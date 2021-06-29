@@ -157,11 +157,14 @@
 
 "D"   '(:ignore t :which-key "diff")
 "Db"  '(vdiff-buffers :which-key "vdiff-buffers")
-"Du"  '(vdiff-buffers3 :which-key "vdiff-buffers3")
+"D3"  '(vdiff-buffers3 :which-key "vdiff-buffers3")
 "Df"  '(vdiff-files :which-key "vdiff-files")
 "Di"  '(vdiff-files3 :which-key "vdiff-files3")
 "Dm"  '(vdiff-mode :which-key "vdiff-mode")
 "Dv"  '(vdiff-hydra/body :which-key "vdiff-hydra")
+"Dw"  '(vdiff-save-buffers :which-key "vdiff-save-buffers")
+"Du"  '(vdiff-refresh :which-key "vdiff-refresh")
+"Dq"  '(vdiff-quit :which-key "vdiff-quit")
 
 "p"   '(:ignore t :which-key "projects")
 "p;"  '(:ignore t :which-key "search/grep")
