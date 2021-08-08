@@ -1,7 +1,7 @@
 ;;; cfg-python.el --- configfuration for python programming -*- lexical-binding: t -*-
 ;;; Commentary:
 
-;; Everything what is connected with python programming
+;; Everything what is connected with python programming.
 
 ;;; Code:
 
