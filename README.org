@@ -1,2 +1,2 @@
-# emacs.d
+* emacs.d
 My personal .emacs.d
