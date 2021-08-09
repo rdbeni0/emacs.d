@@ -5,141 +5,18 @@
 
 ;;; Code:
 
-(defun perl-quote-backslashing (plains func)
-  (goto-char (point-min))
-  (let ((re (concat plains "\\|\\(\\\\+\\)")))
-    (while (re-search-forward re nil t)
-      (if (match-beginning 1)
-          (when (and (= 1 (logand 1 (- (match-end 1)  ;; an odd number
-                                       (match-beginning 1))))
-                     (> (point-max) (point)))
-            (goto-char (1+ (point)))
-            (funcall func (buffer-substring (- (point) 2) (point))))
+;; perl-quote
+;; https://user42.tuxfamily.org/perl-quote/index.html
+;; ^ latest, updated and patched version will be located in the "site-elisp"
 
-        (funcall func (match-string 0)))))
+(use-package perl-quote
+  ;; :load-path "site-elisp/"
+  :config
+  ;;
   )
 
-(defun perl-quote-single-backslashing (single-func)
-  (perl-quote-backslashing
-   "[$@']" (lambda (str)
-             (funcall single-func
-                      str
-                      (cdr (assoc str '(("\\\"" . "\"")
-                                        ("'"    . "\\'")
-                                        ("\\$"  . "$")
-                                        ("\\@"  . "@")
-                                        ;; see perlop "Quote and Quote-like
-                                        ;; Operators"
-                                        ("\\t"  . "\t")
-                                        ("\\n"  . "\n")
-                                        ("\\r"  . "\r")
-                                        ("\\f"  . "\f")
-                                        ("\\b"  . "\b")
-                                        ("\\a"  . "\a")
-                                        ("\\e"  . "\e")))))))
-  )
-
-(defun perl-quote-single (&optional force)
-  (interactive "P")
-  (let ((orig-marker (point-marker))
-        (add-parens  (and (looking-at "N?__")
-                          (goto-char (match-end 0))))
-        (beg         (point))
-        (qq          nil))
-    (or (looking-at "\"\\|\\(qq[{[{<]\\)")
-        (error "Not a double-quoted string"))
-    (setq qq (match-beginning 1))  ;; nil for "", number for qq{}
-
-    (forward-sexp (if qq 2 1)) ;; to after string
-    (let ((end (point)))
-      (save-restriction
-        (narrow-to-region beg end)
-
-        ;; check for interpolation or unrecognised backslashing before
-        ;; changing anything
-        (unless force
-          (perl-quote-single-backslashing
-           (lambda (part rep)
-             (unless rep
-               (goto-char (- (point) (length part)))
-               (if (= 1 (length part))
-                   (error "Interpolation in string")
-                 (error "Backslash in string, no replacement yet implemented"))))))
-
-        (goto-char (point-min))
-        (if qq
-            (progn ;; qq{}
-              (delete-region beg (1+ beg)) ;; qq{} becomes q{}
-              (goto-char (1+ (point))))
-
-          ;; plain ""
-          (when add-parens
-            (insert "(")
-            (goto-char (point-max))
-            (insert ")")
-            (narrow-to-region (1+ (point-min)) (1- (point))))
-
-          (delete-region (1- (point-max)) (point-max))
-          (goto-char (point-max))
-          (insert "'")
-
-
-          (delete-region (point-min) (1+ (point-min)))
-          (goto-char (point-min))
-          (insert "'"))
-
-        (narrow-to-region (point) (1- (point-max)))
-
-        (perl-quote-single-backslashing
-         (lambda (part rep)
-           (when rep
-             (delete-region (- (point) (length part))
-                            (point))
-             (insert rep))))))
-    (goto-char orig-marker))
-  )
-
-(defun perl-quote-double ()
-  (interactive)
-  (let ((beg (point))
-        (q  nil))
-    (or (looking-at "'\\|\\(q[{[{<]\\)")
-        (error "Not a single-quoted string"))
-    (setq q (match-beginning 1))  ;; nil for ' number for q{
-
-    (save-excursion
-      (forward-sexp)
-      (let ((end (point)))
-        (save-restriction
-          (narrow-to-region beg end)
-          (goto-char (point-min))
-
-          (if q
-              (insert "q")
-            (goto-char (1- (point-max)))
-            (delete-region (1- (point-max)) (point-max))
-            (insert "\"")
-
-            (delete-region (point-min) (1+ (point-min)))
-            (goto-char (point-min))
-            (insert "\"")
-
-            (narrow-to-region (point) (1- (point-max))))
-
-          (perl-quote-backslashing
-           "[\"$@]" (lambda (part)
-                      (let ((rep (or (cdr (assoc part '(("\\\'" . "'")
-							("\""   . "\\\"")
-							("$" . "\\$")
-							("@" . "\\@")
-							;; backslashed literals
-							("\\\"" . "\\\"")
-							("\\$"  . "\\$")
-							("\\@"  . "\\@"))))
-                                     (substring part 1))))
-			(delete-region (- (point) (length part)) (point))
-			(insert rep))))))))
-  )
+;; perl find modules
+;; https://www.emacswiki.org/emacs/CPerlMode#h5o-9
 
 (defun perl-module-path (module-name)
   (let* ((file-name
@@ -166,13 +43,15 @@
       (error "Module '%s' not found" module-name)))
   )
 
+;; perltidy
+
 (defvar perl5-perltidy-executable "perltidy"
   "Location of perltidy executable.")
 
 (defvar perl5-perltidy-options '()
   "Command line options to pass to perltidy")
 
-;; other option:
+;; other, alternative option:
 ;;
 ;; (defun perltidy-format ()
 ;;     "Run perltidy on the current region."
@@ -210,7 +89,7 @@
   )
 
 (defun perltidy-format-function ()
-  "Format current function with perltidy."
+  "Format current function (sub) with perltidy."
   (interactive)
   (mark-defun)
   (perltidy-format)
