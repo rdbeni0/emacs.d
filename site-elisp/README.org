@@ -4,7 +4,7 @@ This directory and its immediate subdirectories will be added to load-path at st
 As an example's:
 - awesome-tab : https://github.com/manateelazycat/awesome-tab/issues/34
 - Emacs bits : https://user42.tuxfamily.org/
-- EmacsWiki elisp collection : 
+- EmacsWiki - Elisp Area : 
 https://www.emacswiki.org/emacs/ElispArea  
 
 https://www.emacswiki.org/emacs?action=elisp-area  
