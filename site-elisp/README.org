@@ -1,5 +1,5 @@
 This is a place for 3rd party code which isn't available in MELPA or other package repositories. 
-This directory and its immediate subdirectories will be added to load-path at start-up time.
+This directory and it's immediate subdirectories will be added to load-path at start-up time.
 
 As an example's:
 - awesome-tab : https://github.com/manateelazycat/awesome-tab/issues/34
