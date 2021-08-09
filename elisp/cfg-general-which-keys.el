@@ -205,7 +205,7 @@
    "Du"  '(vdiff-refresh :which-key "vdiff-refresh")
    "Dq"  '(vdiff-quit :which-key "vdiff-quit")
 
-   ;; projects
+   ;; projects, projectile
 
    "p"   '(:ignore t :which-key "projects")
    "p;"  '(:ignore t :which-key "search/grep")
@@ -257,7 +257,7 @@
 
    )
 
-  ;; LSP mode
+  ;; LSP mode : TODO
 
   ;; https://github.com/emacs-lsp/lsp-mode/issues/1530
   ;; ^ evil modes and lsp-mode prefix-key on Gitter
@@ -409,17 +409,12 @@
    ","  '(cperl-perldoc-at-point :which-key "perldoc-at-point")
    "o"  '(cperl-perldoc :which-key "cperl-perldoc")
    "t"  '(:ignore t :which-key "toggle")
-   "te"   '(cperl-toggle-electric :which-key "toggle-electric")
-   "tf"  '(flycheck-mode :which-key "toggle flycheck")
+   "te" '(cperl-toggle-electric :which-key "toggle-electric")
+   "tf" '(flycheck-mode :which-key "toggle flycheck")
    "d"  '(cperl-db :which-key "debugger")
-   "k"  '(:ignore t :which-key "comments, quotes")
-   "ki" '(perl-quote-single :which-key "quote-single")
-   "ko" '(perl-quote-double :which-key "quote-double")
-   "kl" '(comment-dwim :which-key "comment-dwim")
-   "km" '(comment-region :which-key "comment-region")
-   "kn" '(uncomment-region :which-key "uncomment-region")
-   "kj" '(comment-line :which-key "comment-line")
-   "kt" '(comment-kill :which-key "comment-kill")
+   "q"  '(:ignore t :which-key "quotes")
+   "qi" '(perl-quote-single :which-key "quote-single")
+   "qo" '(perl-quote-double :which-key "quote-double")
    "m"  '(:ignore t :which-key "modules")
    "mm" '(find-perl-module :which-key "find-perl-module")
    "mn" '(ffap :which-key "ffap")
@@ -466,13 +461,6 @@
    "=b"   '(elisp-format-buffer :which-key "elisp-format-buffer")
    "=="   '(elisp-format-region :which-key "elisp-format-region")
    "=F"   '(elisp-format-file :which-key "elisp-format-file")
-   "k"  '(:ignore t :which-key "comments")
-   "kl" '(comment-dwim :which-key "comment-dwim")
-   "kk" '(mark-defun :which-key "mark-defun")
-   "km" '(comment-region :which-key "comment-region")
-   "kn" '(uncomment-region :which-key "uncomment-region")
-   "kj" '(comment-line :which-key "comment-line")
-   "kt" '(comment-kill :which-key "comment-kill")
    ","  '(ffap :which-key "ffap")
    )
 
@@ -554,14 +542,7 @@
    "\\" '(sh-backslash-region :which-key "backslash-region")
    "#" '(sh-set-shell :which-key "set-shell")
    "="  '(:ignore t :which-key "format")
-   "=b"   '(format-all-buffer :which-key "format-all-buffer")
-   "k"  '(:ignore t :which-key "comments")
-   "kl" '(comment-dwim :which-key "comment-dwim")
-   "kk" '(mark-defun :which-key "mark-defun")
-   "km" '(comment-region :which-key "comment-region")
-   "kn" '(uncomment-region :which-key "uncomment-region")
-   "kj" '(comment-line :which-key "comment-line")
-   "kt" '(comment-kill :which-key "comment-kill")
+   "=b" '(format-all-buffer :which-key "format-all-buffer")
    "i" '(sh-if :which-key "if")
    "o" '(sh-for :which-key "for")
    "c" '(sh-case :which-key "case")
@@ -612,6 +593,22 @@
    "nv" '(python-nav-forward-sexp-safe :which-key "forward-sexp-safe")
    "nw" '(python-nav-forward-sexp :which-key "forward-sexp")
    "na" '(python-nav-backward-sexp :which-key "backward-sexp")
+   )
+
+  ;; comments for major modes ; the same hotkeys for all mentioned modes
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map)
+   :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode)
+   :prefix ","
+   "k"  '(:ignore t :which-key "comments, marks")
+   "kl" '(comment-dwim :which-key "comment-dwim")
+   "kk" '(mark-defun :which-key "mark-fun")
+   "km" '(comment-region :which-key "comment-region")
+   "kn" '(uncomment-region :which-key "uncomment-region")
+   "kj" '(comment-line :which-key "comment-line")
+   "kt" '(comment-kill :which-key "comment-kill")
    )
 
   ;; commented code..
