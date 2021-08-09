@@ -31,7 +31,9 @@
 ;; (load-theme 'deeper-blue t)
 ;; (load-theme 'doom-one t)
 
+;; tested:
 (load-theme 'reverse t)
+;; (load-theme 'wheatgrass t)
 
 ;; FONTS
 ;; issues and workarounds:

@@ -466,7 +466,7 @@
    "=b"   '(elisp-format-buffer :which-key "elisp-format-buffer")
    "=="   '(elisp-format-region :which-key "elisp-format-region")
    "=F"   '(elisp-format-file :which-key "elisp-format-file")
-   "k"  '(:ignore t :which-key "comments, quotes")
+   "k"  '(:ignore t :which-key "comments")
    "kl" '(comment-dwim :which-key "comment-dwim")
    "kk" '(mark-defun :which-key "mark-defun")
    "km" '(comment-region :which-key "comment-region")
@@ -542,6 +542,36 @@
    "c" '(comint-clear-buffer :which-key "clear")
    "i" '(comint-send-invisible :which-key "send-invisible")
    "f" '(find-file :which-key "find-file")
+   )
+
+  ;; shell-script-mode ; sh-mode
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(sh-mode-map)
+   :major-modes 'sh-mode
+   :prefix ","
+   "\\" '(sh-backslash-region :which-key "backslash-region")
+   "#" '(sh-set-shell :which-key "set-shell")
+   "="  '(:ignore t :which-key "format")
+   "=b"   '(format-all-buffer :which-key "format-all-buffer")
+   "k"  '(:ignore t :which-key "comments")
+   "kl" '(comment-dwim :which-key "comment-dwim")
+   "kk" '(mark-defun :which-key "mark-defun")
+   "km" '(comment-region :which-key "comment-region")
+   "kn" '(uncomment-region :which-key "uncomment-region")
+   "kj" '(comment-line :which-key "comment-line")
+   "kt" '(comment-kill :which-key "comment-kill")
+   "i" '(sh-if :which-key "if")
+   "o" '(sh-for :which-key "for")
+   "c" '(sh-case :which-key "case")
+   "w" '(sh-while :which-key "while")
+   "f" '(sh-function :which-key "function")
+   "u" '(sh-until :which-key "until")
+   "e" '(sh-indexed-loop :which-key "indexed-loop")
+   "r" '(sh-repeat :which-key "repeat")
+   "s" '(sh-select :which-key "select")
+   "g" '(sh-while-getopts :which-key "while-getopts")
    )
 
   ;; grep-mode
