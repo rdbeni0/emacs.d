@@ -9,7 +9,6 @@
 ;; For example - Arch Linux packages: aspell-en aspell-pl
 
 (use-package flyspell
-  :ensure t
   :init
   (setq flyspell-default-dictionary "english")
   )

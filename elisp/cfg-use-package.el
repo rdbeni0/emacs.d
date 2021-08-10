@@ -34,7 +34,7 @@
 ;; https://marmalade-repo.org/#download
 ;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 
-(package-initialize)
+;; (package-initialize)
 
 ;; Unless it is already installed:
 ;; update packages archive and install the most recent version of use-package.
