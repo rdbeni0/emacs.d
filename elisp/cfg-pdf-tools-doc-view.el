@@ -8,7 +8,6 @@
 ;; DocVIew
 
 (use-package doc-view
-  :ensure t
   :config
   (define-key doc-view-mode-map (kbd "C-<mouse-4>") 'doc-view-enlarge)
   (define-key doc-view-mode-map (kbd "C-<mouse-5>") 'doc-view-shrink)
