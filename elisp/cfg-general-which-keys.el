@@ -30,6 +30,8 @@
   :config
   (general-override-mode 1)
 
+  ;; global: space + which-key
+
   (general-define-key
    :states '(normal visual emacs)
    :keymaps 'override

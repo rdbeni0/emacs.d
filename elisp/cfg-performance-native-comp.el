@@ -34,7 +34,8 @@
 
 ;; add directories:
 (native-compile-async (expand-file-name "site-elisp/" user-emacs-directory) 2 t)
-(native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t)
+;; TODO:
+;; (native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t)
 
 ;; options
 (setq native-comp-deferred-compilation t) ; should be t, and default is t
