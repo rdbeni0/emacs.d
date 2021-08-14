@@ -9,7 +9,7 @@
 (use-package magit
   :ensure t
   :config
-  ;;
+  ;; TODO: update config
   )
 
 (provide 'cfg-magit)
