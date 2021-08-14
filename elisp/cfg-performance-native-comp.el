@@ -34,7 +34,8 @@
 
 ;; add directories:
 (native-compile-async (expand-file-name "site-elisp/" user-emacs-directory) 2 t)
-;; TODO:
+
+;; TODO: 20210814 issues with some cfg- files, I need to disable that.... to be checked in the future
 ;; (native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t)
 
 ;; options
