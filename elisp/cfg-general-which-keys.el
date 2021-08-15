@@ -37,6 +37,8 @@
    :keymaps 'global
 
    "<M-tab>" '(alternate-buffer :wk t)
+   "<C-mouse-4>" '(text-scale-increase :wk t)
+   "<C-mouse-5>" '(text-scale-decrease :wk t)
 
    ;; tabbar legacy plugin
 

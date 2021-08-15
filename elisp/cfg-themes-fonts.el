@@ -47,12 +47,5 @@
 ;; (set-face-attribute 'default nil :family "Consolas")
 (set-face-attribute 'default nil :height 120)
 
-;; TODO - add it to the general
-;; Change size of text via mouse scroll:
-
-(global-set-key [C-mouse-4] 'text-scale-increase)
-(global-set-key [C-mouse-5] 'text-scale-decrease)
-
-
 (provide 'cfg-themes-fonts)
 ;;; cfg-themes-fonts.el ends here
