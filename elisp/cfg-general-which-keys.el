@@ -30,7 +30,41 @@
   :config
   (general-override-mode 1)
 
-  ;; global: space + which-key
+  ;; general: no space + no which-key
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'global
+
+   "<M-tab>" '(alternate-buffer :wk t)
+
+   ;; tabbar legacy plugin
+
+   "<S-next>" '(tabbar-backward :wk t)
+   "<S-prior>" '(tabbar-forward :wk t)
+   ;;   "<header-line> <mouse-1>" '(tabbar-press-home :wk t)
+   ;;   "<header-line> <mouse-2>" '(tabbar-press-home :wk t)
+   ;;   "<header-line> <mouse-3>" '(tabbar-press-home :wk t)
+   "<header-line> <mouse-9>" '(tabbar-forward-group :wk t)
+   "<header-line> <drag-mouse-9>" '(tabbar-forward-group :wk t)
+   "<header-line> <mouse-8>" '(tabbar-backward-group :wk t)
+   "<header-line> <drag-mouse-8>" '(tabbar-backward-group :wk t)
+
+   ;; tab (emacs 27++)
+
+   "<mouse-9>" '(tab-next :wk t)
+   "<drag-mouse-9>" '(tab-next :wk t)
+   "<mouse-8>" '(tab-previous :wk t)
+   "<drag-mouse-8>" '(tab-previous :wk t)
+   "<M-mouse-9>" '(tab-new :wk t)
+   "<M-drag-mouse-9>" '(tab-new :wk t)
+   "<M-mouse-8>" '(tab-close :wk t)
+   "<M-drag-mouse-8>" '(tab-close :wk t)
+   "<M-mouse-2>" '(tab-close :wk t)
+   "<M-drag-mouse-2>" '(tab-close :wk t)
+   )
+
+  ;; global: space as leader-key + which-key
 
   (general-define-key
    :states '(normal visual emacs)

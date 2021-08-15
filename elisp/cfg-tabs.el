@@ -6,8 +6,15 @@
 ;;; Code:
 
 
-;; tab-bar : since emacs 27 version
+;; tab-bar
+;; since emacs 27 version
 (tab-bar-mode 1)
+
+;; tabbar legacy plugin
+;; Introduction:
+;; https://emacs.stackexchange.com/questions/10081/browser-style-tabs-for-emacs
+;; https://stackoverflow.com/questions/3811126/do-you-use-emacs-tabbar
+;; https://gist.github.com/3demax/1264635
 
 (defun px-tabbar-buffer-help-on-tab (tab)
   "Return the help string shown when mouse is onto TAB."
@@ -50,18 +57,10 @@ mouse-2: kill %S"
                        (length (tabbar-view
                                 (tabbar-current-tabset))))))))
   )
-
-;; tabbar legacy
-;; Introduction:
-;; https://emacs.stackexchange.com/questions/10081/browser-style-tabs-for-emacs
-;; https://stackoverflow.com/questions/3811126/do-you-use-emacs-tabbar
-;; https://gist.github.com/3demax/1264635
-
 (use-package tabbar
   :ensure t
   :init
   (tabbar-mode 1)
-  ;;  (add-hook 'helm-mode-hook 'tabbar-local-mode) ;;probably not working correctly... bugs
   :config
   ;;  (setq tabbar-separator (quote (1.0)))
 
@@ -131,40 +130,16 @@ mouse-2: kill %S"
 	   ))
     )
 
-  ;; end of use-package....
+  ;; keys
 
   (setq tabbar-help-on-tab-function 'px-tabbar-buffer-help-on-tab)
   (setq tabbar-select-tab-function 'px-tabbar-buffer-select-tab)
   (setq tabbar-buffer-groups-function 'px-tabbar-buffer-groups)
+  (global-set-key [header-line mouse-1] 'tabbar-press-home)
+  (global-set-key [header-line mouse-2] 'tabbar-press-home)
+  (global-set-key [header-line mouse-3] 'tabbar-press-home)
 
+  ;; end of use-package....
   )
-
-(global-set-key [M-tab] 'alternate-buffer)
-
-;; tabbar legacy
-
-(global-set-key [header-line mouse-1] 'tabbar-press-home)
-(global-set-key [header-line mouse-2] 'tabbar-press-home)
-;; (global-set-key [header-line mouse-3] 'tabbar-press-home)
-(global-set-key [header-line drag-mouse-9] 'tabbar-press-home)
-(global-set-key [header-line mouse-9] 'tabbar-press-home)
-(global-set-key [header-line mouse-8] 'tabbar-backward-group)
-(global-set-key [header-line drag-mouse-8] 'tabbar-backward-group)
-(global-set-key [S-next] 'tabbar-backward)
-(global-set-key [S-prior] 'tabbar-forward)
-
-;; tab (emacs 27++)
-
-(global-set-key [mouse-9] 'tab-next)
-(global-set-key [drag-mouse-9] 'tab-next)
-(global-set-key [mouse-8] 'tab-previous)
-(global-set-key [drag-mouse-8] 'tab-previous)
-(global-set-key [M-mouse-9] 'tab-new)
-(global-set-key [M-drag-mouse-9] 'tab-new)
-(global-set-key [M-mouse-8] 'tab-close)
-(global-set-key [M-drag-mouse-8] 'tab-close)
-(global-set-key [M-mouse-2] 'tab-close)
-(global-set-key [M-drag-mouse-2] 'tab-close)
-
 (provide 'cfg-tabs)
 ;;; cfg-tabs.el ends here
