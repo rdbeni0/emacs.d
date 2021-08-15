@@ -353,7 +353,7 @@
    "b" '(json-mode-beautify :which-key "jm-beautify")
    )
 
-  ;; doc-view mode
+  ;; doc-view mode ; with prefix
 
   (general-define-key
    :states '(normal visual emacs)
@@ -377,7 +377,28 @@
    "sl" '(doc-view-set-slice :which-key "set-slice")
    )
 
-  ;; pdf-view mode
+  ;; doc-view mode ; without prefix
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'doc-view-mode-map
+   :major-modes 'doc-view-mode
+   "C-<mouse-4>" '(doc-view-enlarge :wk t)
+   "C-<mouse-5>"'(doc-view-shrink :wk t)
+   "<right>" '(doc-view-next-page :wk t)
+   "<left>" '(doc-view-previous-page :wk t)
+   "<home>" '(doc-view-first-page :wk t)
+   "<end>" '(doc-view-last-page :wk t)
+   "k" '(doc-view-shrink :wk t)
+   "l" '(doc-view-enlarge :wk t)
+   "/" '(doc-view-search :wk t)
+   "W" '(doc-view-fit-width-to-window :wk t)
+   "H" '(doc-view-fit-height-to-window :wk t)
+   "P" '(doc-view-fit-page-to-window :wk t)
+   "0" '(doc-view-scale-reset :wk t)
+   )
+
+  ;; pdf-view mode ; with prefix
 
   (general-define-key
    :states '(normal visual emacs)
@@ -399,6 +420,27 @@
    "ss" '(pdf-view-set-slice-using-mouse :which-key "set-slice-using-mouse")
    "sb" '(pdf-view-set-slice-from-bounding-box :which-key "set-slice-from-bounding-box")
    "sl" '(pdf-view-set-slice :which-key "set-slice")
+   )
+
+  ;; pdf-view mode ; without prefix
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'pdf-view-mode-map
+   :major-modes 'pdf-view-mode
+   "C-<mouse-4>"'(pdf-view-enlarge :wk t)
+   "C-<mouse-5>"'(pdf-view-shrink :wk t)
+   "<right>"'(pdf-view-next-page :wk t)
+   "<left>"'(pdf-view-previous-page :wk t)
+   "<home>" '(pdf-view-first-page :wk t)
+   "<end>" '(pdf-view-last-page :wk t)
+   "k" '(pdf-view-shrink :wk t)
+   "l" '(pdf-view-enlarge :wk t)
+   "0" '(pdf-view-scale-reset :wk t)
+   "P" '(pdf-view-fit-page-to-window :wk t)
+   "W" '(pdf-view-fit-width-to-window :wk t)
+   "H" '(pdf-view-fit-height-to-window :wk t)
+   "/" '(isearch-forward :wk t)
    )
 
   ;; cperl-mode
