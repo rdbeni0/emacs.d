@@ -30,22 +30,11 @@
   )
 
 ;; dired - reuse buffer
-
 ;; http://ergoemacs.org/emacs/emacs_dired_tips.html
 ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
-
-;; Obsolete:
-;; (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-;; (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))
-;; If you want Enter and ^ (parent dir) to use the same buffer, put the following:
-
 ;; Possible issues with mouse integration:
 ;; https://emacs.stackexchange.com/questions/35536/dired-mouse-click-open-folder-in-the-same-window
-
-;; (require 'dired)
-;; (put 'dired-find-alternate-file 'disabled nil)
-
-;; so the best option seems to be dired-single:
+;; ... so the best option seems to be dired-single:
 
 (use-package dired-single
   :ensure t

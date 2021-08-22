@@ -173,7 +173,6 @@
    "asS"  '(my-named-shell :which-key "my-named-shell")
    "ast"  '(tramp-term :which-key "tramp-term")
    "aeD"  '(erc-default-servers :which-key "erc-default-servers")
-   "ae,"  '(erc-status-sidebar-toggle :which-key "erc-status-sidebar-toggle")
    "aeE"  '(erc-tls :which-key "erc-tls")
    "aer"  '(rcirc :which-key "rcirc")
    "aee"  '(erc :which-key "erc")
@@ -520,11 +519,11 @@
    "n" '(erc-channel-names :which-key "channel-names")
    "Q" '(erc-quit-server :which-key "quit-server")
    "f" '(erc-find-logfile :which-key "find-logfile")
-   "," '(erc-status-sidebar-toggle :which-key "status-sidebar-toggle")
+   "o" '(erc-status-sidebar-open :which-key "status-sidebar-open")
+   "i" '(erc-status-sidebar-kill :which-key "status-sidebar-kill")
    "." '(quoted-insert :which-key "quoted-insert")
-   "p" '(erc-cmd-QUERY :which-key "cmd-QUERY-private-msg")
-   "i" '(erc-kill-input :which-key "kill-input")
-   "g" '(erc-image-mode :which-key "image-mode")
+   "," '(erc-cmd-QUERY :which-key "cmd-QUERY-private-msg")
+   "g" '(erc-image-mode :which-key "toggle-image-mode")
    )
 
   ;; emacs-lisp-mode
