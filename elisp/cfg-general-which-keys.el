@@ -17,6 +17,12 @@
   (which-key-mode)
   )
 
+;; evil-ex-define-cmd
+;; https://stackoverflow.com/questions/12913713/rebinding-b-and-e-in-evil-normal-state-map
+(evil-ex-define-cmd "e[dit]" 'helm-find-files)
+(evil-ex-define-cmd "E[x]" 'dired-jump)
+
+
 ;; general
 
 ;; https://github.com/noctuid/general.el/issues/99
