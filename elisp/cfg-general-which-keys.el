@@ -18,8 +18,11 @@
   )
 
 ;; evil-ex-define-cmd
+;; unfortunately it seems that binding : vim commands needs to be done via dedicated function, but not via "general.el":
 ;; https://stackoverflow.com/questions/12913713/rebinding-b-and-e-in-evil-normal-state-map
+
 (evil-ex-define-cmd "e[dit]" 'helm-find-files)
+(evil-ex-define-cmd "b[uffers]" 'helm-buffers-list)
 (evil-ex-define-cmd "E[x]" 'dired-jump)
 
 

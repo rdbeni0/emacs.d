@@ -58,7 +58,7 @@
   :config
   )
 
-;; https://github.com/yasuyk/helm-git-grep     
+;; https://github.com/yasuyk/helm-git-grep
 
 (use-package helm-git-grep
   :after magit
@@ -77,9 +77,15 @@
 ;; https://github.com/DarwinAwardWinner/dotemacs-old/blob/master/site-lisp/settings/tempbuf-settings.el
 ;; https://github.com/biern/.emacs.d/blob/master/conf/tempbuf.el
 ;;
-;; tempbuf is working well with helm and it will clean junk buffers:
-
 (require 'tempbuf)
+;; clean native-compile buffer
+(when (get-buffer "*Async-native-compile-log*")
+  (setq tempbuf-minimum-timeout 5) ;; 5 seconds
+  (switch-to-buffer "*Async-native-compile-log*")
+  (turn-on-tempbuf-mode)
+  (switch-to-buffer "*scratch*")
+  )
+;; tempbuf is working well with helm and it will clean junk buffers:
 (setq tempbuf-minimum-timeout 30)
 (add-hook 'helm-major-mode-hook 'turn-on-tempbuf-mode)
 

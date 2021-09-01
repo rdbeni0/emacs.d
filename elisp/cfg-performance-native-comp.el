@@ -15,7 +15,7 @@
 
 ;; for native-comp sometimes old *elc need to be removed:
 ;; https://www.reddit.com/r/emacs/comments/myej3z/the_nativecompilation_branch_was_just_merged_into/
-;; "One snag I hit after trying to recompile native compilation after using it for a while 
+;; "One snag I hit after trying to recompile native compilation after using it for a while
 ;; was needing to delete the old .elc files in the source directory"
 
 ;; >>>>>>>>>>>>>>>>>> ... or NATIVE COMPILATION
@@ -49,6 +49,11 @@
 ;; no warnings when compilation is ongoing:
 (setq native-comp-async-report-warnings-errors nil)
 (setq comp-async-report-warnings-errors nil)
+
+;; kill unnecessary compilation buffer:
+;; please check cfg- file with tempbuf configuration
+
+;; (kill-buffer )
 
 ;; >>>>>>>>>>>>>>>>>> OVERALL PERFORMANCE OPTIONS
 ;; see Doom Emacs for inspiration: https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
