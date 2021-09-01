@@ -83,6 +83,7 @@
    "<down>" '(tab-new :wk t)
    "<left>" '(tab-previous :wk t)
    "<right>" '(tab-next :wk t)
+   "<deletechar>" '(tab-close :wk t)
    "<next>" '(tabbar-backward :wk t)
    "<prior>" '(tabbar-forward :wk t)
 
@@ -140,6 +141,14 @@
    ;; windows
 
    "w"   '(:ignore t :which-key "windows")
+   "wt"   '(:ignore t :which-key "tabs")
+   "wt <deletechar>"   '(tab-close :which-key "tab-close")
+   "wt <up>" '(tab-rename :which-key "tab-rename")
+   "wt <down>" '(tab-new :which-key "tab-new")
+   "wt <left>" '(tab-previous :which-key "tab-previous")
+   "wt <right>" '(tab-next :which-key "tab-next")
+   "wt <next>" '(tabbar-backward :which-key "tabbar-backward")
+   "wt <prior>" '(tabbar-forward :which-key "tabbar-forward")
    "ww"  '(other-window :which-key "other-window")
    "we"  '(delete-other-windows :which-key "delete-other-windows")
    "ws"  '(split-window-below :which-key "split-window-below")
