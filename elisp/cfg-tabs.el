@@ -109,6 +109,10 @@ mouse-2: kill %S"
 	   ((or (string= (file-name-extension (buffer-name)) "el")) "ELISP")
 	   ((or (eq major-mode 'emacs-lisp-mode)) "ELISP")
 
+	   ((or (string= (file-name-extension (buffer-name)) "md")) "MARKDOWN")
+	   ((or (eq major-mode 'gfm-mode)) "MARKDOWN")
+	   ((or (eq major-mode 'markdown-mode)) "MARKDOWN")
+
 	   ((or (string= (file-name-extension (buffer-name)) "xml")) "XML")
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
 
@@ -118,6 +122,9 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'help-mode)) "HELP")
 	   ((or (eq major-mode 'info-mode)) "HELP")
+
+	   ((or (eq major-mode 'ibuffer-mode)) "BUFFERS")
+	   ((or (eq major-mode 'Buffer-menu-mode)) "BUFFERS")
 
 	   ((or (eq major-mode 'python-mode)) "PYTHON")
 
