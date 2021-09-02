@@ -40,6 +40,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; https://github.com/proofgeneral/pg/issues/174
   ;; https://github.com/syl20bnr/spacemacs/issues/8853
   (setq evil-want-abbrev-expand-on-insert-exit nil)
+  ;; visual-line-mode
+  ;; https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
+  (setq evil-respect-visual-line-mode t)
   )
 
 ;; useful package:
@@ -49,6 +52,25 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config
   (evil-collection-init)
+  )
+
+;; https://github.com/Somelauw/evil-org-mode
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  )
+
+;; evil-markdown-mode
+;; https://github.com/Somelauw/evil-markdown
+;; this is local package
+
+(use-package evil-markdown
+  :after evil
   )
 
 ;; TODO
