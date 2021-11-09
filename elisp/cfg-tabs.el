@@ -92,6 +92,10 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'pdf-view-mode)) "PDF")
 
+	   ((or (eq major-mode 'conf-mode)) "CONF")
+	   ((or (eq major-mode 'conf-unix-mode)) "CONF")
+	   ((or (eq major-mode 'conf-windows-mode)) "CONF")
+
 	   ((or (eq major-mode 'org-mode)) "ORG")
 	   ((or (eq major-mode 'shell-mode)) "SHELL")
 
@@ -99,6 +103,9 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'fundamental-mode)) "TXT")
 	   ((or (string= (file-name-extension (buffer-name)) "txt")) "TXT")
+
+	   ((or (eq major-mode 'php-mode)) "PHP")
+	   ((or (string= (file-name-extension (buffer-name)) "php")) "PHP")
 
 	   ((or (eq major-mode 'perl-mode)) "PERL")
 	   ((or (eq major-mode 'cperl-mode)) "PERL")

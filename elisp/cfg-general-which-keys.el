@@ -517,8 +517,9 @@
    "mn" '(ffap :which-key "ffap")
    "n" '(mark-defun :which-key "mark-sub")
    "="  '(:ignore t :which-key "format")
-   "==" '(perltidy-format :which-key "perltidy-format")
+   "==" '(perltidy-format-buffer :which-key "perltidy-format-buffer")
    "=b" '(perltidy-format-buffer :which-key "perltidy-format-buffer")
+   "=o" '(perltidy-format :which-key "perltidy-format")
    "=f" '(perltidy-format-function :which-key "perltidy-format-function")
    )
 
@@ -555,9 +556,9 @@
    "e"   '(eval-region :which-key "eval-region")
    "E"   '(eval-buffer :which-key "eval-buffer")
    "="  '(:ignore t :which-key "format")
-   "=b"   '(elisp-format-buffer :which-key "elisp-format-buffer")
-   "=="   '(elisp-format-region :which-key "elisp-format-region")
-   "=F"   '(elisp-format-file :which-key "elisp-format-file")
+   "=="   '(format-all-buffer :which-key "format-all-buffer")
+   "=b"   '(format-all-buffer :which-key "format-all-buffer")
+   "=o"   '(format-all-region :which-key "format-all-region")
    ","  '(ffap :which-key "ffap")
    )
 
@@ -640,6 +641,7 @@
    "#" '(sh-set-shell :which-key "set-shell")
    "="  '(:ignore t :which-key "format")
    "=b" '(format-all-buffer :which-key "format-all-buffer")
+   "==" '(format-all-buffer :which-key "format-all-buffer")
    "i" '(sh-if :which-key "if")
    "o" '(sh-for :which-key "for")
    "c" '(sh-case :which-key "case")
@@ -692,12 +694,26 @@
    "na" '(python-nav-backward-sexp :which-key "backward-sexp")
    )
 
+  ;; php-mode
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'php-mode-map
+   :major-modes 'php-mode
+   :prefix ","
+   "="  '(:ignore t :which-key "format")
+   "==" '(php-cs-fixer-fix :which-key "php-cs-fixer")
+   "=b" '(php-cs-fixer-fix :which-key "php-cs-fixer")
+   "=s" '(php-set-style :which-key "set-style")
+   "=p" '(format-all-buffer :which-key "prettier-plugin-php")
+   )
+
   ;; comments for major modes ; the same hotkeys for all mentioned modes
 
   (general-define-key
    :states '(normal visual emacs)
-   :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map)
-   :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode)
+   :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map)
+   :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode)
    :prefix ","
    "k"  '(:ignore t :which-key "comments, marks")
    "kl" '(comment-dwim :which-key "comment-dwim")

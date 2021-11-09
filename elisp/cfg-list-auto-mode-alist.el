@@ -12,6 +12,7 @@
       (append
        ;; File name (within directory) starts with a dot.
        '(("\\.*_conf_file\\'" . conf-mode)
+	 ("\\.npmrc\\'" . conf-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.md\\'" . gfm-mode)
 	 ("\\.markdown\\'" . gfm-mode)

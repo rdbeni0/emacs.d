@@ -21,6 +21,7 @@
 (require 'cfg-dired)
 (require 'cfg-pdf-tools-doc-view)
 (require 'cfg-perl-regexps)
+(require 'cfg-php)
 (require 'cfg-magit)
 (require 'cfg-webpaste-browsers)
 (require 'cfg-python)
