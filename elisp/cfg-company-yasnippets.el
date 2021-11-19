@@ -1,8 +1,12 @@
-;;; cfg-company.el --- configfuration for company-mode -*- lexical-binding: t -*-
+;;; cfg-company-yasnippets.el --- configfuration for company-mode and yasnippets -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;; company-mode
 ;; https://company-mode.github.io/
+
+;; yasnippet:
+;; https://github.com/joaotavora/yasnippet
+;; https://www.emacswiki.org/emacs/Yasnippet
 
 ;;; Code:
 
@@ -46,5 +50,36 @@
     (display-buffer doc-buffer t))
   )
 
-(provide 'cfg-company)
-;;; cfg-company.el ends here
+;;;;;;;;;;;;;;;;;;;;;; yasnippets
+;; ;; (setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacs.d/data/yasnippets")))
+
+(use-package yasnippet
+  :ensure t
+  )
+
+;; https://github.com/AndreaCrotti/yasnippet-snippets
+
+(setq yasnippets-dynamic-data-dir
+      (substring
+       ;;
+       ;; optional:
+       ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
+       ;;
+       (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
+       0 -1))
+
+;; Adding a custom yasnippet directory:
+;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
+
+(use-package yasnippet-snippets
+  :ensure t
+  :config
+  ;;
+  ;; not necessary, but optional:
+  ;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
+  ;;
+  (yas-reload-all)
+  )
+
+(provide 'cfg-company-yasnippets)
+;;; cfg-company-yasnippets.el ends here
