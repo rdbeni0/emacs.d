@@ -71,7 +71,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; this is local package
 
 (use-package evil-markdown
-  :after evil
+  :after '(evil markdown-mode)
   )
 
 ;; TODO

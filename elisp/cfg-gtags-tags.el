@@ -12,7 +12,8 @@
 ;; https://archlinux.org/packages/extra/x86_64/ctags/
 ;;
 ;; pygments:
-;;
+;; pygments is for less popular languages:
+;; In order to look up symbol references for any language not in the built in parser you must use the pygments backend:
 ;; https://pygments.org/
 ;;
 ;; tutorial for spacemacs:
@@ -22,6 +23,13 @@
 
 (use-package ggtags
   :ensure t
+  :config
+  (setq ggtags-completing-read-function nil)
+  )
+
+(use-package helm-gtags
+  :ensure t
+  :after '(helm ggtags)
   )
 
 
