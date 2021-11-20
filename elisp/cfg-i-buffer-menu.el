@@ -7,7 +7,7 @@
 
 ;; defuns
 
-(defun kill-other-buffers (&optional arg)
+(defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.
 If the universal prefix argument is used then will the windows too."
   (interactive "P")
@@ -18,7 +18,7 @@ If the universal prefix argument is used then will the windows too."
     (message "Buffers deleted!"))
   )
 
-(defun alternate-buffer (&optional window)
+(defun cfg/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
   (let ((current-buffer (window-buffer window)))
@@ -31,7 +31,7 @@ If the universal prefix argument is used then will the windows too."
      nil t))
   )
 
-(defun delete-current-buffer-file ()
+(defun cfg/delete-current-buffer-file ()
   "Removes file connected to current buffer and kills buffer."
   (interactive)
   (let ((filename (buffer-file-name))
@@ -50,7 +50,7 @@ If the universal prefix argument is used then will the windows too."
         (message "Canceled: File deletion"))))
   )
 
-(defun rename-current-buffer-file (&optional arg)
+(defun cfg/rename-current-buffer-file (&optional arg)
   "Rename the current buffer and the file it is visiting.
 If the buffer isn't visiting a file, ask if it should
 be saved to a file, or just renamed.
@@ -113,7 +113,7 @@ initialized with the current directory instead of filename."
                 ((memq key '(?\a ?\e)) (keyboard-quit)))))))
   )
 
-(defun new-empty-buffer ()
+(defun cfg/new-empty-buffer ()
   "Create a new empty buffer.
 New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
 It returns the buffer (for elisp programing).
@@ -127,7 +127,7 @@ Version 2017-11-01"
     $buf)
   )
 
-(defun toggle-maximize-buffer ()
+(defun cfg/toggle-maximize-buffer ()
   "Maximize buffer"
   (interactive)
   (save-excursion
@@ -141,7 +141,7 @@ Version 2017-11-01"
 
 ;; https://stackoverflow.com/questions/12715376/emacs-copy-pwd-of-the-current-buffer-to-clipboard
 
-(defun show-file-name ()
+(defun cfg/show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
   (kill-new (buffer-file-name))

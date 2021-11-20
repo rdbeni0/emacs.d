@@ -7,8 +7,8 @@
 
 ;; sudo
 
-(defun sudo-edit (&optional arg)
-  "Edit as sudo user"
+(defun cfg/sudo-edit (&optional arg)
+  "Edit buffer / file as sudo user"
   (interactive "P")
   (require 'tramp)
   (let ((fname (if (or arg (not buffer-file-name))
@@ -35,7 +35,7 @@
            new-fname)))))
   )
 
-(defun sudired ()
+(defun cfg/sudired ()
   "Open current directory via sudo and dired."
   (interactive)
   (require 'tramp)
@@ -56,7 +56,7 @@
         (tramp-set-completion-function method my-tramp-ssh-completions))
       '("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh"))
 
-(defun make-comint-file-name-prefix ()
+(defun cfg-make-comint-file-name-prefix ()
   (require 'tramp)
   (format "/%s:%s%s:"
 	  tramp-default-method
@@ -77,7 +77,7 @@
 	      (shell-dirtrack-mode t)
 	      (setq ssh-directory-tracking-mode t)
 	      (setq shell-dirtrackp t)
-	      (setq comint-file-name-prefix (make-comint-file-name-prefix)))
+	      (setq comint-file-name-prefix (cfg-make-comint-file-name-prefix)))
 	    )
   )
 

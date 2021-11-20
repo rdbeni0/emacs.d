@@ -17,7 +17,7 @@
   :type 'list
   :version "green")
 
-(defun display-line-numbers--turn-on ()
+(defun display-line-numbers--turn-on () ;; no cfg/  here
   "turn on line numbers but excempting certain majore modes defined in `display-line-numbers-exempt-modes'"
   (if (and
        (not (member major-mode display-line-numbers-exempt-modes))

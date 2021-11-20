@@ -18,7 +18,7 @@
 
 ;; https://unix.stackexchange.com/questions/182211/automaticaly-rename-new-buffer-in-term-mode
 
-(defun multi-term-buffer-rn ()
+(defun cfg/multi-term-buffer-rn ()
   "Open multi-term buffer with special name and prefix, it could be useful for custom buffer filtering (via tabs or helm)"
   (interactive)
   (require 'multi-term)
@@ -57,7 +57,7 @@
 
 ;; https://stackoverflow.com/questions/9514495/how-to-define-a-function-to-run-multiple-shells-on-emacs
 
-(defun my-named-shell ()
+(defun cfg/my-named-shell ()
   "Equivalent to C-u M-x shell RET"
   (interactive)
   (let ((current-prefix-arg '(4)))

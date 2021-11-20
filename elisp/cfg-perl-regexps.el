@@ -18,7 +18,7 @@
 ;; perl find modules
 ;; https://www.emacswiki.org/emacs/CPerlMode#h5o-9
 
-(defun perl-module-path (module-name)
+(defun cfg/perl-module-path (module-name)
   (let* ((file-name
 	  (concat (replace-regexp-in-string "::" "/" module-name)
 		  ".pm"))
@@ -35,9 +35,9 @@
       path))
   )
 
-(defun find-perl-module (module-name)
+(defun cfg/find-perl-module (module-name)
   (interactive "sPerl module name: ")
-  (let ((path (perl-module-path module-name)))
+  (let ((path (cfg/perl-module-path module-name)))
     (if path
 	(find-file path)
       (error "Module '%s' not found" module-name)))
@@ -53,13 +53,13 @@
 
 ;; other, alternative option:
 ;;
-;; (defun perltidy-format ()
+;; (defun cfg/perltidy-format ()
 ;;     "Run perltidy on the current region."
 ;;    (interactive)
 ;;    (save-excursion
 ;;      (shell-command-on-region (point) (mark) "/usr/bin/perltidy -q" nil t)))
 
-(defun perltidy-format ()
+(defun cfg/perltidy-format ()
   "Format Perl code with perltidy.
    If region is active, operate on it, else operate on line."
   (interactive)
@@ -81,18 +81,18 @@
     (goto-char old-point))
   )
 
-(defun perltidy-format-buffer ()
+(defun cfg/perltidy-format-buffer ()
   "Format current buffer with perltidy."
   (interactive)
   (mark-whole-buffer)
-  (perltidy-format)
+  (cfg/perltidy-format)
   )
 
-(defun perltidy-format-function ()
+(defun cfg/perltidy-format-function ()
   "Format current function (sub) with perltidy."
   (interactive)
   (mark-defun)
-  (perltidy-format)
+  (cfg/perltidy-format)
   )
 
 (use-package cperl-mode
@@ -107,7 +107,7 @@
 
 ;; OPTIONAL package : https://github.com/aki2o/emacs-plsense
 ;;
-;; (defun plsense-go()
+;; (defun cfg/plsense-go()
 ;;   "Start plsense server and load buffer into it."
 ;;   (interactive)
 ;;   (plsense-server-start)

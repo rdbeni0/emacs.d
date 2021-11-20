@@ -16,7 +16,7 @@
 ;; https://stackoverflow.com/questions/3811126/do-you-use-emacs-tabbar
 ;; https://gist.github.com/3demax/1264635
 
-(defun px-tabbar-buffer-help-on-tab (tab)
+(defun cfg/px-tabbar-buffer-help-on-tab (tab)
   "Return the help string shown when mouse is onto TAB."
   (if tabbar--buffer-show-groups
       (let* ((tabset (tabbar-tab-tabset tab))
@@ -31,7 +31,7 @@ mouse-2: kill %S"
             (buffer-name (tabbar-tab-value tab))))
   )
 
-(defun px-tabbar-buffer-select-tab (event tab)
+(defun cfg/px-tabbar-buffer-select-tab (event tab)
   "On mouse EVENT, select TAB."
   (let ((mouse-button (event-basic-type event))
         (buffer (tabbar-tab-value tab)))
@@ -41,7 +41,7 @@ mouse-2: kill %S"
     (tabbar-buffer-show-groups nil))
   )
 
-(defun tabbar-buffer-tab-label (tab)
+(defun cfg/tabbar-buffer-tab-label (tab)
   "Return a label for TAB.
   That is, a string used to represent it on the tab bar."
   (let ((label  (if tabbar--buffer-show-groups
@@ -64,7 +64,7 @@ mouse-2: kill %S"
   :config
   ;;  (setq tabbar-separator (quote (1.0)))
 
-  (defun px-tabbar-buffer-groups ()
+  (defun cfg/px-tabbar-buffer-groups ()
     "Sort tab groups."
     (list (cond
 	   ;;   ((or (string-equal "*grep" (substring (buffer-name) 0 5))) "GREP")
@@ -146,9 +146,9 @@ mouse-2: kill %S"
 
   ;; keys
 
-  (setq tabbar-help-on-tab-function 'px-tabbar-buffer-help-on-tab)
-  (setq tabbar-select-tab-function 'px-tabbar-buffer-select-tab)
-  (setq tabbar-buffer-groups-function 'px-tabbar-buffer-groups)
+  (setq tabbar-help-on-tab-function 'cfg/px-tabbar-buffer-help-on-tab)
+  (setq tabbar-select-tab-function 'cfg/px-tabbar-buffer-select-tab)
+  (setq tabbar-buffer-groups-function 'cfg/px-tabbar-buffer-groups)
   (global-set-key [header-line mouse-1] 'tabbar-press-home)
   (global-set-key [header-line mouse-2] 'tabbar-press-home)
   (global-set-key [header-line mouse-3] 'tabbar-press-home)

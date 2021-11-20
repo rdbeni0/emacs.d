@@ -14,7 +14,7 @@
   ;;
   )
 
-(defun grep-recentf (filepattern pattern)
+(defun cfg/grep-recentf (filepattern pattern)
   (interactive "sFiles regexp: \nsSearch regexp: ")
   (let ((files (if filepattern
                    (cl-remove-if-not (lambda (item) (string-match filepattern item))

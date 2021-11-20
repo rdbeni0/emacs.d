@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(defun my-dired-init ()
+(defun cfg/dired-init ()
   "Bunch of stuff to run for dired, either immediately or when it's loaded."
   (define-key dired-mode-map [remap dired-find-file]
     'dired-single-buffer)
@@ -20,7 +20,7 @@
   "List of ls switches for dired to cycle among.")
 
 
-(defun cycle-dired-switches ()
+(defun cfg/cycle-dired-switches ()
   "Cycle through the list `list-of-dired-switches' of switches for ls"
   (interactive)
   (setq list-of-dired-switches
@@ -43,9 +43,9 @@
   ;; if dired's already loaded, then the keymap will be bound
   (if (boundp 'dired-mode-map)
       ;; we're good to go; just add our bindings
-      (my-dired-init)
+      (cfg/dired-init)
     ;; it's not loaded yet, so add our bindings to the load-hook
-    (add-hook 'dired-load-hook 'my-dired-init))
+    (add-hook 'dired-load-hook 'cfg/dired-init))
   )
 
 ;; https://elpa.gnu.org/packages/dired-du.html

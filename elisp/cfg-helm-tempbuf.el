@@ -95,7 +95,7 @@
 
 ;; defuns
 
-(defun my//helm-do-grep-region-or-symbol
+(defun cfg/helm-do-grep-region-or-symbol
     (&optional targs use-region-or-symbol-p)
   "Version of `helm-do-grep' with a default input."
   (interactive)
@@ -128,51 +128,51 @@
     (helm-do-grep-1 targets nil nil nil nil use-region-or-symbol-p))
   )
 
-(defun my//helm-file-do-grep ()
+(defun cfg/helm-file-do-grep ()
   "Search in current file with `grep' using a default input."
   (interactive)
-  (my//helm-do-grep-region-or-symbol
+  (cfg/helm-do-grep-region-or-symbol
    (list (buffer-file-name (current-buffer))) nil)
   )
 
-(defun my//helm-file-do-grep-region-or-symbol ()
+(defun cfg/helm-file-do-grep-region-or-symbol ()
   "Search in current file with `grep' using a default input."
   (interactive)
-  (my//helm-do-grep-region-or-symbol
+  (cfg/helm-do-grep-region-or-symbol
    (list (buffer-file-name (current-buffer))) t)
   )
 
-(defun my//helm-files-do-grep ()
+(defun cfg/helm-files-do-grep ()
   "Search in files with `grep'."
   (interactive)
-  (my//helm-do-grep-region-or-symbol nil nil)
+  (cfg/helm-do-grep-region-or-symbol nil nil)
   )
 
-(defun my//helm-files-do-grep-region-or-symbol ()
+(defun cfg/helm-files-do-grep-region-or-symbol ()
   "Search in files with `grep' using a default input."
   (interactive)
-  (my//helm-do-grep-region-or-symbol nil t)
+  (cfg/helm-do-grep-region-or-symbol nil t)
   )
 
-(defun my//helm-buffers-do-grep ()
+(defun cfg/helm-buffers-do-grep ()
   "Search in opened buffers with `grep'."
   (interactive)
   (let ((buffers (cl-loop for buffer in (buffer-list)
                           when (buffer-file-name buffer)
                           collect (buffer-file-name buffer))))
-    (my//helm-do-grep-region-or-symbol buffers nil))
+    (cfg/helm-do-grep-region-or-symbol buffers nil))
   )
 
-(defun my//helm-buffers-do-grep-region-or-symbol ()
+(defun cfg/helm-buffers-do-grep-region-or-symbol ()
   "Search in opened buffers with `grep' with a default input."
   (interactive)
   (let ((buffers (cl-loop for buffer in (buffer-list)
                           when (buffer-file-name buffer)
                           collect (buffer-file-name buffer))))
-    (my//helm-do-grep-region-or-symbol buffers t))
+    (cfg/helm-do-grep-region-or-symbol buffers t))
   )
 
-(defun my//helm-jump-in-buffer ()
+(defun cfg/helm-jump-in-buffer ()
   "Jump in buffer using `imenu' facilities and helm."
   (interactive)
   (call-interactively

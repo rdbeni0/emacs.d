@@ -34,12 +34,12 @@
   (setq company-quickhelp-delay 0.1)
   (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
   (add-hook 'company-mode-hook #'company-quickhelp-mode)
-  (define-key company-active-map (kbd "<f1>") #'company-show-doc-buffer-f1) ; TODO - migrate to general.el
+  (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1) ; TODO - migrate to general.el
   )
 
 ;; https://emacs.stackexchange.com/questions/2762/jump-to-documentation-buffer-with-company-mode
 
-(defun company-show-doc-buffer-f1 ()
+(defun cfg/company-show-doc-buffer-f1 ()
   "Temporarily show the documentation buffer for the selection."
   (interactive)
   (let* ((selected (nth company-selection company-candidates))
@@ -51,10 +51,12 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;; yasnippets
-;; ;; (setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacs.d/data/yasnippets")))
+;; Documentation: https://joaotavora.github.io/yasnippet/
 
 (use-package yasnippet
   :ensure t
+  :config
+  ;; (yas-global-mode 1)
   )
 
 ;; https://github.com/AndreaCrotti/yasnippet-snippets
@@ -62,7 +64,7 @@
 (setq yasnippets-dynamic-data-dir
       (substring
        ;;
-       ;; optional:
+       ;; OPTIONAL:
        ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
        ;;
        (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
@@ -75,11 +77,19 @@
   :ensure t
   :config
   ;;
-  ;; not necessary, but optional:
+  ;; NOT NECESSARY, BUT OPTIONAL:
   ;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
   ;;
   (yas-reload-all)
   )
+
+;; add yas-minor-mode per MAJOR mode - not global:
+
+(add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
+(add-hook 'fundamental-mode-hook #'yas-minor-mode) ;; text files
+(add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
+(add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
+(add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
 
 (provide 'cfg-company-yasnippets)
 ;;; cfg-company-yasnippets.el ends here

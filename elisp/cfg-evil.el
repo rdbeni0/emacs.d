@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(defun minibuffer-keyboard-quit ()
+(defun cfg/minibuffer-keyboard-quit ()
   "Abort recursive edit. In Delete Selection mode, if the mark is active, just deactivate it;
 then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
@@ -26,11 +26,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; woarkarounds to add ESC as "quit" button everywhere :
   (define-key evil-normal-state-map [escape] 'keyboard-quit)
   (define-key evil-visual-state-map [escape] 'keyboard-quit)
-  (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'cfg/minibuffer-keyboard-quit)
   (global-set-key [escape] 'evil-exit-emacs-state)
   (evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
   (evil-define-key 'visual lsp-mode-map (kbd "\\") lsp-command-map)

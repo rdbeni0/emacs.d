@@ -45,7 +45,7 @@
    :states '(normal visual emacs)
    :keymaps 'global
 
-   "<M-tab>" '(alternate-buffer :wk t)
+   "<M-tab>" '(cfg/alternate-buffer :wk t)
    "<C-mouse-4>" '(text-scale-increase :wk t)
    "<C-mouse-5>" '(text-scale-decrease :wk t)
 
@@ -81,7 +81,7 @@
    :states '(normal visual emacs)
    :keymaps 'override
    :prefix "SPC"
-   "TAB" '(alternate-buffer :which-key "alternate-buffer")
+   "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
    "<mouse-1>" '(tabbar-mode :which-key "tbb-mode")
    "<mouse-3>" '(tabbar-press-home :which-key "tbb-home")
    "<mouse-2>" '(tabbar-backward-group :which-key "tbb-backward")
@@ -111,6 +111,7 @@
 
    "0"   '(:ignore t :which-key "treemacs")
    "00"  '(treemacs :which-key "treemacs")
+   "0o"  '(treemacs-switch-workspace :which-key "switch-workspace")
    "0w"  '(:ignore t :which-key "treemacs-workspaces")
    "0ww"  '(treemacs-switch-workspace :which-key "switch-workspace")
    "0wa"  '(treemacs-create-workspace :which-key "create-workspace")
@@ -131,16 +132,30 @@
    "f"   '(:ignore t :which-key "files")
    "ff"  '(helm-find-files :which-key "find files")
    "fz"  '(fzf :which-key "fzf")
-   "fR"  '(rename-current-buffer-file :which-key "rename-current-buffer-file")
-   "fE"  '(sudo-edit :which-key "sudo-edit")
+   "fR"  '(cfg/rename-current-buffer-file :which-key "rename-current-buffer-file")
+   "fE"  '(cfg/sudo-edit :which-key "sudo-edit")
    "fv"  '(revert-buffer :which-key "revert-buffer")
    "fV"  '(auto-revert-mode :which-key "auto-revert-mode")
    "fr"  '(helm-recentf :which-key "helm-recentf")
-   "fp"  '(show-file-name :which-key "show-file-name")
    "fs"  '(save-buffer :which-key "save buffer")
    "fo"  '(save-some-buffers :which-key "save-some-buffers")
    "fb"  '(helm-bookmarks :which-key "bookmarks")
-   "fD"  '(delete-current-buffer-file :which-key "delete-current-buffer-file")
+   "fD"  '(cfg/delete-current-buffer-file :which-key "delete-current-buffer-file")
+
+   "fy"   '(:ignore t :which-key "Yank/Copy")
+   "fyp"  '(cfg/show-file-name :which-key "show-file-name")
+   "fyb"   '(cfg/copy-buffer-name :which-key "Buffer Name")
+   "fyc"   '(cfg/copy-file-path-with-line-column :which-key "File path with line and column")
+   "fyd"   '(cfg/copy-directory-path :which-key "Directory path")
+   "fyl"   '(cfg/copy-file-path-with-line :which-key "File path with line number")
+   "fyn"   '(cfg/copy-file-name :which-key "File name")
+   "fyN"   '(cfg/copy-file-name-base :which-key "File name, no ext")
+   "fyy"   '(cfg/copy-file-path :which-key "File full path")
+
+   "fyC"   '(cfg/projectile-copy-file-path-with-line-column :which-key "projectile-copy-file-path-with-line-column")
+   "fyD"   '(cfg/projectile-copy-directory-path :which-key "projectile-copy-directory-path")
+   "fyL"   '(cfg/projectile-copy-file-path-with-line :which-key "projectile-copy-file-path-with-line")
+   "fyY"   '(cfg/projectile-copy-file-path :which-key "projectile-copy-file-path")
 
    ;; others
 
@@ -159,12 +174,13 @@
    "b"   '(:ignore t :which-key "buffers")
    "bb"  '(helm-buffers-list :which-key "buffers list")
    "bF"  '(format-all-buffer :which-key "format-all-buffer")
-   "bm"  '(kill-other-buffers :which-key "kill-other-buffers")
+   "bm"  '(cfg/kill-other-buffers :which-key "kill-other-buffers")
    "bv"  '(ibuffer :which-key "ibuffer")
    "bt"  '(eval-buffer :which-key "eval-buffer")
    "bd"  '(kill-this-buffer :which-key "kill-this-buffer")
-   "bN"  '(new-empty-buffer :which-key "new-empty-buffer")
+   "bN"  '(cfg/new-empty-buffer :which-key "new-empty-buffer")
    "bx"  '(kill-buffer-and-window :which-key "kill-buffer-and-window")
+   "by"  '(yas-describe-tables :which-key "yas-describe-tables")
 
    ;; windows
 
@@ -182,7 +198,7 @@
    "ws"  '(split-window-below :which-key "split-window-below")
    "wo"  '(scroll-bar-mode :which-key "scroll-bar-mode")
    "wv"  '(split-window-right :which-key "split-window-right")
-   "wm"  '(toggle-maximize-buffer :which-key "maximize-buffer")
+   "wm"  '(cfg/toggle-maximize-buffer :which-key "maximize-buffer")
    "wl"  '(windmove-right :which-key "right")
    "wh"  '(windmove-left :which-key "left")
    "wk"  '(windmove-up :which-key "up")
@@ -204,17 +220,17 @@
    "aq"   '(quick-calc :which-key "quick-calc")
    "as"   '(:ignore t :which-key "shells")
    "ar"   '(:ignore t :which-key "regexp")
-   "asm"  '(multi-term-buffer-rn :which-key "multi-term")
+   "asm"  '(cfg/multi-term-buffer-rn :which-key "multi-term")
    "asa"  '(ansi-term :which-key "ansi-term")
    "ass"  '(shell :which-key "shell")
-   "asS"  '(my-named-shell :which-key "my-named-shell")
+   "asS"  '(cfg/my-named-shell :which-key "my-named-shell")
    "ast"  '(tramp-term :which-key "tramp-term")
-   "aeD"  '(erc-default-servers :which-key "erc-default-servers")
+   "aeD"  '(cfg/erc-default-servers :which-key "erc-default-servers")
    "aeE"  '(erc-tls :which-key "erc-tls")
    "aer"  '(rcirc :which-key "rcirc")
    "aee"  '(erc :which-key "erc")
    "ael"  '(:ignore t :which-key "erc-view-log-mode")
-   "aelf" '(erc-find-logfile :which-key "erc-find-logfile")
+   "aelf" '(cfg/erc-find-logfile :which-key "erc-find-logfile")
    "aelv" '(erc-view-log-mode :which-key "erc-view-log-mode")
    "aelr" '(erc-view-log-reload-file :which-key "erc-view-log-reload-file")
    "ael>" '(erc-view-log-next-mention :which-key "erc-view-log-next-mention")
@@ -227,25 +243,26 @@
    "adw"  '(wdired-change-to-wdired-mode :which-key "wdired-mode")
    "adW"  '(wdired-exit :which-key "wdired-exit")
    "add"  '(dired :which-key "dired")
-   "adD"  '(sudired :which-key "sudired")
+   "adD"  '(cfg/sudired :which-key "sudired")
 
    ;; search
 
    "s"   '(:ignore t :which-key "search")
-   "sj"  '(my//helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+   "sj"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
    "si"  '(find-name-dired :which-key "find-name-dired")
    "sd"  '(find-grep-dired :which-key "find-grep-dired")
    "sz"  '(zrgrep :which-key "zrgrep")
    "sr"  '(rgrep :which-key "rgrep")
+   "se"  '(cfg/grep-recentf :which-key "grep-recentf")
    "sp"  '(wgrep-change-to-wgrep-mode :which-key "wgrep-change-to-wgrep-mode")
    "sg"  '(:ignore t :which-key "helm-grep")
    "sgi" '(helm-grep-do-git-grep :which-key "helm-grep-do-git-grep")
-   "sgb" '(my//helm-buffers-do-grep :which-key "helm-buffers-do-grep")
-   "sgB" '(my//helm-buffers-do-grep-region-or-symbol :which-key "helm-buffers-do-grep-reg-or-sym")
-   "sgf" '(my//helm-files-do-grep :which-key "helm-files-do-grep")
-   "sgF" '(my//helm-files-do-grep-region-or-symbol :which-key "helm-files-do-grep-reg-or-sym")
-   "sgg" '(my//helm-file-do-grep :which-key "helm-file-do-grep")
-   "sgG" '(my//helm-file-do-grep-region-or-symbol :which-key "helm-file-do-grep-reg-or-sym")
+   "sgb" '(cfg/helm-buffers-do-grep :which-key "helm-buffers-do-grep")
+   "sgB" '(cfg/helm-buffers-do-grep-region-or-symbol :which-key "helm-buffers-do-grep-reg-or-sym")
+   "sgf" '(cfg/helm-files-do-grep :which-key "helm-files-do-grep")
+   "sgF" '(cfg/helm-files-do-grep-region-or-symbol :which-key "helm-files-do-grep-reg-or-sym")
+   "sgg" '(cfg/helm-file-do-grep :which-key "helm-file-do-grep")
+   "sgG" '(cfg/helm-file-do-grep-region-or-symbol :which-key "helm-file-do-grep-reg-or-sym")
 
    ;; help
 
@@ -379,7 +396,7 @@
    :major-modes '(org-mode org-static-blog-mode)
    :prefix ","
    "p" '(org-priority :which-key "org-priority")
-   "j"  '(my//helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+   "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
    "," '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
    "A" '(org-attach :which-key "org-attach")
 
@@ -532,14 +549,14 @@
    "qi" '(perl-quote-single :which-key "quote-single")
    "qo" '(perl-quote-double :which-key "quote-double")
    "m"  '(:ignore t :which-key "modules")
-   "mm" '(find-perl-module :which-key "find-perl-module")
+   "mm" '(cfg/find-perl-module :which-key "find-perl-module")
    "mn" '(ffap :which-key "ffap")
    "n" '(mark-defun :which-key "mark-sub")
    "="  '(:ignore t :which-key "format")
-   "==" '(perltidy-format-buffer :which-key "perltidy-format-buffer")
-   "=b" '(perltidy-format-buffer :which-key "perltidy-format-buffer")
-   "=o" '(perltidy-format :which-key "perltidy-format")
-   "=f" '(perltidy-format-function :which-key "perltidy-format-function")
+   "==" '(cfg/perltidy-format-buffer :which-key "perltidy-format-buffer")
+   "=b" '(cfg/perltidy-format-buffer :which-key "perltidy-format-buffer")
+   "=o" '(cfg/perltidy-format :which-key "perltidy-format")
+   "=f" '(cfg/perltidy-format-function :which-key "perltidy-format-function")
    )
 
   ;; erc-mode
@@ -552,11 +569,11 @@
    :prefix ","
    "b" '(erc-iswitchb :which-key "iswitchb")
    "a" '(erc-input-action :which-key "input-action")
-   "c" '(erc-chanlist :which-key "chanlist")
+   "c" '(cfg/erc-chanlist :which-key "chanlist")
    "j" '(erc-join-channel :which-key "join-channel")
    "n" '(erc-channel-names :which-key "channel-names")
    "Q" '(erc-quit-server :which-key "quit-server")
-   "f" '(erc-find-logfile :which-key "find-logfile")
+   "f" '(cfg/erc-find-logfile :which-key "find-logfile")
    "o" '(erc-status-sidebar-open :which-key "status-sidebar-open")
    "i" '(erc-status-sidebar-kill :which-key "status-sidebar-kill")
    "." '(quoted-insert :which-key "quoted-insert")
@@ -597,7 +614,7 @@
    :major-modes 'dired-mode
    :prefix ","
    ","  '(dired-narrow :which-key "dired-narrow")
-   "l"  '(cycle-dired-switches :which-key "cycle-dired-switches")
+   "l"  '(cfg/cycle-dired-switches :which-key "cycle-dired-switches")
    "d"  '(:ignore t :which-key "dired-du")
    "dc" '(dired-du-count-sizes :which-key "count-sizes")
    "dr" '(dired-du-recompute-dir-size :which-key "recompute-dir-size")
@@ -621,6 +638,7 @@
    :prefix ","
    "0"  '(treemacs :which-key "treemacs")
    "w"  '(:ignore t :which-key "treemacs-workspaces")
+   "o"  '(treemacs-switch-workspace :which-key "switch-workspace")
    "ww"  '(treemacs-switch-workspace :which-key "switch-workspace")
    "wa"  '(treemacs-create-workspace :which-key "create-workspace")
    "wd"  '(treemacs-remove-workspace :which-key "remove-workspace")
@@ -651,7 +669,7 @@
    :keymaps '(term-mode-map term-raw-map)
    :major-modes 'term-mode
    "S-<up>" 'rename-buffer
-   "S-<down>" 'multi-term-buffer-rn
+   "S-<down>" 'cfg/multi-term-buffer-rn
    "S-<left>" 'multi-term-prev
    "S-<right>" 'multi-term-next
    "<delete>" 'term-send-del
@@ -729,7 +747,7 @@
    :major-modes 'python-mode
    :prefix ","
    "=" '(yapfify-buffer :which-key "format-buffer")
-   "j"  '(my//helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+   "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
    "n"  '(:ignore t :which-key "navigate")
    "nb" '(python-nav-beginning-of-block :which-key "beginnning-of-block")
    "nn" '(python-nav-end-of-block :which-key "end-of-block")
