@@ -71,11 +71,11 @@
   ;;
   ;; How TO MANIPULATE BACKENDS PER MODE:
   ;; 1) clean (setq company-backends '()) - from now it will be empty
-  ;; 2) add your preferred backends - choose only the best options (and not everything!)
+  ;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be mess)
   ;; 2A) the less important  backends should be at the beginning
   ;; 2B) the most important - should be declared at the end
   ;; 3) run emacs and check variable "company-backends" as "describe-variable"
-  ;; 4) OPTIONAL: checn: company-transformers '(company-sort-by-occurrence) > change sorting options
+  ;; 4) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options
 
   (add-hook 'php-mode-hook (lambda ()
 			     (setq company-backends '())
