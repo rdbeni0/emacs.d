@@ -133,7 +133,7 @@
 ;; https://github.com/AndreaCrotti/yasnippet-snippets
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Adding a custom yasnippet directory:
+;; Adding a custom/dynamic yasnippet directory:
 ;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
 ;; and dymamic dir - example of code:
 (setq yasnippets-dynamic-data-dir
