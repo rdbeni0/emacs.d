@@ -8,10 +8,6 @@
 ;; custom-set-variables
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(company-quickhelp-color-background "dark red")
  '(company-quickhelp-color-foreground "dim gray")
  '(company-quickhelp-delay 0.0)
@@ -47,10 +43,6 @@
 ;; custom-set-faces
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(dired-mark ((t nil)))
  '(dired-marked ((t (:foreground "DarkOrange" :weight bold))))
  '(erc-button ((t (:background "gray0" :foreground "dodger blue" :underline "dodger blue" :weight bold))))
