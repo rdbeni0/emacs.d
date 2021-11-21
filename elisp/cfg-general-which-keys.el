@@ -42,10 +42,12 @@
   ;; general: no space + no which-key
 
   (general-define-key
-   :states '(normal visual emacs)
+   :states '(normal visual emacs insert)
    :keymaps 'global
 
    "<M-tab>" '(cfg/alternate-buffer :wk t)
+   "S-<iso-lefttab>" '(indent-for-tab-command :wk t)
+   "<tab>" '(cfg/company-backend-with-yas :wk t)
    "<C-mouse-4>" '(text-scale-increase :wk t)
    "<C-mouse-5>" '(text-scale-decrease :wk t)
 
