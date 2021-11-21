@@ -38,9 +38,9 @@
           rcirc-mode
           minibuffer-inactive-mode))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS:
+  ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.
   ;; FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
-  ;; examples:
+  ;; SOURCES:
   ;; https://github.com/company-mode/company-mode/issues/839
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
   (defun cfg/company-backend-with-yas (backends)
