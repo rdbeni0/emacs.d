@@ -90,6 +90,16 @@
 			     ;; TODO -  company-ac-php-backend
 			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 			     ))
+ (add-hook 'cperl-mode-hook (lambda ()
+			     (setq company-backends '())
+			     (add-to-list 'company-backends 'company-dabbrev)
+			     (add-to-list 'company-backends '(company-dabbrev-code
+							      company-gtags
+							      company-etags
+							      company-keywords))
+			     (add-to-list 'company-backends 'company-capf)
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+			     ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   )
