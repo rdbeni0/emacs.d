@@ -18,10 +18,10 @@
   (global-company-mode 1)
   (setq company-idle-delay              0   ;; no delay at all
 	;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
-	company-minimum-prefix-length   1   ;; show completion after 1 character (default is 3!):
+	company-minimum-prefix-length   1   ;; show completion after 1 character (default is 3!)
 	company-show-numbers            t
-	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip.
-	company-transformers '(company-sort-by-occurrence)
+	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
+	company-transformers '(company-sort-by-occurrence) ;; could be changed "per mode"
 	)
   ;; Press SPACE will accept the highlighted candidate and insert a space
   ;; "M-x describe-variable company-auto-complete-chars" for details.
