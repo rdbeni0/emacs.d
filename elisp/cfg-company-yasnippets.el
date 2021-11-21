@@ -68,6 +68,26 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY):
   ;; https://www.reddit.com/r/emacs/comments/ba6blj/company_looking_for_comprehensive_documentation/
+  ;;
+  ;; How TO MANIPULATE BACKENDS PER MODE:
+  ;; 1) clean (setq company-backends '()) - from now it will be empty
+  ;; 2) add your preferred backends - choose only the best options (and not everything!)
+  ;; 2A) the less important  backends should be at the beginning
+  ;; 2B) the most important - should be declared at the end
+  ;; 3) run emacs and check variable "company-backends" as "describe-variable"
+  ;; 4) OPTIONAL: checn: company-transformers '(company-sort-by-occurrence) > change sorting options
+
+  (add-hook 'php-mode-hook (lambda ()
+			     (setq company-backends '())
+			     (add-to-list 'company-backends 'company-dabbrev) ;; the less important
+			     (add-to-list 'company-backends '(company-dabbrev-code
+							      company-gtags
+							      company-etags
+							      company-keywords))
+			     (add-to-list 'company-backends 'company-capf)
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)) ;; the most important
+			     ;; TODO -  company-ac-php-backend ;; the most important
+			     ))
 
   (add-hook 'sh-mode-hook (lambda ()
 			    (setq company-backends '())
@@ -79,27 +99,17 @@
 			    (add-to-list 'company-backends 'company-capf)
 			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 			    ))
-  (add-hook 'php-mode-hook (lambda ()
-			     (setq company-backends '())
-			     (add-to-list 'company-backends 'company-dabbrev)
-			     (add-to-list 'company-backends '(company-dabbrev-code
-							      company-gtags
-							      company-etags
-							      company-keywords))
-			     (add-to-list 'company-backends 'company-capf)
-			     ;; TODO -  company-ac-php-backend
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			     ))
- (add-hook 'cperl-mode-hook (lambda ()
-			     (setq company-backends '())
-			     (add-to-list 'company-backends 'company-dabbrev)
-			     (add-to-list 'company-backends '(company-dabbrev-code
-							      company-gtags
-							      company-etags
-							      company-keywords))
-			     (add-to-list 'company-backends 'company-capf)
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			     ))
+
+  (add-hook 'cperl-mode-hook (lambda ()
+			       (setq company-backends '())
+			       (add-to-list 'company-backends 'company-dabbrev)
+			       (add-to-list 'company-backends '(company-dabbrev-code
+								company-gtags
+								company-etags
+								company-keywords))
+			       (add-to-list 'company-backends 'company-capf)
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+			       ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   )
