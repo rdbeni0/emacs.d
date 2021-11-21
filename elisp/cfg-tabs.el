@@ -128,6 +128,8 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
 
 	   ((or (eq major-mode 'help-mode)) "HELP")
+	   ((or (string= (buffer-name) "*company-documentation*") "HELP")) ;; not working
+	   ((or (eq (buffer-name) "*company-documentation*") "HELP"))  ;; not working
 	   ((or (eq major-mode 'info-mode)) "HELP")
 
 	   ((or (eq major-mode 'ibuffer-mode)) "BUFFERS")

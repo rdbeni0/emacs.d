@@ -8,8 +8,17 @@
 ;; custom-set-variables
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-quickhelp-color-background "dark red")
+ '(company-quickhelp-color-foreground "dim gray")
+ '(company-quickhelp-delay 0.0)
+ '(company-quickhelp-mode t)
  '(doc-view-resolution 150)
  '(doc-view-scale-internally nil)
+ '(erc-image-inline-rescale 330)
  '(erc-nicklist-use-icons nil)
  '(erc-track-exclude-server-buffer t)
  '(erc-track-minor-mode t)
@@ -26,19 +35,22 @@
  '(multi-term-program "/usr/sbin/zsh")
  '(org-modules
    '(ol-bbdb ol-bibtex ol-docview ol-eww ol-gnus ol-info ol-irc ol-mhe org-mouse ol-rmail ol-w3m))
+ '(package-selected-packages '(perl-quote use-package))
  '(tab-bar-close-button-show nil)
  '(tab-bar-mode t)
  '(tab-bar-tab-hints t)
- '(term-buffer-maximum-size 0)
  '(tabbar-mode t nil (tabbar))
  '(tabbar-mwheel-mode t nil (tabbar))
- '(tabbar-separator (quote (0.2)))
- '(package-selected-packages '(use-package))
- )
+ '(tabbar-separator '(0.2))
+ '(term-buffer-maximum-size 0))
 
 ;; custom-set-faces
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(dired-mark ((t nil)))
  '(dired-marked ((t (:foreground "DarkOrange" :weight bold))))
  '(erc-button ((t (:background "gray0" :foreground "dodger blue" :underline "dodger blue" :weight bold))))
@@ -55,6 +67,10 @@
  '(erc-notice-face ((t (:background "gray21" :foreground "deep sky blue" :weight bold))))
  '(erc-timestamp-face ((t (:foreground "cyan" :weight bold))))
  '(fg:erc-color-face1 ((t (:background "magenta" :foreground "black"))))
+ '(helm-ff-dotted-directory ((t (:background "chartreuse" :foreground "black"))))
+ '(helm-helper ((t (:foreground "cyan"))))
+ '(helm-selection ((t (:background "white" :foreground "black"))))
+ '(helm-source-header ((t (:background "#202328" :foreground "wheat"))))
  '(rcirc-my-nick ((t (:foreground "red"))))
  '(rcirc-server ((t (:foreground "PaleGreen1"))))
  '(rcirc-timestamp ((t (:inherit default :foreground "magenta"))))
@@ -66,12 +82,7 @@
  '(term-color-cyan ((t (:background "cyan" :foreground "cyan"))))
  '(term-color-green ((t (:background "lawn green" :foreground "lawn green"))))
  '(term-color-magenta ((t (:background "magenta" :foreground "magenta"))))
- '(term-color-red ((t (:background "red1" :foreground "red1"))))
- '(helm-ff-dotted-directory ((t (:background "chartreuse" :foreground "black"))))
- '(helm-selection ((t (:background "white" :foreground "black"))))
- '(helm-helper ((t (:foreground "cyan"))))
- '(helm-source-header ((t (:background "#202328" :foreground "wheat"))))
- )
+ '(term-color-red ((t (:background "red1" :foreground "red1")))))
 
 ;; !!WARNING!! FROM NOW ALL ABOVE SETTINGS COULD BE OVERWRITTEN !!
 ;; AND NOW : finally load default custom.el file...

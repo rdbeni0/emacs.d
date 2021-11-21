@@ -30,6 +30,7 @@
   (with-eval-after-load 'helm-buffers
     (add-to-list 'helm-boring-buffer-regexp-list "*scratch*")
     (add-to-list 'helm-boring-buffer-regexp-list "*Messages*")
+    (add-to-list 'helm-boring-buffer-regexp-list "*company-documentation*")
     (add-to-list 'helm-boring-buffer-regexp-list "*spacemacs*"))
   )
 
