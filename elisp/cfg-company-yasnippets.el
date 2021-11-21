@@ -52,7 +52,7 @@
 		  backends
 		(list backends))
 	      '(:with company-yasnippet))))
-  ;; <TAB> - SHOULD BE USED WITH BOTH (smart tab):
+  ;; <TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
   (defun cfg/yas-expand-or-company-complete (&optional arg)
     (interactive)
     (or (yas-expand) (company-indent-or-complete-common arg)))
