@@ -69,7 +69,7 @@
   ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY):
   ;; https://www.reddit.com/r/emacs/comments/ba6blj/company_looking_for_comprehensive_documentation/
   ;;
-  ;; How TO MANIPULATE BACKENDS PER MODE:
+  ;; How TO MANIPULATE BACKENDS PER MAJOR MODE:
   ;; 1) clean (setq company-backends '()) - from now it will be empty
   ;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be mess)
   ;; 2A) the less important  backends should be at the beginning
