@@ -38,7 +38,8 @@
           rcirc-mode
           minibuffer-inactive-mode))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; FORCE YASNIPPETS EVERYWHERE WITH COMPANY-MODE :
+  ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS:
+  ;; FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
   ;; examples:
   ;; https://github.com/company-mode/company-mode/issues/839
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
@@ -51,8 +52,7 @@
 		  backends
 		(list backends))
 	      '(:with company-yasnippet))))
-  ;; manipulation with company-backends + yasnippets:
-  ;; <TAB> - used with both:
+  ;; <TAB> - SHOULD BE USED WITH BOTH (smart tab):
   (defun cfg/yas-expand-or-company-complete (&optional arg)
     (interactive)
     (or (yas-expand) (company-indent-or-complete-common arg)))
