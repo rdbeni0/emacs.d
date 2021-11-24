@@ -120,6 +120,8 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'gfm-mode)) "MARKDOWN")
 	   ((or (eq major-mode 'markdown-mode)) "MARKDOWN")
 
+	   ((or (eq major-mode 'snippet-mode)) "SNIPPETS")
+
 	   ((or (string= (file-name-extension (buffer-name)) "xml")) "XML")
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
 
@@ -128,8 +130,6 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
 
 	   ((or (eq major-mode 'help-mode)) "HELP")
-	   ((or (string= (buffer-name) "*company-documentation*") "HELP")) ;; not working
-	   ((or (eq (buffer-name) "*company-documentation*") "HELP"))  ;; not working
 	   ((or (eq major-mode 'info-mode)) "HELP")
 
 	   ((or (eq major-mode 'ibuffer-mode)) "BUFFERS")

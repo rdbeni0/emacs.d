@@ -182,7 +182,8 @@
    "bd"  '(kill-this-buffer :which-key "kill-this-buffer")
    "bN"  '(cfg/new-empty-buffer :which-key "new-empty-buffer")
    "bx"  '(kill-buffer-and-window :which-key "kill-buffer-and-window")
-   "by"  '(yas-describe-tables :which-key "yas-describe-tables")
+   "by"   '(:ignore t :which-key "yas_company")
+   "byy"  '(yas-describe-tables :which-key "yas-describe-tables")
 
    ;; windows
 
@@ -773,10 +774,10 @@
    :major-modes 'php-mode
    :prefix ","
    "="  '(:ignore t :which-key "format")
-   "==" '(php-cs-fixer-fix :which-key "php-cs-fixer")
+   "==" '(format-all-buffer :which-key "prettier-plugin-php")
+   "=p" '(php-cs-fixer-fix :which-key "php-cs-fixer")
    "=b" '(php-cs-fixer-fix :which-key "php-cs-fixer")
    "=s" '(php-set-style :which-key "set-style")
-   "=p" '(format-all-buffer :which-key "prettier-plugin-php")
    )
 
   ;;;;; for major modes ; the same hotkeys for all mentioned modes
