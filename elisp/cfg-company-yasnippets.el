@@ -111,16 +111,28 @@
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 			       ))
 
- (add-hook 'yasnippet-mode-hook (lambda ()
-			       (setq company-backends '())
-			       (add-to-list 'company-backends 'company-dabbrev)
-			       (add-to-list 'company-backends '(company-dabbrev-code
-								company-gtags
-								company-etags
-								company-keywords))
-			       (add-to-list 'company-backends 'company-capf)
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			       ))
+  (add-hook 'snippet-mode-hook (lambda ()
+				 (setq company-backends '())
+				 (add-to-list 'company-backends 'company-dabbrev)
+				 (add-to-list 'company-backends '(company-dabbrev-code
+								  company-gtags
+								  company-etags
+								  company-keywords))
+				 (add-to-list 'company-backends 'company-capf)
+				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+				 ))
+
+  (add-hook 'org-mode-hook (lambda ()
+			     (setq company-backends '())
+			     (add-to-list 'company-backends 'company-dabbrev)
+			     (add-to-list 'company-backends '(company-dabbrev-code
+							      company-gtags
+							      company-etags
+							      company-keywords))
+			     (add-to-list 'company-backends 'company-capf)
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+			     ))
+
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -192,6 +204,7 @@
   (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
   (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
   (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
+  (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
   (yas-reload-all)
   )
 
