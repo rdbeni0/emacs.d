@@ -68,6 +68,8 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY):
   ;; https://www.reddit.com/r/emacs/comments/ba6blj/company_looking_for_comprehensive_documentation/
+  ;; OTHER EXAMPLE:
+  ;; https://emacs.stackexchange.com/questions/23999/php-completion-with-company-does-not-work-on-local-variables
   ;;
   ;; How TO MANIPULATE BACKENDS PER MAJOR MODE:
   ;; 1) clean (setq company-backends '()) - from now it will be empty

@@ -432,6 +432,14 @@
 
    "b" '(:ignore t :which-key "babel")
    "bt" '(org-babel-tangle :which-key "org-babel-tangle")
+
+
+   "o" '(:ignore t :which-key "org-roam")
+   "ol"  '(org-roam-buffer-toggle :which-key "buffer-toggle")
+   "of"  '(org-roam-node-find :which-key "node-find")
+   "ol"  '(org-roam-node-find-file :which-key "node-find-file")
+   "oi"  '(org-roam-node-insert :which-key "node-insert")
+
    )
 
   ;; json-mode
