@@ -15,7 +15,7 @@
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/emacs.d/OrgRoamNotes")
+  (org-roam-directory "~/.emacs.d/OrgRoamNotes")
   (org-roam-completion-everywhere t)
   :config
   (org-roam-setup)
