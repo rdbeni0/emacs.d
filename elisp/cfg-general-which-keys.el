@@ -45,23 +45,23 @@
    :states '(normal visual emacs insert)
    :keymaps 'global
 
-   "<M-tab>" '(cfg/alternate-buffer :wk t)
-   "S-<iso-lefttab>" '(indent-for-tab-command :wk t)
-   "<tab>" '(cfg/company-backend-with-yas :wk t)
-   "<C-mouse-4>" '(text-scale-increase :wk t)
-   "<C-mouse-5>" '(text-scale-decrease :wk t)
+   "<M-tab>" 'cfg/alternate-buffer
+   "S-<iso-lefttab>" 'indent-for-tab-command
+   "<tab>" 'cfg/company-backend-with-yas
+   "<C-mouse-4>" 'text-scale-increase
+   "<C-mouse-5>" 'text-scale-decrease
 
    ;; tabbar legacy plugin
 
-   "<S-next>" '(tabbar-backward :wk t)
-   "<S-prior>" '(tabbar-forward :wk t)
+   "<S-next>" 'tabbar-backward
+   "<S-prior>" 'tabbar-forward
    ;;   "<header-line> <mouse-1>" '(tabbar-press-home :wk t)
    ;;   "<header-line> <mouse-2>" '(tabbar-press-home :wk t)
    ;;   "<header-line> <mouse-3>" '(tabbar-press-home :wk t)
-   "<header-line> <mouse-9>" '(tabbar-forward-group :wk t)
-   "<header-line> <drag-mouse-9>" '(tabbar-forward-group :wk t)
-   "<header-line> <mouse-8>" '(tabbar-backward-group :wk t)
-   "<header-line> <drag-mouse-8>" '(tabbar-backward-group :wk t)
+   "<header-line> <mouse-9>" 'tabbar-forward-group
+   "<header-line> <drag-mouse-9>" 'tabbar-forward-group
+   "<header-line> <mouse-8>" 'tabbar-backward-group
+   "<header-line> <drag-mouse-8>" 'tabbar-backward-group
 
    ;; tab (emacs 27++)
 
@@ -484,19 +484,19 @@
    :states '(normal visual emacs)
    :keymaps 'doc-view-mode-map
    :major-modes 'doc-view-mode
-   "C-<mouse-4>" '(doc-view-enlarge :wk t)
-   "C-<mouse-5>"'(doc-view-shrink :wk t)
-   "<right>" '(doc-view-next-page :wk t)
-   "<left>" '(doc-view-previous-page :wk t)
-   "<home>" '(doc-view-first-page :wk t)
-   "<end>" '(doc-view-last-page :wk t)
-   "k" '(doc-view-shrink :wk t)
-   "l" '(doc-view-enlarge :wk t)
-   "/" '(doc-view-search :wk t)
-   "W" '(doc-view-fit-width-to-window :wk t)
-   "H" '(doc-view-fit-height-to-window :wk t)
-   "P" '(doc-view-fit-page-to-window :wk t)
-   "0" '(doc-view-scale-reset :wk t)
+   "C-<mouse-4>" 'doc-view-enlarge
+   "C-<mouse-5>"'doc-view-shrink
+   "<right>" 'doc-view-next-page
+   "<left>" 'doc-view-previous-page
+   "<home>" 'doc-view-first-page
+   "<end>" 'doc-view-last-page
+   "k" 'doc-view-shrink
+   "l" 'doc-view-enlarge
+   "/" 'doc-view-search
+   "W" 'doc-view-fit-width-to-window
+   "H" 'doc-view-fit-height-to-window
+   "P" 'doc-view-fit-page-to-window
+   "0" 'doc-view-scale-reset
    )
 
   ;; pdf-view mode ; with prefix
@@ -529,19 +529,19 @@
    :states '(normal visual emacs)
    :keymaps 'pdf-view-mode-map
    :major-modes 'pdf-view-mode
-   "C-<mouse-4>"'(pdf-view-enlarge :wk t)
-   "C-<mouse-5>"'(pdf-view-shrink :wk t)
-   "<right>"'(pdf-view-next-page :wk t)
-   "<left>"'(pdf-view-previous-page :wk t)
-   "<home>" '(pdf-view-first-page :wk t)
-   "<end>" '(pdf-view-last-page :wk t)
-   "k" '(pdf-view-shrink :wk t)
-   "l" '(pdf-view-enlarge :wk t)
-   "0" '(pdf-view-scale-reset :wk t)
-   "P" '(pdf-view-fit-page-to-window :wk t)
-   "W" '(pdf-view-fit-width-to-window :wk t)
-   "H" '(pdf-view-fit-height-to-window :wk t)
-   "/" '(isearch-forward :wk t)
+   "C-<mouse-4>"'pdf-view-enlarge
+   "C-<mouse-5>"'pdf-view-shrink
+   "<right>"'pdf-view-next-page
+   "<left>"'pdf-view-previous-page
+   "<home>" 'pdf-view-first-page
+   "<end>" 'pdf-view-last-page
+   "k" 'pdf-view-shrink
+   "l" 'pdf-view-enlarge
+   "0" 'pdf-view-scale-reset
+   "P" 'pdf-view-fit-page-to-window
+   "W" 'pdf-view-fit-width-to-window
+   "H" 'pdf-view-fit-height-to-window
+   "/" 'isearch-forward
    )
 
   ;; cperl-mode
