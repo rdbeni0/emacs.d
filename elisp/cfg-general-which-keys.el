@@ -678,8 +678,8 @@
    "S-<right>" 'multi-vterm-next
    "C-l" (lambda () (interactive) (vterm-clear) (vterm-clear-scrollback))
    "<tab>" 'vterm-send-tab ;; for zsh
-   ;;   "<delete>" 'term-send-del
-   ;;   "<backspace>" 'term-send-backspace
+   "<delete>" 'vterm-send-delete
+   "<backspace>" 'vterm-send-backspace
    )
 
   ;; term-mode

@@ -12,6 +12,12 @@
   :ensure t
   :config
   (setq vterm-clear-scrollback t)
+
+  (add-hook 'vterm-mode-hook
+	    (lambda ()
+	      (setq hl-line-mode -1)
+	      (setq-local global-hl-line-mode nil)
+	      ))
   )
 
 (use-package multi-vterm
@@ -79,6 +85,7 @@
   (shell-dirtrack-mode t)
   (setq dirtrackp nil)
   )
+
 
 (provide 'cfg-e-shell-terminals)
 ;;; cfg-e-shell-terminals.el ends here
