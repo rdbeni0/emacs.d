@@ -46,7 +46,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (setq evil-respect-visual-line-mode t)
   )
 
-;; useful package:
 ;; https://github.com/emacs-evil/evil-collection
 (use-package evil-collection
   :after evil
@@ -54,6 +53,25 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config
   (evil-collection-init)
   )
+
+;; https://github.com/emacsorphanage/evil-anzu
+(use-package evil-anzu
+  :ensure t
+  :after 'evil
+  )
+
+;; ;; https://github.com/TheBB/evil-indent-plus
+;; (use-package evil-indent-plus
+;;   :ensure t
+;;   :after 'evil
+;;   :config
+;;   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
+;;   (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)
+;;   (define-key evil-inner-text-objects-map "I" 'evil-indent-plus-i-indent-up)
+;;   (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up)
+;;   (define-key evil-inner-text-objects-map "J" 'evil-indent-plus-i-indent-up-down)
+;;   (define-key evil-outer-text-objects-map "J" 'evil-indent-plus-a-indent-up-down)
+;;   )
 
 ;; https://github.com/Somelauw/evil-org-mode
 

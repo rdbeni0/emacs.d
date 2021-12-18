@@ -1,4 +1,4 @@
-;;; cfg-mode-line.el --- mode-line in Emacs -*- lexical-binding: t -*-
+;;; cfg-mode-line-hl.el --- mode-line in Emacs -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;; Configuration for various mode-line options.
@@ -11,5 +11,14 @@
 
 (setq column-number-mode t)
 
-(provide 'cfg-mode-line)
-;;; cfg-mode-line.el ends here
+;; https://github.com/seagle0128/doom-modeline
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  )
+
+(global-hl-line-mode 1) ; highlight current line
+
+(provide 'cfg-mode-line-hl)
+;;; cfg-mode-line-hl.el ends here
