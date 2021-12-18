@@ -36,6 +36,7 @@
           erc-mode
           gud-mode
           rcirc-mode
+	  vterm-mode
           minibuffer-inactive-mode))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.

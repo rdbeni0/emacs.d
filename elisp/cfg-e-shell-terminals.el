@@ -6,6 +6,17 @@
 
 ;;; Code:
 
+;; vterm and multi-vterm
+
+(use-package vterm
+  :ensure t
+  :config
+  (setq vterm-clear-scrollback t)
+  )
+
+(use-package multi-vterm
+  :ensure t)
+
 ;; multi-term and ansi-term
 
 (use-package multi-term

@@ -65,16 +65,16 @@
 
    ;; tab (emacs 27++)
 
-   "<mouse-9>" '(tab-next :wk t)
-   "<drag-mouse-9>" '(tab-next :wk t)
-   "<mouse-8>" '(tab-previous :wk t)
-   "<drag-mouse-8>" '(tab-previous :wk t)
-   "<M-mouse-9>" '(tab-new :wk t)
-   "<M-drag-mouse-9>" '(tab-new :wk t)
-   "<M-mouse-8>" '(tab-close :wk t)
-   "<M-drag-mouse-8>" '(tab-close :wk t)
-   "<M-mouse-2>" '(tab-close :wk t)
-   "<M-drag-mouse-2>" '(tab-close :wk t)
+   "<mouse-9>" 'tab-next
+   "<drag-mouse-9>" 'tab-next
+   "<mouse-8>" 'tab-previous
+   "<drag-mouse-8>" 'tab-previous
+   "<M-mouse-9>" 'tab-new
+   "<M-drag-mouse-9>" 'tab-new
+   "<M-mouse-8>" 'tab-close
+   "<M-drag-mouse-8>" 'tab-close
+   "<M-mouse-2>" 'tab-close
+   "<M-drag-mouse-2>" 'tab-close
    )
 
   ;; global: space as leader-key + which-key
@@ -90,13 +90,13 @@
 
    ;; tabs and mouse commands
 
-   "<up>" '(tab-rename :wk t)
-   "<down>" '(tab-new :wk t)
-   "<left>" '(tab-previous :wk t)
-   "<right>" '(tab-next :wk t)
-   "<deletechar>" '(tab-close :wk t)
-   "<next>" '(tabbar-backward :wk t)
-   "<prior>" '(tabbar-forward :wk t)
+   "<up>" 'tab-rename
+   "<down>" 'tab-new
+   "<left>" 'tab-previous
+   "<right>" 'tab-next
+   "<deletechar>" 'tab-close
+   "<next>" 'tabbar-backward
+   "<prior>" 'tabbar-forward
 
    ;;
 
@@ -225,7 +225,9 @@
    "ar"   '(:ignore t :which-key "regexp")
    "asm"  '(cfg/multi-term-buffer-rn :which-key "multi-term")
    "asa"  '(ansi-term :which-key "ansi-term")
-   "ass"  '(shell :which-key "shell")
+   "asv"  '(multi-vterm :which-key "multi-vterm")
+   "ass"  '(multi-vterm :which-key "multi-vterm")
+   "ash"  '(shell :which-key "shell")
    "asS"  '(cfg/my-named-shell :which-key "my-named-shell")
    "ast"  '(tramp-term :which-key "tramp-term")
    "aeD"  '(cfg/erc-default-servers :which-key "erc-default-servers")
@@ -437,7 +439,6 @@
    "o" '(:ignore t :which-key "org-roam")
    "ol"  '(org-roam-buffer-toggle :which-key "buffer-toggle")
    "of"  '(org-roam-node-find :which-key "node-find")
-   "ol"  '(org-roam-node-find-file :which-key "node-find-file")
    "oi"  '(org-roam-node-insert :which-key "node-insert")
 
    )
@@ -663,6 +664,22 @@
    "pd" '(treemacs-remove-project-from-workspace :which-key "remove-project")
    "pr" '(treemacs-rename-project :which-key "rename-project")
    "pp" '(treemacs-projectile :which-key "projectile")
+   )
+
+  ;; vterm-mode
+
+  (general-define-key
+   :states '(normal visual emacs insert)
+   :keymaps '(vterm-mode-map)
+   :major-modes 'term-mode
+   "S-<up>" 'multi-vterm-rename-buffer
+   "S-<down>" 'multi-vterm
+   "S-<left>" 'multi-vterm-prev
+   "S-<right>" 'multi-vterm-next
+   "C-l" (lambda () (interactive) (vterm-clear) (vterm-clear-scrollback))
+   "<tab>" 'vterm-send-tab ;; for zsh
+   ;;   "<delete>" 'term-send-del
+   ;;   "<backspace>" 'term-send-backspace
    )
 
   ;; term-mode

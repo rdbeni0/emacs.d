@@ -100,6 +100,7 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'shell-mode)) "SHELL")
 
 	   ((or (eq major-mode 'term-mode)) "TERM")
+	   ((or (eq major-mode 'vterm-mode)) "TERM")
 
 	   ((or (eq major-mode 'fundamental-mode)) "TXT")
 	   ((or (string= (file-name-extension (buffer-name)) "txt")) "TXT")
