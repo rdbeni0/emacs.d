@@ -11,7 +11,7 @@
 (add-to-list 'load-path (expand-file-name "site-elisp" user-emacs-directory))
 
 ;; TODO: add also subdirs
-;; 
+;;
 ;; found here: https://stackoverflow.com/questions/56799992/how-can-i-register-a-recursive-load-path
 ;;
 ;; (let ((default-directory (expand-file-name "site-elisp/" user-emacs-directory))) (normal-top-level-add-subdirs-to-load-path))
@@ -20,14 +20,14 @@
 (require 'package)
 ;;
 ;; https://www.reddit.com/r/emacs/comments/1rdstn/set_packageenableatstartup_to_nil_for_slightly/
-;; 
+;;
 (setq package-enable-at-startup nil)
 
 ;; The following lines tell emacs where on the internet to look up for new packages (elisp repositories):
 
-(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                         ("gnu"       . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")
                          ("melpa"     . "https://melpa.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ))
 
 ;; marmalade is an obsolete repository :

@@ -71,6 +71,7 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'grep-mode)) "GREP")
 	   ((or (eq major-mode 'helm-grep-mode)) "GREP")
 
+	   ((or (eq major-mode 'magit-mode)) "GIT")
 	   ((or (eq major-mode 'magit-status-mode)) "GIT")
 	   ((or (eq major-mode 'magit-blame-mode)) "GIT")
 	   ((or (eq major-mode 'magit-log-mode)) "GIT")

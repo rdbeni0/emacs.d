@@ -16,7 +16,6 @@
 (require 'cfg-i-buffer-menu)
 (require 'cfg-markdown)
 (require 'cfg-folding-hideshow)
-(require 'cfg-mode-line-hl)
 (require 'cfg-tabs)
 (require 'cfg-dired)
 (require 'cfg-treemacs-speedbar)
@@ -33,3 +32,4 @@
 (require 'cfg-e-shell-terminals)
 (require 'cfg-general-which-keys)
 (require 'cfg-custom-file)
+(require 'cfg-mode-line-hl)

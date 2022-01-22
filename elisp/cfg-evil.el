@@ -56,8 +56,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; https://github.com/emacsorphanage/evil-anzu
 (use-package evil-anzu
+  :after evil
   :ensure t
-  :after 'evil
+  :config
+
+  (with-eval-after-load 'evil
+    (require 'evil-anzu))
+  (global-anzu-mode +1)
   )
 
 ;; ;; https://github.com/TheBB/evil-indent-plus

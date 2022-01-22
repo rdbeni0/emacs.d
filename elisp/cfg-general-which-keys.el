@@ -47,7 +47,7 @@
 
    "<M-tab>" 'cfg/alternate-buffer
    "S-<iso-lefttab>" 'indent-for-tab-command
-   "<tab>" 'cfg/company-backend-with-yas
+   "S-<tab>" 'cfg/company-backend-with-yas
    "<C-mouse-4>" 'text-scale-increase
    "<C-mouse-5>" 'text-scale-decrease
 
@@ -403,6 +403,7 @@
    "p" '(org-priority :which-key "org-priority")
    "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
    "," '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
+   "." '(org-cycle :which-key "cycle")
    "A" '(org-attach :which-key "org-attach")
 
    "e" '(:ignore t :which-key "export")
