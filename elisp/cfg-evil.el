@@ -59,9 +59,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :after evil
   :ensure t
   :config
-
-  (with-eval-after-load 'evil
-    (require 'evil-anzu))
   (global-anzu-mode +1)
   )
 
