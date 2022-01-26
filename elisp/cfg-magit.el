@@ -15,5 +15,14 @@
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1) ;; new magit
   )
 
+(use-package evil-magit
+  :after evil
+  :ensure t
+  :config
+  ;; TODO: update config
+  ;; https://github.com/emacs-evil/evil-magit
+  (evil-define-key evil-magit-state magit-mode-map "?" 'evil-search-backward)
+  )
+
 (provide 'cfg-magit)
 ;;; cfg-magit.el ends here
