@@ -13,14 +13,6 @@
   ;; https://stackoverflow.com/questions/9439702/how-to-open-magit-status-in-full-window
   (setq magit-status-buffer-switch-function 'switch-to-buffer) ;; old magit
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1) ;; new magit
-  )
-
-(use-package evil-magit
-  :after evil
-  :ensure t
-  :config
-  ;; TODO: update config
-  ;; https://github.com/emacs-evil/evil-magit
   (evil-define-key evil-magit-state magit-mode-map "?" 'evil-search-backward)
   )
 
