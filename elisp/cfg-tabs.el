@@ -128,6 +128,7 @@ mouse-2: kill %S"
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
 
 	   ((or (eq major-mode 'json-mode)) "JSON")
+	   ((or (eq major-mode 'json-navigator-mode)) "JSON")
 
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
 
