@@ -96,6 +96,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; https://github.com/redguardtoo/evil-matchit
 (use-package evil-matchit
+  :ensure
   :after evil
   :config
   (global-evil-matchit-mode 1)
