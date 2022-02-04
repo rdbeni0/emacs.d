@@ -94,15 +94,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :after '(evil markdown-mode)
   )
 
-;; TODO
-;; https://github.com/emacs-evil/evil-magit
-
-;; (use-package evil-magit
-;;   :ensure t
-;;   :config
-;;   ;;
-;;   )
-
+;; https://github.com/redguardtoo/evil-matchit
+(use-package evil-matchit
+  :after evil
+  :config
+  (global-evil-matchit-mode 1)
+  )
 
 (provide 'cfg-evil)
 ;;; cfg-evil.el ends here
