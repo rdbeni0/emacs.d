@@ -263,6 +263,7 @@
    "sq"  '(query-replace-regexp :which-key "query-replace-regexp")
    "st"  '(project-query-replace-regexp :which-key "project-query-replace-regexp")
    "sf"  '(dired-do-find-regexp-and-replace :which-key "dired-do-find-regexp-and-replace")
+   "sm"  '(map-query-replace-regexp :which-key "map-query-replace-regexp")
    "sg"  '(:ignore t :which-key "helm-grep")
    "sgi" '(helm-grep-do-git-grep :which-key "helm-grep-do-git-grep")
    "sgb" '(cfg/helm-buffers-do-grep :which-key "helm-buffers-do-grep")
