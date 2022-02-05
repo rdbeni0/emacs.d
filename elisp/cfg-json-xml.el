@@ -7,6 +7,7 @@
 
 (use-package json-navigator
   :ensure t
+  :after hierarchy
   :config
   ;; TODO: update config
   )

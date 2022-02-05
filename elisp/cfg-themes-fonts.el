@@ -40,13 +40,19 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/3477
 ;; https://www.emacswiki.org/emacs/SetFonts
 
-(set-face-attribute 'default nil :family "DejaVu Sans Mono")
+;; https://github.com/source-foundry/Hack
+(set-face-attribute 'default nil :family "Hack")
+
+;; others - optional:
+
+;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 ;; (set-face-attribute 'default nil :family "Source Code Pro")
-;; (set-face-attribute 'default nil :family "FantasqueSansMono-Regular")
+;; (set-face-attribute 'default nil :family "Fantasque Sans Mono")
+;; (set-frame-font "Fantasque Sans Mono-16" nil t)
 ;; (set-face-attribute 'default nil :family "Verdana")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans")
 ;; (set-face-attribute 'default nil :family "Consolas")
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 130)
 
 (provide 'cfg-themes-fonts)
 ;;; cfg-themes-fonts.el ends here
