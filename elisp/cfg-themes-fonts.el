@@ -42,6 +42,7 @@
 
 (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 ;; (set-face-attribute 'default nil :family "Source Code Pro")
+;; (set-face-attribute 'default nil :family "FantasqueSansMono-Regular")
 ;; (set-face-attribute 'default nil :family "Verdana")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans")
 ;; (set-face-attribute 'default nil :family "Consolas")
