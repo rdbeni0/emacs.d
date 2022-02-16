@@ -39,19 +39,32 @@
 ;; issues and workarounds:
 ;; https://github.com/syl20bnr/spacemacs/issues/3477
 ;; https://www.emacswiki.org/emacs/SetFonts
+;; (set-frame-font "Fantasque Sans Mono-16" nil t)
+
+;; default fonts - optional:
+;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
+;; (set-face-attribute 'default nil :family "Source Code Pro")
+;; (set-face-attribute 'default nil :family "Fantasque Sans Mono")
+;; (set-face-attribute 'default nil :family "Verdana")
+;; (set-face-attribute 'default nil :family "DejaVu Sans")
+;; (set-face-attribute 'default nil :family "Consolas")
 
 ;; https://github.com/source-foundry/Hack
 (set-face-attribute 'default nil :family "Hack")
 
-;; others - optional:
+;; symbols and emojis:
+(setq use-default-font-for-symbols nil)
+(set-fontset-font t 'symbol "Noto Color Emoji")
 
-;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
-;; (set-face-attribute 'default nil :family "Source Code Pro")
-;; (set-face-attribute 'default nil :family "Fantasque Sans Mono")
-;; (set-frame-font "Fantasque Sans Mono-16" nil t)
-;; (set-face-attribute 'default nil :family "Verdana")
-;; (set-face-attribute 'default nil :family "DejaVu Sans")
-;; (set-face-attribute 'default nil :family "Consolas")
+;; https://www.masteringemacs.org/article/unicode-ligatures-color-emoji
+;; https://github.com/rolandwalker/unicode-fonts
+(use-package unicode-fonts
+  :ensure t
+  :config
+  (unicode-fonts-setup))
+
+;; (set-fontset-font t 'symbol "Noto Sans Symbol")
+;; height
 (set-face-attribute 'default nil :height 130)
 
 (provide 'cfg-themes-fonts)
