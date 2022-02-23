@@ -218,6 +218,10 @@
    ;; apps
 
    "a"    '(:ignore t :which-key "apps")
+   "aa"   '(:ignore t :which-key "notmuch")
+   "aaa"  '(notmuch-jump-search :which-key "notmuch-jump-search")
+   "aah"  '(notmuch :which-key "notmuch-hello")
+   "aap"  '(cfg/notmuch-poll-mbsync :which-key "notmuch-poll-mbsync")
    "ae"   '(:ignore t :which-key "erc/irc")
    "ac"   '(calc-dispatch :which-key "calc-dispatch")
    "aq"   '(quick-calc :which-key "quick-calc")
@@ -602,6 +606,24 @@
    "." '(quoted-insert :which-key "quoted-insert")
    "," '(erc-cmd-QUERY :which-key "cmd-QUERY-private-msg")
    "g" '(erc-image-mode :which-key "toggle-image-mode")
+   )
+
+  ;; notmuch
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(notmuch-search-mode-map notmuch-hello-mode-map)
+   :major-modes '(notmuch-search-mode notmuch-hello-mode)
+   :prefix ","
+   "R" '(notmuch-refresh-all-buffers :which-key "refresh-all-buffers")
+   "r" '(notmuch-poll-and-refresh-this-buffer :which-key "poll-and-refresh-this-buffer")
+   "p"  '(:ignore t :which-key "polls")
+   "pl" '(notmuch-poll :which-key "notmuch-poll")
+   "pu" '(cfg/notmuch-poll-full-sort :which-key "notmuch-poll-full-sort")
+   "pp" '(cfg/notmuch-poll-mbsync :which-key "poll-mbsync")
+   "q" '(notmuch-bury-or-kill-this-buffer :which-key "bury-or-kill-this-buffer")
+   "s" '(notmuch-search :which-key "search")
+   "j" '(notmuch-jump-search :which-key "jump-search")
    )
 
   ;; emacs-lisp-mode

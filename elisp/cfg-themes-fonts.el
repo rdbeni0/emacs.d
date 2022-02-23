@@ -42,15 +42,18 @@
 ;; (set-frame-font "Fantasque Sans Mono-16" nil t)
 
 ;; default fonts - optional:
+
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 ;; (set-face-attribute 'default nil :family "Source Code Pro")
 ;; (set-face-attribute 'default nil :family "Fantasque Sans Mono")
 ;; (set-face-attribute 'default nil :family "Verdana")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans")
 ;; (set-face-attribute 'default nil :family "Consolas")
-
 ;; https://github.com/source-foundry/Hack
 (set-face-attribute 'default nil :family "Hack")
+
+;; height fpr default font:
+(set-face-attribute 'default nil :height 130)
 
 ;; symbols and emojis:
 (setq use-default-font-for-symbols nil)
@@ -61,11 +64,8 @@
 (use-package unicode-fonts
   :ensure t
   :config
-  (unicode-fonts-setup))
-
-;; (set-fontset-font t 'symbol "Noto Sans Symbol")
-;; height
-(set-face-attribute 'default nil :height 130)
+  (unicode-fonts-setup)
+  )
 
 (provide 'cfg-themes-fonts)
 ;;; cfg-themes-fonts.el ends here

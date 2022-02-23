@@ -8,7 +8,6 @@
 (require 'cfg-line-numbers)
 (require 'cfg-evil)
 (require 'cfg-vdiff-diff-ediff)
-(require 'cfg-themes-fonts)
 (require 'cfg-helm-tempbuf)
 (require 'cfg-grep-recentf)
 (require 'cfg-projectile)
@@ -32,4 +31,5 @@
 (require 'cfg-e-shell-terminals)
 (require 'cfg-general-which-keys)
 (require 'cfg-custom-file)
+(require 'cfg-themes-fonts)
 (require 'cfg-mode-line-hl)

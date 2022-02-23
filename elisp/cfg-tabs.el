@@ -67,7 +67,6 @@ mouse-2: kill %S"
   (defun cfg/px-tabbar-buffer-groups ()
     "Sort tab groups."
     (list (cond
-	   ;;   ((or (string-equal "*grep" (substring (buffer-name) 0 5))) "GREP")
 	   ((or (eq major-mode 'grep-mode)) "GREP")
 	   ((or (eq major-mode 'helm-grep-mode)) "GREP")
 
@@ -98,8 +97,8 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'conf-windows-mode)) "CONF")
 
 	   ((or (eq major-mode 'org-mode)) "ORG")
-	   ((or (eq major-mode 'shell-mode)) "SHELL")
 
+	   ((or (eq major-mode 'shell-mode)) "TERM")
 	   ((or (eq major-mode 'term-mode)) "TERM")
 	   ((or (eq major-mode 'vterm-mode)) "TERM")
 
@@ -134,6 +133,12 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'help-mode)) "HELP")
 	   ((or (eq major-mode 'info-mode)) "HELP")
+
+  	   ((or (eq major-mode 'notmuch-search-mode)) "NOTMUCH")
+  	   ((or (eq major-mode 'notmuch-hello-mode)) "NOTMUCH")
+  	   ((or (eq major-mode 'notmuch-show-mode)) "NOTMUCH")
+  	   ((or (eq major-mode 'notmuch-tree-mode)) "NOTMUCH")
+  	   ((or (eq major-mode 'notmuch-message-mode)) "NOTMUCH")
 
 	   ((or (eq major-mode 'ibuffer-mode)) "BUFFERS")
 	   ((or (eq major-mode 'Buffer-menu-mode)) "BUFFERS")
