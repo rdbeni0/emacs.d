@@ -283,6 +283,7 @@
    "hi"  '(info :which-key "info")
    "hd"  '(:ignore t :which-key "describe")
    "hdf" '(describe-function :which-key "describe-function")
+   "hdk" '(describe-key :which-key "describe-key")
    "hdo" '(describe-font :which-key "describe-font")
    "hdm" '(describe-mode :which-key "describe-mode")
    "hda" '(helm-apropos :which-key "helm-apropos")
@@ -608,22 +609,34 @@
    "g" '(erc-image-mode :which-key "toggle-image-mode")
    )
 
-  ;; notmuch
+  ;; notmuch with prefix
 
   (general-define-key
    :states '(normal visual emacs)
-   :keymaps '(notmuch-search-mode-map notmuch-hello-mode-map)
-   :major-modes '(notmuch-search-mode notmuch-hello-mode)
+   :keymaps '(notmuch-search-mode-map notmuch-hello-mode-map notmuch-show-mode-map)
+   :major-modes '(notmuch-search-mode notmuch-hello-mode notmuch-show-mode)
    :prefix ","
    "R" '(notmuch-refresh-all-buffers :which-key "refresh-all-buffers")
-   "r" '(notmuch-poll-and-refresh-this-buffer :which-key "poll-and-refresh-this-buffer")
+   "r" '(notmuch-refresh-all-buffers :which-key "refresh-all-buffers")
    "p"  '(:ignore t :which-key "polls")
    "pl" '(notmuch-poll :which-key "notmuch-poll")
    "pu" '(cfg/notmuch-poll-full-sort :which-key "notmuch-poll-full-sort")
    "pp" '(cfg/notmuch-poll-mbsync :which-key "poll-mbsync")
+   "pr" '(notmuch-poll-and-refresh-this-buffer :which-key "poll-and-refresh-this-buffer")
    "q" '(notmuch-bury-or-kill-this-buffer :which-key "bury-or-kill-this-buffer")
    "s" '(notmuch-search :which-key "search")
    "j" '(notmuch-jump-search :which-key "jump-search")
+   "." '(cfg/notmuch-show-view-html :which-key "show-view-html")
+   )
+
+  ;; notmuch (without prefix)
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(notmuch-search-mode-map notmuch-hello-mode-map notmuch-show-mode-map)
+   :major-modes '(notmuch-search-mode notmuch-hello-mode notmuch-show-mode)
+   "r" 'notmuch-refresh-all-buffers
+   "R" 'notmuch-refresh-all-buffers
    )
 
   ;; emacs-lisp-mode
