@@ -689,6 +689,8 @@
    "R" 'notmuch-refresh-all-buffers
    "J" 'notmuch-jump-search
    "A" 'notmuch-search
+   "S-<left>" 'tabbar-backward
+   "S-<right>" 'tabbar-forward
    "?" 'notmuch-help
    )
 
@@ -708,8 +710,11 @@
    "R" 'notmuch-refresh-all-buffers
    "u" 'cfg/notmuch-toggle-tag-show-unread
    "b" 'cfg/notmuch-toggle-tag-show-bin
+   "d" 'cfg/notmuch-toggle-tag-show-bin
    "t" 'notmuch-show-save-attachments
    "." 'cfg/notmuch-show-view-html
+   "S-<left>" 'tabbar-backward
+   "S-<right>" 'tabbar-forward
    "?" 'notmuch-help
    )
 
@@ -722,10 +727,13 @@
    "T" 'notmuch-search-filter-by-tag
    "u" 'cfg/notmuch-toggle-tag-search-unread
    "b" 'cfg/notmuch-toggle-tag-search-bin
+   "d" 'cfg/notmuch-toggle-tag-search-bin
    "J" 'notmuch-jump-search
    "A" 'notmuch-search
    "S"  'notmuch-search-filter
    "T"  'notmuch-search-filter-by-tag
+   "S-<left>" 'tabbar-backward
+   "S-<right>" 'tabbar-forward
    "?" 'notmuch-help
    )
 
