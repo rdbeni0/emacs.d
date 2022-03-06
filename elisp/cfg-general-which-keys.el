@@ -220,8 +220,10 @@
    "a"    '(:ignore t :which-key "apps")
    "aa"   '(:ignore t :which-key "notmuch")
    "aaa"  '(notmuch-jump-search :which-key "notmuch-jump-search")
+   "aaj"  '(notmuch-jump-search :which-key "notmuch-jump-search")
    "aah"  '(notmuch :which-key "notmuch-hello")
    "aap"  '(cfg/notmuch-poll-mbsync :which-key "notmuch-poll-mbsync")
+   "aam"  '(helm-notmuch :which-key "helm-notmuch")
    "ae"   '(:ignore t :which-key "erc/irc")
    "ac"   '(calc-dispatch :which-key "calc-dispatch")
    "aq"   '(quick-calc :which-key "quick-calc")
@@ -620,22 +622,111 @@
    "pu" '(cfg/notmuch-poll-full-sort :which-key "notmuch-poll-full-sort")
    "pp" '(cfg/notmuch-poll-mbsync :which-key "poll-mbsync")
    "pl" '(notmuch-poll-and-refresh-this-buffer :which-key "poll")
+   "pb" '(cfg/notmuch-poll-empty-bin :which-key "poll-empty-bin")
+   "ps" '(cfg/notmuch-poll-empty-spam :which-key "poll-empty-spam")
    "R" '(notmuch-refresh-all-buffers :which-key "refresh-all-buffers")
-   "r" '(notmuch-refresh-all-buffers :which-key "refresh-all-buffers")
+   "r" '(notmuch-refresh-this-buffer :which-key "refresh-this-buffer")
    "q" '(notmuch-bury-or-kill-this-buffer :which-key "bury-or-kill-this-buffer")
-   "s" '(notmuch-search :which-key "search")
    "j" '(notmuch-jump-search :which-key "jump-search")
+   "J" '(notmuch-jump-search :which-key "jump-search")
+   "A" '(notmuch-search :which-key "search")
+   "a" '(notmuch-search :which-key "search")
+   "m" '(helm-notmuch :which-key "helm-notmuch")
+   "?"  '(notmuch-help :which-key "notmuch-help")
+   )
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(notmuch-show-mode-map)
+   :major-modes '(notmuch-show-mode)
+   :prefix ","
+   "}" '(notmuch-show-next-message :which-key "show-next-msg")
+   "]" '(notmuch-show-next-open-message :which-key "show-next-open-msg")
+   "{" '(notmuch-show-previous-message :which-key "show-previous-msg")
+   "[" '(notmuch-show-previous-open-message :which-key "show-previous-open-msg")
+   "o" '(cfg/notmuch-show-close-all :which-key "show-close-all")
+   "O" '(notmuch-show-open-or-close-all :which-key "show-open-all")
    "." '(cfg/notmuch-show-view-html :which-key "show-view-html")
+   "t" '(notmuch-show-save-attachments :which-key "show-save-attachments")
+   "s"  '(:ignore t :which-key "show-stash (copy)")
+   "sG" '(notmuch-show-stash-git-send-email :which-key "git-send-mail")
+   "sL" '(notmuch-show-stash-mlarchive-link-and-go :which-key "mlarchive-link-and-go")
+   "sl" '(notmuch-show-stash-mlarchive-link :which-key "mlarchive-link")
+   "st" '(notmuch-show-stash-to :which-key "to")
+   "sT" '(notmuch-show-stash-tags :which-key "tags")
+   "ss" '(notmuch-show-stash-subject :which-key "subject")
+   "sI" '(notmuch-show-stash-message-id-stripped :which-key "message-id-stripped")
+   "si" '(notmuch-show-stash-message-id :which-key "message-id")
+   "sf" '(notmuch-show-stash-from :which-key "from")
+   "sF" '(notmuch-show-stash-filename :which-key "filename")
+   "sd" '(notmuch-show-stash-date :which-key "date")
+   "sc" '(notmuch-show-stash-cc :which-key "cc")
+   "'"  '(:ignore t :which-key "show-part")
+   "'?"  '(notmuch-subkeymap-help "notmuch-subkeymap-help")
+   "'v"  '(notmuch-show-view-part :which-key "show-view-part")
+   "'s"  '(notmuch-show-save-part :which-key "show-save-part")
+   "'|"  '(notmuch-show-pipe-part :which-key "show-pipe-part")
+   "'m"  '(notmuch-show-choose-mime-of-part :which-key "show-choose-mime-of-part")
+   "'o"  '(notmuch-show-interactively-view-part :which-key "show-interactively-view-part")
+   )
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(notmuch-search-mode-map)
+   :major-modes '(notmuch-search-mode)
+   :prefix ","
+   "S"  '(notmuch-search-filter :which-key "search-filter")
+   "T"  '(notmuch-search-filter-by-tag :which-key "search-filter-by-tag")
    )
 
   ;; notmuch (without prefix)
 
   (general-define-key
    :states '(normal visual emacs)
-   :keymaps '(notmuch-search-mode-map notmuch-hello-mode-map notmuch-show-mode-map)
-   :major-modes '(notmuch-search-mode notmuch-hello-mode notmuch-show-mode)
-   "r" 'notmuch-refresh-all-buffers
+   :keymaps '(notmuch-hello-mode-map)
+   :major-modes '(notmuch-hello-mode)
+   "r" 'notmuch-refresh-this-buffer
    "R" 'notmuch-refresh-all-buffers
+   "J" 'notmuch-jump-search
+   "A" 'notmuch-search
+   "?" 'notmuch-help
+   )
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(notmuch-show-mode-map)
+   :major-modes '(notmuch-show-mode)
+   "}" 'notmuch-show-next-message
+   "]" 'notmuch-show-next-open-message
+   "{" 'notmuch-show-previous-message
+   "[" 'notmuch-show-previous-open-message
+   "o" 'cfg/notmuch-show-close-all
+   "O" 'notmuch-show-open-or-close-all
+   "J" 'notmuch-jump-search
+   "A" 'notmuch-search
+   "r" 'notmuch-refresh-this-buffer
+   "R" 'notmuch-refresh-all-buffers
+   "u" 'cfg/notmuch-toggle-tag-show-unread
+   "b" 'cfg/notmuch-toggle-tag-show-bin
+   "t" 'notmuch-show-save-attachments
+   "." 'cfg/notmuch-show-view-html
+   "?" 'notmuch-help
+   )
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps '(notmuch-search-mode-map)
+   :major-modes '(notmuch-search-mode)
+   "r" 'notmuch-refresh-this-buffer
+   "R" 'notmuch-refresh-all-buffers
+   "T" 'notmuch-search-filter-by-tag
+   "u" 'cfg/notmuch-toggle-tag-search-unread
+   "b" 'cfg/notmuch-toggle-tag-search-bin
+   "J" 'notmuch-jump-search
+   "A" 'notmuch-search
+   "S"  'notmuch-search-filter
+   "T"  'notmuch-search-filter-by-tag
+   "?" 'notmuch-help
    )
 
   ;; emacs-lisp-mode
