@@ -929,7 +929,8 @@
    :keymaps 'python-mode-map
    :major-modes 'python-mode
    :prefix ","
-   "=" '(yapfify-buffer :which-key "format-buffer")
+   "="  '(:ignore t :which-key "format")
+   "==" '(yapfify-buffer :which-key "yapfify-buffer")
    "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
    "n"  '(:ignore t :which-key "navigate")
    "nb" '(python-nav-beginning-of-block :which-key "beginnning-of-block")
@@ -944,6 +945,28 @@
    "nv" '(python-nav-forward-sexp-safe :which-key "forward-sexp-safe")
    "nw" '(python-nav-forward-sexp :which-key "forward-sexp")
    "na" '(python-nav-backward-sexp :which-key "backward-sexp")
+   "."  '(:ignore t :which-key "anaconda-mode")
+   ".a" '(anaconda-mode-find-assignments :which-key "find-assignments")
+   ".A" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
+   ".r" '(anaconda-mode-find-references :which-key "find-references")
+   ".R" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
+   ".d" '(anaconda-mode-find-definitions :which-key "find-definitions")
+   ".D" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window")
+   )
+
+  ;; python-mode no prefix / anaconda-mode
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'anaconda-mode-map
+   :major-modes 'anaconda-mode
+   "gC" '(what-cursor-position :which-key "what-cursor-position")
+   "ga" '(anaconda-mode-find-assignments :which-key "find-assignments")
+   "gA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
+   "gr" '(anaconda-mode-find-references :which-key "find-references")
+   "gR" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
+   "gd" '(anaconda-mode-find-definitions :which-key "find-definitions")
+   "gD" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window")
    )
 
   ;; php-mode

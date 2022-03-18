@@ -114,6 +114,18 @@
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 			       ))
 
+  (add-hook 'python-mode-hook (lambda ()
+				(setq company-backends '())
+				(add-to-list 'company-backends 'company-dabbrev)
+				(add-to-list 'company-backends '(company-dabbrev-code
+								 company-gtags
+								 company-etags
+								 company-keywords))
+				(add-to-list 'company-backends 'company-capf)
+				(add-to-list 'company-backends 'company-anaconda) ;; anaconda-mode
+				(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+				))
+
   (add-hook 'snippet-mode-hook (lambda ()
 				 (setq company-backends '())
 				 (add-to-list 'company-backends 'company-dabbrev)
@@ -139,6 +151,14 @@
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  )
+
+;; https://github.com/pythonic-emacs/company-anaconda
+;; for python:
+
+(use-package company-anaconda
+  :after company
+  :ensure t
   )
 
 ;; https://github.com/expez/company-quickhelp
