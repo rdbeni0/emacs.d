@@ -19,5 +19,13 @@
   (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
   )
 
+;;;; python-mode and pylint
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
+            (setq flycheck-pylintrc "~/.pylintrc"))
+)
+
 (provide 'cfg-python)
 ;;; cfg-python.el ends here
