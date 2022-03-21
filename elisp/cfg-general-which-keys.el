@@ -929,9 +929,13 @@
    :keymaps 'python-mode-map
    :major-modes 'python-mode
    :prefix ","
+   "v"  '(:ignore t :which-key "venv")
+   "va"  '(pythonic-activate :which-key "pythonic-activate")
+   "vd"  '(pythonic-deactivate :which-key "pythonic-deactivate")
    "="  '(:ignore t :which-key "format")
    "==" '(yapfify-buffer :which-key "yapfify-buffer")
    "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+   "h"  '(python-check :which-key "python-check")
    "n"  '(:ignore t :which-key "navigate")
    "nb" '(python-nav-beginning-of-block :which-key "beginnning-of-block")
    "nn" '(python-nav-end-of-block :which-key "end-of-block")
