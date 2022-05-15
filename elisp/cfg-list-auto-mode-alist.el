@@ -1,6 +1,7 @@
 ;;; cfg-list-auto-mode-alist.el --- Full list for auto-mode-alist -*- lexical-binding: t -*-
 ;;; Commentary:
 
+
 ;; Full list with major modes and files:
 ;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Auto-Major-Mode.html
@@ -13,8 +14,6 @@
        ;; File name (within directory) starts with a dot.
        '(("\\.*_conf_file\\'" . conf-mode)
 	 ("\\.npmrc\\'" . conf-mode)
-	 ("ssh_config\\'" . conf-mode)
-	 ("sshd_config\\'" . conf-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.md\\'" . gfm-mode)
 	 ("\\.markdown\\'" . gfm-mode)
@@ -24,6 +23,11 @@
 	 ("zlogin\\'" . sh-mode)
 	 ("zshenv\\'" . sh-mode)
 	 ("zshrc\\'" . sh-mode)
+	 ("~/.ssh/config\\'" . ssh-config-mode)
+	 ("ssh_config\\'" . ssh-config-mode)
+	 ("sshd_config\\'" . ssh-config-mode)
+	 ("known_hosts\\'" . ssh-config-mode)
+	 ("authorized_keys\\'" . ssh-config-mode)
 	 )
        auto-mode-alist)
       )

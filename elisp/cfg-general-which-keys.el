@@ -754,6 +754,20 @@
    ","  '(ffap :which-key "ffap")
    )
 
+  ;; ssh-config-mode
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'ssh-config-mode-map
+   :major-modes 'ssh-config-mode
+   :prefix ","
+   "m"  '(ssh-config-host-next :which-key "host-next")
+   "n"  '(ssh-config-host-prev :which-key "host-prev")
+   "l"  '(ssh-config-completion-at-point :which-key "completion-at-point")
+   "."  '(ssh-config-compute-indent :which-key "compute-indent")
+   ","  '(ffap :which-key "ffap")
+   )
+
   ;; magit-mode
 
   (general-define-key
@@ -995,7 +1009,7 @@
 
   (general-define-key
    :states '(normal visual emacs)
-   :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map)
+   :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map)
    :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode)
    :prefix ","
    "k"  '(:ignore t :which-key "comments, marks")

@@ -64,6 +64,11 @@
 	  ssh-host)
   )
 
+;; https://github.com/jhgorrell/ssh-config-mode-el
+(use-package ssh-config-mode
+  :ensure t
+  )
+
 ;; ssh.el
 ;; https://github.com/ieure/ssh-el
 ;; https://github.com/ieure/ssh-el/pull/3
