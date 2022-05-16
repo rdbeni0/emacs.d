@@ -6,8 +6,7 @@
 ;;; Code:
 
 
-;; tab-bar
-;; since emacs 27 version
+;; tab-bar : since emacs 27 version
 (tab-bar-mode 1)
 
 ;; tabbar legacy plugin
@@ -156,6 +155,7 @@ mouse-2: kill %S"
     )
 
   ;; keys
+  ;; TODO : migrate to general.el
 
   (setq tabbar-help-on-tab-function 'cfg/px-tabbar-buffer-help-on-tab)
   (setq tabbar-select-tab-function 'cfg/px-tabbar-buffer-select-tab)

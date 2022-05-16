@@ -67,7 +67,10 @@
 ;; https://github.com/jhgorrell/ssh-config-mode-el
 (use-package ssh-config-mode
   :ensure t
+  :config
   )
+
+(add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
 
 ;; ssh.el
 ;; https://github.com/ieure/ssh-el
