@@ -27,8 +27,11 @@
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
   (setq company-auto-complete nil)
+  ;;
+  ;;
   ;; NOT to load company-mode for certain major modes.
   ;; https://github.com/company-mode/company-mode/issues/29
+  ;;
   (setq company-global-modes
         '(not
           eshell-mode
@@ -79,6 +82,8 @@
   ;; 2B) the most important - should be declared at the end
   ;; 3) run emacs and check variable "company-backends" as "describe-variable"
   ;; 4) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options
+  ;; 5) OPTIONAL: no new line for particular mode: https://github.com/joaotavora/yasnippet/issues/192
+  ;; just add: (setq require-final-newline nil) into particular mode hook
 
   (add-hook 'php-mode-hook (lambda ()
 			     (setq company-backends '())
@@ -148,88 +153,97 @@
 			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 			     ))
 
-
+  ;; some optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
+  (add-hook 'notmuch-message-mode-hook (lambda ()
+			    (setq company-backends '())
+			    (add-to-list 'company-backends 'company-dabbrev)
+			    (add-to-list 'company-backends 'notmuch-company)
+			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+			    (setq require-final-newline nil) ;; no new lines after inserting snippet
+			    ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  )
 
-;; https://github.com/pythonic-emacs/company-anaconda
-;; for python:
+)
 
-(use-package company-anaconda
-  :after company
-  :ensure t
-  )
+  ;; https://github.com/pythonic-emacs/company-anaconda
+  ;; for python:
 
-;; https://github.com/expez/company-quickhelp
-
-(use-package company-quickhelp
-  :after company
-  :ensure t
-  :config
-
-  ;; https://emacs.stackexchange.com/questions/2762/jump-to-documentation-buffer-with-company-mode
-  (defun cfg/company-show-doc-buffer-f1 ()
-    "Temporarily show the documentation buffer for the selection."
-    (interactive)
-    (let* ((selected (nth company-selection company-candidates))
-	   (doc-buffer (or (company-call-backend 'doc-buffer selected)
-			   (error "No documentation available"))))
-      (with-current-buffer doc-buffer
-	(goto-char (point-min)))
-      (display-buffer doc-buffer t))
+  (use-package company-anaconda
+    :after company
+    :ensure t
     )
-  (company-quickhelp-mode 1)
-  (setq company-quickhelp-delay 0.0)
-  (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
-  (add-hook 'company-mode-hook #'company-quickhelp-mode)
-  (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1) ; TODO - migrate to general.el
-  )
+
+  ;; https://github.com/expez/company-quickhelp
+
+  (use-package company-quickhelp
+    :after company
+    :ensure t
+    :config
+
+    ;; https://emacs.stackexchange.com/questions/2762/jump-to-documentation-buffer-with-company-mode
+    (defun cfg/company-show-doc-buffer-f1 ()
+      "Temporarily show the documentation buffer for the selection."
+      (interactive)
+      (let* ((selected (nth company-selection company-candidates))
+	     (doc-buffer (or (company-call-backend 'doc-buffer selected)
+			     (error "No documentation available"))))
+	(with-current-buffer doc-buffer
+	  (goto-char (point-min)))
+	(display-buffer doc-buffer t))
+      )
+    (company-quickhelp-mode 1)
+    (setq company-quickhelp-delay 0.0)
+    (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
+    (add-hook 'company-mode-hook #'company-quickhelp-mode)
+    (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1) ; TODO - migrate to general.el
+    )
 
 
 ;;;;;;;;;;;;;;;;;;;;;; yasnippets
-;; Documentation: https://joaotavora.github.io/yasnippet/
+  ;; Documentation: https://joaotavora.github.io/yasnippet/
 
-(use-package yasnippet
-  :ensure t
-  :config
-  ;; add yasnippet to all backends:
-  ;; (yas-global-mode 1)
-  )
+  (use-package yasnippet
+    :ensure t
+    :config
+    ;; add yasnippet to all backends:
+    ;; (yas-global-mode 1)
+    )
 
-;; https://github.com/AndreaCrotti/yasnippet-snippets
+  ;; https://github.com/AndreaCrotti/yasnippet-snippets
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Adding a custom/dynamic yasnippet directory:
-;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
-;; and dymamic dir - example of code:
-(setq yasnippets-dynamic-data-dir
-      (substring
-       ;;
-       ;; EXAMPLES:
-       ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
-       ;;
-       (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
-       0 -1))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Adding a custom/dynamic yasnippet directory:
+  ;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
+  ;; and dymamic dir - example of code:
+  (setq yasnippets-dynamic-data-dir
+	(substring
+	 ;;
+	 ;; EXAMPLES:
+	 ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
+	 ;;
+	 (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
+	 0 -1))
 
-;; and then:
-;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; and then:
+  ;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
+  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package yasnippet-snippets
-  :ensure t
-  :config
-  ;; add yas-minor-mode per MAJOR mode - not global:
-  (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
-  (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
-  (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
-  (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
-  (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
-  (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
-  (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
-  (yas-reload-all)
-  )
+  (use-package yasnippet-snippets
+    :ensure t
+    :config
+    ;; add yas-minor-mode per MAJOR mode - not global:
+    (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
+    (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
+    (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
+    (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
+    (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
+    (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
+    (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
+    (add-hook 'notmuch-message-mode-hook #'yas-minor-mode) ;; notmuch-message-mode
+    (yas-reload-all)
+    )
 
-(provide 'cfg-company-yasnippets)
+  (provide 'cfg-company-yasnippets)
 ;;; cfg-company-yasnippets.el ends here
