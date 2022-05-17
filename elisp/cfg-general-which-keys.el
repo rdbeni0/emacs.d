@@ -634,6 +634,7 @@
    "r" '(notmuch-refresh-this-buffer :which-key "refresh-this-buffer")
    "q" '(notmuch-bury-or-kill-this-buffer :which-key "bury-or-kill-this-buffer")
    "j" '(notmuch-jump-search :which-key "jump-search")
+   "i" '(visual-line-mode :which-key "toggle-visual-line-mode")
    "J" '(notmuch-jump-search :which-key "jump-search")
    "A" '(notmuch-search :which-key "search")
    "a" '(notmuch-search :which-key "search")
@@ -690,6 +691,9 @@
    "S"  '(notmuch-search-filter :which-key "search-filter")
    "T"  '(notmuch-search-filter-by-tag :which-key "search-filter-by-tag")
    "v" '(notmuch-tree-from-search-current-query :which-key "tree-from-search-current-query")
+   "u" '(cfg/notmuch-toggle-tag-search-unread :which-key "toggle-unread")
+   "b" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
+   "d" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
    )
 
   (general-define-key
@@ -697,6 +701,9 @@
    :keymaps '(notmuch-tree-mode-map)
    :major-modes '(notmuch-tree-mode)
    :prefix ","
+   "u" '(cfg/notmuch-toggle-tag-tree-unread :which-key "toggle-unread")
+   "b" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
+   "d" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
    "v" '(notmuch-search-from-tree-current-query :which-key "search-from-tree-current-query")
    "c"  '(:ignore t :which-key "compose,create")
    "cr" '(notmuch-tree-reply-sender :which-key "tree-reply-to-sender")
@@ -748,6 +755,9 @@
    "R" 'notmuch-refresh-all-buffers
    "J" 'notmuch-jump-search
    "A" 'notmuch-search
+   "u" 'cfg/notmuch-toggle-tag-tree-unread
+   "b" 'cfg/notmuch-toggle-tag-tree-bin
+   "d" 'cfg/notmuch-toggle-tag-tree-bin
    "S-<left>" 'tabbar-backward
    "S-<right>" 'tabbar-forward
    )
