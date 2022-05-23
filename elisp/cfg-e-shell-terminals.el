@@ -6,7 +6,7 @@
 
 ;;; Code:
 
-;; vterm and multi-vterm
+;; vterm and multi-vterm:
 
 (use-package vterm
   :ensure t
@@ -23,12 +23,12 @@
 (use-package multi-vterm
   :ensure t)
 
-;; multi-term and ansi-term
+;; ansi-term and multi-term and:
 
 (use-package multi-term
   :ensure t
   :config
-  (setq multi-term-program "/bin/zsh")
+  (setq multi-term-program "/bin/bash") ;; bash, but not fish
   (setq shell-default-shell 'multi-term)
   (setq term-buffer-maximum-size 0)
   )
@@ -49,8 +49,23 @@
 
 (setq term-suppress-hard-newline t)
 
-;; shell mode
+;; fish-mode: Emacs major mode for fish shell scripts.
 
+(use-package fish-mode
+  :ensure t
+  )
+
+  (add-hook 'fish-mode-hook (lambda ()
+                              (add-hook 'before-save-hook 'fish_indent-before-save)))
+
+;; comint
+
+(setq comint-prompt-read-only t)
+(setq comint-process-echoes t)
+
+;; M-x shell mode :
+
+;; colors:
 (use-package xterm-color
   :ensure t
   :config
@@ -65,12 +80,10 @@
 	      (make-local-variable 'font-lock-function)
 	      (setq font-lock-function (lambda (_) nil))
 	      (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))
-
   )
 
-(setq comint-prompt-read-only t)
-(setq comint-process-echoes t)
-(setq explicit-shell-file-name "/bin/bash")
+
+(setq explicit-shell-file-name "/bin/bash") ;; M-x shell default shell:
 
 ;; https://stackoverflow.com/questions/9514495/how-to-define-a-function-to-run-multiple-shells-on-emacs
 

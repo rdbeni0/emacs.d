@@ -14,6 +14,8 @@
        ;; File name (within directory) starts with a dot.
        '(("\\.*_conf_file\\'" . conf-mode)
 	 ("\\.npmrc\\'" . conf-mode)
+	 ("\\.bash_aliases\\'" . conf-mode)
+	 ("fish_variables\\'" . conf-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.md\\'" . gfm-mode)
 	 ("\\.markdown\\'" . gfm-mode)
@@ -23,7 +25,7 @@
 	 ("zlogin\\'" . sh-mode)
 	 ("zshenv\\'" . sh-mode)
 	 ("zshrc\\'" . sh-mode)
-	 ("~/.ssh/config\\'" . ssh-config-mode)
+	 ("~/\\.ssh/config\\'" . ssh-config-mode)
 	 ("ssh_config\\'" . ssh-config-mode)
 	 ("sshd_config\\'" . ssh-config-mode)
 	 ("/\\.ssh/config\\(\\.d/.*\\.conf\\)?\\'" . ssh-config-mode)
