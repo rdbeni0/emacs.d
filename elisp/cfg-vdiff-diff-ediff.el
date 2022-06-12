@@ -18,13 +18,15 @@
 ;; https://github.com/justbur/emacs-vdiff-magit
 (use-package vdiff-magit
   :ensure t
-  :after '(vdiff magit)
   :config
+  ;; (define-key magit-mode-map "e" 'vdiff-magit-dwim)
+  ;; (define-key magit-mode-map "E" 'vdiff-magit)
   (transient-suffix-put 'magit-dispatch "e" :description "vdiff (dwim)")
   (transient-suffix-put 'magit-dispatch "e" :command 'vdiff-magit-dwim)
   (transient-suffix-put 'magit-dispatch "E" :description "vdiff")
   (transient-suffix-put 'magit-dispatch "E" :command 'vdiff-magit)
   )
+
 
 (provide 'cfg-vdiff-diff-ediff)
 ;;; cfg-vdiff-diff-ediff.el ends here

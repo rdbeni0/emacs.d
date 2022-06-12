@@ -27,5 +27,18 @@
 
 (global-display-line-numbers-mode)
 
+;;  https://github.com/DarthFennec/highlight-indent-guides
+
+(use-package highlight-indent-guides
+  :ensure t
+  :config
+  (setq highlight-indent-guides-method 'bitmap)
+  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  ;; (set-face-background 'highlight-indent-guides-even-face "dimgray")
+  ;; (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  )
+
+
 (provide 'cfg-line-numbers)
 ;;; cfg-line-numbers.el ends here
