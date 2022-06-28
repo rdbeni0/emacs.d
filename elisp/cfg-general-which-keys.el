@@ -421,6 +421,7 @@
 
    "e" '(:ignore t :which-key "export")
    "ed" '(org-md-export-to-markdown :which-key "export-to-md")
+   "eh" '(org-md-export-to-html :which-key "export-to-html")
 
    "i" '(:ignore t :which-key "insert")
    "ib" '(org-insert-structure-template :which-key "org-insert-structure-template")
