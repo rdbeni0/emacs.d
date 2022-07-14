@@ -77,6 +77,8 @@
     (apply #'call-process-region (car pos) (cdr pos) perl5-perltidy-executable t '(t nil)
            "--quiet"
            "--standard-error-output"
+           "--perl-best-practices"
+           "-l=185"
            perl5-perltidy-options)
     (goto-char old-point))
   )
