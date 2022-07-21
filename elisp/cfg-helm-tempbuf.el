@@ -62,10 +62,8 @@
 ;; https://github.com/yasuyk/helm-git-grep
 
 (use-package helm-git-grep
-  :after magit
+  :after '(magit wgrep)
   :ensure t
-  :config
-  ;;
   )
 
 ;; tempbuf
