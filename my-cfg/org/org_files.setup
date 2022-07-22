@@ -1,6 +1,5 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="~/.emacs.d/my-cfg/html_css_fonts/html.css" />
 #+OPTIONS: html-postamble:nil
-#+AUTHOR: rdbeni0
 #+OPTIONS: \n:t
 #+OPTIONS: *:t
 #+OPTIONS: ^:nil
