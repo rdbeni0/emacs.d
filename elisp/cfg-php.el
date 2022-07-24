@@ -19,7 +19,7 @@
   (interactive)
   (mark-whole-buffer)
   (cfg/-php-format)
-  (message "Reformatted! In case of formatting errors, please undo.")
+  (message "Reformatted! In case of formatting errors, please undo buffer.")
   )
 
 (use-package php-mode
