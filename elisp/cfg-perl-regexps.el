@@ -48,10 +48,13 @@
 (defvar perl5-perltidy-executable "perltidy"
   "Location of perltidy executable.")
 
-(defvar perl5-perltidy-options '()
+(defvar perl5-perltidy-options '("--quiet"
+				 "--standard-error-output"
+				 "--perl-best-practices"
+				 "-l=185")
   "Command line options to pass to perltidy")
 
-;; other, alternative option:
+;; other and alternative option:
 ;;
 ;; (defun cfg/perltidy-format ()
 ;;     "Run perltidy on the current region."
@@ -60,7 +63,7 @@
 ;;      (shell-command-on-region (point) (mark) "/usr/bin/perltidy -q" nil t)))
 
 (defun cfg/perltidy-format ()
-  "Format Perl code with perltidy.
+  "Format Perl5 code with perltidy.
    If region is active, operate on it, else operate on line."
   (interactive)
   (let ((old-point (point))
@@ -75,10 +78,6 @@
            (cons (line-beginning-position)
                  (1+ (line-end-position))))))
     (apply #'call-process-region (car pos) (cdr pos) perl5-perltidy-executable t '(t nil)
-           "--quiet"
-           "--standard-error-output"
-           "--perl-best-practices"
-           "-l=185"
            perl5-perltidy-options)
     (goto-char old-point))
   )
