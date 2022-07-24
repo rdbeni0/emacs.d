@@ -1069,10 +1069,11 @@
    :major-modes 'php-mode
    :prefix ","
    "="  '(:ignore t :which-key "format")
-   "==" '(format-all-buffer :which-key "prettier-plugin-php")
-   "=p" '(php-cs-fixer-fix :which-key "php-cs-fixer")
-   "=b" '(php-cs-fixer-fix :which-key "php-cs-fixer")
-   "=s" '(php-set-style :which-key "set-style")
+   "==" '(cfg/php-custom-file-format :which-key "php-custom-file-format")
+   "=b" '(format-all-buffer :which-key "format-all-buffer")
+   "=c" '(php-cs-fixer-fix :which-key "php-cs-fixer")
+   "=f" '(php-cs-fixer-fix :which-key "php-cs-fixer")
+   "=s" '(php-set-style :which-key "php-mode-set-style")
    )
 
   ;; fish-mode
