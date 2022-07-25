@@ -28,7 +28,6 @@
   :ensure t
   )
 
-
 ;; https://github.com/OVYA/php-cs-fixer
 
 (use-package php-cs-fixer

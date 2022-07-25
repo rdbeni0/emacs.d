@@ -21,7 +21,8 @@
   )
 
 (use-package multi-vterm
-  :ensure t)
+  :ensure t
+  )
 
 ;; ansi-term and multi-term and:
 
@@ -55,8 +56,8 @@
   :ensure t
   )
 
-  (add-hook 'fish-mode-hook (lambda ()
-                              (add-hook 'before-save-hook 'fish_indent-before-save)))
+(add-hook 'fish-mode-hook (lambda ()
+                            (add-hook 'before-save-hook 'fish_indent-before-save)))
 
 ;; comint
 
