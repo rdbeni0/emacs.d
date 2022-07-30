@@ -56,7 +56,6 @@
 (use-package helm-org
   :after org
   :ensure t
-  :config
   )
 
 ;; https://github.com/yasuyk/helm-git-grep
