@@ -17,7 +17,8 @@
         helm-buffers-fuzzy-matching           t
         helm-completion-in-region-fuzzy-match t
         helm-file-cache-fuzzy-match           t
-        helm-allow-mouse                      t
+	;; not working with: helm-git-grep:
+        ;; helm-allow-mouse                      t
         helm-imenu-fuzzy-match                t
         helm-mode-fuzzy-match                 t
         helm-locate-fuzzy-match               t
@@ -64,6 +65,8 @@
 (use-package helm-git-grep
   :after '(magit wgrep)
   :ensure t
+  :config
+  (eval-after-load 'helm '(define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm))
   )
 
 ;; tempbuf
