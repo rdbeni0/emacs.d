@@ -70,16 +70,14 @@
   "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
   (interactive)
   (let ((helm-allow-mouse nil))
-    (helm-git-grep-at-point)
-    )
+    (helm-git-grep-at-point))
   )
 
 (defun cfg/helm-git-grep ()
   "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
   (interactive)
   (let ((helm-allow-mouse nil))
-    (helm-git-grep)
-    )
+    (helm-git-grep))
   )
 
 ;; tempbuf
