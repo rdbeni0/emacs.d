@@ -77,6 +77,15 @@
    "<M-drag-mouse-2>" 'tab-close
    )
 
+  ;; general: no space + which-key
+
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'global
+   "g/"  '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
+   "g'"  '(cfg/helm-git-grep :which-key "helm-git-grep")
+   )
+
   ;; global: space as leader-key + which-key
 
   (general-define-key
@@ -273,6 +282,8 @@
    "sf"  '(dired-do-find-regexp-and-replace :which-key "dired-do-find-regexp-and-replace")
    "sm"  '(map-query-replace-regexp :which-key "map-query-replace-regexp")
    "sg"  '(:ignore t :which-key "helm-grep")
+   "sg/" '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
+   "sg'" '(cfg/helm-git-grep :which-key "helm-git-grep")
    "sgi" '(helm-grep-do-git-grep :which-key "helm-grep-do-git-grep")
    "sgb" '(cfg/helm-buffers-do-grep :which-key "helm-buffers-do-grep")
    "sgB" '(cfg/helm-buffers-do-grep-region-or-symbol :which-key "helm-buffers-do-grep-reg-or-sym")
@@ -350,8 +361,8 @@
    ;; git
 
    "g"   '(:ignore t :which-key "git")
-   "g*"  '(helm-git-grep-at-point :which-key "helm-git-grep-at-point")
-   "g/"  '(helm-git-grep :which-key "helm-git-grep")
+   "g/"  '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
+   "g'"  '(cfg/helm-git-grep :which-key "helm-git-grep")
    "gb"  '(magit-blame :which-key "magit-blame")
    "gc"  '(magit-clone :which-key "magit-clone")
    "gi"  '(magit-init :which-key "magit-init")

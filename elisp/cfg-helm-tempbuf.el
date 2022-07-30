@@ -17,8 +17,7 @@
         helm-buffers-fuzzy-matching           t
         helm-completion-in-region-fuzzy-match t
         helm-file-cache-fuzzy-match           t
-	;; not working with: helm-git-grep:
-        ;; helm-allow-mouse                      t
+        helm-allow-mouse                      t  ;; this not working with helm-git-grep
         helm-imenu-fuzzy-match                t
         helm-mode-fuzzy-match                 t
         helm-locate-fuzzy-match               t
@@ -65,8 +64,22 @@
 (use-package helm-git-grep
   :after '(magit wgrep)
   :ensure t
-  :config
-  (eval-after-load 'helm '(define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm))
+  )
+
+(defun cfg/helm-git-grep-at-point ()
+  "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
+  (interactive)
+  (let ((helm-allow-mouse nil))
+    (helm-git-grep-at-point)
+    )
+  )
+
+(defun cfg/helm-git-grep ()
+  "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
+  (interactive)
+  (let ((helm-allow-mouse nil))
+    (helm-git-grep)
+    )
   )
 
 ;; tempbuf
