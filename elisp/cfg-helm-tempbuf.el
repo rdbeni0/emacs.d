@@ -66,20 +66,6 @@
   :ensure t
   )
 
-(defun cfg/helm-git-grep-at-point ()
-  "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
-  (interactive)
-  (let ((helm-allow-mouse nil))
-    (helm-git-grep-at-point))
-  )
-
-(defun cfg/helm-git-grep ()
-  "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
-  (interactive)
-  (let ((helm-allow-mouse nil))
-    (helm-git-grep))
-  )
-
 ;; tempbuf
 
 ;; (WARNING - this option could be aggresive!)
@@ -107,6 +93,20 @@
 ;; https://www.emacswiki.org/emacs/CleanBufferList
 
 ;; defuns
+
+(defun cfg/helm-git-grep-at-point ()
+  "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
+  (interactive)
+  (let ((helm-allow-mouse nil))
+    (helm-git-grep-at-point))
+  )
+
+(defun cfg/helm-git-grep ()
+  "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
+  (interactive)
+  (let ((helm-allow-mouse nil))
+    (helm-git-grep))
+  )
 
 (defun cfg/helm-do-grep-region-or-symbol
     (&optional targs use-region-or-symbol-p)
