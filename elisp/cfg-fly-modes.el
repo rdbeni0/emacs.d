@@ -15,7 +15,7 @@
 
 (use-package flycheck
   :ensure t
-  :init
+  :config
   (global-flycheck-mode)
 
   ;; https://www.reddit.com/r/emacs/comments/gqymvz/how_to_force_flycheck_to_select_a_specific_syntax/
