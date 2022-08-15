@@ -9,7 +9,7 @@
   :ensure t
   :defer t
   :config
-  (add-hook 'python-mode-hook 'yapf-mode)
+  ;; (add-hook 'python-mode-hook 'yapf-mode)
   )
 
 (use-package anaconda-mode
