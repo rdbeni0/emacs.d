@@ -29,7 +29,7 @@
   ;; fd is very fast "find" alternative, howewer it must be installed:
   ;; https://github.com/sharkdp/fd
   ;;
-  (setq projectile-generic-command "fd -H --ignore-file .projectile -t f -0")
+  (setq projectile-generic-command "fd -H --ignore-file .gitignore -t f -0")
 
   ;; An alternative option with "generic-command" is here:
   ;; https://github.com/kaushalmodi/.emacs.d/blob/c7da9469e9de3aff83e3e3b09596ef3665b5ab95/setup-files/setup-projectile.el#L64-L77
@@ -45,9 +45,16 @@
   ;; "Ag command to be used by projectile to generate file cache.")
 
   ;;
+
+  ;; this will allow to use projects by .gitignore files
+  (projectile-register-project-type 'gitign '(".gitignore")
+                                    :project-file ".gitignore"
+				    )
   :config
   (add-hook 'projectile-after-switch-project-hook (lambda ()
 						    (projectile-invalidate-cache nil)))
+
+
   )
 
 
