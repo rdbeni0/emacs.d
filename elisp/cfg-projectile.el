@@ -17,11 +17,10 @@
   ;; It can be tried with "indexing-method alien"; but primarly alien works only with ".gitignore".
   ;; And "indexing-method alien" is much faster from performance point of view.
 
-
   ;;   (setq projectile-indexing-method 'native)
   (setq projectile-indexing-method 'alien)
   ;;
-  ;; There is also "turbo-alien" :
+  ;; btw. there is also "turbo-alien" :
   ;; https://www.reddit.com/r/emacs/comments/9jvn0f/projectile_gets_a_turboalien_indexing_mode/
 
   ;;
@@ -44,17 +43,16 @@
   ;;         " -g ''") ; get file names matching the regex ''
   ;; "Ag command to be used by projectile to generate file cache.")
 
-  ;;
+  ;; https://www.reddit.com/r/emacs/comments/ihvv0s/projectile_how_to_manually_registering_a_project/
+  ;; "To disable automatic detection of projects you have to use(setq projectile-track-known-projects-automatically nil). Then you can add projects into projectile with M-x projectile-add-known-project."
+  (setq projectile-track-known-projects-automatically nil)
 
   ;; this will allow to use projects by .gitignore files
   (projectile-register-project-type 'gitign '(".gitignore")
-                                    :project-file ".gitignore"
-				    )
+                                    :project-file ".gitignore")
   :config
   (add-hook 'projectile-after-switch-project-hook (lambda ()
 						    (projectile-invalidate-cache nil)))
-
-
   )
 
 
