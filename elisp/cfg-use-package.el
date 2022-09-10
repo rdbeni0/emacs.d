@@ -48,7 +48,7 @@
 ;; https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
 ;; "This function is based on Drew's code, with a few tweaks to avoid re-loading a library when both .el and .elc versions are present."
 
-(defun cfg/my-load-all-in-directory (dir)
+(defun cfg/load-all-el-in-directory (dir)
   "`load' all elisp libraries in directory DIR which are not already loaded."
   (interactive "D")
   (let ((libraries-loaded (mapcar #'file-name-sans-extension
