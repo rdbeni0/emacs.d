@@ -16,8 +16,7 @@
 (use-package hideshow
   :defer t
   :init
-  (add-hook 'prog-mode-hook #'hs-minor-mode)
-  )
+  (add-hook 'prog-mode-hook #'hs-minor-mode))
 
 (provide 'cfg-folding-hideshow)
 ;;; cfg-folding-hideshow.el ends here

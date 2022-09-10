@@ -12,8 +12,7 @@
   (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
     'dired-single-buffer-mouse)
   (define-key dired-mode-map [remap dired-up-directory]
-    'dired-single-up-directory)
-  )
+    'dired-single-up-directory))
 
 (defcustom list-of-dired-switches
   '("-l" "-la" "-lA" "-lA --group-directories-first")
@@ -26,8 +25,7 @@
   (setq list-of-dired-switches
         (append (cdr list-of-dired-switches)
                 (list (car list-of-dired-switches))))
-  (dired-sort-other (car list-of-dired-switches))
-  )
+  (dired-sort-other (car list-of-dired-switches)))
 
 ;; dired - reuse buffer
 ;; http://ergoemacs.org/emacs/emacs_dired_tips.html
@@ -45,8 +43,7 @@
       ;; we're good to go; just add our bindings
       (cfg/dired-init)
     ;; it's not loaded yet, so add our bindings to the load-hook
-    (add-hook 'dired-load-hook 'cfg/dired-init))
-  )
+    (add-hook 'dired-load-hook 'cfg/dired-init)))
 
 ;; https://elpa.gnu.org/packages/dired-du.html
 ;; optional: (add-hook 'dired-mode-hook #'dired-du-mode)
@@ -96,14 +93,12 @@
     (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
     (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
     (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
-    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")
-    )
-  )
+    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
 
 (use-package diredfl
   :ensure t
   :config
-  (add-hook 'dired-mode-hook #'diredfl-mode)
-  )
+  (add-hook 'dired-mode-hook #'diredfl-mode))
+
 (provide 'cfg-dired)
 ;;; cfg-dired.el ends here

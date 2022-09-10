@@ -51,8 +51,7 @@
                                     :project-file ".gitignore")
   :config
   (add-hook 'projectile-after-switch-project-hook (lambda ()
-						    (projectile-invalidate-cache nil)))
-  )
+						    (projectile-invalidate-cache nil))))
 
 
 ;; org-projectile
@@ -63,11 +62,11 @@
 
 (defun cfg/-projectile-directory-path ()
   "Retrieve the directory path relative to project root.
-If the buffer is not visiting a file, use the `list-buffers-directory'
-variable as a fallback to display the directory, useful in buffers like the
-ones created by `magit' and `dired'.
+  If the buffer is not visiting a file, use the `list-buffers-directory'
+  variable as a fallback to display the directory, useful in buffers like the
+  ones created by `magit' and `dired'.
 
-Returns:
+  Returns:
   - A string containing the directory path in case of success.
   - `nil' in case the current buffer does not have a directory."
   (when-let (directory-name (if-let (file-name (buffer-file-name))
@@ -80,7 +79,7 @@ Returns:
 (defun cfg/-projectile-file-path ()
   "Retrieve the file path relative to project root.
 
-Returns:
+  Returns:
   - A string containing the file path in case of success.
   - `nil' in case the current buffer does not visit a file."
   (when-let (file-name (buffer-file-name))
@@ -89,7 +88,7 @@ Returns:
 (defun cfg/-projectile-file-path-with-line ()
   "Retrieve the file path relative to project root, including line number.
 
-Returns:
+  Returns:
   - A string containing the file path in case of success.
   - `nil' in case the current buffer does not visit a file."
   (when-let (file-path (cfg/-projectile-file-path))
@@ -98,10 +97,9 @@ Returns:
 (defun cfg/-projectile-file-path-with-line-column ()
   "Retrieve the file path relative to project root, including line and column number.
 
-This function respects the value of the `column-number-indicator-zero-based'
-variable.
+  This function respects the value of the `column-number-indicator-zero-based' variable.
 
-Returns:
+  Returns:
   - A string containing the file path in case of success.
   - `nil' in case the current buffer does not visit a file."
   (when-let (file-path (cfg/-projectile-file-path-with-line))
@@ -119,9 +117,9 @@ Returns:
 (defun cfg/projectile-copy-directory-path ()
   "Copy and show the directory path relative to project root.
 
-If the buffer is not visiting a file, use the `list-buffers-directory'
-variable as a fallback to display the directory, useful in buffers like the
-ones created by `magit' and `dired'."
+  If the buffer is not visiting a file, use the `list-buffers-directory'
+  variable as a fallback to display the directory, useful in buffers like the
+  ones created by `magit' and `dired'."
   (interactive)
   (if-let (directory-path (cfg/-projectile-directory-path))
       (progn
@@ -150,8 +148,7 @@ ones created by `magit' and `dired'."
 (defun cfg/projectile-copy-file-path-with-line-column ()
   "Copy and show the file path relative to project root, including line and column number.
 
-This function respects the value of the `column-number-indicator-zero-based'
-variable."
+  This function respects the value of the `column-number-indicator-zero-based' variable."
   (interactive)
   (if-let (file-path (cfg/-projectile-file-path-with-line-column))
       (progn
@@ -164,11 +161,11 @@ variable."
 (defun cfg/-directory-path ()
   "Retrieve the directory path of the current buffer.
 
-If the buffer is not visiting a file, use the `list-buffers-directory' variable
-as a fallback to display the directory, useful in buffers like the ones created
-by `magit' and `dired'.
+  If the buffer is not visiting a file, use the `list-buffers-directory' variable
+  as a fallback to display the directory, useful in buffers like the ones created
+  by `magit' and `dired'.
 
-Returns:
+  Returns:
   - A string containing the directory path in case of success.
   - `nil' in case the current buffer does not have a directory."
   (when-let (directory-name (if-let (file-name (buffer-file-name))
@@ -179,7 +176,7 @@ Returns:
 (defun cfg/-file-path ()
   "Retrieve the file path of the current buffer.
 
-Returns:
+  Returns:
   - A string containing the file path in case of success.
   - `nil' in case the current buffer does not have a directory."
   (when-let (file-path (buffer-file-name))
@@ -188,17 +185,16 @@ Returns:
 (defun cfg/-file-path-with-line ()
   "Retrieve the file path of the current buffer, including line number.
 
-Returns:
+  Returns:
   - A string containing the file path in case of success.
   - `nil' in case the current buffer does not have a directory."
   (when-let (file-path (cfg/-file-path))
     (concat file-path ":" (number-to-string (line-number-at-pos)))))
 
 (defun cfg/-file-path-with-line-column ()
-  "Retrieve the file path of the current buffer,
-including line and column number.
+  "Retrieve the file path of the current buffer, including line and column number.
 
-Returns:
+  Returns:
   - A string containing the file path in case of success.
   - `nil' in case the current buffer does not have a directory."
   (when-let (file-path (cfg/-file-path-with-line))
@@ -216,9 +212,9 @@ Returns:
 (defun cfg/copy-directory-path ()
   "Copy and show the directory path of the current buffer.
 
-If the buffer is not visiting a file, use the `list-buffers-directory'
-variable as a fallback to display the directory, useful in buffers like the
-ones created by `magit' and `dired'."
+  If the buffer is not visiting a file, use the `list-buffers-directory'
+  variable as a fallback to display the directory, useful in buffers like the
+  ones created by `magit' and `dired'."
   (interactive)
   (if-let (directory-path (cfg/-directory-path))
       (progn
@@ -251,8 +247,7 @@ ones created by `magit' and `dired'."
   (message "%s" (buffer-name)))
 
 (defun cfg/copy-file-name-base ()
-  "Copy and show the file name without its final extension of the current
-buffer."
+  "Copy and show the file name without its final extension of the current buffer."
   (interactive)
   (if-let (file-name (file-name-base (cfg/-file-path)))
       (progn
@@ -270,18 +265,14 @@ buffer."
     (message "WARNING: Current buffer is not attached to a file!")))
 
 (defun cfg/copy-file-path-with-line-column ()
-  "Copy and show the file path of the current buffer,
-including line and column number.
-
-This function respects the value of the `column-number-indicator-zero-based'
-variable."
+  "Copy and show the file path of the current buffer, including line and column number.
+  This function respects the value of the `column-number-indicator-zero-based' variable."
   (interactive)
   (if-let (file-path (cfg/-file-path-with-line-column))
       (progn
         (kill-new file-path)
         (message "%s" file-path))
     (message "WARNING: Current buffer is not attached to a file!")))
-
 
 (provide 'cfg-projectile)
 ;;; cfg-projectile.el ends here

@@ -1210,16 +1210,6 @@
    "gt%" '(ggtags-query-replace :which-key "query-replace")
    )
 
-
-  ;; commented code..
-
-  ;; (general-create-definer private/with-leader
-  ;;                         :prefix "SPC"
-  ;;                         :keymaps 'override
-  ;;                         :states '(normal visual emacs))
-  ;; (general-create-definer private/with-local-leader
-  ;;                         :prefix ","
-  ;;                         :states '(normal visual emacs))
   )
 
 (provide 'cfg-general-which-keys)

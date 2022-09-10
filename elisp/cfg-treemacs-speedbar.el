@@ -18,8 +18,7 @@
    treemacs-indentation                     1
    )
   (treemacs-resize-icons 18) ;; icon's size
-  (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
-  )
+  (setq-local imenu-create-index-function #'ggtags-build-imenu-index))
 
 (use-package treemacs-evil
   :after (treemacs evil)
@@ -49,8 +48,6 @@
   :ensure t
   :config
   )
-
-
 
 (provide 'cfg-treemacs-speedbar)
 ;;; cfg-treemacs-speedbar.el ends here

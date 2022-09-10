@@ -17,8 +17,7 @@
   :ensure t
   :init (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 23)
-  )
+  (setq doom-modeline-height 23))
 
 (global-hl-line-mode 1) ; highlight current line
 

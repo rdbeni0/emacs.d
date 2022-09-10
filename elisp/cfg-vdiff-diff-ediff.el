@@ -9,8 +9,7 @@
   :after evil
   :ensure t
   :config
-  (evil-define-key 'normal vdiff-mode-map "Z" vdiff-mode-prefix-map)
-  )
+  (evil-define-key 'normal vdiff-mode-map "Z" vdiff-mode-prefix-map))
 
 ;; https://emacs.stackexchange.com/questions/7362/how-to-show-a-diff-between-two-buffers-with-character-level-diffs
 (setq-default ediff-forward-word-function 'forward-char)
@@ -24,9 +23,7 @@
   (transient-suffix-put 'magit-dispatch "e" :description "vdiff (dwim)")
   (transient-suffix-put 'magit-dispatch "e" :command 'vdiff-magit-dwim)
   (transient-suffix-put 'magit-dispatch "E" :description "vdiff")
-  (transient-suffix-put 'magit-dispatch "E" :command 'vdiff-magit)
-  )
-
+  (transient-suffix-put 'magit-dispatch "E" :command 'vdiff-magit))
 
 (provide 'cfg-vdiff-diff-ediff)
 ;;; cfg-vdiff-diff-ediff.el ends here

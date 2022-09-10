@@ -24,14 +24,11 @@
 (use-package ggtags
   :ensure t
   :config
-  (setq ggtags-completing-read-function nil)
-  )
+  (setq ggtags-completing-read-function nil))
 
 (use-package helm-gtags
   :ensure t
-  :after '(helm ggtags)
-  )
-
+  :after '(helm ggtags))
 
 (provide 'cfg-gtags-tags)
 ;;; cfg-gtags-tags.el ends here

@@ -33,8 +33,7 @@
 	 ("/known_hosts\\'"       . ssh-known-hosts-mode)
 	 ("/authorized_keys2?\\'" . ssh-authorized-keys-mode)
 	 )
-       auto-mode-alist)
-      )
+       auto-mode-alist))
 
 (provide 'cfg-list-auto-mode-alist)
 ;;; cfg-list-auto-mode-alist.el ends here

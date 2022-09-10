@@ -32,8 +32,7 @@
                                                        parsed-host
                                                        parsed-localname
                                                        new-hop)))
-           new-fname)))))
-  )
+           new-fname))))))
 
 (defun cfg/sudired ()
   "Open current directory via sudo and dired."
@@ -42,16 +41,15 @@
   (let ((dir (expand-file-name default-directory)))
     (if (string-match "^/sudo:" dir)
         (user-error "Already in sudo")
-      (dired (concat "/sudo::" dir))))
-  )
+      (dired (concat "/sudo::" dir)))))
 
 ;; tramp
 ;; more examples for tramp-parse : https://github.com/abo-abo/swiper/issues/59
 
 (setq my-tramp-ssh-completions
       '((tramp-parse-sconfig "~/.ssh/ssh_config")
-        (tramp-parse-shosts "~/.ssh/known_hosts"))
-      )
+        (tramp-parse-shosts "~/.ssh/known_hosts")))
+
 (mapc (lambda (method)
         (tramp-set-completion-function method my-tramp-ssh-completions))
       '("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh"))
@@ -61,8 +59,7 @@
   (format "/%s:%s%s:"
 	  tramp-default-method
 	  (if ssh-remote-user (format "%s@" ssh-remote-user) "")
-	  ssh-host)
-  )
+	  ssh-host))
 
 ;; https://github.com/jhgorrell/ssh-config-mode-el
 (use-package ssh-config-mode
@@ -85,10 +82,7 @@
 	      (shell-dirtrack-mode t)
 	      (setq ssh-directory-tracking-mode t)
 	      (setq shell-dirtrackp t)
-	      (setq comint-file-name-prefix (cfg-make-comint-file-name-prefix)))
-	    )
-  )
-
+	      (setq comint-file-name-prefix (cfg-make-comint-file-name-prefix)))))
 
 ;; tramp-term
 ;; Note: a large part of the data is also directly embedded in the "tramp-term.el" file (due to the fact that they are located directly in the package).
@@ -98,14 +92,13 @@
 ;;
 
 (require 'tramp-term)
+
 (add-hook 'tramp-term-after-initialized-hook
 	  (lambda (host)
 	    (term-send-raw-string (format "export PS1=\"[\\[\\033[1;35m\\]\\h\\[\\033[0m\\]:\\[\\033[1;32m\\]\\$PWD\\[\\033[0m\\]]\n$ \"
 export HISTFILE=~/.bash_history
 clear
-" host))
-	    )
-	  )
+" host))))
 
 (provide 'cfg-tramp-sudo-ssh)
 ;;; cfg-tramp-sudo-ssh.el ends here

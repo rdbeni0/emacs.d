@@ -9,8 +9,7 @@
   :ensure t
   :config
   (setq markdown-fontify-code-blocks-natively t)
-  (setq markdown-command "/usr/sbin/pandoc")
-  )
+  (setq markdown-command "/usr/sbin/pandoc"))
 
 (provide 'cfg-markdown)
 ;;; cfg-markdown.el ends here

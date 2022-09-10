@@ -28,8 +28,7 @@
 
 (setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")
                          ("melpa"     . "https://melpa.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ))
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 ;; marmalade is an obsolete repository :
 ;; https://marmalade-repo.org/#download
@@ -43,6 +42,7 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
 (require 'use-package)
 
 (provide 'cfg-use-package)

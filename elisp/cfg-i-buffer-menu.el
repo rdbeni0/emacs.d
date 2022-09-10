@@ -9,14 +9,13 @@
 
 (defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.
-If the universal prefix argument is used then will the windows too."
+  If the universal prefix argument is used then will the windows too."
   (interactive "P")
   (when (yes-or-no-p (format "Killing all buffers except \"%s\"? "
                              (buffer-name)))
     (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))
     (when (equal '(4) arg) (delete-other-windows))
-    (message "Buffers deleted!"))
-  )
+    (message "Buffers deleted!")))
 
 (defun cfg/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
@@ -28,8 +27,7 @@ If the universal prefix argument is used then will the windows too."
      (cl-find-if (lambda (buffer)
                    (not (eq buffer current-buffer)))
                  (mapcar #'car (window-prev-buffers window)))
-     nil t))
-  )
+     nil t)))
 
 (defun cfg/delete-current-buffer-file ()
   "Removes file connected to current buffer and kills buffer."
@@ -47,16 +45,15 @@ If the universal prefix argument is used then will the windows too."
             (when (projectile-project-p)
               (call-interactively #'projectile-invalidate-cache))
             (message "File deleted: '%s'" filename))
-        (message "Canceled: File deletion"))))
-  )
+        (message "Canceled: File deletion")))))
 
 (defun cfg/rename-current-buffer-file (&optional arg)
   "Rename the current buffer and the file it is visiting.
-If the buffer isn't visiting a file, ask if it should
-be saved to a file, or just renamed.
+  If the buffer isn't visiting a file, ask if it should
+  be saved to a file, or just renamed.
 
-If called without a prefix argument, the prompt is
-initialized with the current directory instead of filename."
+  If called without a prefix argument, the prompt is
+  initialized with the current directory instead of filename."
   (interactive "P")
   (let* ((name (buffer-name))
          (filename (buffer-file-name)))
@@ -110,22 +107,20 @@ initialized with the current directory instead of filename."
                    (message "Buffer '%s' successfully renamed to '%s'"
                             name new-name)))
                 ;; ?\a = C-g, ?\e = Esc and C-[
-                ((memq key '(?\a ?\e)) (keyboard-quit)))))))
-  )
+                ((memq key '(?\a ?\e)) (keyboard-quit))))))))
 
 (defun cfg/new-empty-buffer ()
   "Create a new empty buffer.
-New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
-It returns the buffer (for elisp programing).
-URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
-Version 2017-11-01"
+  New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+  It returns the buffer (for elisp programing).
+  URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
+  Version 2017-11-01"
   (interactive)
   (let (($buf (generate-new-buffer "untitled")))
     (switch-to-buffer $buf)
     (funcall initial-major-mode)
     (setq buffer-offer-save t)
-    $buf)
-  )
+    $buf))
 
 (defun cfg/toggle-maximize-buffer ()
   "Maximize buffer"
@@ -136,8 +131,7 @@ Version 2017-11-01"
         (jump-to-register ?_)
       (progn
         (window-configuration-to-register ?_)
-        (delete-other-windows))))
-  )
+        (delete-other-windows)))))
 
 ;; https://stackoverflow.com/questions/12715376/emacs-copy-pwd-of-the-current-buffer-to-clipboard
 
@@ -145,8 +139,7 @@ Version 2017-11-01"
   "Show the full path file name in the minibuffer."
   (interactive)
   (kill-new (buffer-file-name))
-  (message (buffer-file-name))
-  )
+  (message (buffer-file-name)))
 
 ;; ibuffer
 

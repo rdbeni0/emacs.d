@@ -5,6 +5,10 @@
 
 ;;; Code:
 
+(use-package json-mode
+  :ensure t
+  )
+
 (use-package json-navigator
   :ensure t
   :after hierarchy

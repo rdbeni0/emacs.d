@@ -43,7 +43,7 @@
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Resources.html
 ;; https://emacs.stackexchange.com/questions/13291/emacs-cursor-color-is-different-in-daemon-and-non-daemon-modes
-(setq inhibit-x-resources t) 
+(setq inhibit-x-resources t)
 
 ;; Minimal UI
 

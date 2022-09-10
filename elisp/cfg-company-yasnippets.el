@@ -21,8 +21,7 @@
 	company-minimum-prefix-length   1   ;; show completion after 1 character (default is 3!)
 	company-show-numbers            t
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
-	company-transformers '(company-sort-by-occurrence) ;; could be changed "per mode"
-	)
+	company-transformers '(company-sort-by-occurrence)) ;; could be changed "per mode"
   ;; Press SPACE will accept the highlighted candidate and insert a space
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
@@ -64,8 +63,7 @@
   ;; MORE OPTIONS:
   (with-eval-after-load 'company
     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-    (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))
-    )
+    (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS - ADD GLOBALLY:
@@ -93,9 +91,8 @@
 							      company-etags
 							      company-keywords))
 			     (add-to-list 'company-backends 'company-capf)
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)) ;; the most important
-			     ;; TODO -  company-ac-php-backend ;; the most important
-			     ))
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))) ;; the most important
+  ;; TODO -  company-ac-php-backend ;; the most important
 
   (add-hook 'sh-mode-hook (lambda ()
 			    (setq company-backends '())
@@ -105,8 +102,7 @@
 							     company-etags
 							     company-keywords))
 			    (add-to-list 'company-backends 'company-capf)
-			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			    ))
+			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'cperl-mode-hook (lambda ()
 			       (setq company-backends '())
@@ -116,8 +112,7 @@
 								company-etags
 								company-keywords))
 			       (add-to-list 'company-backends 'company-capf)
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			       ))
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'python-mode-hook (lambda ()
 				(setq company-backends '())
@@ -128,8 +123,7 @@
 								 company-keywords))
 				(add-to-list 'company-backends 'company-capf)
 				(add-to-list 'company-backends 'company-anaconda) ;; anaconda-mode
-				(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-				))
+				(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'snippet-mode-hook (lambda ()
 				 (setq company-backends '())
@@ -139,8 +133,7 @@
 								  company-etags
 								  company-keywords))
 				 (add-to-list 'company-backends 'company-capf)
-				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-				 ))
+				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'org-mode-hook (lambda ()
 			     (setq company-backends '())
@@ -150,100 +143,96 @@
 							      company-etags
 							      company-keywords))
 			     (add-to-list 'company-backends 'company-capf)
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			     ))
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   ;; some optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
   (add-hook 'notmuch-message-mode-hook (lambda ()
-			    (setq company-backends '())
-			    (add-to-list 'company-backends 'company-dabbrev)
-			    (add-to-list 'company-backends 'notmuch-company)
-			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-			    (setq require-final-newline nil) ;; no new lines after inserting snippet
-			    ))
+					 (setq company-backends '())
+					 (add-to-list 'company-backends 'company-dabbrev)
+					 (add-to-list 'company-backends 'notmuch-company)
+					 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-)
+  )
 
-  ;; https://github.com/pythonic-emacs/company-anaconda
-  ;; for python:
+;; https://github.com/pythonic-emacs/company-anaconda
+;; for python:
 
-  (use-package company-anaconda
-    :after company
-    :ensure t
+(use-package company-anaconda
+  :after company
+  :ensure t
+  )
+
+;; https://github.com/expez/company-quickhelp
+
+(use-package company-quickhelp
+  :after company
+  :ensure t
+  :config
+
+  ;; https://emacs.stackexchange.com/questions/2762/jump-to-documentation-buffer-with-company-mode
+  (defun cfg/company-show-doc-buffer-f1 ()
+    "Temporarily show the documentation buffer for the selection."
+    (interactive)
+    (let* ((selected (nth company-selection company-candidates))
+	   (doc-buffer (or (company-call-backend 'doc-buffer selected)
+			   (error "No documentation available"))))
+      (with-current-buffer doc-buffer
+	(goto-char (point-min)))
+      (display-buffer doc-buffer t))
     )
-
-  ;; https://github.com/expez/company-quickhelp
-
-  (use-package company-quickhelp
-    :after company
-    :ensure t
-    :config
-
-    ;; https://emacs.stackexchange.com/questions/2762/jump-to-documentation-buffer-with-company-mode
-    (defun cfg/company-show-doc-buffer-f1 ()
-      "Temporarily show the documentation buffer for the selection."
-      (interactive)
-      (let* ((selected (nth company-selection company-candidates))
-	     (doc-buffer (or (company-call-backend 'doc-buffer selected)
-			     (error "No documentation available"))))
-	(with-current-buffer doc-buffer
-	  (goto-char (point-min)))
-	(display-buffer doc-buffer t))
-      )
-    (company-quickhelp-mode 1)
-    (setq company-quickhelp-delay 0.0)
-    (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
-    (add-hook 'company-mode-hook #'company-quickhelp-mode)
-    (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1) ; TODO - migrate to general.el
-    )
+  (company-quickhelp-mode 1)
+  (setq company-quickhelp-delay 0.0)
+  (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
+  (add-hook 'company-mode-hook #'company-quickhelp-mode)
+  (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1)) ; TODO - migrate to general.el
 
 
 ;;;;;;;;;;;;;;;;;;;;;; yasnippets
-  ;; Documentation: https://joaotavora.github.io/yasnippet/
+;; Documentation: https://joaotavora.github.io/yasnippet/
 
-  (use-package yasnippet
-    :ensure t
-    :config
-    ;; add yasnippet to all backends:
-    ;; (yas-global-mode 1)
-    )
+(use-package yasnippet
+  :ensure t
+  :config
+  ;; add yasnippet to all backends:
+  ;; (yas-global-mode 1)
+  )
 
-  ;; https://github.com/AndreaCrotti/yasnippet-snippets
+;; https://github.com/AndreaCrotti/yasnippet-snippets
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Adding a custom/dynamic yasnippet directory:
-  ;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
-  ;; and dymamic dir - example of code:
-  (setq yasnippets-dynamic-data-dir
-	(substring
-	 ;;
-	 ;; EXAMPLES:
-	 ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
-	 ;;
-	 (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
-	 0 -1))
+;; Adding a custom/dynamic yasnippet directory:
+;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
+;; and dymamic dir - example of code:
+(setq yasnippets-dynamic-data-dir
+      (substring
+       ;;
+       ;; EXAMPLES:
+       ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
+       ;;
+       (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
+       0 -1))
 
-  ;; and then:
-  ;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
-  ;;
+;; and then:
+;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
+;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (use-package yasnippet-snippets
-    :ensure t
-    :config
-    ;; add yas-minor-mode per MAJOR mode - not global:
-    (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
-    (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
-    (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
-    (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
-    (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
-    (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
-    (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
-    (add-hook 'notmuch-message-mode-hook #'yas-minor-mode) ;; notmuch-message-mode
-    (yas-reload-all)
-    )
+(use-package yasnippet-snippets
+  :ensure t
+  :config
+  ;; add yas-minor-mode per MAJOR mode - not global:
+  (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
+  (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
+  (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
+  (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
+  (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
+  (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
+  (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
+  (add-hook 'notmuch-message-mode-hook #'yas-minor-mode) ;; notmuch-message-mode
+  (yas-reload-all))
 
-  (provide 'cfg-company-yasnippets)
+(provide 'cfg-company-yasnippets)
 ;;; cfg-company-yasnippets.el ends here

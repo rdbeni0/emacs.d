@@ -27,8 +27,7 @@ mouse-1: switch to %S\n\
 mouse-2: kill %S"
             (buffer-name (tabbar-tab-value tab))
             (buffer-name (tabbar-tab-value tab))
-            (buffer-name (tabbar-tab-value tab))))
-  )
+            (buffer-name (tabbar-tab-value tab)))))
 
 (defun cfg/px-tabbar-buffer-select-tab (event tab)
   "On mouse EVENT, select TAB."
@@ -37,8 +36,7 @@ mouse-2: kill %S"
     (cond
      ((eq mouse-button 'mouse-3) (with-current-buffer buffer (kill-buffer)))
      (t (switch-to-buffer buffer)))
-    (tabbar-buffer-show-groups nil))
-  )
+    (tabbar-buffer-show-groups nil)))
 
 (defun cfg/tabbar-buffer-tab-label (tab)
   "Return a label for TAB.
@@ -54,8 +52,7 @@ mouse-2: kill %S"
       (tabbar-shorten
        label (max 1 (/ (window-width)
                        (length (tabbar-view
-                                (tabbar-current-tabset))))))))
-  )
+                                (tabbar-current-tabset)))))))))
 (use-package tabbar
   :ensure t
   :init
@@ -150,9 +147,7 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'helm-mode) (string-equal "*helm" (substring (buffer-name) 0 5))) "HELM")
 
-	   (t "user")
-	   ))
-    )
+	   (t "user"))))
 
   ;; keys
   ;; TODO : migrate to general.el

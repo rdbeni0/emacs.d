@@ -37,8 +37,7 @@
       (write-region  (mapconcat 'identity files (char-to-string 0))
                      nil tempfile)
 
-      (grep (format "%s %s | xargs -0 grep -n -i \"%s\" " pattern))))
-  )
+      (grep (format "%s %s | xargs -0 grep -n -i \"%s\" " pattern)))))
 
 ;; recentf
 

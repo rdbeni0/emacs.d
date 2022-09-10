@@ -22,8 +22,7 @@
   (if (and
        (not (member major-mode display-line-numbers-exempt-modes))
        (not (minibufferp)))
-      (display-line-numbers-mode))
-  )
+      (display-line-numbers-mode)))
 
 (global-display-line-numbers-mode)
 
@@ -36,9 +35,7 @@
   (set-face-background 'highlight-indent-guides-odd-face "darkgray")
   ;; (set-face-background 'highlight-indent-guides-even-face "dimgray")
   ;; (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-  )
-
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 (provide 'cfg-line-numbers)
 ;;; cfg-line-numbers.el ends here

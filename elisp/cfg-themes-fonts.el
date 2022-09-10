@@ -21,8 +21,7 @@
   (progn
     (doom-themes-neotree-config)
     (setq doom-neotree-line-spacing 0)
-    (doom-themes-org-config))
-  )
+    (doom-themes-org-config)))
 
 ;; (use-package moe-theme
 ;;    :ensure t
@@ -64,8 +63,7 @@
 (use-package unicode-fonts
   :ensure t
   :config
-  (unicode-fonts-setup)
-  )
+  (unicode-fonts-setup))
 
 (provide 'cfg-themes-fonts)
 ;;; cfg-themes-fonts.el ends here

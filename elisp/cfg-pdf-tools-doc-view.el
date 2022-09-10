@@ -10,16 +10,14 @@
 (use-package doc-view
   :config
   (setq doc-view-resolution 150)
-  (setq doc-view-scale-internally nil)
-  )
+  (setq doc-view-scale-internally nil))
 
 ;; pdf-tools
 
 (use-package pdf-tools
   :ensure t
   :config
-  (pdf-tools-install)
-  )
+  (pdf-tools-install))
 
 (provide 'cfg-pdf-tools-doc-view)
 ;;; cfg-pdf-tools-doc-view.el ends here

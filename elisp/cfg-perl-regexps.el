@@ -32,16 +32,14 @@
 	 (cant-locate (string-match "^Can't locate " path)))
     (if cant-locate
 	nil
-      path))
-  )
+      path)))
 
 (defun cfg/find-perl-module (module-name)
   (interactive "sPerl module name: ")
   (let ((path (cfg/perl-module-path module-name)))
     (if path
 	(find-file path)
-      (error "Module '%s' not found" module-name)))
-  )
+      (error "Module '%s' not found" module-name))))
 
 ;; perltidy
 
@@ -79,22 +77,19 @@
                  (1+ (line-end-position))))))
     (apply #'call-process-region (car pos) (cdr pos) perl5-perltidy-executable t '(t nil)
            perl5-perltidy-options)
-    (goto-char old-point))
-  )
+    (goto-char old-point)))
 
 (defun cfg/perltidy-format-buffer ()
   "Format current buffer with perltidy."
   (interactive)
   (mark-whole-buffer)
-  (cfg/perltidy-format)
-  )
+  (cfg/perltidy-format))
 
 (defun cfg/perltidy-format-function ()
   "Format current function (sub) with perltidy."
   (interactive)
   (mark-defun)
-  (cfg/perltidy-format)
-  )
+  (cfg/perltidy-format))
 
 (use-package cperl-mode
   ;;     :demand t
@@ -103,8 +98,7 @@
   (eval-after-load "ffap" '(require 'ffap-perl-module))
   :config
   (setq cperl-electric-keywords nil)
-  (clear-abbrev-table cperl-mode-abbrev-table)
-  )
+  (clear-abbrev-table cperl-mode-abbrev-table))
 
 ;; OPTIONAL package : https://github.com/aki2o/emacs-plsense
 ;;
@@ -120,8 +114,7 @@
 (use-package regex-tool
   :ensure t
   :config
-  (setq regex-tool-backend "perl")
-  )
+  (setq regex-tool-backend "perl"))
 
 (provide 'cfg-perl-regexps)
 ;;; cfg-perl-regexps.el ends here

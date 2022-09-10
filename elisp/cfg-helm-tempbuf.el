@@ -31,8 +31,7 @@
     (add-to-list 'helm-boring-buffer-regexp-list "*scratch*")
     (add-to-list 'helm-boring-buffer-regexp-list "*Messages*")
     (add-to-list 'helm-boring-buffer-regexp-list "*company-documentation*")
-    (add-to-list 'helm-boring-buffer-regexp-list "*spacemacs*"))
-  )
+    (add-to-list 'helm-boring-buffer-regexp-list "*spacemacs*")))
 
 (setq helm-candidate-number-limit 150) ;; default is 150
 
@@ -50,8 +49,7 @@
   :after projectile
   :ensure t
   :config
-  (helm-projectile-on)
-  )
+  (helm-projectile-on))
 
 (use-package helm-org
   :after org
@@ -77,13 +75,13 @@
 ;; https://github.com/biern/.emacs.d/blob/master/conf/tempbuf.el
 ;;
 (require 'tempbuf)
+
 ;; clean native-compile buffer
 (when (get-buffer "*Async-native-compile-log*")
   (setq tempbuf-minimum-timeout 5) ;; 5 seconds
   (switch-to-buffer "*Async-native-compile-log*")
   (turn-on-tempbuf-mode)
-  (switch-to-buffer "*scratch*")
-  )
+  (switch-to-buffer "*scratch*"))
 ;; tempbuf is working well with helm and it will clean junk buffers:
 (setq tempbuf-minimum-timeout 30)
 (add-hook 'helm-major-mode-hook 'turn-on-tempbuf-mode)
@@ -98,15 +96,13 @@
   "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
   (interactive)
   (let ((helm-allow-mouse nil))
-    (helm-git-grep-at-point))
-  )
+    (helm-git-grep-at-point)))
 
 (defun cfg/helm-git-grep ()
   "Some helm variables are NOT working correctly with helm-git-grep: so we need to turn it off."
   (interactive)
   (let ((helm-allow-mouse nil))
-    (helm-git-grep))
-  )
+    (helm-git-grep)))
 
 (defun cfg/helm-do-grep-region-or-symbol
     (&optional targs use-region-or-symbol-p)
@@ -138,34 +134,29 @@
                                   (if helm-ff-transformer-show-only-basename
                                       (helm-basename preselection)
                                     preselection))))))
-    (helm-do-grep-1 targets nil nil nil nil use-region-or-symbol-p))
-  )
+    (helm-do-grep-1 targets nil nil nil nil use-region-or-symbol-p)))
 
 (defun cfg/helm-file-do-grep ()
   "Search in current file with `grep' using a default input."
   (interactive)
   (cfg/helm-do-grep-region-or-symbol
-   (list (buffer-file-name (current-buffer))) nil)
-  )
+   (list (buffer-file-name (current-buffer))) nil))
 
 (defun cfg/helm-file-do-grep-region-or-symbol ()
   "Search in current file with `grep' using a default input."
   (interactive)
   (cfg/helm-do-grep-region-or-symbol
-   (list (buffer-file-name (current-buffer))) t)
-  )
+   (list (buffer-file-name (current-buffer))) t))
 
 (defun cfg/helm-files-do-grep ()
   "Search in files with `grep'."
   (interactive)
-  (cfg/helm-do-grep-region-or-symbol nil nil)
-  )
+  (cfg/helm-do-grep-region-or-symbol nil nil))
 
 (defun cfg/helm-files-do-grep-region-or-symbol ()
   "Search in files with `grep' using a default input."
   (interactive)
-  (cfg/helm-do-grep-region-or-symbol nil t)
-  )
+  (cfg/helm-do-grep-region-or-symbol nil t))
 
 (defun cfg/helm-buffers-do-grep ()
   "Search in opened buffers with `grep'."
@@ -173,8 +164,7 @@
   (let ((buffers (cl-loop for buffer in (buffer-list)
                           when (buffer-file-name buffer)
                           collect (buffer-file-name buffer))))
-    (cfg/helm-do-grep-region-or-symbol buffers nil))
-  )
+    (cfg/helm-do-grep-region-or-symbol buffers nil)))
 
 (defun cfg/helm-buffers-do-grep-region-or-symbol ()
   "Search in opened buffers with `grep' with a default input."
@@ -182,8 +172,7 @@
   (let ((buffers (cl-loop for buffer in (buffer-list)
                           when (buffer-file-name buffer)
                           collect (buffer-file-name buffer))))
-    (cfg/helm-do-grep-region-or-symbol buffers t))
-  )
+    (cfg/helm-do-grep-region-or-symbol buffers t)))
 
 (defun cfg/helm-jump-in-buffer ()
   "Jump in buffer using `imenu' facilities and helm."
@@ -191,8 +180,7 @@
   (call-interactively
    (cond
     ((eq major-mode 'org-mode) 'helm-org-in-buffer-headings)
-    (t 'helm-semantic-or-imenu)))
-  )
+    (t 'helm-semantic-or-imenu))))
 
 (provide 'cfg-helm-tempbuf)
 ;;; cfg-helm-tempbuf.el ends here

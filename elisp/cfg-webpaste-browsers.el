@@ -16,8 +16,7 @@
   (add-hook 'webpaste-return-url-hook
             (lambda (url)
               (message "Copied URL to clipboard: %S" url)
-              (simpleclip-set-contents url)))
-  )
+              (simpleclip-set-contents url))))
 
 ;; default browser: firefox
 (setq browse-url-browser-function 'browse-url-generic)

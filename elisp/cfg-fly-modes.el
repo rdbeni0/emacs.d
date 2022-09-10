@@ -10,8 +10,7 @@
 
 (use-package flyspell
   :init
-  (setq flyspell-default-dictionary "english")
-  )
+  (setq flyspell-default-dictionary "english"))
 
 (use-package flycheck
   :ensure t
@@ -27,8 +26,7 @@
 (use-package flycheck-checkbashisms
   :ensure t
   :config
-  (flycheck-checkbashisms-setup)
-  )
+  (flycheck-checkbashisms-setup))
 
 (provide 'cfg-fly-modes)
 ;;; cfg-fly-modes.el ends here
