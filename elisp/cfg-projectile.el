@@ -7,14 +7,13 @@
 
 (use-package projectile
   :ensure t
-  ;;  :requires subr-x
   :init
   (projectile-mode)
   (setq projectile-completion-system 'helm)
   (setq projectile-enable-caching t)
 
   ;; Currently if the ignore list has to be taken from .projectile, then it only works with "indexing-method native".
-  ;; It can be tried with "indexing-method alien"; but primarly alien works only with ".gitignore".
+  ;; It can be tried with "indexing-method alien", but primarly alien works only with ".gitignore".
   ;; And "indexing-method alien" is much faster from performance point of view.
 
   ;;   (setq projectile-indexing-method 'native)

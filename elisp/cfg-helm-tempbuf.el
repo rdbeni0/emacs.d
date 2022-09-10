@@ -59,8 +59,10 @@
   )
 
 ;; https://github.com/yasuyk/helm-git-grep
+;; helm has it's own built command: "helm-grep-do-git-grep" which is very similar, but this one package is little better:
 
 (use-package helm-git-grep
+  :after wgrep
   :ensure t
   )
 
