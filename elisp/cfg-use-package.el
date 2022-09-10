@@ -45,5 +45,19 @@
 
 (require 'use-package)
 
+;; https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
+;; "This function is based on Drew's code, with a few tweaks to avoid re-loading a library when both .el and .elc versions are present."
+
+(defun cfg/my-load-all-in-directory (dir)
+  "`load' all elisp libraries in directory DIR which are not already loaded."
+  (interactive "D")
+  (let ((libraries-loaded (mapcar #'file-name-sans-extension
+                                  (delq nil (mapcar #'car load-history)))))
+    (dolist (file (directory-files dir t ".+\\.elc?$"))
+      (let ((library (file-name-sans-extension file)))
+        (unless (member library libraries-loaded)
+          (load library nil t)
+          (push library libraries-loaded))))))
+
 (provide 'cfg-use-package)
 ;;; cfg-use-package.el ends here

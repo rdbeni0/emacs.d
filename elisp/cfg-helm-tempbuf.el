@@ -17,7 +17,7 @@
         helm-buffers-fuzzy-matching           t
         helm-completion-in-region-fuzzy-match t
         helm-file-cache-fuzzy-match           t
-        helm-allow-mouse                      t  ;; this not working with helm-git-grep
+        helm-allow-mouse                      t  ;; this is not working with helm-git-grep
         helm-imenu-fuzzy-match                t
         helm-mode-fuzzy-match                 t
         helm-locate-fuzzy-match               t

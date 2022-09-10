@@ -1,0 +1,56 @@
+;; general helm-gtags / ggtags / ctags:
+
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map)
+ :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode)
+ :prefix ","
+ "g"  '(:ignore t :which-key "ggtags")
+ "gc" '(helm-gtags-create-tags :which-key "create-tags")
+ "gg" '(helm-gtags-find-pattern :which-key "find-pattern")
+ "gm" '(helm-gtags-mode :which-key "helm-gtags-mode")
+ "gl" '(helm-gtags-select :which-key "gtags-select")
+ "gd" '(helm-gtags-find-tag :which-key "find-def")
+ "gD" '(helm-gtags-find-tag-from-here :which-key "find-def-from-here")
+ "gf" '(helm-gtags-find-files :which-key "find-file")
+ "gr" '(helm-gtags-find-rtag :which-key "find-refr")
+ "gi" '(helm-gtags-tags-in-this-function :which-key "tags-in-func")
+ "gP" '(helm-gtags-parse-file :which-key "parse-file")
+ "g." '(helm-gtags-dwim :which-key "gtags-dwim")
+ "go" '(helm-gtags-find-symbol :which-key "find-symbol")
+ "gu" '(helm-gtags-update-tags :which-key "update-tags")
+ "gs" '(helm-gtags-find-symbol :which-key "find-symbol")
+ "ga" '(helm-gtags-clear-cache :which-key "clear-cache")
+ "gq" '(helm-gtags-resume :which-key "gtags-resume")
+ "gA" '(helm-gtags-clear-all-cache :which-key "clear-all-cache")
+
+  ;;;; helm-gtags : navigation :
+
+ "g]" '(helm-gtags-next-history :which-key "next-history")
+ "g}" '(helm-gtags-next-history :which-key "next-history")
+ "g[" '(helm-gtags-previous-history :which-key "previous-history")
+ "g{" '(helm-gtags-previous-history :which-key "previous-history")
+ "g/" '(helm-gtags-show-stack :which-key "show-stack")
+ "g0" '(helm-gtags-clear-stack :which-key "clear-stack")
+ "g)" '(helm-gtags-clear-all-stacks :which-key "clear-all-stacks")
+ "g-" '(helm-gtags-pop-stack :which-key "pop-stack")
+ "g_" '(helm-gtags-pop-stack :which-key "pop-stack")
+ "g=" '(helm-gtags-push-stack :which-key "push-stack")
+ "g+" '(helm-gtags-push-stack :which-key "push-stack")
+
+  ;;;; ggtags raw // no helm:
+
+ "gt"  '(:ignore t :which-key "ggtags_raw")
+ "gtt" '(ggtags-find-tag-regexp :which-key "find-tag-regexp")
+ "gt." '(ggtags-find-tag-dwim :which-key "find-tag-dwim")
+ "gtm" '(ggtags-mode :which-key "ggtags-mode")
+ "gte" '(ggtags-grep :which-key "grep")
+ "gtc" '(ggtags-create-tags :which-key "create-tags")
+ "gtf" '(ggtags-find-file :which-key "find-file")
+ "gtd" '(ggtags-find-definition :which-key "find-definition")
+ "gtD" '(ggtags-show-definition :which-key "show-definition")
+ "gtr" '(ggtags-find-reference :which-key "find-reference")
+ "gts" '(ggtags-find-other-symbol :which-key "find-other-symbol")
+ "gtu" '(ggtags-update-tags :which-key "update-tags")
+ "gt/" '(ggtags-view-search-history :which-key "view-search-history")
+ "gt%" '(ggtags-query-replace :which-key "query-replace"))

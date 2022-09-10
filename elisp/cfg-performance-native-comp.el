@@ -32,13 +32,8 @@
 (setq comp-speed 2)
 (setq native-comp-speed 2)
 
-;; add directories:
-(native-compile-async (expand-file-name "site-elisp/" user-emacs-directory) 2 t)
+;; additional options:
 
-;; TODO: 20210814 issues with some cfg- files, I need to disable that.... to be checked in the future
-;; (native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t)
-
-;; options
 (setq native-comp-deferred-compilation t) ; should be t, and default is t
 (setq native-comp-async-query-on-exit t) ; no risky
 
@@ -51,9 +46,33 @@
 (setq comp-async-report-warnings-errors nil)
 
 ;; kill unnecessary compilation buffer:
-;; please check cfg- file with tempbuf configuration
+;; please check cfg- file with tempbuf configuration or try to experiment with (kill-buffer ) ...
 
-;; (kill-buffer )
+;;  >>>>>>>>>>>>>>>>>> DEFUNS FOR COMPILATION OF PARTICULAR DIRECTORIES:
+;; All below defuns should me executed manually via M-x or via CLI scripts:
+
+(defun cfg/eln-compile-elisp ()
+  "Compile all files inside \"~/.emacs.d/elisp\" into eln. WARNING! Could cause errors and hang emacs."
+  (interactive)
+  (native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t))
+
+(defun cfg/eln-compile-site-elisp ()
+  "Compile all files inside \"~/.emacs.d/site-elisp\" into eln."
+  (interactive)
+  (native-compile-async (expand-file-name "site-elisp/" user-emacs-directory) 2 t))
+
+(defun cfg/eln-compile-elisp-general ()
+  "Compile all files inside \"~/.emacs.d/elisp/cfg-general\" into eln."
+  (interactive)
+  (native-compile-async (expand-file-name "elisp/cfg-general" user-emacs-directory) 2 t))
+
+(defun cfg/eln-compile-only-safe ()
+  "Compile all \"safe\" files - should not cause any errors."
+  (interactive)
+  ;; (cfg/eln-compile-elisp) ;; unfortunately this is NOT SAFE - 20210814 - issues with some cfg- files
+  ;; (cfg/eln-compile-elisp-general) ;; 20220910: unfortunately as above...
+  (cfg/eln-compile-site-elisp)
+  (message "Compilation has been started. Please check reults in the dedicated buffer!"))
 
 ;; >>>>>>>>>>>>>>>>>> OVERALL PERFORMANCE OPTIONS
 ;; see Doom Emacs for inspiration: https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
