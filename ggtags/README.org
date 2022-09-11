@@ -1,6 +1,7 @@
 Local dir for gnu global tags:
 
 GNU global: https://www.gnu.org/software/global/
+
 Emacs package: https://github.com/leoliu/ggtags
 
 * installation
@@ -59,8 +60,9 @@ universalctags-pygments-native-:\
 	:tc=universal-ctags:tc=pygments-parser:tc=builtin-parser:
 #+END_EXAMPLE
 
-universaltags seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
-pygments plugin is written in =python=, so it could be slower than =universalctags=.
+*universaltags* seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
+
+*pygments* plugin is written in =python=, so it could be slower than =universalctags=.
 
 -- customize your elisp with below code:
 
