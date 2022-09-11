@@ -30,14 +30,11 @@
                          ("melpa"     . "https://melpa.org/packages/")
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-;; marmalade is an obsolete repository :
-;; https://marmalade-repo.org/#download
-;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
+;; WARNING! Do not use marmalade - is an obsolete repository : https://marmalade-repo.org/#download
 
 ;; (package-initialize)
 
-;; Unless it is already installed:
-;; update packages archive and install the most recent version of use-package.
+;; Unless it is already installed: update packages archive and install the most recent version of use-package:
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -46,7 +43,7 @@
 (require 'use-package)
 
 ;; https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
-;; "This function is based on Drew's code, with a few tweaks to avoid re-loading a library when both .el and .elc versions are present."
+;; "This function is (...) to avoid re-loading a library when both .el and .elc versions are present."
 
 (defun cfg/load-all-el-in-directory (dir)
   "`load' all elisp libraries in directory DIR which are not already loaded."
