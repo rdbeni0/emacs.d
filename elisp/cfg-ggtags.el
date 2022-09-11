@@ -22,7 +22,7 @@
   :ensure t
   :config
   (setq ggtags-completing-read-function nil)
-  ;; not required and optional:
+  ;; optionak and not required:
   (setq ggtags-executable-directory "~/.emacs.d/ggtags/bin"))
 
 (use-package helm-gtags
