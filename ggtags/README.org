@@ -3,10 +3,12 @@ Local dir for gnu global tags:
 GNU global: https://www.gnu.org/software/global/
 
 Emacs package: https://github.com/leoliu/ggtags
+Emacs package for helm: https://github.com/emacsorphanage/helm-gtags (install it if you are helm user)
+We can use both packages independly.
 
 * installation
 
--- remove all =*tags= packages on your OS. They can cause errors, be outdated or misconfigured. 
+-- remove all =*tags= packages on your OS. They can cause errors, be outdated or misconfigured.
 We will use tagging systems directly: via emacs and this local directory.
 
 Arch Linux:
@@ -35,6 +37,8 @@ make install
 #+end_src
 
 -- compile and install =gnu-global= - https://www.gnu.org/software/global/
+
+Please be aware that GNU Global is not using git as vsc. Instead of that, we need to download it manually from ftp server. The pygments plugin has been included in global since version =6.3.2= (=pip install pygments= is no more required).
 
 #+begin_src emacs-lisp
 cd ~/.emacs.d/ggtags/src
@@ -73,6 +77,8 @@ universalctags-pygments-native-:\
 
 (setenv "PATH" (concat "~/.emacs.d/ggtags/bin" path-separator (getenv "PATH")))
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
-(setenv "GTAGSLABEL" "new-ctags") ;; add here your parsers and labels
+ ;; add here your parsers and labels - "new-ctags" means use only "universalctags"
+(setenv "GTAGSLABEL" "new-ctags")
 
+(add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 #+end_src
