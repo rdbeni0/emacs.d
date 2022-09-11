@@ -60,9 +60,9 @@ universalctags-pygments-native-:\
 	:tc=universal-ctags:tc=pygments-parser:tc=builtin-parser:
 #+END_EXAMPLE
 
-*universaltags* seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
+*universalctags* seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
 
-*pygments* plugin is written in =python=, so it could be slower than =universalctags=.
+*pygments* plugin is written in =python=, so it could be slower than *universalctags*.
 
 -- customize your elisp with below code:
 
@@ -73,6 +73,6 @@ universalctags-pygments-native-:\
 
 (setenv "PATH" (concat "~/.emacs.d/ggtags/bin" path-separator (getenv "PATH")))
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
-(setenv "GTAGSLABEL" "new-ctags")
+(setenv "GTAGSLABEL" "new-ctags") ;; add here your parsers and labels
 
 #+end_src
