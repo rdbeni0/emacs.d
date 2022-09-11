@@ -1,0 +1,76 @@
+Local dir for gnu global tags:
+
+GNU global: https://www.gnu.org/software/global/
+Emacs package: https://github.com/leoliu/ggtags
+
+* installation
+
+-- remove all =*tags= packages on your OS. They can cause errors, be outdated or misconfigured. 
+We will use tagging systems directly or via emacs.
+
+Arch Linux:
+
+#+BEGIN_SRC 
+sudo pacman -Rns global
+sudo pacman -R ctags
+sudo pacman -R etags
+#+END_SRC
+
+-- mkdir:
+
+#+begin_src emacs-lisp
+mkdir -p ~/.emacs.d/ggtags/src/ctags
+#+end_src
+
+-- compile and install =universal-ctags= - https://github.com/universal-ctags/ctags
+
+#+begin_src emacs-lisp
+git clone https://github.com/universal-ctags/ctags.git ~/.emacs.d/ggtags/src/ctags
+cd ~/.emacs.d/ggtags/src/ctags
+./autogen.sh
+./configure --prefix=$HOME/.emacs.d/ggtags
+make
+make install
+#+end_src
+
+-- compile and install =gnu-global= - https://www.gnu.org/software/global/
+
+#+begin_src emacs-lisp
+cd ~/.emacs.d/ggtags/src
+wget https://ftp.gnu.org/pub/gnu/global/global-6.6.8.tar.gz
+# OPTIONAL TODO: verify downloaded file via .sig
+tar xzvf ./global-6.6.8.tar.gz
+rm ./global-6.6.8.tar.gz
+# COMPILE AND INSTALL GLOBAL WITH UNIVERSAL-CTAGS:
+./configure --prefix=$HOME/.emacs.d/ggtags --with-universal-ctags=$HOME/.emacs.d/ggtags/bin/ctags
+#+end_src
+
+-- install, check and update =gtags.conf= file:
+
+#+begin_src emacs-lisp
+cd ~/.emacs.d/ggtags/src/global-6.6.8
+cp ./gtags.conf $HOME/.emacs.d/ggtags/
+#+end_src
+
+And finally merge some parsers into one label - add this somewhere at the beginning:
+
+#+BEGIN_EXAMPLE
+universalctags-pygments-native-:\
+	:tc=universal-ctags:tc=pygments-parser:tc=builtin-parser:
+#+END_EXAMPLE
+
+universaltags seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
+pygments plugin is written in =python=, so it could be slower than =universalctags=.
+
+-- customize your elisp with below code:
+
+#+begin_src emacs-lisp
+(setq ggtags-executable-directory "~/.emacs.d/ggtags/bin")
+
+;; now we can manipulate with GTAGS env variables:
+
+(setenv "PATH" (concat "~/.emacs.d/ggtags/bin" path-separator (getenv "PATH")))
+(setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
+(setenv "GTAGSLABEL" "new-ctags")
+
+#+end_src
