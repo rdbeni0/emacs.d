@@ -83,7 +83,7 @@ universalctags-pygments-native:\
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
 (setenv "GTAGSLABEL" "new-ctags") ;; it means "universal-ctags" only as default, this option is faster than "pygments"
 ;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough, then "pygments" can cover less popular languages
-;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; BOTH parsers - that config is slow for big codebase, use it only for small projects...
+;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects...
 #+end_src
 
 For more env variables, please see man:  https://www.gnu.org/software/global/manual/global.html#ENVIRONMENT
