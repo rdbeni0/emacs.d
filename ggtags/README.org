@@ -40,7 +40,7 @@ make install
 
 -- compile and install =gnu-global= - https://www.gnu.org/software/global/
 
-Please be aware that GNU Global is not using git as version control system. Instead of that, we need to download it manually from ftp server. The pygments plugin has been included in GNU Global since version =6.3.2= (so =pip install pygments= is no more required).
+Please be aware that GNU Global is not using git as version control system. Instead of that, we need to download it manually from ftp server. The =pygments= plugin has been included in GNU Global since version =6.3.2= (so =pip install pygments= is no more required).
 
 #+begin_src emacs-lisp
 cd ~/.emacs.d/ggtags/src
