@@ -87,7 +87,7 @@ universalctags-pygments-native:\
 (setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator (getenv "PATH")))
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 
-;; now we can manipulate with GTAGS* env variables:
+;; now we can configure GTAGS* env variables:
 
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
 (setenv "GTAGSLABEL" "new-ctags") ;; it means "universal-ctags" only as default, this option is faster than "pygments"

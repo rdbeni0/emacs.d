@@ -22,7 +22,7 @@
   :ensure t
   :config
   (setq ggtags-completing-read-function nil)
-  ;; optionak and not required:
+  ;; optional and not required:
   (setq ggtags-executable-directory "~/.emacs.d/ggtags/bin"))
 
 (use-package helm-gtags
@@ -36,7 +36,7 @@
 (setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator (getenv "PATH")))
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 
-;; now we can manipulate with GTAGS* env variables:
+;; now we can configure GTAGS* env variables:
 
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
 (setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
