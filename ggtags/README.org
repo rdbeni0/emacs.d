@@ -6,7 +6,7 @@ Emacs package: https://github.com/leoliu/ggtags
 
 Emacs package for helm: https://github.com/emacsorphanage/helm-gtags (install it if you are helm user)
 
-We can use both packages independly.
+We can use both emacs packages independly.
 
 * installation
 
