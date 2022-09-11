@@ -53,7 +53,7 @@ cd ~/.emacs.d/ggtags/src/global-6.6.8
 cp ./gtags.conf $HOME/.emacs.d/ggtags/
 #+end_src
 
-And finally merge some parsers into one label - add this somewhere at the beginning into =$HOME/.emacs.d/ggtags/=:
+And finally merge some parsers into one label - add this somewhere at the beginning into =$HOME/.emacs.d/ggtags/gtags.conf=:
 
 #+BEGIN_EXAMPLE
 universalctags-pygments-native-:\
