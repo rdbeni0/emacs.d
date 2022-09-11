@@ -84,3 +84,9 @@ universalctags-pygments-native-:\
 
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 #+end_src
+
+-- *OPTIONAL*: if you like to use ggtags outside your emacs, then add this into the =$PATH= (env variable):
+
+#+BEGIN_EXAMPLE
+export PATH="$PATH:$HOME/.emacs.d/ggtags/bin"
+#+END_EXAMPLE
