@@ -40,7 +40,7 @@ make install
 
 -- compile and install =gnu-global= - https://www.gnu.org/software/global/
 
-Please be aware that GNU Global is not using git as version control system. Instead of that, we need to download it manually from ftp server. The pygments plugin has been included in GNU Global since version =6.3.2= (=pip install pygments= is no more required).
+Please be aware that GNU Global is not using git as version control system. Instead of that, we need to download it manually from ftp server. The pygments plugin has been included in GNU Global since version =6.3.2= (so =pip install pygments= is no more required).
 
 #+begin_src emacs-lisp
 cd ~/.emacs.d/ggtags/src
@@ -59,10 +59,10 @@ cd ~/.emacs.d/ggtags/src/global-6.6.8
 cp ./gtags.conf $HOME/.emacs.d/ggtags/
 #+end_src
 
-And finally merge some parsers into one label - add this somewhere at the beginning into =$HOME/.emacs.d/ggtags/gtags.conf=:
+ *OPTIONAL* - merge some parsers into one label; add this somewhere at the beginning into =$HOME/.emacs.d/ggtags/gtags.conf=:
 
 #+BEGIN_EXAMPLE
-universalctags-pygments-native-:\
+universalctags-pygments-native:\
 	:tc=universal-ctags:tc=pygments-parser:tc=builtin-parser:
 #+END_EXAMPLE
 
@@ -81,6 +81,7 @@ universalctags-pygments-native-:\
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
  ;; add here your parsers and labels - "new-ctags" means use only "universalctags"
 (setenv "GTAGSLABEL" "new-ctags")
+;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that one is slow for big codebase, use it only for small projects
 
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 #+end_src
