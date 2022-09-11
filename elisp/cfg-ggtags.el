@@ -30,10 +30,7 @@
 
 ;; now we can manipulate with GTAGS env variables:
 
-(setenv "PATH"
-        (concat
-         (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator
-         (getenv "PATH")))
+(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator (getenv "PATH")))
 
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
 (setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
