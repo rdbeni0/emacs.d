@@ -66,7 +66,7 @@ universalctags-pygments-native:\
 	:tc=universal-ctags:tc=pygments-parser:tc=builtin-parser:
 #+END_EXAMPLE
 
-*universalctags* seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
+*universal-ctags* seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
 
 *pygments* plugin is written in =python=, so it could be slower than *universalctags*.
 
