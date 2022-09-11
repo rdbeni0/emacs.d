@@ -81,7 +81,7 @@ universalctags-pygments-native:\
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
  ;; add here your parsers and labels - "new-ctags" means use only "universalctags"
 (setenv "GTAGSLABEL" "new-ctags")
-;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that one is slow for big codebase, use it only for small projects
+;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
 
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 #+end_src
