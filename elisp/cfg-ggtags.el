@@ -22,24 +22,26 @@
   :ensure t
   :config
   (setq ggtags-completing-read-function nil)
+  ;; not required and optional:
   (setq ggtags-executable-directory "~/.emacs.d/ggtags/bin"))
 
 (use-package helm-gtags
   :ensure t
   :after '(helm ggtags))
 
-;; now we can manipulate with GTAGS env variables:
-
-(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator (getenv "PATH")))
-
-(setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
-(setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
-;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough
-
+;; customize PATH and exec-path:
 ;; https://www.emacswiki.org/emacs/ExecPath
 ;; https://emacs.stackexchange.com/questions/550/exec-path-and-path
 
+(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator (getenv "PATH")))
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
+
+;; now we can manipulate with GTAGS* env variables:
+
+(setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
+(setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
+;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough, then "pygments" can cover less popular languages
+;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
 
 (provide 'cfg-ggtags)
 ;;; cfg-ggtags.el ends here

@@ -73,18 +73,19 @@ universalctags-pygments-native:\
 -- customize your elisp with below code:
 
 #+begin_src emacs-lisp
-(setq ggtags-executable-directory "~/.emacs.d/ggtags/bin")
+(setq ggtags-executable-directory "~/.emacs.d/ggtags/bin") ;; for ggtags package, not required
 
-;; now we can customize GTAGS* env variables:
+;; customize PATH and exec-path:
 
-(setenv "PATH" (concat "~/.emacs.d/ggtags/bin" path-separator (getenv "PATH")))
-(setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
-
- ;; add here your parsers and labels - "new-ctags" means use only "universalctags":
-(setenv "GTAGSLABEL" "new-ctags")
-;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
-
+(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/ggtags/bin") path-separator (getenv "PATH")))
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
+
+;; now we can manipulate with GTAGS* env variables:
+
+(setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/ggtags/gtags.conf"))
+(setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
+;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough, then "pygments" can cover less popular languages
+;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
 #+end_src
 
 For more env variables, please see man:  https://www.gnu.org/software/global/manual/global.html#ENVIRONMENT
