@@ -32,17 +32,26 @@
  "eb" '(python-shell-send-buffer :which-key "eval-buffer")
  "es" '(python-shell-send-string :which-key "eval-given-string")
  "et" '(python-shell-send-statement :which-key "eval-statement")
- "."  '(:ignore t :which-key "anaconda-mode")
- ".k" '(xref-pop-marker-stack :which-key "xref-pop-marker-stack")
- ".?" '(anaconda-mode-show-doc :which-key "anaconda-mode-show-doc")
- ".a" '(anaconda-mode-find-assignments :which-key "find-assignments")
- ".A" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
- ".r" '(anaconda-mode-find-references :which-key "find-references")
- ".R" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
- ".d" '(anaconda-mode-find-definitions :which-key "find-definitions")
- ".D" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window"))
+ "a"  '(:ignore t :which-key "anaconda-mode")
+ "am" '(anaconda-mode :which-key "anaconda-mode"))
 
-;; python-mode no prefix / anaconda-mode
+;; general-python-mode - use below only when anaconda mode is enabled:
+
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'anaconda-mode-map
+ :major-modes 'anaconda-mode
+ :prefix ","
+ "ak" '(xref-pop-marker-stack :which-key "xref-pop-marker-stack")
+ "a?" '(anaconda-mode-show-doc :which-key "anaconda-mode-show-doc")
+ "aa" '(anaconda-mode-find-assignments :which-key "find-assignments")
+ "aA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
+ "ar" '(anaconda-mode-find-references :which-key "find-references")
+ "aR" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
+ "ad" '(anaconda-mode-find-definitions :which-key "find-definitions")
+ "aD" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window"))
+
+;; anaconda-mode - no prefix, it will override evil keymaps:
 
 (general-define-key
  :states '(normal visual emacs)
