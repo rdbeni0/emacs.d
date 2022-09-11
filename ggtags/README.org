@@ -7,7 +7,7 @@ Emacs package: https://github.com/leoliu/ggtags
 * installation
 
 -- remove all =*tags= packages on your OS. They can cause errors, be outdated or misconfigured. 
-We will use tagging systems directly or via emacs and this local directory.
+We will use tagging systems directly: via emacs and this local directory.
 
 Arch Linux:
 
