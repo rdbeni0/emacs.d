@@ -39,5 +39,10 @@
 (setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
 ;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough
 
+;; https://www.emacswiki.org/emacs/ExecPath
+;; https://emacs.stackexchange.com/questions/550/exec-path-and-path
+
+(add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
+
 (provide 'cfg-ggtags)
 ;;; cfg-ggtags.el ends here
