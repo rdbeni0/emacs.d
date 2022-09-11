@@ -48,7 +48,7 @@ wget https://ftp.gnu.org/pub/gnu/global/global-6.6.8.tar.gz
 # OPTIONAL TODO: verify downloaded file via .sig
 tar xzvf ./global-6.6.8.tar.gz
 rm ./global-6.6.8.tar.gz
-# COMPILE AND INSTALL GLOBAL WITH UNIVERSAL-CTAGS:
+# Compile and install gnu global with universal-ctags:
 ./configure --prefix=$HOME/.emacs.d/ggtags --with-universal-ctags=$HOME/.emacs.d/ggtags/bin/ctags
 #+end_src
 
@@ -59,7 +59,7 @@ cd ~/.emacs.d/ggtags/src/global-6.6.8
 cp ./gtags.conf $HOME/.emacs.d/ggtags/
 #+end_src
 
- *OPTIONAL* - merge some parsers into one label; add this somewhere at the beginning into =$HOME/.emacs.d/ggtags/gtags.conf=:
+*OPTIONAL* - merge some parsers into one label; add this somewhere at the beginning into =$HOME/.emacs.d/ggtags/gtags.conf=:
 
 #+BEGIN_EXAMPLE
 universalctags-pygments-native:\
@@ -85,6 +85,10 @@ universalctags-pygments-native:\
 
 (add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/ggtags/bin"))
 #+end_src
+
+For more env variables, please see man:
+
+https://www.gnu.org/software/global/manual/global.html#ENVIRONMENT
 
 -- *OPTIONAL*: if you like to use ggtags outside your emacs, then add this into the =$PATH= (env variable):
 
