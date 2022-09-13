@@ -1,4 +1,4 @@
-;; general-global: no space + no which-key
+;; no space + no which-key
 
 (general-define-key
  :states '(normal visual emacs insert)
@@ -35,15 +35,17 @@
  "<M-mouse-2>" 'tab-close
  "<M-drag-mouse-2>" 'tab-close)
 
-;; general-global: no space + which-key
+;; no space + which-key
 
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'global
- "g/"  '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
- "g'"  '(cfg/helm-git-grep :which-key "helm-git-grep"))
+ "g/" '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
+ "g'" '(cfg/helm-git-grep :which-key "helm-git-grep")
+ "gy" '(helm-browse-project :which-key "helm-ls-git")
+ "gY" '(helm-projects-history :which-key "helm-ls-git-history"))
 
-;; global-global: space as leader-key + which-key
+;; space as leader-key + which-key
 
 (general-define-key
  :states '(normal visual emacs)
@@ -51,7 +53,7 @@
  :prefix "SPC"
 
  ;; GLOBAL and no prefix:
- 
+
  "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
  "<mouse-1>" '(tabbar-mode :which-key "tbb-mode")
  "<mouse-3>" '(tabbar-press-home :which-key "tbb-home")
@@ -224,6 +226,8 @@
  "s"   '(:ignore t :which-key "search")
  "s/"  '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
  "s'"  '(cfg/helm-git-grep :which-key "helm-git-grep")
+ "sy"  '(helm-browse-project :which-key "helm-ls-git")
+ "sY"  '(helm-projects-history :which-key "helm-ls-git-history")
  "sj"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
  "si"  '(find-name-dired :which-key "find-name-dired")
  "sd"  '(find-grep-dired :which-key "find-grep-dired")
@@ -238,6 +242,8 @@
  "sg"  '(:ignore t :which-key "helm-grep")
  "sg/" '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
  "sg'" '(cfg/helm-git-grep :which-key "helm-git-grep")
+ "sgy" '(helm-browse-project :which-key "helm-ls-git")
+ "sgY" '(helm-projects-history :which-key "helm-ls-git-history")
  "sgi" '(helm-grep-do-git-grep :which-key "helm-grep-do-git-grep")
  "sgb" '(cfg/helm-buffers-do-grep :which-key "helm-buffers-do-grep")
  "sgB" '(cfg/helm-buffers-do-grep-region-or-symbol :which-key "helm-buffers-do-grep-reg-or-sym")
@@ -313,6 +319,8 @@
  "g"  '(:ignore t :which-key "git")
  "g/" '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
  "g'" '(cfg/helm-git-grep :which-key "helm-git-grep")
+ "gy" '(helm-browse-project :which-key "helm-ls-git")
+ "gY" '(helm-projects-history :which-key "helm-ls-git-history")
  "gb" '(magit-blame :which-key "magit-blame")
  "gc" '(magit-clone :which-key "magit-clone")
  "gi" '(magit-init :which-key "magit-init")

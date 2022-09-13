@@ -1,4 +1,4 @@
-;; general-comments:
+;; comments:
 
 (general-define-key
  :states '(normal visual emacs)
