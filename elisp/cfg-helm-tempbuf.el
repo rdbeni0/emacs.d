@@ -60,7 +60,15 @@
 ;; helm has it's own built command: "helm-grep-do-git-grep" which is very similar, but this one package is little better:
 
 (use-package helm-git-grep
-  :after wgrep
+  :after '(wgrep helm)
+  :ensure t
+  )
+
+;; helm-ls-git
+;; https://github.com/emacs-helm/helm-ls-git
+
+(use-package  helm-ls-git
+  :after helm
   :ensure t
   )
 
