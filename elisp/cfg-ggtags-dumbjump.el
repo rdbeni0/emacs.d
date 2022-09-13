@@ -10,7 +10,6 @@
 ;;
 ;; Before installation, ensure that you installed gtags and ctags.
 ;;
-;; pygments:
 ;; pygments is for less popular languages:
 ;; In order to look up symbol references for any language not in the built in parser you must use the pygments backend:
 ;; https://pygments.org/
@@ -32,7 +31,7 @@
 	  ;;
 	  ;; ^ if this msg will appear:
 	  ;; https://www.reddit.com/r/emacs/comments/pr7nh2/dumbjump/
-	  ;; "(If you really want to use the old interface, dumb-jump-use-legacy-interface can be set to nil as to silence the warnings you would get from using obsolete functions. 
+	  ;; "(If you really want to use the old interface, dumb-jump-use-legacy-interface can be set to nil as to silence the warnings you would get from using obsolete functions.
 	  ;; I would really recommend trying xref though.)"
 	  ;;
 	  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate nil t)
@@ -48,11 +47,14 @@
   :config
   (setq ggtags-completing-read-function nil)
   ;; optional and not required:
-  (setq ggtags-executable-directory "~/.emacs.d/ggtags/bin"))
+  (setq ggtags-executable-directory "~/.emacs.d/ggtags/bin")
+  (add-hook 'prog-mode-hook
+            (lambda ()
+	      (ggtags-mode))))
 
 (use-package helm-gtags
   :ensure t
-  :after '(helm ggtags))
+  )
 
 ;; execute two modes at once:
 

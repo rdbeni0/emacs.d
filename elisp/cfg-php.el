@@ -29,6 +29,7 @@
 
 (use-package php-cs-fixer
   :ensure t
+  :after php-mode
   )
 
 (provide 'cfg-php)
