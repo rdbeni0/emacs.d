@@ -117,20 +117,22 @@
  ;; buffers
 
  "b"   '(:ignore t :which-key "buffers")
- "bo"  '(:ignore t :which-key "modes")
- "boa" '(auto-revert-mode :which-key "auto-revert-mode")
- "bot" '(text-mode :which-key "text-mode")
- "boo" '(org-mode :which-key "org-mode")
- "boc" '(conf-mode :which-key "conf-mode")
- "boe" '(emacs-lisp-mode :which-key "emacs-lisp-mode")
+ "bm"  '(:ignore t :which-key "modes")
+ "bma" '(auto-revert-mode :which-key "auto-revert-mode")
+ "bmg" '(ggtags-mode :which-key "ggtags-mode")
+ "bmA" '(anaconda-mode :which-key "anaconda-mode")
+ "bmt" '(text-mode :which-key "text-mode")
+ "bmo" '(org-mode :which-key "org-mode")
+ "bmc" '(conf-mode :which-key "conf-mode")
+ "bme" '(emacs-lisp-mode :which-key "emacs-lisp-mode")
  "bb"  '(helm-buffers-list :which-key "buffers list")
  "bF"  '(format-all-buffer :which-key "format-all-buffer")
- "bm"  '(cfg/kill-other-buffers :which-key "kill-other-buffers")
  "bv"  '(ibuffer :which-key "ibuffer")
  "bt"  '(eval-buffer :which-key "eval-buffer")
  "bd"  '(kill-this-buffer :which-key "kill-this-buffer")
  "bN"  '(cfg/new-empty-buffer :which-key "new-empty-buffer")
  "bx"  '(kill-buffer-and-window :which-key "kill-buffer-and-window")
+ "bX"  '(cfg/kill-other-buffers :which-key "kill-other-buffers")
  "by"  '(:ignore t :which-key "yas_company")
  "byy" '(yas-describe-tables :which-key "yas-describe-tables")
 
@@ -219,6 +221,8 @@
  ;; search
 
  "s"   '(:ignore t :which-key "search")
+ "s/"  '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
+ "s'"  '(cfg/helm-git-grep :which-key "helm-git-grep")
  "sj"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
  "si"  '(find-name-dired :which-key "find-name-dired")
  "sd"  '(find-grep-dired :which-key "find-grep-dired")

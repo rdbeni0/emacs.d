@@ -58,6 +58,7 @@
  :keymaps 'anaconda-mode-map
  :major-modes 'anaconda-mode
  "gC" '(what-cursor-position :which-key "what-cursor-position")
+ "g?" '(anaconda-mode-show-doc :which-key "show-doc")
  "ga" '(anaconda-mode-find-assignments :which-key "find-assignments")
  "gA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
  "gr" '(anaconda-mode-find-references :which-key "find-references")

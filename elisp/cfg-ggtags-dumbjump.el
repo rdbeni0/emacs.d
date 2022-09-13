@@ -1,7 +1,9 @@
-;;; cfg-ggtags.el --- configfuration for  tagging systems -*- lexical-binding: t -*-
+;;; cfg-ggtags-dumbjump.el --- configfuration for  tagging systems -*- lexical-binding: t -*-
 ;;; Commentary:
-
-;; Everything what is connected with tagging systems:
+;;
+;; dumb-jump - Dumb Jump is an Emacs "jump to definition" package with support for 50+ programming languages that favors "just working".
+;;
+;; ggtags - everything what is connected with tagging systems:
 ;; https://github.com/leoliu/ggtags
 ;; https://www.gnu.org/software/global/
 ;; https://github.com/universal-ctags/ctags
@@ -18,6 +20,29 @@
 ;;
 ;;; Code:
 
+;; dumb-jump: https://github.com/jacktasia/dumb-jump
+
+(use-package dumb-jump
+  :ensure t
+  :after helm
+  :hook ((prog-mode . cfg/dumb-jump-activate))
+  :init (defun cfg/dumb-jump-activate ()
+          (interactive)
+	  (if (version< emacs-version "28.1") (message "Your emacs version is too old! dumb-jump will work only via \"dumb-jump-go\""))
+	  ;;
+	  ;; ^ if this msg will appear:
+	  ;; https://www.reddit.com/r/emacs/comments/pr7nh2/dumbjump/
+	  ;; "(If you really want to use the old interface, dumb-jump-use-legacy-interface can be set to nil as to silence the warnings you would get from using obsolete functions. 
+	  ;; I would really recommend trying xref though.)"
+	  ;;
+	  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate nil t)
+	  (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+  :config
+  ;; https://github.com/jacktasia/dumb-jump#configuration
+  )
+
+;; tags:
+
 (use-package ggtags
   :ensure t
   :config
@@ -28,6 +53,13 @@
 (use-package helm-gtags
   :ensure t
   :after '(helm ggtags))
+
+;; execute two modes at once:
+
+(add-hook 'ggtags-mode-hook
+          (lambda ()
+	    (helm-gtags-mode)
+	    ))
 
 ;; customize PATH and exec-path:
 ;; https://www.emacswiki.org/emacs/ExecPath
@@ -43,5 +75,5 @@
 ;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough, then "pygments" can cover less popular languages
 ;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
 
-(provide 'cfg-ggtags)
-;;; cfg-ggtags.el ends here
+(provide 'cfg-ggtags-dumbjump)
+;;; cfg-ggtags-dumbjump.el ends here

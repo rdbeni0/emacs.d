@@ -19,7 +19,7 @@
 (require 'cfg-tabs)
 (require 'cfg-dired)
 (require 'cfg-treemacs-speedbar)
-(require 'cfg-ggtags)
+(require 'cfg-ggtags-dumbjump)
 (require 'cfg-pdf-tools-doc-view)
 (require 'cfg-perl-regexps)
 (require 'cfg-php)
