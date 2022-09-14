@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map helm-gtags-mode-map ggtags-mode-map ggtags-global-mode-map)
- :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode helm-gtags-mode ggtags-mode ggtags-global-mode)
+ :keymaps '(helm-gtags-mode-map ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map)
+ :major-modes '(helm-gtags-mode ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode)
  :prefix ","
  "."  '(:ignore t :which-key "ggtags")
  ".." '(helm-gtags-find-pattern :which-key "hgt-find-pattern")
@@ -63,8 +63,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map helm-gtags-mode-map ggtags-mode-map ggtags-global-mode-map)
- :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode helm-gtags-mode ggtags-mode ggtags-global-mode)
+ :keymaps '(helm-gtags-mode-map ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map)
+ :major-modes '(helm-gtags-mode ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode)
  "g." '(helm-gtags-find-pattern :which-key "hgt-find-pattern")
  "gf" '(ggtags-find-file :which-key "ggt-find-file")
  "gF" '(helm-gtags-find-files :which-key "hgt-find-files")
