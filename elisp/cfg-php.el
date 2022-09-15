@@ -12,7 +12,7 @@
   (save-excursion
     (shell-command-on-region (point) (mark) (concat "prettier --parser php --print-width 180 --stdin-filepath " (buffer-file-name)) nil t)))
 
-(defun cfg/php-custom-file-format ()
+(defun cfg/php-custom-format ()
   "Format current php buffer."
   (interactive)
   (mark-whole-buffer)

@@ -18,6 +18,7 @@
  ".a" '(helm-gtags-find-rtag :which-key "hgt-find-rtag")
  ".A" '(ggtags-find-reference :which-key "ggt-find-reference")
  ".b" '(helm-gtags-pop-stack :which-key "hgt-back")
+ ".B" '(helm-gtags-show-stack :which-key "hgt-show-stack")
  ".t" '(helm-gtags-find-tag-from-here :which-key "hgt-find-tag-here")
  ".T" '(helm-gtags-find-tag :which-key "hgt-find-tag-def")
  ".z" '(ggtags-find-tag-dwim :which-key "ggt-find-tag-dwim")
@@ -38,28 +39,28 @@
  ;; without evil:
 
  ".m" '(ggtags-mode :which-key "ggtags-mode")
- ".g" '(ggtags-create-tags :which-key "create-tags")
- ".u" '(ggtags-update-tags :which-key "update-tags")
- ".i" '(helm-gtags-tags-in-this-function :which-key "tags-in-func")
- ".e" '(helm-gtags-parse-file :which-key "parse-file")
+ ".g" '(ggtags-create-tags :which-key "ggt-create-tags")
+ ".u" '(ggtags-update-tags :which-key "ggt-update-tags")
+ ".i" '(helm-gtags-tags-in-this-function :which-key "hgt-tags-in-func")
+ ".e" '(helm-gtags-parse-file :which-key "hgt-parse-file")
 
   ;;;; helm-gtags : navigation and stack
 
- ".]" '(helm-gtags-next-history :which-key "next-history")
- ".[" '(helm-gtags-previous-history :which-key "previous-history")
+ ".]" '(helm-gtags-next-history :which-key "hgt-next-hist")
+ ".[" '(helm-gtags-previous-history :which-key "hgt-previous-hist")
  ".}" 'helm-gtags-next-history
  ".{" 'helm-gtags-previous-history
  ".k"  '(:ignore t :which-key "stack, cache")
- ".ka" '(helm-gtags-clear-cache :which-key "clear-cache")
- ".kA" '(helm-gtags-clear-all-cache :which-key "clear-all-cache")
- ".kq" '(helm-gtags-resume :which-key "gtags-resume")
- ".k/" '(helm-gtags-show-stack :which-key "show-stack")
- ".k0" '(helm-gtags-clear-stack :which-key "clear-stack")
- ".k)" '(helm-gtags-clear-all-stacks :which-key "clear-all-stacks")
- ".k-" '(helm-gtags-pop-stack :which-key "pop-stack")
- ".k_" '(helm-gtags-pop-stack :which-key "pop-stack")
- ".k=" '(helm-gtags-push-stack :which-key "push-stack")
- ".k+" '(helm-gtags-push-stack :which-key "push-stack"))
+ ".kk" '(helm-gtags-show-stack :which-key "hgt-show-stack")
+ ".ka" '(helm-gtags-clear-cache :which-key "hgt-clear-cache")
+ ".kA" '(helm-gtags-clear-all-cache :which-key "hgt-clear-all-cache")
+ ".kq" '(helm-gtags-resume :which-key "hgt-gtags-resume")
+ ".k0" '(helm-gtags-clear-stack :which-key "hgt-clear-stack")
+ ".k)" '(helm-gtags-clear-all-stacks :which-key "hgt-clear-all-stacks")
+ ".k-" '(helm-gtags-pop-stack :which-key "hgt-pop-stack")
+ ".k_" '(helm-gtags-pop-stack :which-key "hgt-pop-stack")
+ ".k=" '(helm-gtags-push-stack :which-key "hgt-push-stack")
+ ".k+" '(helm-gtags-push-stack :which-key "hgt-push-stack"))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -77,6 +78,7 @@
  "ga" '(helm-gtags-find-rtag :which-key "hgt-find-rtag")
  "gA" '(ggtags-find-reference :which-key "ggt-find-reference")
  "gb" '(helm-gtags-pop-stack :which-key "hgt-back")
+ "gB" '(helm-gtags-show-stack :which-key "hgt-show-stack")
  "gt" '(helm-gtags-find-tag-from-here :which-key "hgt-find-tag-here")
  "gT" '(helm-gtags-find-tag :which-key "hgt-find-tag-def")
  "gz" '(ggtags-find-tag-dwim :which-key "ggt-find-tag-dwim")
@@ -84,9 +86,9 @@
  "gl" '(helm-gtags-find-symbol :which-key "hgt-find-symbol")
  "gL" '(ggtags-show-definition :which-key "ggt-show-definition")
  "g%" '(ggtags-query-replace :which-key "ggt-query-replace")
- 
+
  ;; dumb-jump:
- 
+
  "gh" '(xref-find-definitions :which-key "dumb-jump-go")
  "gc" '(xref-pop-marker-stack :which-key "dumb-jump-back")
  "gH" '(xref-find-apropos :which-key "xref-apropos")
