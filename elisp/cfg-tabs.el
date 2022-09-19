@@ -141,6 +141,7 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'Buffer-menu-mode)) "BUFFERS")
 
 	   ((or (eq major-mode 'python-mode)) "PYTHON")
+	   ((or (eq major-mode 'inferior-python-mode)) "PYTHON")
 
 	   ((or (eq major-mode 'regex-tool-mode)) "REGEXP")
 	   ((or (string-equal "*Groups*" (substring (buffer-name) 0 8))) "REGEXP")

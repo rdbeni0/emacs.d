@@ -65,3 +65,12 @@
  "gR" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
  "gd" '(anaconda-mode-find-definitions :which-key "find-definitions")
  "gD" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window"))
+
+;; inferior-python-mode - no prefix
+
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'inferior-python-mode-map
+ :major-modes 'inferior-python-mode
+ "q" '(kill-buffer-and-window :which-key "kill-buffer-and-window")
+ "Q" '(kill-this-buffer :which-key "kill-this-buffer"))
