@@ -77,7 +77,7 @@ universalctags-pygments-native:\
 
 *universal-ctags* seems to be most updated and written in =C= (it means fastest one) - so that one we will use with higher priority.
 
-*pygments* plugin is written in =python=, so it could be slower than *universalctags*.
+*pygments* plugin is written in =python=, so it could be slower than *universal-ctags*.
 
 -- customize your elisp with below code:
 
