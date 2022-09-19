@@ -32,6 +32,8 @@
  "eb" '(python-shell-send-buffer :which-key "eval-buffer")
  "es" '(python-shell-send-string :which-key "eval-given-string")
  "et" '(python-shell-send-statement :which-key "eval-statement")
+ "ed" '(python-shell-send-defun :which-key "eval-defun")
+ "ep" '(python-shell-package-enable :which-key "package-enable")
  "a"  '(:ignore t :which-key "anaconda-mode")
  "am" '(anaconda-mode :which-key "anaconda-mode"))
 
