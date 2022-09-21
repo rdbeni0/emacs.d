@@ -1,4 +1,4 @@
-;; general-Man-mode:
+;; general-ibuffer-mode:
 
 (general-define-key
  :states '(normal visual emacs)
