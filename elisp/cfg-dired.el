@@ -27,13 +27,14 @@
                 (list (car list-of-dired-switches))))
   (dired-sort-other (car list-of-dired-switches)))
 
+;; https://github.com/alexluigit/dirvish - optional dired alternative
+
 ;; dired - reuse buffer
 ;; http://ergoemacs.org/emacs/emacs_dired_tips.html
 ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
 ;; Possible issues with mouse integration:
 ;; https://emacs.stackexchange.com/questions/35536/dired-mouse-click-open-folder-in-the-same-window
 ;; ... so the best option seems to be dired-single:
-
 (use-package dired-single
   :ensure t
   :config
