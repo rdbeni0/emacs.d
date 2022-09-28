@@ -26,22 +26,22 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 (defconst ediff-long-help-message-compare2
   "
 [c,k  -previous diff |     | -vert/horiz split   |dp/a do/b -copy A/B's to B/A
-]c,j  -next diff     |     H -highlighting       | rx       -restore old buf X
-zd,zj -jump to diff  |     @ -auto-refinement    |  *       -refine current region
+]c,j  -next diff     |     H -highlighting       | h j k l  -move/copy (vim style)
+zd,zj -jump to diff  |     @ -auto-refinement    | rx       -restore old buf X 
    gx -goto X's point|    ## -ignore whitespace  |  !       -update diff regions
-  C-l -recenter      |    #c -ignore case        |
-C-u/d -scroll up/dn  | #f/#h -focus/hide regions | wx -save buf X
-zh/zl -scroll lt/rt  |     X -read-only in buf X | wd -save diff output
-    ~ -swap variants |     m -wide display       |
+  C-l -recenter      |    #c -ignore case        |  *       -refine current region
+C-u/d -scroll up/dn  | #f/#h -focus/hide regions |
+zh/zl -scroll lt/rt  |     X -read-only in buf X | wx -save buf X
+    ~ -swap variants |     m -wide display       | wd -save diff output
 "
   "Help message usually used for 2-way comparison.
 Normally, not a user option.  See `ediff-help-message' for details.")
 
 (defconst ediff-long-help-message-tail
   "=====================|===========================|=============================
-    R -show registry | hjkl  -move/copy (vim)    |  M -show session group
-    D -diff output   |     = -compare regions    |  ? -help off
-    i -status info   |     E -browse Ediff manual|  C-z/q -suspend/quit"
+    R -show registry |    = -compare regions     |  ? -help off/on 
+    D -diff output   |    E -browse Ediff manual |  q -quit (exit)
+    i -status info   |    M -show session group  |C-z -suspend (drop to registry)"
   "The tail of the full-help message.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
