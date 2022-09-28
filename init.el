@@ -7,7 +7,7 @@
 (require 'cfg-common-options)
 (require 'cfg-line-numbers)
 (require 'cfg-evil)
-(require 'cfg-vdiff-diff-ediff)
+(require 'cfg-ediff-diff-vdiff)
 (require 'cfg-helm-tempbuf)
 (require 'cfg-grep-recentf)
 (require 'cfg-projectile)
