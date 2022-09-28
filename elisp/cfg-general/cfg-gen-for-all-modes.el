@@ -35,7 +35,7 @@
  "<M-mouse-2>" 'tab-close
  "<M-drag-mouse-2>" 'tab-close)
 
-;; no space + which-key
+;; no space + which-key + no-whick-key : normal mode
 
 (general-define-key
  :states '(normal visual emacs)
@@ -43,7 +43,10 @@
  "g/" '(cfg/helm-git-grep-at-point :which-key "helm-git-grep-at-point")
  "g'" '(cfg/helm-git-grep :which-key "helm-git-grep")
  "gy" '(helm-browse-project :which-key "helm-ls-git")
- "gY" '(helm-projects-history :which-key "helm-ls-git-history"))
+ "gY" '(helm-projects-history :which-key "helm-ls-git-history")
+ "q"  'kill-this-buffer
+ "zq" '(evil-quit :which-key "evil-quit")
+ "Q"  'evil-record-macro)
 
 ;; space as leader-key + which-key
 
@@ -67,6 +70,12 @@
  "<deletechar>" 'tab-close
  "<next>" 'tabbar-backward
  "<prior>" 'tabbar-forward
+
+ ;; macros:
+
+ "Q"   '(:ignore t :which-key "macros")
+ "QQ"  '(evil-record-macro :which-key "evil-record-macro")
+ "Q@"  '(evil-execute-macro :which-key "evil-execute-maco")
 
  ;; treemacs:
 

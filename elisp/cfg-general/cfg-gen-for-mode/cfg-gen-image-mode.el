@@ -27,4 +27,16 @@
  "O" '(image-transform-original :which-key "original-size")
  "RET" '(image-toggle-animation :which-key "animation-toggle")
  "." '(image-previous-frame :which-key "animation-prev-frame")
- ";" '(image-next-frame  :which-key "animation-next-frame"))
+ ";" '(image-next-frame  :which-key "animation-next-frame")
+
+ ;; animations, gifs...
+
+ "a"   '(:ignore t :which-key "animations")
+ "aa" '(image-toggle-animation :which-key "animation-RET-toggle")
+ "a." '(image-previous-frame :which-key "animation-prev-frame")
+ "a;" '(image-next-frame  :which-key "animation-next-frame")
+ "a0" '(image-reset-speed :which-key "animation-reset-speed")
+ "ar" '(image-reverse-speed  :which-key "animation-reverse-speed")
+ "aF" '(image-goto-frame :which-key "animation-goto-frame")
+ "a{" '(image-decrease-speed  :which-key "animation-decrease-speed")
+ "a}" '(image-increase-speed :which-key "animation-increase-speed"))
