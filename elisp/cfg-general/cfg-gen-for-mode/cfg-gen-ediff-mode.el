@@ -12,7 +12,7 @@
 (defconst ediff-long-help-message-compare3
   "
 [c,k  -previous diff |     | -vert/horiz split   | dp/a -copy A to B/C
-]c,j  -next diff     |     H -highlighting       | do/b -copy B to A/B
+]c,j  -next diff     |     h -highlighting       | do/b -copy B to A/B
 zd,zj -jump to diff  |     @ -auto-refinement    | dl/c -copy C to A/B
    gx -goto X's point|    ## -ignore whitespace  | rx   -restore buf X's old diff
   C-l -recenter      |    #c -ignore case        | *    -refine current region
@@ -134,7 +134,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 		      ( "  j,n -next diff     " . "]c,j  -next diff     ")
                       ("    j -jump to diff  " . "zd,zj -jump to diff  ")
                       ("    d -jump to diff  " . "zd,zj -jump to diff  ")
-                      ("    h -highlighting  " . "    H -highlighting  ")
+                      ;; ("    h -highlighting  " . "    H -highlighting  ")
                       ("  v/V -scroll up/dn  " . "C-u/d -scroll up/dn  ")
                       ("  </> -scroll lt/rt  " . "zh/zl -scroll lt/rt  ")
                       ("  z/q -suspend/quit"   . "C-z/q -suspend/quit")))
