@@ -10,14 +10,12 @@
 
 (use-package ediff
   :after magit ;; for magit-ediff
-  :ensure t
   :config
   ;; https://emacs.stackexchange.com/questions/7362/how-to-show-a-diff-between-two-buffers-with-character-level-diffs
   (setq-default ediff-forward-word-function 'forward-char)
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-merge-split-window-function 'split-window-horizontally)
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
-
 
 
 ;; OPTIONAL - vdiff:

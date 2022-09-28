@@ -128,6 +128,8 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
 
+	   ((or (eq major-mode 'ediff-meta-mode)) "DIFF")
+
 	   ((or (eq major-mode 'image-mode)) "IMAGE")
 
 	   ((or (eq major-mode 'help-mode)) "HELP")

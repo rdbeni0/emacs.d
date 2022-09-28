@@ -7,49 +7,40 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Adjust long help messages to reflect cfg/ediff-bindings bindings:
 
-(defvar cfg/ediff-help-changed nil)
+(defconst ediff-long-help-message-compare3
+  "
+[c,k  -previous diff |     | -vert/horiz split   | dp/a -copy A to B/C
+]c,j  -next diff     |     H -highlighting       | do/b -copy B to A/B
+zd,zj -jump to diff  |     @ -auto-refinement    | dl/c -copy C to A/B
+   gx -goto X's point|    ## -ignore whitespace  | rx   -restore buf X's old diff
+  C-l -recenter      |    #c -ignore case        | *    -refine current region
+C-u/d -scroll up/dn  | #f/#h -focus/hide regions | !    -update diff regions
+zh/zl -scroll lt/rt  |     X -read-only in buf X | wx   -save buf X
+    ~ -rotate buffers|     m -wide display       | wd   -save diff output
+"
+  "Help message usually used for 3-way comparison.
+Normally, not a user option.  See `ediff-help-message' for details.")
 
-(defvar cfg/ediff-initial-state-backup (evil-initial-state 'ediff-mode))
-(defvar cfg/ediff-long-help-message-compare2-backup ediff-long-help-message-compare2)
-(defvar cfg/ediff-long-help-message-compare3-backup  ediff-long-help-message-compare3)
-(defvar cfg/ediff-long-help-message-narrow2-backup  ediff-long-help-message-narrow2)
-(defvar cfg/ediff-long-help-message-word-backup  ediff-long-help-message-word-mode)
-(defvar cfg/ediff-long-help-message-merge-backup  ediff-long-help-message-merge)
-(defvar cfg/ediff-long-help-message-head-backup  ediff-long-help-message-head)
-(defvar cfg/ediff-long-help-message-tail-backup  ediff-long-help-message-tail)
+(defconst ediff-long-help-message-compare2
+  "
+[c,k  -previous diff |     | -vert/horiz split   |dp/a do/b -copy A/B's to B/A
+]c,j  -next diff     |     H -highlighting       | rx       -restore old buf X
+zd,zj -jump to diff  |     @ -auto-refinement    |  *       -refine current region
+   gx -goto X's point|    ## -ignore whitespace  |  !       -update diff regions
+  C-l -recenter      |    #c -ignore case        |
+C-u/d -scroll up/dn  | #f/#h -focus/hide regions | wx -save buf X
+zh/zl -scroll lt/rt  |     X -read-only in buf X | wd -save diff output
+    ~ -swap variants |     m -wide display       |
+"
+  "Help message usually used for 2-way comparison.
+Normally, not a user option.  See `ediff-help-message' for details.")
 
-(defun cfg/ediff-adjust-help ()
-  "Adjust long help messages to reflect cfg/ediff-bindings bindings."
-  (unless cfg/ediff-help-changed
-    (dolist (msg '(ediff-long-help-message-compare2
-                   ediff-long-help-message-compare3
-                   ediff-long-help-message-narrow2
-                   ediff-long-help-message-word-mode
-                   ediff-long-help-message-merge
-                   ediff-long-help-message-head
-                   ediff-long-help-message-tail))
-      (dolist (chng '( ;;("^" . "  ")
-                      ( "k,N,p -previous diff " . "[c,k  -previous diff ")
-                      ( "  j,n -next diff     " . "]c,j  -next diff     ")
-                      ( "    d -jump to diff  " . "zd,zj -jump to diff  ")
-                      ( "a/b -copy A/B's region to B/A" . "dp/a do/b -copy A/B's to B/A")
-                      ( " rx -restore buf X's old diff" . " rx       -restore old buf X")
-                      ( "* -refine current region"     .    "*       -refine current region")
-                      ( "  ! -update diff regions" .      "  !       -update diff regions")
-
-		      ;; evil collection help msg :
-                      ;; ( "    H -highlighting  " . "    H -highlighting  ")
-                      ;; ( "C-u/d -scroll up/dn  " . "C-u/d -scroll up/dn  ")
-                      ;; ( "zh/zl -scroll lt/rt  " . "zh/zl -scroll lt/rt  ")
-                      ;; ("C-z/q -suspend/quit" . "C-z/q -suspend/quit")
-
-                      ("-------------------------------------------------------------------------------\n" . "")
-		      ("For help on a specific command:  Click Button 2 over it; or\n" . "")
-		      ("              			 Put the cursor over it and type RET." . "")))
-
-        (setf (symbol-value msg)
-              (replace-regexp-in-string (car chng) (cdr chng) (symbol-value msg))))))
-  (setq cfg/ediff-help-changed t))
+(defconst ediff-long-help-message-tail
+  "=====================|===========================|=============================
+    R -show registry | hjkl  -move/copy (vim)    |  M -show session group
+    D -diff output   |     = -compare regions    |  ? -help off
+    i -status info   |     E -browse Ediff manual|  C-z/q -suspend/quit"
+  "The tail of the full-help message.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -107,4 +98,46 @@
 ;; add above keybindings:
 (evil-set-initial-state 'ediff-mode 'normal)
 (add-hook 'ediff-keymap-setup-hook 'cfg/ediff-startup-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; OPTIONAL:
+
+(defvar cfg/ediff-help-changed nil)
+
+(defvar cfg/ediff-initial-state-backup (evil-initial-state 'ediff-mode))
+(defvar cfg/ediff-long-help-message-compare2-backup ediff-long-help-message-compare2)
+(defvar cfg/ediff-long-help-message-compare3-backup  ediff-long-help-message-compare3)
+(defvar cfg/ediff-long-help-message-narrow2-backup  ediff-long-help-message-narrow2)
+(defvar cfg/ediff-long-help-message-word-backup  ediff-long-help-message-word-mode)
+(defvar cfg/ediff-long-help-message-merge-backup  ediff-long-help-message-merge)
+(defvar cfg/ediff-long-help-message-head-backup  ediff-long-help-message-head)
+(defvar cfg/ediff-long-help-message-tail-backup  ediff-long-help-message-tail)
+
+(defun cfg/ediff-adjust-help ()
+  "Adjust long help messages to reflect cfg/ediff-bindings bindings."
+  (unless cfg/ediff-help-changed
+    (dolist (msg '(ediff-long-help-message-compare2
+                   ediff-long-help-message-compare3
+                   ediff-long-help-message-narrow2
+                   ediff-long-help-message-word-mode
+                   ediff-long-help-message-merge
+                   ediff-long-help-message-head
+                   ediff-long-help-message-tail))
+      (dolist (chng '(( " rx -restore buf X's old diff" . " rx       -restore old buf X")
+                      ;; ( "* -refine current region"     .    "*       -refine current region")
+                      ;; ( "  ! -update diff regions" .      "  !       -update diff regions")
+		      ( "p,DEL -previous diff " . "[c,k  -previous diff ")
+		      ( "k,N,p -previous diff " . "[c,k  -previous diff ")
+		      ( "n,SPC -next diff     " . "]c,j  -next diff     ")
+		      ( "  j,n -next diff     " . "]c,j  -next diff     ")
+                      ("    j -jump to diff  " . "zd,zj -jump to diff  ")
+                      ("    d -jump to diff  " . "zd,zj -jump to diff  ")
+                      ("    h -highlighting  " . "    H -highlighting  ")
+                      ("  v/V -scroll up/dn  " . "C-u/d -scroll up/dn  ")
+                      ("  </> -scroll lt/rt  " . "zh/zl -scroll lt/rt  ")
+                      ("  z/q -suspend/quit"   . "C-z/q -suspend/quit")))
+        (setf (symbol-value msg)
+              (replace-regexp-in-string (car chng) (cdr chng) (symbol-value msg))))))
+  (setq cfg/ediff-help-changed t))
+
 (cfg/ediff-adjust-help)

@@ -281,15 +281,15 @@
  ;; diff
 
  "D"  '(:ignore t :which-key "diff")
- "Db" '(vdiff-buffers :which-key "vdiff-buffers")
- "D3" '(vdiff-buffers3 :which-key "vdiff-buffers3")
- "Df" '(vdiff-files :which-key "vdiff-files")
- "Di" '(vdiff-files3 :which-key "vdiff-files3")
- "Dm" '(vdiff-mode :which-key "vdiff-mode")
- "Dv" '(vdiff-hydra/body :which-key "vdiff-hydra")
- "Dw" '(vdiff-save-buffers :which-key "vdiff-save-buffers")
- "Du" '(vdiff-refresh :which-key "vdiff-refresh")
- "Dq" '(vdiff-quit :which-key "vdiff-quit")
+ "Db" '(ediff-buffers :which-key "ediff-buffers")
+ "DB" '(ediff-buffers3 :which-key "ediff-buffers3")
+ "D3" '(ediff-buffers3 :which-key "ediff-buffers3")
+ "Df" '(ediff-files :which-key "ediff-files")
+ "DF" '(ediff-files3 :which-key "ediff-files3")
+ "De" '(ediff :which-key "ediff")
+ "Ds" '(ediff-save-buffer :which-key "ediff-save-buffer")
+ "Du" '(ediff-update-diffs :which-key "ediff-update-diffs")
+ "Dq" '(ediff-quit :which-key "ediff-quit")
 
  ;; projects, projectile
 
