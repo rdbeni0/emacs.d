@@ -1,5 +1,5 @@
 ;; ediff-mode (without general.el)
-;; This mode i special - unfortunately, general.el doesn't work in the usual way in ediff-mode...
+;; This mode is special - unfortunately, general.el doesn't work in the usual way in ediff-mode...
 
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
 
