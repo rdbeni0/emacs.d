@@ -35,7 +35,7 @@
  "<M-mouse-2>" 'tab-close
  "<M-drag-mouse-2>" 'tab-close)
 
-;; no space + which-key + no-whick-key : normal mode
+;; no space + which-key + no whick-key : normal mode
 
 (general-define-key
  :states '(normal visual emacs)
