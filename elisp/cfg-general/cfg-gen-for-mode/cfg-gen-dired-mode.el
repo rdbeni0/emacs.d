@@ -5,7 +5,8 @@
  :keymaps 'dired-mode-map
  :major-modes 'dired-mode
  "^" (lambda () (interactive) (find-alternate-file ".."))
- "<RET>" (lambda () (interactive) (dired-find-alternate-file)))
+ "<RET>" (lambda () (interactive) (dired-find-alternate-file))
+ "q" 'kill-this-buffer)
 
 (general-define-key
  :states '(normal visual emacs)

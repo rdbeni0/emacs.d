@@ -15,5 +15,4 @@
  "gc" '(Man-goto-section :which-key "Man-goto-section")
  "gb" '(Man-goto-see-also-section :which-key "Man-goto-see-also")
  "Q" 'kill-this-buffer
- "q" 'kill-buffer-and-window
- )
+ "q" 'kill-buffer-and-window)
