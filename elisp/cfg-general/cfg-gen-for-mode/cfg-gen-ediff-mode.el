@@ -1,4 +1,6 @@
-;; ediff-mode
+;; ediff-mode (without general.el)
+;; This mode i special - unfortunately, general.el doesn't work in the usual way in ediff-mode...
+
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
 
 ;; remove evil-collection:
@@ -60,7 +62,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
     ("zl"   . evil-collection-ediff-scroll-right)
     ("zh"   . evil-collection-ediff-scroll-left)
 
-    ;; gvimdiff compability:
+    ;; vimdiff compability:
     ("]c"   . ediff-next-difference)
     ("[c"   . ediff-previous-difference)
 
@@ -100,7 +102,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 (add-hook 'ediff-keymap-setup-hook 'cfg/ediff-startup-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; OPTIONAL:
+;; tweaks for other modes:
 
 (defvar cfg/ediff-help-changed nil)
 
@@ -114,7 +116,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 (defvar cfg/ediff-long-help-message-tail-backup  ediff-long-help-message-tail)
 
 (defun cfg/ediff-adjust-help ()
-  "Adjust long help messages to reflect cfg/ediff-bindings bindings."
+  "Adjust long help messages to reflect cfg/ediff-bindings bindings: for evil-collection and pure ediff."
   (unless cfg/ediff-help-changed
     (dolist (msg '(ediff-long-help-message-compare2
                    ediff-long-help-message-compare3
