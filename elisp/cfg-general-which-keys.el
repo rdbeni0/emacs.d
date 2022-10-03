@@ -25,7 +25,6 @@
 (evil-ex-define-cmd "E[x]" 'dired-jump)
 
 (use-package general
-  :demand t
   :ensure t
   :config
 
