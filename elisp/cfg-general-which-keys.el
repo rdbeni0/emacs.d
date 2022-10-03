@@ -14,10 +14,7 @@
   (setq which-key-prefix-prefix "+")
   (setq which-key-idle-delay 0.0)
   :config
-  (which-key-mode)
-  ;; https://github.com/noctuid/general.el#automatic-key-unbinding
-  ;; "To automatically prevent Key sequence starts with a non-prefix key errors without the need to explicitly unbind non-prefix keys, you can add (general-auto-unbind-keys) to your configuration file. This will advise define-key to unbind any bound subsequence of the KEY."
-  (general-auto-unbind-keys))
+  (which-key-mode))
 
 ;; evil-ex-define-cmd
 ;; unfortunately it seems that binding : vim commands needs to be done via dedicated function, but not via "general.el":
@@ -36,8 +33,11 @@
   ;; general-override-mode
   ;; :keymaps 'override
   ;; ^override evil keybindings
-
   (general-override-mode 1)
+
+  ;; https://github.com/noctuid/general.el#automatic-key-unbinding
+  ;; "To automatically prevent Key sequence starts with a non-prefix key errors without the need to explicitly unbind non-prefix keys, you can add (general-auto-unbind-keys) to your configuration file. This will advise define-key to unbind any bound subsequence of the KEY."
+  (general-auto-unbind-keys)
 
   ;;;;;;;;;;;;;; Split whole general.el mapping into small pieces:
 

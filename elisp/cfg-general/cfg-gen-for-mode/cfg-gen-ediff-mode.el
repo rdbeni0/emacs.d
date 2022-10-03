@@ -3,6 +3,9 @@
 
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
 
+(require 'ediff)
+(require 'evil-collection)
+
 ;; remove evil-collection:
 (remove-hook 'ediff-keymap-setup-hook 'evil-collection-ediff-startup-hook)
 
