@@ -15,9 +15,26 @@
 (use-package anaconda-mode
   :ensure t
   :config
-  ;; (add-hook 'python-mode-hook 'anaconda-mode) ;; optional - ggtags solution seems to be better and faster
-  ;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-  )
+  ;; ggtags solution seems to be better and faster for "jump to definitions", but anaconda-mode is great for code completion.
+  ;; it will be disabled by default:
+
+  ;; (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'anaconda-mode-hook 'anaconda-eldoc-mode)
+
+  ;; turn off anaconda-mode-map, because it seems it could overwrite ggtags keymap (and general.el):
+  (setcdr anaconda-mode-map nil)
+)
+
+;; https://github.com/pythonic-emacs/company-anaconda
+(use-package company-anaconda
+  :ensure t
+)
+
+;; OPTIONAL:
+;; https://github.com/emacsorphanage/company-jedi
+;; (use-package company-jedi
+;;   :ensure t
+;; )
 
 ;;;; python-mode and pylint
 
