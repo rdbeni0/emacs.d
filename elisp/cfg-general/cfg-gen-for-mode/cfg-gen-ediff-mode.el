@@ -47,6 +47,22 @@ Normally, not a user option.  See `ediff-help-message' for details.")
     i -status info   |    M -show session group  |C-z -suspend (drop to registry)"
   "The tail of the full-help message.")
 
+(defconst ediff-long-help-message-merge
+  "
+[c,k  -previous diff |     | -vert/horiz split   |dX,x -copy buf X's region to C
+]c,j  -next diff     |     h -highlighting       |   r -restore buf C's old diff
+zd,zj -jump to diff  |     @ -auto-refinement    |   * -refine current region
+   gx -goto X's point|    ## -ignore whitespace  |   ! -update diff regions
+  C-l -recenter      | #f/#h -focus/hide regions |   + -combine diff regions
+C-u/d -scroll up/dn  |     X -read-only in buf X |  wx -save buf X (wc is for C)
+zh/zl -scroll lt/rt  |     m -wide display       |  wd -save diff output
+    ~ -swap variants |     s -shrink window C    |   / -show/hide ancestor buff
+                     |  $$ -show clashes only    |   & -merge w/new default
+                     |  $* -skip changed regions | j k -move (vim style)
+"
+  "Help message for merge sessions.
+Normally, not a user option.  See `ediff-help-message' for details.")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar cfg/ediff-bindings

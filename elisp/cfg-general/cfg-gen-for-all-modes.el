@@ -205,6 +205,8 @@
  "acc"  '(calculator :which-key "calculator")
  "acd"  '(calc-dispatch :which-key "calc-dispatch")
  "aq"   '(quick-calc :which-key "quick-calc")
+ "ao"   '(:ignore t :which-key "operating system")
+ "aop"  '(pacfiles :which-key "pacfiles")
  "as"   '(:ignore t :which-key "shells")
  "ar"   '(:ignore t :which-key "regexp")
  "asm"  '(cfg/multi-term-buffer-rn :which-key "multi-term_bash")
