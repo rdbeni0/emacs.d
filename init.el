@@ -27,6 +27,7 @@
 (require 'cfg-webpaste-browsers)
 (require 'cfg-python)
 (require 'cfg-company-yasnippets)
+(require 'cfg-os-linux-tools)
 (require 'cfg-tramp-sudo-ssh)
 (require 'cfg-e-shell-terminals)
 (require 'cfg-general-which-keys)
