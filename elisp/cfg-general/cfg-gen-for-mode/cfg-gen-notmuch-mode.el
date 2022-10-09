@@ -24,6 +24,7 @@
  "J" '(notmuch-jump-search :which-key "jump-search")
  "A" '(notmuch-search :which-key "search")
  "a" '(notmuch-search :which-key "search")
+ "s" '(notmuch-search :which-key "search")
  "m" '(helm-notmuch :which-key "helm-notmuch")
  "?"  '(notmuch-help :which-key "notmuch-help"))
 
