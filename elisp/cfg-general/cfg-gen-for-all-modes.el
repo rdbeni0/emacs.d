@@ -342,6 +342,7 @@
  "gb" '(magit-blame :which-key "magit-blame")
  "gc" '(magit-clone :which-key "magit-clone")
  "gi" '(magit-init :which-key "magit-init")
+ "gl" '(helm-ls-git :which-key "helm-ls-git")
  "gs" '(magit-status :which-key "magit-status")
  "gm" '(magit-dispatch :which-key "magit-dispatch")
  "gL" '(magit-list-repositories :which-key "magit-list-repositories")
