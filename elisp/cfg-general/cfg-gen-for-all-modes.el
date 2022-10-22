@@ -138,6 +138,7 @@
  "bmo" '(org-mode :which-key "org-mode")
  "bmc" '(conf-mode :which-key "conf-mode")
  "bme" '(emacs-lisp-mode :which-key "emacs-lisp-mode")
+ "bmw" '(web-mode :which-key "web-mode")
  "be"  '(revert-buffer :which-key "revert-buffer")
  "bb"  '(helm-buffers-list :which-key "buffers list")
  "bs"  '(sort-lines :which-key "sort-lines")

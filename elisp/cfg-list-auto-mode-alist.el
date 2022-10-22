@@ -32,6 +32,9 @@
 	 ("/sshd?_config\\(\\.d/.*\\.conf\\)?\\'"  . ssh-config-mode)
 	 ("/known_hosts\\'"       . ssh-known-hosts-mode)
 	 ("/authorized_keys2?\\'" . ssh-authorized-keys-mode)
+	 ("\\.html?\\'" . web-mode)
+	 ("\\.js?\\'" . web-mode)
+	 ("\\.css?\\'" . web-mode)
 	 )
        auto-mode-alist))
 

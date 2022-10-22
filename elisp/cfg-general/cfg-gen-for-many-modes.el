@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map)
- :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode fish-mode)
+ :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map)
+ :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode)
  :prefix ","
  "k"  '(:ignore t :which-key "comments")
  "kl" '(comment-dwim :which-key "comment-dwim")

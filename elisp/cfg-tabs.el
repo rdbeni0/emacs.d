@@ -102,6 +102,14 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'fundamental-mode)) "TXT")
 	   ((or (string= (file-name-extension (buffer-name)) "txt")) "TXT")
 
+	   ((or (eq major-mode 'web-mode)) "WEB")
+	   ((or (eq major-mode 'mhtml-mode)) "WEB")
+	   ((or (eq major-mode 'html-mode)) "WEB")
+	   ((or (eq major-mode 'css-mode)) "WEB")
+	   ((or (eq major-mode 'js-mode)) "WEB")
+	   ((or (eq major-mode 'json-mode)) "WEB")
+	   ((or (eq major-mode 'json-navigator-mode)) "WEB")
+
 	   ((or (eq major-mode 'php-mode)) "PHP")
 	   ((or (string= (file-name-extension (buffer-name)) "php")) "PHP")
 
@@ -122,9 +130,6 @@ mouse-2: kill %S"
 
 	   ((or (string= (file-name-extension (buffer-name)) "xml")) "XML")
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
-
-	   ((or (eq major-mode 'json-mode)) "JSON")
-	   ((or (eq major-mode 'json-navigator-mode)) "JSON")
 
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
 

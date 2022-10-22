@@ -15,6 +15,7 @@
 (require 'cfg-i-buffer-menu)
 (require 'cfg-markdown)
 (require 'cfg-json-xml)
+(require 'cfg-web-front-end)
 (require 'cfg-folding-hideshow)
 (require 'cfg-tabs)
 (require 'cfg-dired)

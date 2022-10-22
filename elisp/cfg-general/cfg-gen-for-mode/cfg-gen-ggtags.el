@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(helm-gtags-mode-map ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map)
- :major-modes '(helm-gtags-mode ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode)
+ :keymaps '(helm-gtags-mode-map ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map)
+ :major-modes '(helm-gtags-mode ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode web-mode mhtml-mode html-mode css-mode js-mode)
  :prefix ","
  "."  '(:ignore t :which-key "ggtags")
  ".." '(helm-gtags-find-pattern :which-key "hgt-find-pattern")
