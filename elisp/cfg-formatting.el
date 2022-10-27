@@ -12,8 +12,12 @@
 
 (use-package format-all
   :ensure t
-  :hook (;; if you want format automatically after "save", then format-all-mode should be switched. For example:
+  :hook (;; if you want format automatically after "save" file, then format-all-mode should be turned on.
+	 ;; For example:
+	 ;;
 	 ;; (prog-mode . format-all-mode)
+	 ;; ^ or any other, particular mode.
+	 ;;
 	 ;;;; do not ask for a choice and always use default formatter:
 	 ;; (format-all-mode . format-all-ensure-formatter)
 	 (prog-mode . format-all-ensure-formatter))
