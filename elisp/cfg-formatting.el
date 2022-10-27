@@ -12,9 +12,11 @@
 
 (use-package format-all
   :ensure t
-  :hook ((prog-mode . format-all-mode)
-	  ;;;; do not ask for a choice and always use default formatter:
-	 (format-all-mode . format-all-ensure-formatter))
+  :hook (;; if you want format automatically after "save", then format-all-mode should be switched. For example:
+	 ;; (prog-mode . format-all-mode)
+	 ;;;; do not ask for a choice and always use default formatter:
+	 ;; (format-all-mode . format-all-ensure-formatter)
+	 (prog-mode . format-all-ensure-formatter))
   :config
 
   ;;;; set to 't' if you want see detailed debug in the "Messages" buffer:
