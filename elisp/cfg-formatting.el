@@ -12,11 +12,10 @@
 
 (use-package format-all
   :ensure t
+  :hook ((prog-mode . format-all-mode)
+	  ;;;; do not ask for a choice and always use default formatter:
+	 (format-all-mode . format-all-ensure-formatter))
   :config
-  (add-hook 'prog-mode-hook 'format-all-mode)
-
-  ;;;; do not ask for a choice and always use default formatter:
-  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
 
   ;;;; set to 't' if you want see detailed debug in the "Messages" buffer:
   ;; (setq format-all-debug t)
