@@ -5,7 +5,8 @@
  :keymaps '(perl-mode-map cperl-mode-map)
  :major-modes '(perl-mode cperl-mode)
  :prefix ","
- "!" '(executable-interpret :which-key "exec-script")
+ "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+ "!"  '(executable-interpret :which-key "exec-script")
  ","  '(cperl-perldoc-at-point :which-key "perldoc-at-point")
  "o"  '(cperl-perldoc :which-key "cperl-perldoc")
  "t"  '(:ignore t :which-key "toggle")

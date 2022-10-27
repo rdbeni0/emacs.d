@@ -5,6 +5,7 @@
  :keymaps 'php-mode-map
  :major-modes 'php-mode
  :prefix ","
+ "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
  "="  '(:ignore t :which-key "format")
  "==" '(format-all-buffer :which-key "format-all-buffer")
  "=b" '(format-all-buffer :which-key "format-all-buffer")
