@@ -85,7 +85,7 @@
 ;;   :after python
 ;;   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
-;; yapf formatter is optional: it has more options than black, but should be used with cautions:
+;; yapf formatter is optional - it has more options than black, but should be used with cautions:
 ;; https://github.com/JorisE/yapfify
 (use-package yapfify
   :ensure t
