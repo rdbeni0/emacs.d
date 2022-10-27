@@ -5,6 +5,11 @@
  :keymaps '(markdown-mode-map gfm-mode-map)
  :major-modes '(markdown-mode gfm-mode)
  :prefix ","
+
+ "="  '(:ignore t :which-key "format")
+ "==" '(format-all-buffer :which-key "format-all-buffer")
+ "=b" '(format-all-buffer :which-key "format-all-buffer")
+
  "i" '(:ignore t :which-key "insert")
  "il" '(markdown-insert-link :which-key "insert-link")
  "im" '(markdown-insert-image :which-key "insert-image")

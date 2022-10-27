@@ -13,7 +13,6 @@
 	   htmlize
 	   command-log-mode
 	   ;; json-mode
-	   format-all ; https://github.com/lassik/emacs-format-all-the-code
 	   ;; elisp-format
 	   simpleclip
 	   fzf

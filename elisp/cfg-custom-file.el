@@ -28,7 +28,7 @@
    '("%e" mode-line-mule-info mode-line-modified " " mode-line-buffer-identification " %I L%l_C%c <%m>"
      (vc-mode vc-mode)
      mode-line-misc-info mode-line-end-spaces))
- '(multi-term-program "/usr/sbin/zsh")
+ '(multi-term-program "/usr/sbin/bash")
  '(multi-vterm-buffer-name "vterm")
  '(org-modules
    '(ol-bbdb ol-bibtex ol-docview ol-eww ol-gnus ol-info ol-irc ol-mhe org-mouse ol-rmail ol-w3m))

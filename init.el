@@ -8,6 +8,7 @@
 (require 'cfg-line-numbers)
 (require 'cfg-evil)
 (require 'cfg-ediff-diff-vdiff)
+(require 'cfg-formatting)
 (require 'cfg-helm-tempbuf)
 (require 'cfg-grep-recentf)
 (require 'cfg-projectile)

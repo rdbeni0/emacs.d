@@ -7,6 +7,7 @@
  :prefix ","
  "="  '(:ignore t :which-key "format")
  "==" '(format-all-buffer :which-key "format-all-buffer")
+ "=b" '(format-all-buffer :which-key "format-all-buffer")
  "j"  '(:ignore t :which-key "js")
  "t"  '(:ignore t :which-key "styles")
  "ts" '(css-lookup-symbol :which-key "css-lookup-symbol"))
