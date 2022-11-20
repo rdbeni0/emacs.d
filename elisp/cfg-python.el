@@ -16,18 +16,25 @@
 
   ;; turn off anaconda-mode-map, because it seems it could overwrite ggtags keymap (and general.el):
   (setcdr anaconda-mode-map nil)
-)
+  )
 
 ;; https://github.com/pythonic-emacs/company-anaconda
 (use-package company-anaconda
   :ensure t
-)
+  )
 
 ;; OPTIONAL:
 ;; https://github.com/emacsorphanage/company-jedi
 ;; (use-package company-jedi
 ;;   :ensure t
 ;; )
+
+;;;; pyimport
+;; https://melpa.org/#/pyimport
+
+(use-package pyimport
+  :ensure t
+  )
 
 ;;;; python-mode and pylint
 
