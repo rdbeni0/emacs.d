@@ -115,7 +115,7 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'cc-mode)) "C")
 	   ((or (eq major-mode 'c-mode)) "C")
-	   ((or (string= (file-name-extension (buffer-name)) "php")) "C")
+	   ((or (string= (file-name-extension (buffer-name)) "c")) "C")
 
 	   ((or (eq major-mode 'perl-mode)) "PERL")
 	   ((or (eq major-mode 'cperl-mode)) "PERL")
