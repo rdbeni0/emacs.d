@@ -1,4 +1,4 @@
-;; general-python-mode:
+;; general-cc-mode:
 
 (general-define-key
  :states '(normal visual emacs)
