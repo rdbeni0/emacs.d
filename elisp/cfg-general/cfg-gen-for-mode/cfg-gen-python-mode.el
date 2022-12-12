@@ -59,18 +59,18 @@
 
 ;; anaconda-mode - no prefix, it will override evil keymaps:
 
-;; (general-define-key
-;;  :states '(normal visual emacs)
-;;  :keymaps 'anaconda-mode-map
-;;  :major-modes 'anaconda-mode
-;;  "gC" '(what-cursor-position :which-key "what-cursor-position")
-;;  "g?" '(anaconda-mode-show-doc :which-key "show-doc")
-;;  "ga" '(anaconda-mode-find-assignments :which-key "find-assignments")
-;;  "gA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
-;;  "gr" '(anaconda-mode-find-references :which-key "find-references")
-;;  "gR" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
-;;  "gd" '(anaconda-mode-find-definitions :which-key "find-definitions")
-;;  "gD" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window"))
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'anaconda-mode-map
+ :major-modes 'anaconda-mode
+ "gk" '(xref-pop-marker-stack :which-key "xref-pop-marker-stack")
+ "g?" '(anaconda-mode-show-doc :which-key "show-doc")
+ "ga" '(anaconda-mode-find-assignments :which-key "find-assignments")
+ "gA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
+ "gr" '(anaconda-mode-find-references :which-key "find-references")
+ "gR" '(anaconda-mode-find-references-other-window :which-key "find-references-ot-window")
+ "gd" '(anaconda-mode-find-definitions :which-key "find-definitions")
+ "gD" '(anaconda-mode-find-definitions-other-window :which-key "find-definitions-ot-window"))
 
 ;; inferior-python-mode - no prefix
 
