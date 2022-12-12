@@ -23,7 +23,7 @@
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
 	;; transformers - could be changed "per mode": https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
 	;; https://company-mode.github.io/manual/Backends.html
-	company-transformers '(company-sort-by-backend-importance delete-dups)) ;; or company-sort-by-occurrence
+	company-transformers '(company-sort-by-statistics company-sort-by-backend-importance delete-dups)) ;; or  / company-sort-by-occurrence
   ;; Press SPACE will accept the highlighted candidate and insert a space
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
@@ -93,8 +93,8 @@
   (add-hook 'php-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     (add-to-list 'company-backends 'company-capf)
-			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))) ;; TODO -  company-ac-php-backend - the most important
+			     (add-to-list 'company-backends '(company-ac-php-backend company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
@@ -155,16 +155,40 @@
 					 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; python:
 ;; https://github.com/pythonic-emacs/company-anaconda
-;; for python:
 
 (use-package company-anaconda
   :after company
   :ensure t
+  )
+
+;; php
+;; https://github.com/xcwen/ac-php
+
+(use-package company-php
+  :after company
+  :ensure t
+  :config
+  ;; ac-php uses its own tags format. By default all tags located at ~/.ac-php/tags-<project-directory>. For example, if the real path of the project is /home/jim/ac-php/phptest, then tags will be placed at ~/.ac-php/tags-home-jim-ac-php-phptest/. And you can redefine the base path (~/.ac-php) using ac-php-tags-path variable.
+  (setq ac-php-tags-path (expand-file-name ".cache/.ac-php" user-emacs-directory))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; https://github.com/company-mode/company-statistics
+
+(use-package company-statistics
+  :ensure t
+  :config
+  (company-statistics-mode)
+  (setq company-statistics-size 5000)
+  (setq company-statistics-file (expand-file-name ".cache/company-statistics-cache.el" user-emacs-directory))
   )
 
 ;; https://github.com/expez/company-quickhelp
@@ -192,6 +216,7 @@
   (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1)) ; TODO - migrate to general.el
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;; yasnippets
 ;; Documentation: https://joaotavora.github.io/yasnippet/
 
