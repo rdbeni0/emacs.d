@@ -37,6 +37,7 @@
  "ed" '(python-shell-send-defun :which-key "eval-defun")
  "ep" '(python-shell-package-enable :which-key "package-enable")
  "a"  '(:ignore t :which-key "anaconda-mode")
+ "ae" '(cfg/enable-anaconda-mode :which-key "enable-anaconda-mode")
  "am" '(anaconda-mode :which-key "anaconda-mode")
  "aM" '(anaconda-eldoc-mode :which-key "anaconda-eldoc-mode"))
 

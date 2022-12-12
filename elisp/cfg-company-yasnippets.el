@@ -22,7 +22,8 @@
 	company-show-numbers            t
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
 	;; transformers - could be changed "per mode": https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
-	company-transformers '(company-sort-by-occurrence delete-dups))
+	;; https://company-mode.github.io/manual/Backends.html
+	company-transformers '(company-sort-by-backend-importance delete-dups)) ;; or company-sort-by-occurrence
   ;; Press SPACE will accept the highlighted candidate and insert a space
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
@@ -65,6 +66,8 @@
   (with-eval-after-load 'company
     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
     (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))
+
+  (setq company-dabbrev-downcase nil) ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS:

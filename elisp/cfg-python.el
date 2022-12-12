@@ -18,6 +18,16 @@
   (setcdr anaconda-mode-map nil)
   )
 
+(defun cfg/enable-anaconda-mode ()
+  "Enable anaconda-mode for all python buffers in the future (for corrent emacs session only)."
+  (interactive)
+
+  (add-hook 'python-mode-hook 'anaconda-mode)
+
+  (if (bound-and-true-p anaconda-mode)
+      (message "anaconda-mode is on")
+    (anaconda-mode)))
+
 ;; https://github.com/pythonic-emacs/company-anaconda
 (use-package company-anaconda
   :ensure t
