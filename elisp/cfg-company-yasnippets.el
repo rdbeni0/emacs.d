@@ -21,7 +21,8 @@
 	company-minimum-prefix-length   1   ;; show completion after 1 character (default is 3!)
 	company-show-numbers            t
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
-	company-transformers '(company-sort-by-occurrence)) ;; could be changed "per mode"
+	;; transformers - could be changed "per mode": https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
+	company-transformers '(company-sort-by-occurrence delete-dups))
   ;; Press SPACE will accept the highlighted candidate and insert a space
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
