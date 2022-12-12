@@ -81,12 +81,12 @@
   ;; Description of particular backends: https://company-mode.github.io/manual/Backends.html
   ;;
   ;; How TO MANIPULATE BACKENDS PER MAJOR MODE:
-  ;; 1) clean (setq company-backends '()) - from now it will be empty
-  ;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be mess)
+  ;; 1) clean and make local var (set (make-local-variable 'company-backends) '()) - from now it will be empty
+  ;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be messy and slow)
   ;; 2A) the less important  backends should be at the beginning
   ;; 2B) the most important - should be declared at the end
-  ;; 3) run emacs and check variable "company-backends" as "describe-variable"
-  ;; 4) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options
+  ;; 3) run emacs and check variable "company-backends" as "describe-variable" and also use M-x company-diag in real examples
+  ;; 4) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options for particular mode
   ;; 5) OPTIONAL: no new line for particular mode: https://github.com/joaotavora/yasnippet/issues/192
   ;; just add: (setq require-final-newline nil) into particular mode hook
 
@@ -115,16 +115,16 @@
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'web-mode-hook (lambda ()
-			       (set (make-local-variable 'company-backends) '())
-			       (add-to-list 'company-backends 'company-capf)
-			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			     (set (make-local-variable 'company-backends) '())
+			     (add-to-list 'company-backends 'company-capf)
+			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'c-mode-hook (lambda ()
-			       (set (make-local-variable 'company-backends) '())
-			       (add-to-list 'company-backends 'company-capf)
-			       (add-to-list 'company-backends '(company-dabbrev-code company-cmake comany-clang company-files company-gtags company-keywords company-dabbrev))
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			   (set (make-local-variable 'company-backends) '())
+			   (add-to-list 'company-backends 'company-capf)
+			   (add-to-list 'company-backends '(company-dabbrev-code company-cmake comany-clang company-files company-gtags company-keywords company-dabbrev))
+			   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())
