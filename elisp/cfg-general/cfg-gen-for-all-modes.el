@@ -153,6 +153,15 @@
  "by"  '(:ignore t :which-key "yas_company")
  "byy" '(yas-describe-tables :which-key "yas-describe-tables")
 
+ ;; completions
+
+ "<f5>"     '(:ignore t :which-key "completions")
+ "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
+ "<f5><f5>" '(company-files :which-key "company-files")
+ "<f5><f6>" '(helm-dabbrev :which-key "helm-dabbrev")
+ "<f5><f7>" '(company-ispell :which-key "company-ispell")
+ "<f5><f8>" '(helm-lisp-completion-at-point :which-key "helm-lisp-completion-at-point")
+
  ;; windows
 
  "w"   '(:ignore t :which-key "windows")

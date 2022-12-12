@@ -11,4 +11,22 @@
  "km" '(comment-region :which-key "comment-region")
  "kn" '(uncomment-region :which-key "uncomment-region")
  "kj" '(comment-line :which-key "comment-line")
- "kt" '(comment-kill :which-key "comment-kill"))
+ "kt" '(comment-kill :which-key "comment-kill")
+ "<f5>"     '(:ignore t :which-key "completions")
+ "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
+ "<f5><f5>" '(company-files :which-key "company-files")
+ "<f5><f6>" '(helm-dabbrev :which-key "helm-dabbrev")
+ "<f5><f7>" '(company-ispell :which-key "company-ispell")
+ "<f5><f8>" '(helm-lisp-completion-at-point :which-key "helm-lisp-completion-at-point"))
+
+;; F-keys for all many modes (also in insert mode)
+
+(general-define-key
+ :states '(normal visual emacs insert)
+ :keymaps '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map lisp-interaction-mode-map fundamental-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map)
+ :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode lisp-interaction-mode fundamental-mode python-mode php-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode)
+ "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
+ "<f5><f5>" '(company-files :which-key "company-files")
+ "<f5><f6>" '(helm-dabbrev :which-key "helm-dabbrev")
+ "<f5><f7>" '(company-ispell :which-key "company-ispell")
+ "<f5><f8>" '(helm-lisp-completion-at-point :which-key "helm-lisp-completion-at-point"))

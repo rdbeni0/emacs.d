@@ -99,7 +99,7 @@
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
 				    (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-				    (add-to-list 'company-backends '(company-capf company-files)) ;; capf is working great with elisp code
+				    (add-to-list 'company-backends '(company-elisp company-capf company-files)) ;; capf is working great with elisp code
 				    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'sh-mode-hook (lambda ()
@@ -112,6 +112,18 @@
 			       (set (make-local-variable 'company-backends) '())
 			       (add-to-list 'company-backends 'company-capf)
 			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+
+  (add-hook 'web-mode-hook (lambda ()
+			       (set (make-local-variable 'company-backends) '())
+			       (add-to-list 'company-backends 'company-capf)
+			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+
+  (add-hook 'c-mode-hook (lambda ()
+			       (set (make-local-variable 'company-backends) '())
+			       (add-to-list 'company-backends 'company-capf)
+			       (add-to-list 'company-backends '(company-dabbrev-code company-cmake comany-clang company-files company-gtags company-keywords company-dabbrev))
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'python-mode-hook (lambda ()
@@ -218,6 +230,8 @@
   (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
   (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
   (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
+  (add-hook 'web-mode-hook #'yas-minor-mode) ;; front end
+  (add-hook 'c-mode-hook #'yas-minor-mode) ;; c files only
   (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
   (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
   (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
