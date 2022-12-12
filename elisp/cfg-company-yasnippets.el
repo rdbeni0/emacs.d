@@ -66,12 +66,15 @@
     (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; COMPANY BACKENDS - ADD GLOBALLY:
+  ;; COMPANY BACKENDS:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY):
   ;; https://www.reddit.com/r/emacs/comments/ba6blj/company_looking_for_comprehensive_documentation/
+  ;; ^ "(set (make-local-variable 'company-backends) '())" should be used (seems to be the most correct way)
   ;; OTHER EXAMPLE:
   ;; https://emacs.stackexchange.com/questions/23999/php-completion-with-company-does-not-work-on-local-variables
+  ;;
+  ;; Description of particular backends: https://company-mode.github.io/manual/Backends.html
   ;;
   ;; How TO MANIPULATE BACKENDS PER MAJOR MODE:
   ;; 1) clean (setq company-backends '()) - from now it will be empty
@@ -84,67 +87,55 @@
   ;; just add: (setq require-final-newline nil) into particular mode hook
 
   (add-hook 'php-mode-hook (lambda ()
-			     (setq company-backends '())
-			     (add-to-list 'company-backends 'company-dabbrev) ;; the less important
-			     (add-to-list 'company-backends '(company-dabbrev-code
-							      company-gtags
-							      company-etags
-							      company-keywords))
+			     (set (make-local-variable 'company-backends) '())
 			     (add-to-list 'company-backends 'company-capf)
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))) ;; the most important
-  ;; TODO -  company-ac-php-backend ;; the most important
+			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))) ;; TODO -  company-ac-php-backend - the most important
+
+  (add-hook 'emacs-lisp-mode-hook (lambda ()
+				    (set (make-local-variable 'company-backends) '())
+				    (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+				    (add-to-list 'company-backends '(company-capf company-files)) ;; capf is working great with elisp code
+				    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'sh-mode-hook (lambda ()
-			    (setq company-backends '())
-			    (add-to-list 'company-backends 'company-dabbrev)
-			    (add-to-list 'company-backends '(company-dabbrev-code
-							     company-gtags
-							     company-keywords))
+			    (set (make-local-variable 'company-backends) '())
 			    (add-to-list 'company-backends 'company-capf)
+			    (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
 			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'cperl-mode-hook (lambda ()
-			       (setq company-backends '())
-			       (add-to-list 'company-backends 'company-dabbrev)
-			       (add-to-list 'company-backends '(company-dabbrev-code
-								company-gtags
-								company-keywords))
+			       (set (make-local-variable 'company-backends) '())
 			       (add-to-list 'company-backends 'company-capf)
+			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'python-mode-hook (lambda ()
-				(setq company-backends '())
-				(add-to-list 'company-backends 'company-dabbrev)
-				(add-to-list 'company-backends '(company-dabbrev-code
-								 company-gtags
-								 company-keywords))
+				(set (make-local-variable 'company-backends) '())
 				(add-to-list 'company-backends 'company-capf)
-				(add-to-list 'company-backends 'company-anaconda) ;; anaconda-mode
+				(add-to-list 'company-backends '(company-anaconda company-dabbrev-code company-files company-keywords company-gtags company-dabbrev)) ;; anaconda-mode
 				(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'snippet-mode-hook (lambda ()
-				 (setq company-backends '())
-				 (add-to-list 'company-backends 'company-dabbrev)
-				 (add-to-list 'company-backends '(company-dabbrev-code
-								  company-gtags
-								  company-keywords))
+				 (set (make-local-variable 'company-backends) '())
 				 (add-to-list 'company-backends 'company-capf)
+				 (add-to-list 'company-backends 'company-gtags)
+				 (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
 				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   (add-hook 'org-mode-hook (lambda ()
-			     (setq company-backends '())
-			     (add-to-list 'company-backends 'company-dabbrev)
-			     (add-to-list 'company-backends '(company-dabbrev-code
-							      company-gtags
-							      company-keywords))
+			     (set (make-local-variable 'company-backends) '())
 			     (add-to-list 'company-backends 'company-capf)
+			     (add-to-list 'company-backends 'company-gtags)
+			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
 			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
   ;; some optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
   (add-hook 'notmuch-message-mode-hook (lambda ()
-					 (setq company-backends '())
-					 (add-to-list 'company-backends 'company-dabbrev)
-					 (add-to-list 'company-backends 'notmuch-company)
+					 (set (make-local-variable 'company-backends) '())
+					 (add-to-list 'company-backends 'company-gtags)
+					 (add-to-list 'company-backends 'company-capf)
+					 (add-to-list 'company-backends '(notmuch-company company-files company-dabbrev company-dabbrev-code))
 					 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
 					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
 
@@ -220,6 +211,7 @@
   :config
   ;; add yas-minor-mode per MAJOR mode - not global:
   (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
+  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
   (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
   (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
   (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl

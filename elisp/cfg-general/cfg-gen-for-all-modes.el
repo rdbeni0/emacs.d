@@ -5,8 +5,8 @@
  :keymaps 'global
 
  "<M-tab>" 'cfg/alternate-buffer
- "S-<iso-lefttab>" 'indent-for-tab-command
- "S-<tab>" 'cfg/company-backend-with-yas
+ ;; "S-<iso-lefttab>" 'indent-for-tab-command
+ "S-<iso-lefttab>" 'cfg/yas-expand-or-company-complete
  "<C-mouse-4>" 'text-scale-increase
  "<C-mouse-5>" 'text-scale-decrease
 
