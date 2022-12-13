@@ -46,12 +46,22 @@
   :ensure t
   )
 
+;;;; sphinx-doc
+;;;; docstring generation
+
+(use-package sphinx-doc
+  :ensure t
+  )
+
 ;;;; python-mode and pylint
 
 (add-hook 'python-mode-hook
           (lambda ()
             (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
-            (setq flycheck-pylintrc "~/.pylintrc")))
+            (setq flycheck-pylintrc "~/.pylintrc")
+            (sphinx-doc-mode t)
+	    ))
+
 
 (provide 'cfg-python)
 ;;; cfg-python.el ends here

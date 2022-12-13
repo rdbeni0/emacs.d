@@ -7,6 +7,7 @@
  :prefix ","
  "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
  "h"  '(python-check :which-key "python-check")
+ "c"  '(sphinx-doc :which-key "sphinx-doc")
  "s"  '(run-python :which-key "python-shell")
  "v"  '(:ignore t :which-key "venv")
  "va"  '(pythonic-activate :which-key "pythonic-activate")
