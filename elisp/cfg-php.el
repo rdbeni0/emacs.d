@@ -9,8 +9,8 @@
   :ensure t
   :init
   (add-hook 'php-mode-hook (lambda ()
-			      (require 'company-php)
-			      (ac-php-core-eldoc-setup)))
+			     (require 'company-php)
+			     (ac-php-core-eldoc-setup)))
   )
 
 ;; https://github.com/OVYA/php-cs-fixer

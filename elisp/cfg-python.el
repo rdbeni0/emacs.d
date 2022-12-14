@@ -53,14 +53,21 @@
   :ensure t
   )
 
-;;;; python-mode and pylint
+;;;; python-mode - linters, checkers...
+;;;; we need to know that flycheck has excellent support for python-mode in emacs, but it needs some executables to be installed
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
-            (setq flycheck-pylintrc "~/.pylintrc")
-            (sphinx-doc-mode t)
-	    ))
+(use-package python-mode
+  :configure
+  (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
+  (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
+  (setq flycheck-python-mypy-cache-dir¶ (expand-file-name ".cache/mypy" user-emacs-directory))
+  (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (sphinx-doc-mode t)))
+  )
+
+
 
 
 (provide 'cfg-python)
