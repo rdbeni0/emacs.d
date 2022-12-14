@@ -58,7 +58,7 @@
 
 (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
 (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
-(setq flycheck-python-mypy-cache-dir¶ (expand-file-name ".cache/mypy" user-emacs-directory)) ;; https://github.com/python/mypy
+(setq flycheck-python-mypy-cache-dir (expand-file-name ".cache/mypy" user-emacs-directory)) ;; https://github.com/python/mypy
 (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
 ;; https://www.reddit.com/r/emacs/comments/gqymvz/how_to_force_flycheck_to_select_a_specific_syntax/
 ;; https://www.flycheck.org/en/latest/languages.html#python
