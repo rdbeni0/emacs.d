@@ -78,7 +78,9 @@
  "v" '(notmuch-tree-from-search-current-query :which-key "tree-from-search-current-query")
  "u" '(cfg/notmuch-toggle-tag-search-unread :which-key "toggle-unread")
  "b" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
- "d" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin"))
+ "d" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
+ "e" '(cfg/notmuch-toggle-tag-search-new :which-key "toggle-new")
+ "w" '(cfg/notmuch-toggle-tag-search-new :which-key "toggle-new"))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -88,6 +90,8 @@
  "u" '(cfg/notmuch-toggle-tag-tree-unread :which-key "toggle-unread")
  "b" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
+ "w" '(cfg/notmuch-toggle-tag-tree-new :which-key "toggle-new")
+ "e" '(cfg/notmuch-toggle-tag-tree-new :which-key "toggle-new")
  "v" '(notmuch-search-from-tree-current-query :which-key "search-from-tree-current-query")
  "c"  '(:ignore t :which-key "compose,create")
  "cr" '(notmuch-tree-reply-sender :which-key "tree-reply-to-sender")
@@ -139,6 +143,8 @@
  "u" 'cfg/notmuch-toggle-tag-tree-unread
  "b" 'cfg/notmuch-toggle-tag-tree-bin
  "d" 'cfg/notmuch-toggle-tag-tree-bin
+ "e" 'cfg/notmuch-toggle-tag-tree-new
+ "w" 'cfg/notmuch-toggle-tag-tree-new
  "S-<left>" 'tabbar-backward
  "S-<right>" 'tabbar-forward)
 
@@ -159,6 +165,8 @@
  "u" 'cfg/notmuch-toggle-tag-show-unread
  "b" 'cfg/notmuch-toggle-tag-show-bin
  "d" 'cfg/notmuch-toggle-tag-show-bin
+ "e" 'cfg/notmuch-toggle-tag-show-new
+ "w" 'cfg/notmuch-toggle-tag-show-new
  "t" 'notmuch-show-save-attachments
  "." 'cfg/notmuch-show-view-html
  "S-<left>" 'tabbar-backward
@@ -175,6 +183,8 @@
  "u" 'cfg/notmuch-toggle-tag-search-unread
  "b" 'cfg/notmuch-toggle-tag-search-bin
  "d" 'cfg/notmuch-toggle-tag-search-bin
+ "e" 'cfg/notmuch-toggle-tag-search-new
+ "w" 'cfg/notmuch-toggle-tag-search-new
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
  "S"  'notmuch-search-filter
