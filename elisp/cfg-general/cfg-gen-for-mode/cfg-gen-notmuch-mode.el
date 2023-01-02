@@ -33,6 +33,11 @@
  :keymaps '(notmuch-show-mode-map)
  :major-modes '(notmuch-show-mode)
  :prefix ","
+ "u" '(cfg/notmuch-toggle-tag-show-unread :which-key "toggle-unread")
+ "b" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
+ "d" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
+ "e" '(cfg/notmuch-toggle-tag-show-new :which-key "toggle-new")
+ "w" '(cfg/notmuch-toggle-tag-show-new :which-key "toggle-new")
  "}" '(notmuch-show-next-message :which-key "show-next-msg")
  "]" '(notmuch-show-next-open-message :which-key "show-next-open-msg")
  "{" '(notmuch-show-previous-message :which-key "show-previous-msg")
