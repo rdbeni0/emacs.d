@@ -6,7 +6,8 @@
  :major-modes '(notmuch-search-mode notmuch-hello-mode notmuch-show-mode notmuch-tree-mode)
  :prefix ","
  "p"  '(:ignore t :which-key "polls")
- "pu" '(cfg/notmuch-poll-full-sort :which-key "notmuch-poll-full-sort")
+ "pa" '(cfg/notmuch-nmuch-sort-archive :which-key "poll-sort-archive")
+ "pu" '(cfg/notmuch-poll-mbsync-full-sort :which-key "poll-mbsync-full-sort")
  "pp" '(cfg/notmuch-poll-mbsync :which-key "poll-mbsync")
  "pl" '(notmuch-poll-and-refresh-this-buffer :which-key "poll")
  "pb" '(cfg/notmuch-poll-empty-bin :which-key "poll-empty-bin")
@@ -34,6 +35,7 @@
  :major-modes '(notmuch-show-mode)
  :prefix ","
  "u" '(cfg/notmuch-toggle-tag-show-unread :which-key "toggle-unread")
+ "a" '(cfg/notmuch-toggle-tag-show-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
  "e" '(cfg/notmuch-toggle-tag-show-new :which-key "toggle-new")
@@ -82,6 +84,7 @@
  "T"  '(notmuch-search-filter-by-tag :which-key "search-filter-by-tag")
  "v" '(notmuch-tree-from-search-current-query :which-key "tree-from-search-current-query")
  "u" '(cfg/notmuch-toggle-tag-search-unread :which-key "toggle-unread")
+ "a" '(cfg/notmuch-toggle-tag-search-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
  "e" '(cfg/notmuch-toggle-tag-search-new :which-key "toggle-new")
@@ -93,6 +96,7 @@
  :major-modes '(notmuch-tree-mode)
  :prefix ","
  "u" '(cfg/notmuch-toggle-tag-tree-unread :which-key "toggle-unread")
+ "a" '(cfg/notmuch-toggle-tag-tree-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
  "w" '(cfg/notmuch-toggle-tag-tree-new :which-key "toggle-new")
@@ -146,6 +150,7 @@
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
  "u" 'cfg/notmuch-toggle-tag-tree-unread
+ "a" 'cfg/notmuch-toggle-tag-tree-arch
  "b" 'cfg/notmuch-toggle-tag-tree-bin
  "d" 'cfg/notmuch-toggle-tag-tree-bin
  "e" 'cfg/notmuch-toggle-tag-tree-new
@@ -168,6 +173,7 @@
  "r" 'notmuch-refresh-this-buffer
  "R" 'notmuch-refresh-all-buffers
  "u" 'cfg/notmuch-toggle-tag-show-unread
+ "a" 'cfg/notmuch-toggle-tag-show-arch
  "b" 'cfg/notmuch-toggle-tag-show-bin
  "d" 'cfg/notmuch-toggle-tag-show-bin
  "e" 'cfg/notmuch-toggle-tag-show-new
@@ -186,6 +192,7 @@
  "R" 'notmuch-refresh-all-buffers
  "T" 'notmuch-search-filter-by-tag
  "u" 'cfg/notmuch-toggle-tag-search-unread
+ "a" 'cfg/notmuch-toggle-tag-search-arch
  "b" 'cfg/notmuch-toggle-tag-search-bin
  "d" 'cfg/notmuch-toggle-tag-search-bin
  "e" 'cfg/notmuch-toggle-tag-search-new
