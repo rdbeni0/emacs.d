@@ -90,6 +90,7 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'conf-mode)) "CONF")
 	   ((or (eq major-mode 'conf-unix-mode)) "CONF")
+	   ((or (eq major-mode 'conf-space-mode)) "CONF")
 	   ((or (eq major-mode 'ssh-config-mode)) "CONF")
 	   ((or (eq major-mode 'conf-windows-mode)) "CONF")
 
