@@ -15,6 +15,7 @@
        '(("\\.*_conf_file\\'" . conf-mode)
 	 ("\\.npmrc\\'" . conf-mode)
 	 ("\\.bash_aliases\\'" . conf-mode)
+	 ("\\.muttrc\\'" . conf-mode)
 	 ("fish_variables\\'" . conf-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.md\\'" . gfm-mode)
