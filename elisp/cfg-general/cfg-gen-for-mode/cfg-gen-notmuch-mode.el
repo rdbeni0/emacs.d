@@ -25,7 +25,8 @@
  "J" '(notmuch-jump-search :which-key "jump-search")
  "A" '(notmuch-search :which-key "search")
  "a" '(notmuch-search :which-key "search")
- "s" '(notmuch-search :which-key "search")
+ "s" '(cfg/notmuch-fuzzy-search :which-key "fuzzy-search")
+ "F" '(cfg/notmuch-fuzzy-search :which-key "fuzzy-search")
  "m" '(helm-notmuch :which-key "helm-notmuch")
  "?"  '(notmuch-help :which-key "notmuch-help"))
 
@@ -38,8 +39,8 @@
  "a" '(cfg/notmuch-toggle-tag-show-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
- "e" '(cfg/notmuch-toggle-tag-show-new :which-key "toggle-new")
- "w" '(cfg/notmuch-toggle-tag-show-new :which-key "toggle-new")
+ "e" '(cfg/notmuch-toggle-tag-show-flag :which-key "toggle-new-flag")
+ "w" '(cfg/notmuch-toggle-tag-show-flag :which-key "toggle-new-flag")
  "}" '(notmuch-show-next-message :which-key "show-next-msg")
  "]" '(notmuch-show-next-open-message :which-key "show-next-open-msg")
  "{" '(notmuch-show-previous-message :which-key "show-previous-msg")
@@ -87,8 +88,8 @@
  "a" '(cfg/notmuch-toggle-tag-search-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-search-bin :which-key "toggle-bin")
- "e" '(cfg/notmuch-toggle-tag-search-new :which-key "toggle-new")
- "w" '(cfg/notmuch-toggle-tag-search-new :which-key "toggle-new"))
+ "e" '(cfg/notmuch-toggle-tag-search-flag :which-key "toggle-new-flag")
+ "w" '(cfg/notmuch-toggle-tag-search-flag :which-key "toggle-new-flag"))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -99,8 +100,8 @@
  "a" '(cfg/notmuch-toggle-tag-tree-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
  "d" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
- "w" '(cfg/notmuch-toggle-tag-tree-new :which-key "toggle-new")
- "e" '(cfg/notmuch-toggle-tag-tree-new :which-key "toggle-new")
+ "w" '(cfg/notmuch-toggle-tag-tree-flag :which-key "toggle-new-flag")
+ "e" '(cfg/notmuch-toggle-tag-tree-flag :which-key "toggle-new-flag")
  "v" '(notmuch-search-from-tree-current-query :which-key "search-from-tree-current-query")
  "c"  '(:ignore t :which-key "compose,create")
  "cr" '(notmuch-tree-reply-sender :which-key "tree-reply-to-sender")
@@ -112,7 +113,7 @@
  :keymaps '(notmuch-message-mode-map)
  :major-modes '(notmuch-message-mode)
  :prefix ","
- "F"  '(cfg/notmuch-fcc-replace :which-key "fcc-replace")
+ "f"  '(cfg/notmuch-fcc-replace :which-key "fcc-replace")
  "w"  '(message-insert-signature :which-key "insert-signature")
  ;; "p"  '(message-insert-screenshot :which-key "attach-take-screenshot") ;; optional: not working in text-mode
  "a"  '(mml-attach-file :which-key "mml-attach-file")
@@ -123,7 +124,7 @@
  ",b"  '(message-goto-body :which-key "goto-body")
  ",s"  '(message-goto-signature :which-key "goto-signature")
  ",c"  '(message-goto-cc :which-key "goto-cc")
- ",f"  '(message-goto-from :which-key "goto-from")
+ ",o"  '(message-goto-from :which-key "goto-from")
  ",t"  '(message-goto-to :which-key "goto-to")
  ",r"  '(message-goto-reply-to :which-key "goto-reply-to"))
 
@@ -137,6 +138,7 @@
  "R" 'notmuch-refresh-all-buffers
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
+ "F" 'cfg/notmuch-fuzzy-search
  "S-<left>" 'tabbar-backward
  "S-<right>" 'tabbar-forward
  "?" 'notmuch-help)
@@ -149,12 +151,14 @@
  "R" 'notmuch-refresh-all-buffers
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
+ "F" 'cfg/notmuch-fuzzy-search
+ "s" 'cfg/notmuch-fuzzy-search
  "u" 'cfg/notmuch-toggle-tag-tree-unread
  "a" 'cfg/notmuch-toggle-tag-tree-arch
  "b" 'cfg/notmuch-toggle-tag-tree-bin
  "d" 'cfg/notmuch-toggle-tag-tree-bin
- "e" 'cfg/notmuch-toggle-tag-tree-new
- "w" 'cfg/notmuch-toggle-tag-tree-new
+ "e" 'cfg/notmuch-toggle-tag-tree-flag
+ "w" 'cfg/notmuch-toggle-tag-tree-flag
  "S-<left>" 'tabbar-backward
  "S-<right>" 'tabbar-forward)
 
@@ -170,14 +174,16 @@
  "O" 'notmuch-show-open-or-close-all
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
+ "s" 'cfg/notmuch-fuzzy-search
+ "F" 'cfg/notmuch-fuzzy-search
  "r" 'notmuch-refresh-this-buffer
  "R" 'notmuch-refresh-all-buffers
  "u" 'cfg/notmuch-toggle-tag-show-unread
  "a" 'cfg/notmuch-toggle-tag-show-arch
  "b" 'cfg/notmuch-toggle-tag-show-bin
  "d" 'cfg/notmuch-toggle-tag-show-bin
- "e" 'cfg/notmuch-toggle-tag-show-new
- "w" 'cfg/notmuch-toggle-tag-show-new
+ "e" 'cfg/notmuch-toggle-tag-show-flag
+ "w" 'cfg/notmuch-toggle-tag-show-flag
  "t" 'notmuch-show-save-attachments
  "." 'cfg/notmuch-show-view-html
  "S-<left>" 'tabbar-backward
@@ -195,10 +201,12 @@
  "a" 'cfg/notmuch-toggle-tag-search-arch
  "b" 'cfg/notmuch-toggle-tag-search-bin
  "d" 'cfg/notmuch-toggle-tag-search-bin
- "e" 'cfg/notmuch-toggle-tag-search-new
- "w" 'cfg/notmuch-toggle-tag-search-new
+ "e" 'cfg/notmuch-toggle-tag-search-flag
+ "w" 'cfg/notmuch-toggle-tag-search-flag
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
+ "F" 'cfg/notmuch-fuzzy-search
+ "s" 'cfg/notmuch-fuzzy-search
  "S"  'notmuch-search-filter
  "T"  'notmuch-search-filter-by-tag
  "S-<left>" 'tabbar-backward
