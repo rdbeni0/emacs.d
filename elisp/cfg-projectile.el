@@ -27,7 +27,7 @@
   ;; fd is very fast "find" alternative, howewer it must be installed:
   ;; https://github.com/sharkdp/fd
   ;;
-  (setq projectile-generic-command "fd -H --ignore-file .gitignore -t f -0")
+  (setq projectile-generic-command "fd -L -H --ignore-file .gitignore -t f -0")
 
   ;; An alternative option with "generic-command" is here:
   ;; https://github.com/kaushalmodi/.emacs.d/blob/c7da9469e9de3aff83e3e3b09596ef3665b5ab95/setup-files/setup-projectile.el#L64-L77
