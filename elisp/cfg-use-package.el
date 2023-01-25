@@ -56,5 +56,14 @@
           (load library nil t)
           (push library libraries-loaded))))))
 
+
+;; quelpa:
+
+(use-package quelpa-use-package
+  :ensure t
+  :init (setq quelpa-update-melpa-p nil)
+  :config (quelpa-use-package-activate-advice)
+  )
+
 (provide 'cfg-use-package)
 ;;; cfg-use-package.el ends here
