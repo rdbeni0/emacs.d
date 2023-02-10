@@ -1,9 +1,34 @@
 ;;; cfg-i-buffer-menu.el --- configuration for ibuffer and buffer-menu -*- lexical-binding: t -*-
 ;;; Commentary:
 
-;; Configuration for ibuffer and buffer-menu (M-x Buffer-menu)
+;; Configuration for tempbuf (tempbuf will kill unused buffers after XX seconds), ibuffer and buffer-menu (M-x Buffer-menu).
 
 ;;; Code:
+
+;; tempbuf
+
+;; (WARNING - this option could be aggresive!)
+;;
+;; More examples of configuration:
+;; https://www.emacswiki.org/emacs/TempbufMode
+;; https://www.emacswiki.org/emacs/tempbuf.el < source
+;; https://github.com/DarwinAwardWinner/dotemacs-old/blob/master/site-lisp/settings/tempbuf-settings.el
+;; https://github.com/biern/.emacs.d/blob/master/conf/tempbuf.el
+;;
+
+(require 'tempbuf)
+
+;; clean native-compile buffer
+(when (get-buffer "*Async-native-compile-log*")
+  (setq tempbuf-minimum-timeout 5) ;; 5 seconds
+  (switch-to-buffer "*Async-native-compile-log*")
+  (turn-on-tempbuf-mode)
+  (switch-to-buffer "*scratch*"))
+;; tempbuf is working well with helm and it will clean junk buffers:
+(setq tempbuf-minimum-timeout 30)
+
+;; example of usage:
+;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
 
 ;; defuns
 
