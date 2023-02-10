@@ -31,6 +31,8 @@
  ".g" '(ggtags-create-tags :which-key "ggt-create-tags")
  ".u" '(ggtags-update-tags :which-key "ggt-update-tags")
 
+ ;; without prefix:
+ 
  (general-define-key
   :states '(normal visual emacs)
   :keymaps '(ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map)

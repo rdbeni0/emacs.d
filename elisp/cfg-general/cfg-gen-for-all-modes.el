@@ -110,6 +110,7 @@
  "fo"  '(save-some-buffers :which-key "save-some-buffers")
  "fb"  '(bookmark-jump :which-key "bookmark-jump")
  "fD"  '(cfg/delete-current-buffer-file :which-key "delete-current-buffer-file")
+ "fd"  '(dired :which-key "dired")
  "fy"  '(:ignore t :which-key "Yank/Copy")
  "fyp" '(cfg/show-file-name :which-key "show-file-name")
  "fyb" '(cfg/copy-buffer-name :which-key "Buffer Name")

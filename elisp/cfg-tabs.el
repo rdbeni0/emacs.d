@@ -136,6 +136,8 @@ mouse-2: kill %S"
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
 
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
+	   
+	   ((or (eq major-mode 'recentf-dialog-mode)) "RECENTF")
 
 	   ((or (eq major-mode 'ediff-meta-mode)) "DIFF")
 	   ((or (eq major-mode 'diff-mode)) "DIFF")

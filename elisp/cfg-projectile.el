@@ -9,6 +9,7 @@
   :ensure t
   :init
   (projectile-mode)
+  (setq projectile-switch-project-action #'projectile-dired)
   (setq projectile-enable-caching t)
 
   ;; Currently if the ignore list has to be taken from .projectile, then it only works with "indexing-method native".
