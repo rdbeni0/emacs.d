@@ -45,8 +45,8 @@
 
 ;; Save 1000 files for recentf mode:
 
-(setq recentf-max-saved-items 1000)
-(setq recentf-max-menu-items 1000)
+(setq recentf-max-saved-items 10000)
+(setq recentf-max-menu-items 10000)
 
 ;; "By default, Recentf saves the list of recent files on exiting Emacs (specifically, `recentf-save-list` is called on `kill-emacs-hook`). 
 ;; If Emacs exits abruptly for some reason the recent file list will be lost - therefore you may wish to call `recentf-save-list` periodically, e.g. every 5 minutes:"

@@ -319,7 +319,6 @@
  "pF"  '(projectile-find-file-dwim :which-key "find-file-dwim")
  "pg"  '(projectile-find-tag :which-key "find-tag")
  "pG"  '(projectile-regenerate-tags :which-key "regenerate-tags")
- "ph"  '(projectile :which-key "projectile")
  "pI"  '(projectile-invalidate-cache :which-key "invalidate-cache")
  "pk"  '(projectile-kill-buffers :which-key "kill-buffers")
  "pK"  '(projectile-add-known-project :which-key "add-known-project")
