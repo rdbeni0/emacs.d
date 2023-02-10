@@ -36,7 +36,7 @@
 ;; https://unix.stackexchange.com/questions/182211/automaticaly-rename-new-buffer-in-term-mode
 
 (defun cfg/multi-term-buffer-rn ()
-  "Open multi-term buffer with special name and prefix, it could be useful for custom buffer filtering (via tabs or helm)"
+  "Open multi-term buffer with special name and prefix, it could be useful for custom buffer filtering (via tabs or list-buffers)"
   (interactive)
   (require 'multi-term)
   (command-execute 'multi-term)

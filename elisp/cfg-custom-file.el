@@ -22,8 +22,6 @@
  '(erc-track-position-in-mode-line t)
  '(evil-auto-indent nil)
  '(flyspell-default-dictionary "english")
- '(helm-ff-lynx-style-map t)
- '(helm-minibuffer-history-key "M-p")
  '(mode-line-format
    '("%e" mode-line-mule-info mode-line-modified " " mode-line-buffer-identification " %I L%l_C%c <%m>"
      (vc-mode vc-mode)
@@ -60,10 +58,6 @@
  '(erc-notice-face ((t (:background "gray21" :foreground "deep sky blue" :weight bold))))
  '(erc-timestamp-face ((t (:foreground "cyan" :weight bold))))
  '(fg:erc-color-face1 ((t (:background "magenta" :foreground "black"))))
- '(helm-ff-dotted-directory ((t (:background "chartreuse" :foreground "black"))))
- '(helm-helper ((t (:foreground "cyan"))))
- '(helm-selection ((t (:background "white" :foreground "black"))))
- '(helm-source-header ((t (:background "#202328" :foreground "wheat"))))
  '(rcirc-my-nick ((t (:foreground "red"))))
  '(rcirc-server ((t (:foreground "PaleGreen1"))))
  '(rcirc-timestamp ((t (:inherit default :foreground "magenta"))))

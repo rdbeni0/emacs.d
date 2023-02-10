@@ -5,7 +5,7 @@
  :keymaps 'python-mode-map
  :major-modes 'python-mode
  :prefix ","
- "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+ "j"  '(imenu :which-key "imenu")
  "h"  '(python-check :which-key "python-check")
  "c"  '(sphinx-doc :which-key "sphinx-doc")
  "s"  '(run-python :which-key "python-shell")

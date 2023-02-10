@@ -23,7 +23,6 @@
 
 (use-package dumb-jump
   :ensure t
-  :after helm
   :hook ((prog-mode . cfg/dumb-jump-activate))
   :init (defun cfg/dumb-jump-activate ()
           (interactive)
@@ -58,16 +57,6 @@
             (lambda ()
 	      (ggtags-mode))))
 
-(use-package helm-gtags
-  :ensure t
-  )
-
-;; execute two modes at once:
-
-(add-hook 'ggtags-mode-hook
-          (lambda ()
-	    (helm-gtags-mode)
-	    ))
 
 ;; customize PATH and exec-path:
 ;; https://www.emacswiki.org/emacs/ExecPath

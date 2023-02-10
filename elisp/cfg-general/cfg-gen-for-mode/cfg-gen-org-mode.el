@@ -6,7 +6,7 @@
  :major-modes '(org-mode org-static-blog-mode)
  :prefix ","
  "p" '(org-priority :which-key "org-priority")
- "j"  '(cfg/helm-jump-in-buffer :which-key "helm-jump-in-buffer")
+ "j" '( :which-key "imenu")
  "," '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
  "." '(org-cycle :which-key "cycle")
  "A" '(org-attach :which-key "org-attach")

@@ -64,7 +64,6 @@ mouse-2: kill %S"
     "Sort tab groups."
     (list (cond
 	   ((or (eq major-mode 'grep-mode)) "GREP")
-	   ((or (eq major-mode 'helm-grep-mode)) "GREP")
 
 	   ((or (eq major-mode 'magit-mode)) "GIT")
 	   ((or (eq major-mode 'magit-status-mode)) "GIT")
@@ -160,8 +159,6 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'regex-tool-mode)) "REGEXP")
 	   ((or (string-equal "*Groups*" (substring (buffer-name) 0 8))) "REGEXP")
-
-	   ((or (eq major-mode 'helm-mode) (string-equal "*helm" (substring (buffer-name) 0 5))) "HELM")
 
 	   (t "user"))))
 

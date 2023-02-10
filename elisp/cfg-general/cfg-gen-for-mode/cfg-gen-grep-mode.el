@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(grep-mode-map wgrep-mode-map helm-grep-mode-map)
- :major-modes '(grep-mode wgrep-mode helm-grep-mode)
+ :keymaps '(grep-mode-map wgrep-mode-map)
+ :major-modes '(grep-mode wgrep-mode)
  :prefix ","
  "g" '(grep-mode :which-key "grep-mode")
  "p" '(wgrep-change-to-wgrep-mode :which-key "wgrep-change-to-wgrep-mode")

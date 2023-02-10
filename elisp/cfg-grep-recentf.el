@@ -55,7 +55,6 @@
 
 (run-at-time nil (* 10 60) 'recentf-save-list)
 
-;; ... but it's not affecting helm! 
 ;; Currently working on "pure" recentf-mode ("recentf-open-files").
 ;;
 

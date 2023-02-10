@@ -9,7 +9,6 @@
   :ensure t
   :init
   (projectile-mode)
-  (setq projectile-completion-system 'helm)
   (setq projectile-enable-caching t)
 
   ;; Currently if the ignore list has to be taken from .projectile, then it only works with "indexing-method native".

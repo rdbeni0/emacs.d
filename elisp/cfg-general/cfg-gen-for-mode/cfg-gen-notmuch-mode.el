@@ -27,8 +27,7 @@
  "a" '(notmuch-search :which-key "search")
  "s" '(cfg/notmuch-fuzzy-search :which-key "fuzzy-search")
  "F" '(cfg/notmuch-fuzzy-search :which-key "fuzzy-search")
- "m" '(helm-notmuch :which-key "helm-notmuch")
- "?"  '(notmuch-help :which-key "notmuch-help"))
+ "?" '(notmuch-help :which-key "notmuch-help"))
 
 (general-define-key
  :states '(normal visual emacs)
