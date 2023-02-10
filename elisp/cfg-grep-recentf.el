@@ -43,7 +43,7 @@
 
 (recentf-mode 1)
 
-;; Save 1000 files for recentf mode:
+;; Save 10000 files for recentf mode:
 
 (setq recentf-max-saved-items 10000)
 (setq recentf-max-menu-items 10000)
