@@ -1,0 +1,90 @@
+;;; cfg-completion-systems.el --- configfuration for completion styles and engines -*- lexical-binding: t -*-
+;;; Commentary:
+
+;; Everything what is connected with completion styles in bottom minibuffer.
+
+;;; Code:
+
+(use-package vertico
+  :ensure t
+  :init (vertico-mode 1)
+  :config (progn
+            (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+            (vertico-mouse-mode 1)
+            (vertico-multiform-mode 1)
+            (setq vertico-multiform-categories '((consult-grep buffer))
+                  vertico-multiform-commands '((tmm-menubar flat)
+                                               (tmm-shortcut flat)))))
+
+
+(use-package orderless
+  :ensure t
+  :after vertico
+  :config (progn
+            (setq orderless-matching-styles '(orderless-regexp
+                                              orderless-initialism
+                                              orderless-prefixes)
+                  orderless-component-separator #'orderless-escapable-split-on-space)
+
+            ;; Use the built-in "partial-completion" style to complete
+            ;; file inputs such as "/e/ni/co.nix" into
+            ;; "/etc/nixos/configuration.nix".  The "basic" style is
+            ;; needed to support the hostname completion in the TRAMP
+            ;; inputs such as "/sshx:HOSTNAME".
+            (setq completion-category-defaults nil
+                  completion-category-overrides '((file (styles basic partial-completion))))
+
+            (setq completion-styles '(orderless basic))
+
+            (defun cfg/call-without-orderless-dispatchers (orig)
+              "`call-interactively' while ignoring the orderless dispatchers."
+              (let ((orderless-style-dispatchers nil))
+                (call-interactively orig)))))
+
+(use-package marginalia
+  :ensure t
+  :after vertico
+  ;; :demand t                      
+  :config (marginalia-mode 1))
+
+(use-package consult
+  :ensure t
+  :config (progn
+            (consult-customize
+             consult-ripgrep consult-grep
+             consult-buffer consult-recent-file
+             :preview-key "M-.")
+
+            (defun cfg/orderless-fix-consult-tofu (pattern index total)
+              "Ignore the last character which is hidden and used only internally."
+              (when (string-suffix-p "$" pattern)
+                `(orderless-regexp . ,(concat (substring pattern 0 -1)
+                                              "[\x200000-\x300000]*$"))))
+
+            (dolist (command '(consult-buffer consult-line))
+              (advice-add command :around
+                          (lambda (orig &rest args)
+                            (let ((orderless-style-dispatchers (cons #'cfg/orderless-fix-consult-tofu
+                                                                     orderless-style-dispatchers)))
+                              (apply orig args)))))
+
+            ;; Disable consult-buffer project-related capabilities as
+            ;; they are very slow in TRAMP.
+            (setq consult-buffer-sources
+                  (delq 'consult--source-project-buffer
+                        (delq 'consult--source-project-file consult-buffer-sources)))
+
+            (setq consult--source-hidden-buffer
+                  (plist-put consult--source-hidden-buffer :narrow ?h))
+
+            (defun cfg/isearch-to-consult-line ()
+              "Search using `consult-line' what was being searched with `isearch'."
+              (interactive)
+              (isearch-exit)
+              (let ((query (if isearch-regexp
+                               isearch-string
+                             (regexp-quote isearch-string))))
+                (consult-line query)))))
+
+(provide 'cfg-completion-systems)
+;;; cfg-completion-systems.el ends here

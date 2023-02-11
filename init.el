@@ -32,6 +32,7 @@
 (require 'cfg-tramp-sudo-ssh)
 (require 'cfg-e-shell-terminals)
 (require 'cfg-general-which-keys)
+(require 'cfg-completion-systems)
 (require 'cfg-custom-file)
 (require 'cfg-themes-fonts)
 (require 'cfg-mode-line-hl)
