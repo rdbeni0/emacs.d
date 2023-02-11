@@ -46,6 +46,17 @@
   (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general/cfg-gen-for-completion-systems" user-emacs-directory))
   ;; ...and for particular single mode:
   (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general/cfg-gen-for-mode" user-emacs-directory))
+
+  ;; temporary and ugly workaround which will allow load all keybindings for emacs-lisp-mode correctly:
+
+  (find-file (expand-file-name "elisp/cfg-general/cfg-gen-for-many-modes.el" user-emacs-directory))
+  (eval-buffer)
+  (kill-buffer)
+
+  (find-file (expand-file-name "elisp/cfg-general/cfg-gen-for-mode/cfg-gen-emacs-lisp-mode.el" user-emacs-directory))
+  (eval-buffer)
+  (kill-buffer)
+
   )
 
 (provide 'cfg-general-which-keys)
