@@ -22,8 +22,6 @@
  ".c" '(xref-pop-marker-stack :which-key "dumb-jump-back")
  ".H" '(xref-find-apropos :which-key "xref-apropos")
  ".C" '(xref-find-references :which-key "xref-find-ref")
- "./" '(vc-git-grep :which-key "vc-git-grep")
- ".'" '(vc-git-grep :which-key "vc-git-grep")
 
  ;; without evil:
 

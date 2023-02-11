@@ -6,9 +6,9 @@
  :major-modes 'sh-mode
  :prefix ","
  "\\" '(sh-backslash-region :which-key "backslash-region")
- "#" '(sh-set-shell :which-key "set-shell")
- "!" '(executable-interpret :which-key "exec-script")
- "j" '(imenu :which-key "imenu")
+ "#"  '(sh-set-shell :which-key "set-shell")
+ "!"  '(executable-interpret :which-key "exec-script")
+ "j"  '(imenu :which-key "imenu")
  "="  '(:ignore t :which-key "format")
  "=b" '(format-all-buffer :which-key "format-all-buffer")
  "==" '(format-all-buffer :which-key "format-all-buffer")

@@ -40,8 +40,8 @@
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'global
- "g/" '(vc-git-grep :which-key "vc-git-grep")
- "g'" '(vc-git-grep :which-key "vc-git-grep")
+ "g/" '(vc-git-grep :which-key "git-grep")
+ "g'" '(vc-git-grep :which-key "git-grep")
  "q"  'kill-this-buffer
  "zq" '(evil-quit :which-key "evil-quit")
  "Q"  'evil-record-macro)
@@ -136,7 +136,7 @@
 
  "b"   '(:ignore t :which-key "buffers")
  "be"  '(revert-buffer :which-key "revert-refresh-buffer")
- "bb"  '(list-buffers :which-key "list-buffers")
+ "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
  "bs"  '(sort-lines :which-key "sort-lines")
  "bF"  '(format-all-buffer :which-key "format-all-buffer")
  "bv"  '(ibuffer :which-key "ibuffer")
