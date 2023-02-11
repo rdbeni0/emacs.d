@@ -55,7 +55,5 @@
 ;; (menu-bar-mode   -1)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(load "/home/rdbeni0/.emacs.d/elisp/cfg-general/cfg-gen-for-mode/cfg-gen-emacs-lisp-mode.el")
-
 (provide 'cfg-common-options)
 ;;; cfg-common-options.el ends here
