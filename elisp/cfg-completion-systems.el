@@ -55,6 +55,7 @@
          ([remap man]                           . consult-man)
          ([remap org-goto]                      . consult-org-heading)
          ([remap project-switch-to-buffer]      . consult-project-buffer)
+         ([remap projectile-switch-to-buffer]   . consult-project-buffer)
          ([remap recentf-open-files]            . consult-recent-file)
          ([remap repeat-complex-command]        . consult-complex-command)
          ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
