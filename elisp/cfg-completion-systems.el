@@ -45,11 +45,23 @@
 (use-package marginalia
   :ensure t
   :after vertico
-  ;; :demand t                      
+  ;; :demand t
   :config (marginalia-mode 1))
 
 (use-package consult
   :ensure t
+  :bind (     ;; Remaps
+              ([remap switch-to-buffer]              . consult-buffer)
+              ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+              ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
+              ([remap project-switch-to-buffer]      . consult-project-buffer)
+              ([remap yank-pop]                      . consult-yank-pop)
+              ([remap goto-line]                     . consult-goto-line)
+              ([remap bookmark-jump]                 . consult-bookmark)
+              ([remap recentf-open-files]            . consult-recent-file)
+              ([remap imenu]                         . consult-imenu)
+              ([remap Info-search]                   . consult-info))
+              ([remap repeat-complex-command]        . consult-complex-command))
   :config (progn
             (consult-customize
              consult-ripgrep consult-grep
@@ -59,7 +71,7 @@
             (defun cfg/orderless-fix-consult-tofu (pattern index total)
               "Ignore the last character which is hidden and used only internally."
               (when (string-suffix-p "$" pattern)
-                `(orderless-regexp . ,(concat (substring pattern 0 -1)
+		`(orderless-regexp . ,(concat (substring pattern 0 -1)
                                               "[\x200000-\x300000]*$"))))
 
             (dolist (command '(consult-buffer consult-line))
@@ -73,7 +85,7 @@
             ;; they are very slow in TRAMP.
             (setq consult-buffer-sources
                   (delq 'consult--source-project-buffer
-                        (delq 'consult--source-project-file consult-buffer-sources)))
+			(delq 'consult--source-project-file consult-buffer-sources)))
 
             (setq consult--source-hidden-buffer
                   (plist-put consult--source-hidden-buffer :narrow ?h))
@@ -85,7 +97,7 @@
               (let ((query (if isearch-regexp
                                isearch-string
                              (regexp-quote isearch-string))))
-                (consult-line query)))))
+		(consult-line query)))))
 
 (provide 'cfg-completion-systems)
 ;;; cfg-completion-systems.el ends here
