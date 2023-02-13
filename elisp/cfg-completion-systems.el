@@ -35,12 +35,7 @@
             (setq completion-category-defaults nil
                   completion-category-overrides '((file (styles basic partial-completion))))
 
-            (setq completion-styles '(orderless basic))
-
-            (defun cfg/call-without-orderless-dispatchers (orig)
-              "`call-interactively' while ignoring the orderless dispatchers."
-              (let ((orderless-style-dispatchers nil))
-                (call-interactively orig)))))
+            (setq completion-styles '(orderless basic))))
 
 (use-package marginalia
   :ensure t
@@ -48,20 +43,28 @@
   ;; :demand t
   :config (marginalia-mode 1))
 
+;; https://github.com/minad/consult
 (use-package consult
   :ensure t
   :bind (     ;; Remaps
-              ([remap switch-to-buffer]              . consult-buffer)
-              ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
-              ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
-              ([remap project-switch-to-buffer]      . consult-project-buffer)
-              ([remap yank-pop]                      . consult-yank-pop)
-              ([remap goto-line]                     . consult-goto-line)
-              ([remap bookmark-jump]                 . consult-bookmark)
-              ([remap recentf-open-files]            . consult-recent-file)
-              ([remap imenu]                         . consult-imenu)
-              ([remap Info-search]                   . consult-info))
-              ([remap repeat-complex-command]        . consult-complex-command))
+         ([remap Info-search]                   . consult-info)
+         ([remap bookmark-jump]                 . consult-bookmark)
+         ([remap goto-line]                     . consult-goto-line)
+         ([remap imenu]                         . consult-imenu)
+         ([remap locate]                        . consult-locate)
+         ([remap man]                           . consult-man)
+         ([remap org-goto]                      . consult-org-heading)
+         ([remap project-switch-to-buffer]      . consult-project-buffer)
+         ([remap recentf-open-files]            . consult-recent-file)
+         ([remap repeat-complex-command]        . consult-complex-command)
+         ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
+         ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+         ([remap switch-to-buffer]              . consult-buffer)
+         ([remap rgrep]                         . consult-grep)
+         ([remap vc-git-grep]                   . consult-git-grep)
+         ([remap projectile-ripgrep]            . consult-ripgrep)
+         ([remap yank-pop]                      . consult-yank-pop)
+	 )
   :config (progn
             (consult-customize
              consult-ripgrep consult-grep
