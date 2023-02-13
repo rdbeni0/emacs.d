@@ -44,6 +44,7 @@
 
 ;; https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
 ;; "This function is (...) to avoid re-loading a library when both .el and .elc versions are present."
+;; More info and solutions : https://www.emacswiki.org/emacs/LoadingLispFiles
 
 (defun cfg/load-all-el-in-directory (dir)
   "`load' all elisp libraries in directory DIR which are not already loaded."
@@ -56,6 +57,11 @@
           (load library nil t)
           (push library libraries-loaded))))))
 
+(defun cfg/load-all-el-in-directory-alt (dir)
+  "`load' all elisp libraries in directory DIR - alternative version."
+   (let ((load-it (lambda (f)
+		       (load-file (concat (file-name-as-directory dir) f)))))
+	(mapc load-it (directory-files dir nil "\\.el$"))))
 
 ;; quelpa:
 

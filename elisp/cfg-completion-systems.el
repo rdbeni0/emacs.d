@@ -12,7 +12,7 @@
             (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
             (vertico-mouse-mode 1)
             (vertico-multiform-mode 1)
-            (vertico-directory-mode 1)
+            ;; (vertico-directory-mode 1)
             (setq vertico-multiform-categories '((consult-grep buffer))
                   vertico-multiform-commands '((tmm-menubar flat)
                                                (tmm-shortcut flat)))))

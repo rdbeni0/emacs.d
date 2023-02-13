@@ -27,7 +27,7 @@
 
  ".m" '(ggtags-mode :which-key "ggtags-mode")
  ".g" '(ggtags-create-tags :which-key "ggt-create-tags")
- ".u" '(ggtags-update-tags :which-key "ggt-update-tags")
+ ".u" '(ggtags-update-tags :which-key "ggt-update-tags"))
 
  ;; without prefix:
  
@@ -51,4 +51,3 @@
   "gc" '(xref-pop-marker-stack :which-key "dumb-jump-back")
   "gH" '(xref-find-apropos :which-key "xref-apropos")
   "gC" '(xref-find-references :which-key "xref-find-ref"))
- )
