@@ -139,6 +139,7 @@
 
  "b"   '(:ignore t :which-key "buffers")
  "be"  '(revert-buffer :which-key "revert-refresh-buffer")
+ "bp"  '(yank-pop :which-key "yank-pop")
  "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
  "bB"  '(switch-to-buffer-other-window :which-key "switch-to-buffer-other-window")
  "bs"  '(sort-lines :which-key "sort-lines")
