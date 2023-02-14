@@ -62,7 +62,6 @@
          ([remap switch-to-buffer]                . consult-buffer)
          ([remap rgrep]                           . consult-grep)
          ([remap vc-git-grep]                     . consult-git-grep)
-         ([remap projectile-ripgrep]              . consult-ripgrep)
          ([remap find-dired]                      . consult-find)
          ([remap yank-pop]                        . consult-yank-pop)
          ([remap kmacro-view-macro-repeat]        . consult-kmacro)
@@ -79,8 +78,9 @@
          ([remap isearch-backward]                . consult-isearch-backward)
 ;;         ([remap ???]                             . consult-isearch-history)
 	 ;; Remaps - emacs plugins:
-         ([remap projectile-switch-to-buffer]    . consult-project-buffer)
-         ([remap evil-paste-pop]                 . consult-yank-pop)
+         ([remap projectile-switch-to-buffer]     . consult-project-buffer)
+         ([remap projectile-ripgrep]              . consult-ripgrep)
+         ([remap evil-paste-pop]                  . consult-yank-pop)
 	 )
   :config (progn
 	    ;; remove automatic previev of selected entry:
