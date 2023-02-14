@@ -74,8 +74,7 @@
          ([remap flymake-show-diagnostics-buffer] . consult-flymake)
          ([remap customize]                       . consult-customize)
          ([remap load-theme]                      . consult-theme)
-         ([remap isearch-forward]                 . consult-isearch-forward)
-         ([remap isearch-backward]                . consult-isearch-backward)
+         ([remap isearch-forward]                 . consult-line)
 ;;         ([remap ???]                             . consult-isearch-history)
 	 ;; Remaps - emacs plugins:
          ([remap projectile-switch-to-buffer]     . consult-project-buffer)
