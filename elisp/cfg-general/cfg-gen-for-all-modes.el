@@ -40,6 +40,7 @@
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'global
+ "gl" '(goto-line :which-key "goto-line")
  "g/" '(vc-git-grep :which-key "git-grep")
  "g'" '(vc-git-grep :which-key "git-grep")
  "q"  'kill-this-buffer
@@ -74,6 +75,9 @@
  "Q"   '(:ignore t :which-key "macros")
  "QQ"  '(evil-record-macro :which-key "evil-record-macro")
  "Q@"  '(evil-execute-macro :which-key "evil-execute-maco")
+ "Qp"  '(kmacro-cycle-ring-next :which-key "kmacro-next")
+ "Qn"  '(kmacro-cycle-ring-previous :which-key "kmacro-previous")
+ "Qv"  '(kmacro-view-macro-repeat :which-key "kmacro-view-macro")
 
  ;; treemacs:
 
@@ -255,7 +259,8 @@
 
  "s"   '(:ignore t :which-key "search")
  "s/"  '(vc-git-grep :which-key "git-grep")
- "sl"  '(locate :which-key "locate")
+ "so"  '(locate :which-key "locate")
+ "sl"  '(goto-line :which-key "goto-line")
  "s'"  '(vc-git-grep :which-key "git-grep")
  "sj"  '(imenu :which-key "imenu")
  "si"  '(find-name-dired :which-key "find-name-dired")
@@ -310,6 +315,7 @@
  "p;"  '(:ignore t :which-key "search/grep")
  "p;;" '(projectile-grep :which-key "grep")
  "p;g" '(projectile-ag :which-key "ag")
+ "p;r" '(projectile-ripgrep :which-key "ripgrep")
  "p/"  '(vc-git-grep :which-key "git-grep")
  "p!"  '(projectile-run-shell-command-in-root :which-key "run-shell-command-in-root")
  "p&"  '(projectile-run-async-shell-command-in-root :which-key "run-async-shell-command-in-root")

@@ -65,8 +65,10 @@
          ([remap vc-git-grep]                   . consult-git-grep)
          ([remap projectile-ripgrep]            . consult-ripgrep)
          ([remap yank-pop]                      . consult-yank-pop)
+         ([remap kmacro-view-macro-repeat]      . consult-kmacro)
 	 )
   :config (progn
+	    ;; remove automatic previev of selected entry:
             (consult-customize
              consult-ripgrep consult-grep
              consult-buffer consult-recent-file

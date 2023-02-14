@@ -6,6 +6,7 @@
  :major-modes '(org-mode org-static-blog-mode)
  :prefix ","
  "p" '(org-priority :which-key "org-priority")
+ "g" '(org-goto :which-key "org-goto")
  "j" '( :which-key "imenu")
  "," '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
  "." '(org-cycle :which-key "cycle")
