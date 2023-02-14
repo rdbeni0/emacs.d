@@ -7,6 +7,13 @@
 
 (use-package vertico
   :ensure t
+  :bind (("C-x M-r" . vertico-repeat)
+         :map vertico-map
+	 ;; left/right arrows for changing directory:
+         ("<right>" . vertico-directory-enter)
+         ("<left>"  . vertico-directory-delete-word)
+         ("M-g"     . vertico-multiform-grid)
+         ("M-q"     . vertico-multiform-flat))
   :init (vertico-mode 1)
   :config (progn
             (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
