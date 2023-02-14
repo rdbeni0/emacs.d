@@ -9,21 +9,33 @@
   :ensure t
   :bind (("C-x M-r" . vertico-repeat)
          :map vertico-map
-	 ;; left/right arrows for changing directory:
-         ("<right>" . vertico-directory-enter)
-         ("<left>"  . vertico-directory-delete-word)
+	 ;; M- keys for changing view:
+         ("M-v"     . vertico-multiform-vertical)
          ("M-g"     . vertico-multiform-grid)
-         ("M-q"     . vertico-multiform-flat))
+         ("M-f"     . vertico-multiform-flat)
+         ("M-r"     . vertico-multiform-reverse)
+         ("M-u"     . vertico-multiform-unobtrusive))
   :init (vertico-mode 1)
   :config (progn
             (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
             (vertico-mouse-mode 1)
             (vertico-multiform-mode 1)
-            ;; (vertico-directory-mode 1)
+	    (setq vertico-count 20) ;; number of candidates
             (setq vertico-multiform-categories '((consult-grep buffer))
                   vertico-multiform-commands '((tmm-menubar flat)
                                                (tmm-shortcut flat)))))
 
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+	      ;; left/right arrows for changing directory:
+              ("<right>" . vertico-directory-enter)
+              ("<left>"  . vertico-directory-delete-word)
+              ("M-<left>"  . vertico-directory-delete-char))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package orderless
   :ensure t
@@ -41,7 +53,6 @@
             ;; inputs such as "/sshx:HOSTNAME".
             (setq completion-category-defaults nil
                   completion-category-overrides '((file (styles basic partial-completion))))
-
             (setq completion-styles '(orderless basic))))
 
 (use-package marginalia
