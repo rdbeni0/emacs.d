@@ -75,7 +75,6 @@
          ([remap customize]                       . consult-customize)
          ([remap load-theme]                      . consult-theme)
          ([remap isearch-forward]                 . consult-line)
-;;         ([remap ???]                             . consult-isearch-history)
 	 ;; Remaps - emacs plugins:
          ([remap projectile-switch-to-buffer]     . consult-project-buffer)
          ([remap projectile-ripgrep]              . consult-ripgrep)
