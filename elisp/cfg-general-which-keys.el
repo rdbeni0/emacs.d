@@ -41,13 +41,9 @@
   ;;;;;;;;;;;;;; Split whole general.el mapping into small pieces:
 
   ;; Load general.el for all modes (global scope) and for many modes (but not all; local scope)...
-  ;; (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general" user-emacs-directory))
   (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general" user-emacs-directory))
-  ;; ...and for completion-systems:
-  (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general/cfg-gen-for-completion-systems" user-emacs-directory))
   ;; ...and for particular single mode:
   (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general/cfg-gen-for-mode" user-emacs-directory))
-  
   )
 
 (provide 'cfg-general-which-keys)

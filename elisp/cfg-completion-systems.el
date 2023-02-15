@@ -31,8 +31,8 @@
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
 	      ;; left/right arrows for changing directory:
-              ("<right>" . vertico-directory-enter)
-              ("<left>"  . vertico-directory-delete-word)
+              ("<right>"   . vertico-directory-enter)
+              ("<left>"    . vertico-directory-delete-word)
               ("M-<left>"  . vertico-directory-delete-char))
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
@@ -135,6 +135,37 @@
                                isearch-string
                              (regexp-quote isearch-string))))
 		(consult-line query)))))
+
+
+;; https://github.com/oantolin/embark
+
+(use-package embark
+  :ensure t
+  :bind (("C-h B" . embark-bindings)
+   :map vertico-map
+   ("<tab>"   . embark-act)
+   ("C-<tab>" . embark-export)
+   )
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+  
+  (setq embark-prompter 'embark-completing-read-prompter)
+  (setq embark-indicators '(embark--vertico-indicator embark-highlight-indicator embark-isearch-highlight-indicator))
+  
+  )
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t ; only need to install it, embark loads it after consult if found
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (provide 'cfg-completion-systems)
 ;;; cfg-completion-systems.el ends here
