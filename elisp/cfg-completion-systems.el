@@ -141,11 +141,20 @@
 
 (use-package embark
   :ensure t
-  :bind (("C-h B" . embark-bindings)
-   :map vertico-map
-   ("<tab>"   . embark-act)
-   ("C-<tab>" . embark-export)
-   )
+  :bind (("C-h B"    . embark-bindings)
+	 :map vertico-map
+	 ("<tab>"    . embark-act)
+	 ("C-<tab>"  . embark-export)
+	 ;; keys for scrolling mixed indicator buffer:
+	 ("C-d"      . scroll-other-window)       ; vim-style
+	 ("C-u"      . scroll-other-window-down)  ; vim style
+	 ("<next>"   . scroll-other-window)       ; page down key
+	 ("<prior>"  . scroll-other-window-down)  ; page up key
+	 ("M-<down>" . scroll-other-window)       ; Alt-down arrow
+	 ("M-<up>"   . scroll-other-window-down)  ; Alt-up arrow
+	 ("C-<down>" . scroll-other-window)       ; Ctrl-down arrow
+	 ("C-<up>"   . scroll-other-window-down)  ; Ctrl-up arrow
+	 )
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -155,10 +164,48 @@
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none))))
+
+  ;; (setq embark-prompter 'embark-completing-read-prompter)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Optionally - use which-key as indicator:
   
-  (setq embark-prompter 'embark-completing-read-prompter)
-  (setq embark-indicators '(embark--vertico-indicator embark-highlight-indicator embark-isearch-highlight-indicator))
+  (defun embark-which-key-indicator ()
+    "An embark indicator that displays keymaps using which-key.
+The which-key help message will show the type and value of the
+current target followed by an ellipsis if there are further
+targets."
+    (lambda (&optional keymap targets prefix)
+      (if (null keymap)
+          (which-key--hide-popup-ignore-command)
+	(which-key--show-keymap
+	 (if (eq (plist-get (car targets) :type) 'embark-become)
+             "Become"
+           (format "Act on %s '%s'%s"
+                   (plist-get (car targets) :type)
+                   (embark--truncate-target (plist-get (car targets) :target))
+                   (if (cdr targets) "…" "")))
+	 (if prefix
+             (pcase (lookup-key keymap prefix 'accept-default)
+               ((and (pred keymapp) km) km)
+               (_ (key-binding prefix 'accept-default)))
+           keymap)
+	 nil nil t (lambda (binding)
+                     (not (string-suffix-p "-argument" (cdr binding))))))))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; configure indicator:
+
+  ;; use as mixed-indicator as default:
+  (setq embark-mixed-indicator-delay 2)
   
+  (setq embark-indicators '(embark-mixed-indicator
+	  ;; embark-which-key-indicator ;; put it somewhere if you want use it
+	  embark--vertico-indicator
+	  embark-highlight-indicator
+	  embark-isearch-highlight-indicator))
+  ;;
+  (setq resize-mini-windows t)
   )
 
 ;; Consult users will also want the embark-consult package.
