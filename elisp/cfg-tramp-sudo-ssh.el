@@ -5,9 +5,9 @@
 
 ;;; Code:
 
-;; sudo
 
-;; tramp-term
+
+;;;;;; tramp-term:
 ;; Note: a large part of the data is also directly embedded in the "tramp-term.el" file (due to the fact that they are located directly in the package).
 ;;
 ;; other PS1 example:
@@ -23,7 +23,9 @@ export HISTFILE=~/.bash_history
 clear
 " host))))
 
-;; defuns:
+
+
+;;;;;; defuns:
 
 (defun cfg/sudo-edit (&optional arg)
   "Edit buffer / file as sudo user"
@@ -61,7 +63,9 @@ clear
         (user-error "Already in sudo")
       (dired (concat "/sudo::" dir)))))
 
-;; tramp
+
+
+;;;;;; tramp
 ;; more examples for tramp-parse : https://github.com/abo-abo/swiper/issues/59
 
 (setq my-tramp-ssh-completions
@@ -79,15 +83,19 @@ clear
 	  (if ssh-remote-user (format "%s@" ssh-remote-user) "")
 	  ssh-host))
 
+
+
+;;;;;; ssh-config-mode
 ;; https://github.com/jhgorrell/ssh-config-mode-el
 (use-package ssh-config-mode
   :ensure t
   :config
+  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
   )
 
-(add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
 
-;; ssh.el
+
+;;;;;; ssh.el
 ;; https://github.com/ieure/ssh-el
 ;; https://github.com/ieure/ssh-el/pull/3
 
