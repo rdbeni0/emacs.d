@@ -7,6 +7,24 @@
 
 ;; sudo
 
+;; tramp-term
+;; Note: a large part of the data is also directly embedded in the "tramp-term.el" file (due to the fact that they are located directly in the package).
+;;
+;; other PS1 example:
+;; export PS1=\"[\\u:\\$PWD]\n $ \"
+;;
+
+(require 'tramp-term)
+
+(add-hook 'tramp-term-after-initialized-hook
+	  (lambda (host)
+	    (term-send-raw-string (format "export PS1=\"[\\[\\033[1;35m\\]\\h\\[\\033[0m\\]:\\[\\033[1;32m\\]\\$PWD\\[\\033[0m\\]]\n$ \"
+export HISTFILE=~/.bash_history
+clear
+" host))))
+
+;; defuns:
+
 (defun cfg/sudo-edit (&optional arg)
   "Edit buffer / file as sudo user"
   (interactive "P")
@@ -84,21 +102,6 @@
 	      (setq shell-dirtrackp t)
 	      (setq comint-file-name-prefix (cfg/-make-comint-file-name-prefix)))))
 
-;; tramp-term
-;; Note: a large part of the data is also directly embedded in the "tramp-term.el" file (due to the fact that they are located directly in the package).
-;;
-;; other PS1 example:
-;; export PS1=\"[\\u:\\$PWD]\n $ \"
-;;
-
-(require 'tramp-term)
-
-(add-hook 'tramp-term-after-initialized-hook
-	  (lambda (host)
-	    (term-send-raw-string (format "export PS1=\"[\\[\\033[1;35m\\]\\h\\[\\033[0m\\]:\\[\\033[1;32m\\]\\$PWD\\[\\033[0m\\]]\n$ \"
-export HISTFILE=~/.bash_history
-clear
-" host))))
 
 (provide 'cfg-tramp-sudo-ssh)
 ;;; cfg-tramp-sudo-ssh.el ends here
