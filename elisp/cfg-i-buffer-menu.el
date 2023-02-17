@@ -24,7 +24,8 @@
   (switch-to-buffer "*Async-native-compile-log*")
   (turn-on-tempbuf-mode)
   (switch-to-buffer "*scratch*"))
-;; tempbuf is working well with helm and it will clean junk buffers:
+
+;; tempbuf is working well and it will clean junk buffers:
 (setq tempbuf-minimum-timeout 30)
 
 ;; example of usage:
