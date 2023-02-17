@@ -20,7 +20,7 @@
             (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
             (vertico-mouse-mode 1)
             (vertico-multiform-mode 1)
-	    (setq vertico-count 20) ;; number of candidates
+	    (setq vertico-count 20) ;; number of candidates and also size of minibuffer
             (setq vertico-multiform-categories '((consult-grep buffer))
                   vertico-multiform-commands '((tmm-menubar flat)
                                                (tmm-shortcut flat)))))
@@ -169,7 +169,7 @@
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Optionally - use which-key as indicator:
-  
+
   (defun embark-which-key-indicator ()
     "An embark indicator that displays keymaps using which-key.
 The which-key help message will show the type and value of the
@@ -198,12 +198,12 @@ targets."
 
   ;; use as mixed-indicator as default:
   (setq embark-mixed-indicator-delay 2)
-  
+
   (setq embark-indicators '(embark-mixed-indicator
-	  ;; embark-which-key-indicator ;; put it somewhere if you want use it
-	  embark--vertico-indicator
-	  embark-highlight-indicator
-	  embark-isearch-highlight-indicator))
+			    ;; embark-which-key-indicator ;; put it somewhere if you want use it
+			    embark--vertico-indicator
+			    embark-highlight-indicator
+			    embark-isearch-highlight-indicator))
   ;;
   (setq resize-mini-windows t)
   )
