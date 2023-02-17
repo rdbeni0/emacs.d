@@ -54,7 +54,7 @@
         (tramp-set-completion-function method my-tramp-ssh-completions))
       '("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh"))
 
-(defun cfg-make-comint-file-name-prefix ()
+(defun cfg/-make-comint-file-name-prefix ()
   (require 'tramp)
   (format "/%s:%s%s:"
 	  tramp-default-method
@@ -82,7 +82,7 @@
 	      (shell-dirtrack-mode t)
 	      (setq ssh-directory-tracking-mode t)
 	      (setq shell-dirtrackp t)
-	      (setq comint-file-name-prefix (cfg-make-comint-file-name-prefix)))))
+	      (setq comint-file-name-prefix (cfg/-make-comint-file-name-prefix)))))
 
 ;; tramp-term
 ;; Note: a large part of the data is also directly embedded in the "tramp-term.el" file (due to the fact that they are located directly in the package).
