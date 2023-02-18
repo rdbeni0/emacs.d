@@ -133,6 +133,8 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'snippet-mode)) "SNIPPETS")
 
 	   ((or (string= (file-name-extension (buffer-name)) "xml")) "XML")
+	   ((or (eq major-mode 'nxml-mode)) "XML")
+	   ((or (string-equal "*XSD Validator*" (buffer-name))) "XML")
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
 
 	   ((or (eq major-mode 'dired-mode)) "DIRED")

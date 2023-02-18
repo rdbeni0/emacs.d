@@ -30,6 +30,7 @@
 (setq ring-bell-function 'ignore )	; silent bell when you make a mistake
 (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
 (setq coding-system-for-write 'utf-8 )
+(setq default-process-coding-system '(utf-8 . utf-8))
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
 (electric-indent-mode -1)               ; https://www.reddit.com/r/emacs/comments/2mu7yi/disable_electric_indent_mode/
