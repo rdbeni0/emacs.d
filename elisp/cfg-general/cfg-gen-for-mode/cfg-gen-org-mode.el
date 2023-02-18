@@ -42,10 +42,10 @@
  "lo"  '(org-static-blog-create-new-post :which-key "osb-create-new-post")
  "lj"  '(org-static-blog-create-new-draft :which-key "osb-create-new-draft")
 
- "b" '(:ignore t :which-key "babel")
+ "b"  '(:ignore t :which-key "babel")
  "bt" '(org-babel-tangle :which-key "org-babel-tangle")
 
- "o" '(:ignore t :which-key "org-roam")
+ "o"  '(:ignore t :which-key "org-roam")
  "ol"  '(org-roam-buffer-toggle :which-key "buffer-toggle")
  "of"  '(org-roam-node-find :which-key "node-find")
  "oi"  '(org-roam-node-insert :which-key "node-insert"))
