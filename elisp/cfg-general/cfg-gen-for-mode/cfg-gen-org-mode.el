@@ -5,10 +5,12 @@
  :keymaps '(org-mode-map org-static-blog-mode-map)
  :major-modes '(org-mode org-static-blog-mode)
  :prefix ","
+ "," '(ffap :which-key "act_ffap")
+ "a" '(cfg/ffap :which-key "ffap")
+ "c" '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
  "p" '(org-priority :which-key "org-priority")
  "g" '(org-goto :which-key "org-goto")
- "j" '( :which-key "imenu")
- "," '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
+ "j" '(imenu :which-key "imenu")
  "." '(org-cycle :which-key "cycle")
  "A" '(org-attach :which-key "org-attach")
 

@@ -5,6 +5,7 @@
  :keymaps 'php-mode-map
  :major-modes 'php-mode
  :prefix ","
+ ","  '(ffap :which-key "act_ffap")
  "j"  '(imenu :which-key "imenu")
  "="  '(:ignore t :which-key "format")
  "==" '(format-all-buffer :which-key "format-all-buffer")

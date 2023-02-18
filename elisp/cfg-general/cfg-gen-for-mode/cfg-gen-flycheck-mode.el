@@ -7,6 +7,7 @@
  :prefix ","
  "`"  '(:ignore t :which-key "flycheck")
  "`l" '(flycheck-list-errors :which-key "list-errors")
+ "`t" '(flycheck-mode :which-key "toggle-flycheck")
  "`," '(flycheck-display-error-at-point :which-key "display-error")
  "`'" '(flycheck-mode :which-key "flycheck-mode")
  "`'" '(flycheck-buffer :which-key "flycheck-buffer")

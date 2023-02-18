@@ -39,6 +39,11 @@
 
       (grep (format "%s %s | xargs -0 grep -n -i \"%s\" " pattern)))))
 
+(defun cfg/ffap ()
+  "Standard verion of `ffat` comman (without embark)."
+  (interactive)
+  (ffap))
+
 ;; recentf
 
 (recentf-mode 1)
