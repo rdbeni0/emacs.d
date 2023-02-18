@@ -142,6 +142,7 @@
 (use-package embark
   :ensure t
   :bind (("C-h B"    . embark-bindings)
+	 ([remap ffap]                     . embark-act)
 	 :map vertico-map
 	 ("<tab>"    . embark-act)
 	 ("C-<tab>"  . embark-export)
