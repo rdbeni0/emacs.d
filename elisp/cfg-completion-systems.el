@@ -143,18 +143,22 @@
   :ensure t
   :bind (("C-h B"    . embark-bindings)
 	 ([remap ffap]                     . embark-act)
+	 ("C-<next>"  . scroll-other-window)       ; Ctrl-page down key
+	 ("C-<prior>" . scroll-other-window-down)  ; Ctrl-page up key
 	 :map vertico-map
-	 ("<tab>"    . embark-act)
-	 ("C-<tab>"  . embark-export)
+	 ("<tab>"     . embark-act)
+	 ("C-<tab>"   . embark-export)
 	 ;; keys for scrolling mixed indicator buffer:
-	 ("C-d"      . scroll-other-window)       ; vim-style
-	 ("C-u"      . scroll-other-window-down)  ; vim style
-	 ("<next>"   . scroll-other-window)       ; page down key
-	 ("<prior>"  . scroll-other-window-down)  ; page up key
-	 ("M-<down>" . scroll-other-window)       ; Alt-down arrow
-	 ("M-<up>"   . scroll-other-window-down)  ; Alt-up arrow
-	 ("C-<down>" . scroll-other-window)       ; Ctrl-down arrow
-	 ("C-<up>"   . scroll-other-window-down)  ; Ctrl-up arrow
+	 ("C-d"       . scroll-other-window)       ; vim-style
+	 ("C-u"       . scroll-other-window-down)  ; vim style
+	 ("<next>"    . scroll-other-window)       ; page down key
+	 ("<prior>"   . scroll-other-window-down)  ; page up key
+	 ("C-<next>"  . scroll-other-window)       ; Ctrl-page down key
+	 ("C-<prior>" . scroll-other-window-down)  ; Ctrl-page up key
+	 ("M-<down>"  . scroll-other-window)       ; Alt-down arrow
+	 ("M-<up>"    . scroll-other-window-down)  ; Alt-up arrow
+	 ("C-<down>"  . scroll-other-window)       ; Ctrl-down arrow
+	 ("C-<up>"    . scroll-other-window-down)  ; Ctrl-up arrow
 	 )
   :init
   ;; Optionally replace the key help with a completing-read interface
