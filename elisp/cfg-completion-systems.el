@@ -141,7 +141,7 @@
 
 (use-package embark
   :ensure t
-  :bind (("C-h B"    . embark-bindings)
+  :bind (("C-h B"     . embark-bindings)
 	 ([remap ffap]                     . embark-act)
 	 ("C-<next>"  . scroll-other-window)       ; Ctrl-page down key
 	 ("C-<prior>" . scroll-other-window-down)  ; Ctrl-page up key
@@ -205,11 +205,10 @@ targets."
   (setq embark-mixed-indicator-delay 2)
 
   (setq embark-indicators '(embark-mixed-indicator
-			    ;; embark-which-key-indicator ;; put it somewhere if you want use it
+			    ;; embark-which-key-indicator ;; put it in the "embark-indicators" if you want use it
 			    embark--vertico-indicator
 			    embark-highlight-indicator
 			    embark-isearch-highlight-indicator))
-  ;;
   (setq resize-mini-windows t)
   )
 
