@@ -139,6 +139,7 @@
  ;; buffers
 
  "b"   '(:ignore t :which-key "buffers")
+ "bu"  '(cfg/dos2unix :which-key "dos2unix")
  "be"  '(revert-buffer :which-key "revert-refresh-buffer")
  "bp"  '(evil-paste-pop :which-key "yank-pop")
  "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
