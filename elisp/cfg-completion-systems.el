@@ -2,9 +2,12 @@
 ;;; Commentary:
 
 ;; Everything what is connected with completion styles in bottom minibuffer.
+;; Requires Emacs 27.1++
 
 ;;; Code:
 
+
+;; https://github.com/minad/vertico
 (use-package vertico
   :ensure t
   :bind (("C-x M-r" . vertico-repeat)
@@ -37,6 +40,9 @@
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+
+
+;; https://github.com/oantolin/orderless
 (use-package orderless
   :ensure t
   :after vertico
@@ -55,11 +61,15 @@
                   completion-category-overrides '((file (styles basic partial-completion))))
             (setq completion-styles '(orderless basic))))
 
+
+;; https://github.com/minad/marginalia
 (use-package marginalia
   :ensure t
   :after vertico
   ;; :demand t
   :config (marginalia-mode 1))
+
+
 
 ;; https://github.com/minad/consult
 (use-package consult
@@ -104,7 +114,8 @@
              consult-ripgrep consult-grep
              consult-buffer consult-recent-file
              :preview-key "M-.")
-
+	    
+	    ;; fix hidden characters:
             (defun cfg/orderless-fix-consult-tofu (pattern index total)
               "Ignore the last character which is hidden and used only internally."
               (when (string-suffix-p "$" pattern)
@@ -125,20 +136,11 @@
 			(delq 'consult--source-project-file consult-buffer-sources)))
 
             (setq consult--source-hidden-buffer
-                  (plist-put consult--source-hidden-buffer :narrow ?h))
+                  (plist-put consult--source-hidden-buffer :narrow ?h))))
 
-            (defun cfg/isearch-to-consult-line ()
-              "Search using `consult-line' what was being searched with `isearch'."
-              (interactive)
-              (isearch-exit)
-              (let ((query (if isearch-regexp
-                               isearch-string
-                             (regexp-quote isearch-string))))
-		(consult-line query)))))
 
 
 ;; https://github.com/oantolin/embark
-
 (use-package embark
   :ensure t
   :bind (("C-h B"     . embark-bindings)
@@ -199,13 +201,13 @@ targets."
                      (not (string-suffix-p "-argument" (cdr binding))))))))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; configure indicator:
+  ;; Configure indicator:
 
   ;; use as mixed-indicator as default:
   (setq embark-mixed-indicator-delay 2)
 
   (setq embark-indicators '(embark-mixed-indicator
-			    ;; embark-which-key-indicator ;; put it in the "embark-indicators" if you want use it
+			    ;; embark-which-key-indicator ;; put it somewhere in the "embark-indicators" if you want use it
 			    embark--vertico-indicator
 			    embark-highlight-indicator
 			    embark-isearch-highlight-indicator))
