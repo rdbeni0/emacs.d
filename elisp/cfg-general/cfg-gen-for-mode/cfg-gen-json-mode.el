@@ -5,6 +5,7 @@
  :keymaps 'json-mode-map
  :major-modes 'json-mode
  :prefix ","
+ "," '(ffap :which-key "act_ffap")
  "="  '(:ignore t :which-key "format")
  "==" '(format-all-buffer :which-key "format-all-buffer")
  "=b" '(format-all-buffer :which-key "format-all-buffer")

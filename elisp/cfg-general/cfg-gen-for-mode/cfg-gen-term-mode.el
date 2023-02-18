@@ -5,6 +5,7 @@
  :keymaps '(term-mode-map term-raw-map)
  :major-modes 'term-mode
  :prefix ","
+ "," '(ffap :which-key "act_ffap")
  "f" '(find-file :which-key "find-file"))
 
 (general-define-key

@@ -6,6 +6,7 @@
  :keymaps 'erc-mode-map
  :major-modes 'erc-mode
  :prefix ","
+ "," '(ffap :which-key "act_ffap")
  "b" '(erc-iswitchb :which-key "iswitchb")
  "a" '(erc-input-action :which-key "input-action")
  "c" '(cfg/erc-chanlist :which-key "chanlist")

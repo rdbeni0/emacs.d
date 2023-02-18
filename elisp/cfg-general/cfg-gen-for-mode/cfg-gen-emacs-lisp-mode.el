@@ -13,4 +13,4 @@
    "=="   '(format-all-buffer :which-key "format-all-buffer")
    "=b"   '(format-all-buffer :which-key "format-all-buffer")
    "=o"   '(format-all-region :which-key "format-all-region")
-   "a"    '(ffap :which-key "ffap"))
+   "a"    '(cfg/ffap :which-key "ffap"))

@@ -5,6 +5,7 @@
  :keymaps '(notmuch-search-mode-map notmuch-hello-mode-map notmuch-show-mode-map notmuch-tree-mode-map)
  :major-modes '(notmuch-search-mode notmuch-hello-mode notmuch-show-mode notmuch-tree-mode)
  :prefix ","
+ ","  '(ffap :which-key "act_ffap")
  "p"  '(:ignore t :which-key "polls")
  "pa" '(cfg/notmuch-nmuch-sort-archive :which-key "poll-sort-archive")
  "pu" '(cfg/notmuch-poll-mbsync-full-sort :which-key "poll-mbsync-full-sort")
@@ -34,6 +35,7 @@
  :keymaps '(notmuch-show-mode-map)
  :major-modes '(notmuch-show-mode)
  :prefix ","
+ ","  '(ffap :which-key "act_ffap")
  "u" '(cfg/notmuch-toggle-tag-show-unread :which-key "toggle-unread")
  "a" '(cfg/notmuch-toggle-tag-show-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-show-bin :which-key "toggle-bin")
@@ -95,6 +97,7 @@
  :keymaps '(notmuch-tree-mode-map)
  :major-modes '(notmuch-tree-mode)
  :prefix ","
+ "," '(ffap :which-key "act_ffap")
  "u" '(cfg/notmuch-toggle-tag-tree-unread :which-key "toggle-unread")
  "a" '(cfg/notmuch-toggle-tag-tree-arch :which-key "toggle-arch")
  "b" '(cfg/notmuch-toggle-tag-tree-bin :which-key "toggle-bin")
@@ -112,6 +115,7 @@
  :keymaps '(notmuch-message-mode-map)
  :major-modes '(notmuch-message-mode)
  :prefix ","
+ "," '(ffap :which-key "act_ffap")
  "f"  '(cfg/notmuch-fcc-replace :which-key "fcc-replace")
  "w"  '(message-insert-signature :which-key "insert-signature")
  ;; "p"  '(message-insert-screenshot :which-key "attach-take-screenshot") ;; optional: not working in text-mode
@@ -119,13 +123,13 @@
  "c"  '(notmuch-mua-send-and-exit :which-key "send-and-exit")
  "z"  '(message-kill-to-signature :which-key "kill-to-signature")
  "q"  '(notmuch-mua-kill-buffer :which-key "quit-kill-buffer")
- ","  '(:ignore t :which-key "goto-or-create")
- ",b"  '(message-goto-body :which-key "goto-body")
- ",s"  '(message-goto-signature :which-key "goto-signature")
- ",c"  '(message-goto-cc :which-key "goto-cc")
- ",o"  '(message-goto-from :which-key "goto-from")
- ",t"  '(message-goto-to :which-key "goto-to")
- ",r"  '(message-goto-reply-to :which-key "goto-reply-to"))
+ "."  '(:ignore t :which-key "goto-or-create")
+ ".b"  '(message-goto-body :which-key "goto-body")
+ ".s"  '(message-goto-signature :which-key "goto-signature")
+ ".c"  '(message-goto-cc :which-key "goto-cc")
+ ".o"  '(message-goto-from :which-key "goto-from")
+ ".t"  '(message-goto-to :which-key "goto-to")
+ ".r"  '(message-goto-reply-to :which-key "goto-reply-to"))
 
 ;; general-notmuch-mode: without prefix and which-key
 
