@@ -5,7 +5,6 @@
  :keymaps '(sh-mode-map)
  :major-modes 'sh-mode
  :prefix ","
- "a"  '(cfg/ffap :which-key "ffap")
  "\\" '(sh-backslash-region :which-key "backslash-region")
  "#"  '(sh-set-shell :which-key "set-shell")
  "!"  '(executable-interpret :which-key "exec-script")

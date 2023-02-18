@@ -6,7 +6,6 @@
  :major-modes '(cc-mode c-mode)
  :prefix ","
  "c"  '(compile :which-key "compile")
- "a"  '(cfg/ffap :which-key "ffap")
  "="  '(:ignore t :which-key "format")
  "==" '(format-all-buffer :which-key "format-all-buffer")
  )
