@@ -164,6 +164,7 @@ mouse-2: kill %S"
 
 	   ((or (eq major-mode 'groovy-mode)) "GROOVY")
 	   ((or (eq major-mode 'jenkinsfile-mode)) "GROOVY")
+	   ((or (string-equal "*groovy*" (buffer-name))) "GROOVY")
 
 	   ((or (eq major-mode 'regex-tool-mode)) "REGEXP")
 	   ((or (string-equal "*Groups*" (substring (buffer-name) 0 8))) "REGEXP")
