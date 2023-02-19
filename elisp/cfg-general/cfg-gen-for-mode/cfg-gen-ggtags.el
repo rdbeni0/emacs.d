@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map)
- :major-modes '(ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode)
+ :keymaps '(ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map groovy-mode-map jenkinsfile-mode-map)
+ :major-modes '(ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode groovy-mode jenkinsfile-mode)
  :prefix ","
  "."  '(:ignore t :which-key "ggtags")
  ".f" '(ggtags-find-file  :which-key "ggt-find-file")
@@ -33,8 +33,8 @@
  
  (general-define-key
   :states '(normal visual emacs)
-  :keymaps '(ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map)
-  :major-modes '(ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode)
+  :keymaps '(ggtags-mode-map ggtags-global-mode-map sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map groovy-mode-map jenkinsfile-mode-map)
+  :major-modes '(ggtags-mode ggtags-global-mode sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode groovy-mode jenkinsfile-mode)
   "gf" '(ggtags-find-file :which-key "ggt-find-file")
   "gS" '(ggtags-view-search-history :which-key "ggt-show-shistory")
   "gr" '(ggtags-grep :which-key "ggt-grep")

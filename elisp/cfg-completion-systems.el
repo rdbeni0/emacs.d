@@ -109,12 +109,28 @@
          ([remap evil-paste-pop]                  . consult-yank-pop)
 	 )
   :config (progn
+	    (defun cfg/-consult-grep-always-choose-dir (orig &rest args)
+	      "Add prefix argument and always choose directory for consult-grep"
+	      (setq prefix-arg '(4))
+	      (funcall orig args))
+	    (advice-add 'consult-grep    :around #'cfg/-consult-grep-always-choose-dir)
+	    (advice-add 'consult-ripgrep :around #'cfg/-consult-grep-always-choose-dir)
+
+	    ;; consult git-grep with
+	    ;; -F will remove regexp filtering for the grep
+	    (add-to-list 'consult-grep-args "-F" 'append)
+
+	    ;; alternative, but also working:
+	    ;; (setq consult-grep-args
+	    ;; 	  '("grep" (consult--grep-exclude-args)
+	    ;; 	    "--null --line-buffered --color=never --ignore-case --line-number -I -F -r ."))
+
 	    ;; remove automatic previev of selected entry:
             (consult-customize
              consult-ripgrep consult-grep
              consult-buffer consult-recent-file
              :preview-key "M-.")
-	    
+
 	    ;; fix hidden characters:
             (defun cfg/orderless-fix-consult-tofu (pattern index total)
               "Ignore the last character which is hidden and used only internally."
