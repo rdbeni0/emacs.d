@@ -38,8 +38,8 @@
         (setq icomplete-separator "\n")
         (setq icomplete-hide-common-prefix nil)
         (setq icomplete-in-buffer t)
-        (define-key icomplete-minibuffer-map (kbd "<right>") 'icomplete-forward-completions)
-        (define-key icomplete-minibuffer-map (kbd "<left>") 'icomplete-backward-completions)
+        (define-key icomplete-minibuffer-map (kbd "<down>") 'icomplete-forward-completions)
+        (define-key icomplete-minibuffer-map (kbd "<up>") 'icomplete-backward-completions)
 
       )
   (fido-vertical-mode 1))
