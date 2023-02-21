@@ -25,7 +25,7 @@
 (require 'cfg-perl-regexps)
 (require 'cfg-php)
 (require 'cfg-groovy-jenkins)
-(require 'cfg-magit)
+(require 'cfg-vcs-magit)
 (require 'cfg-webpaste-browsers)
 (require 'cfg-python)
 (require 'cfg-company-yasnippets)

@@ -4,12 +4,7 @@
 ;; Basic setup for backups, startup, lockfiles, utf-8 encoding
 
 ;;; Code:
-
-;; TODO : update path with <emacs-user-directory>
-
 (setq delete-old-versions -1 )		; delete excess backup versions silently
-(setq version-control t)		; use version control
-(setq vc-make-backup-files nil) 	; make backups file even when in version controlled dir
 (setq make-backup-files nil)	        ; turn off backups
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Interlocking.html
@@ -25,7 +20,6 @@
 ;; https://stackoverflow.com/questions/25245134/stop-emacs-creating-autosave-files-in-the-same-directory
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
-(setq vc-follow-symlinks t )		; don't ask for confirmation when opening symlinked file
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ; transform backups file name
 (setq ring-bell-function 'ignore )	; silent bell when you make a mistake
 (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
