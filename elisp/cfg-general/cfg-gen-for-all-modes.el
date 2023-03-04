@@ -235,7 +235,6 @@
  "asm"  '(cfg/multi-term-buffer-rn :which-key "multi-term_bash")
  "asa"  '(ansi-term :which-key "ansi-term_bash")
  "asv"  '(multi-vterm :which-key "multi-vterm_fish")
- "ass"  '(multi-vterm :which-key "multi-vterm_fish")
  "asx"  '(cfg/my-named-shell :which-key "my-named-m-x-shell_bash")
  "asX"  '(shell :which-key "m-x-shell_bash")
  "asp"  '(run-python :which-key "python-shell")
