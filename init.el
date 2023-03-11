@@ -4,6 +4,7 @@
 (require 'cfg-use-package)
 (require 'cfg-list-pure-packages)
 (require 'cfg-list-auto-mode-alist)
+(require 'cfg-diagnose)
 (require 'cfg-common-options)
 (require 'cfg-line-numbers)
 (require 'cfg-evil)
