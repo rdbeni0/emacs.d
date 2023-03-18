@@ -64,10 +64,10 @@
   (projectile-register-project-type 'gitign '(".gitignore")
                                     :project-file ".gitignore")
   :config
+
   ;; remap if consult is installed:
   (when (require 'consult nil 'noerror)
-    (define-key projectile-mode-map [remap projectile-ripgrep] 'consult-ripgrep)
-    )
+    (define-key projectile-mode-map [remap projectile-ripgrep] 'consult-ripgrep))
 
   (add-hook 'projectile-after-switch-project-hook (lambda ()
 						    (projectile-invalidate-cache nil))))
