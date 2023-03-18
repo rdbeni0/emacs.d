@@ -103,9 +103,8 @@
          ([remap customize]                       . consult-customize)
          ([remap load-theme]                      . consult-theme)
          ([remap isearch-forward]                 . consult-line)
+         ([remap project-switch-to-buffer]        . consult-project-buffer)
 	 ;; Remaps - emacs plugins:
-         ([remap projectile-switch-to-buffer]     . consult-project-buffer)
-         ([remap projectile-ripgrep]              . consult-ripgrep)
          ([remap evil-paste-pop]                  . consult-yank-pop)
 	 )
   :config (progn

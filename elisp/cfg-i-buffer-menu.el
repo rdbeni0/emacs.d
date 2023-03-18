@@ -68,8 +68,6 @@
           (progn
             (delete-file filename t)
             (kill-buffer buffer)
-            (when (projectile-project-p)
-              (call-interactively #'projectile-invalidate-cache))
             (message "File deleted: '%s'" filename))
         (message "Canceled: File deletion")))))
 
@@ -102,8 +100,6 @@
                  (when (fboundp 'recentf-add-file)
                    (recentf-add-file new-name)
                    (recentf-remove-if-non-kept filename))
-                 (when (projectile-project-p)
-                   (call-interactively #'projectile-invalidate-cache))
                  (message "File '%s' successfully renamed to '%s'"
                           name (file-name-nondirectory new-name)))))
       ;; the buffer is not visiting a file

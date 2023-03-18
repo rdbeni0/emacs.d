@@ -27,12 +27,6 @@
   :config
   )
 
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t
-  :config
-  )
-
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t

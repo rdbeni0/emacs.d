@@ -26,4 +26,4 @@
  "pA" '(treemacs-add-project-to-workspace :which-key "add-project")
  "pd" '(treemacs-remove-project-from-workspace :which-key "remove-project")
  "pr" '(treemacs-rename-project :which-key "rename-project")
- "pp" '(treemacs-projectile :which-key "projectile"))
+ )

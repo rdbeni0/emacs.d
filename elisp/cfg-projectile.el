@@ -7,6 +7,10 @@
 
 (use-package projectile
   :ensure t
+  :bind (;; Remaps - emacs native:
+	 ;; Remaps - emacs plugins:
+         ([remap projectile-ripgrep]             . consult-ripgrep)
+	 )
   :init
   (projectile-mode)
   (setq projectile-switch-project-action #'projectile-dired)
@@ -50,15 +54,35 @@
   (projectile-register-project-type 'gitign '(".gitignore")
                                     :project-file ".gitignore")
   :config
+  ;; remap if consult is installed:
+  (when (require 'consult nil 'noerror)
+    (define-key projectile-mode-map [remap projectile-ripgrep] 'consult-ripgrep)
+    )
+
   (add-hook 'projectile-after-switch-project-hook (lambda ()
 						    (projectile-invalidate-cache nil))))
 
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t
+  :after general
+  :config
+  )
+;; def advice
+;; https://stackoverflow.com/questions/70042843/how-to-advice-add-a-function-with-no-arguments-to-a-function-that-takes-argument
+
+(defun cfg/-adv-projectile-buffer-file (&optional _args)
+  (when (projectile-project-p)
+    (call-interactively #'projectile-invalidate-cache)))
+
+(advice-add 'cfg/-adv-projectile-buffer-file :after #'cfg/delete-current-buffer-file)
+(advice-add 'cfg/-adv-projectile-buffer-file :after #'cfg/rename-current-buffer-file)
 
 ;; org-projectile
-;; ^ optional package, not yet implemented:
+;; ^ optional package:
 ;; https://github.com/IvanMalison/org-projectile
-;; additional funcs (from spacemacs):
 
+;; additional defuns for projectile (from spacemacs):
 
 (defun cfg/-projectile-directory-path ()
   "Retrieve the directory path relative to project root.
@@ -156,123 +180,36 @@
         (message "%s" file-path))
     (message "WARNING: Current buffer is not visiting a file!")))
 
-;; Copy file path
 
-(defun cfg/-directory-path ()
-  "Retrieve the directory path of the current buffer.
+;; general.el for projectile:
 
-  If the buffer is not visiting a file, use the `list-buffers-directory' variable
-  as a fallback to display the directory, useful in buffers like the ones created
-  by `magit' and `dired'.
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'override
+ :prefix "SPC"
 
-  Returns:
-  - A string containing the directory path in case of success.
-  - `nil' in case the current buffer does not have a directory."
-  (when-let (directory-name (if-let (file-name (buffer-file-name))
-                                (file-name-directory file-name)
-                              list-buffers-directory))
-    (file-truename directory-name)))
+ "fyC" '(cfg/projectile-copy-file-path-with-line-column :which-key "projectile-copy-file-path-with-line-column")
+ "fyD" '(cfg/projectile-copy-directory-path :which-key "projectile-copy-directory-path")
+ "fyL" '(cfg/projectile-copy-file-path-with-line :which-key "projectile-copy-file-path-with-line")
+ "fyY" '(cfg/projectile-copy-file-path :which-key "projectile-copy-file-path")
 
-(defun cfg/-file-path ()
-  "Retrieve the file path of the current buffer.
+ "po"  '(:ignore t :which-key "projectile")
+ "poT" '(projectile-test-project :which-key "pe-test-project")
+ "pe"  '(projectile-edit-dir-locals :which-key "pe-edit-dir-locals")
+ "poa" '(projectile-toggle-between-implementation-and-test :which-key "pe-toggle-between-implementation-and-test")
+ "poR" '(projectile-replace :which-key "pe-replace")
+ "pog" '(projectile-find-tag :which-key "pe-find-tag")
+ "poG" '(projectile-regenerate-tags :which-key "pe-regenerate-tags")
+ "pot" '(treemacs-projectile :which-key "treemacs-projectile")
+ "poK" '(projectile-add-known-project :which-key "pe-add-known-project")
+ "poM" '(projectile-remove-known-project :which-key "pe-remove-known-project")
+ "poI" '(projectile-invalidate-cache :which-key "pe-invalidate-cache")
+ "por" '(projectile-recentf :which-key "pe-recentf")
+ "p;"  '(:ignore t :which-key "projectile_search/grep")
+ "p;;" '(projectile-grep :which-key "grep")
+ "p;g" '(projectile-ag :which-key "ag")
+ "p;r" '(projectile-ripgrep :which-key "ripgrep"))
 
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
-  (when-let (file-path (buffer-file-name))
-    (file-truename file-path)))
-
-(defun cfg/-file-path-with-line ()
-  "Retrieve the file path of the current buffer, including line number.
-
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
-  (when-let (file-path (cfg/-file-path))
-    (concat file-path ":" (number-to-string (line-number-at-pos)))))
-
-(defun cfg/-file-path-with-line-column ()
-  "Retrieve the file path of the current buffer, including line and column number.
-
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
-  (when-let (file-path (cfg/-file-path-with-line))
-    (concat
-     file-path
-     ":"
-     (number-to-string (if (and
-                            ;; Emacs 26 introduced this variable. Remove this
-                            ;; check once 26 becomes the minimum version.
-                            (boundp column-number-indicator-zero-based)
-                            (not column-number-indicator-zero-based))
-                           (1+ (current-column))
-                         (current-column))))))
-
-(defun cfg/copy-directory-path ()
-  "Copy and show the directory path of the current buffer.
-
-  If the buffer is not visiting a file, use the `list-buffers-directory'
-  variable as a fallback to display the directory, useful in buffers like the
-  ones created by `magit' and `dired'."
-  (interactive)
-  (if-let (directory-path (cfg/-directory-path))
-      (progn
-        (kill-new directory-path)
-        (message "%s" directory-path))
-    (message "WARNING: Current buffer does not have a directory!")))
-
-(defun cfg/copy-file-path ()
-  "Copy and show the file path of the current buffer."
-  (interactive)
-  (if-let (file-path (cfg/-file-path))
-      (progn
-        (kill-new file-path)
-        (message "%s" file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-(defun cfg/copy-file-name ()
-  "Copy and show the file name of the current buffer."
-  (interactive)
-  (if-let (file-name (file-name-nondirectory (cfg/-file-path)))
-      (progn
-        (kill-new file-name)
-        (message "%s" file-name))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-(defun cfg/copy-buffer-name ()
-  "Copy and show the name of the current buffer."
-  (interactive)
-  (kill-new (buffer-name))
-  (message "%s" (buffer-name)))
-
-(defun cfg/copy-file-name-base ()
-  "Copy and show the file name without its final extension of the current buffer."
-  (interactive)
-  (if-let (file-name (file-name-base (cfg/-file-path)))
-      (progn
-        (kill-new file-name)
-        (message "%s" file-name))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-(defun cfg/copy-file-path-with-line ()
-  "Copy and show the file path of the current buffer, including line number."
-  (interactive)
-  (if-let (file-path (cfg/-file-path-with-line))
-      (progn
-        (kill-new file-path)
-        (message "%s" file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-(defun cfg/copy-file-path-with-line-column ()
-  "Copy and show the file path of the current buffer, including line and column number.
-  This function respects the value of the `column-number-indicator-zero-based' variable."
-  (interactive)
-  (if-let (file-path (cfg/-file-path-with-line-column))
-      (progn
-        (kill-new file-path)
-        (message "%s" file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
 
 (provide 'cfg-projectile)
 ;;; cfg-projectile.el ends here

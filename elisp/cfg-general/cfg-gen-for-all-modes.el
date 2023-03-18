@@ -97,7 +97,6 @@
  "0pA" '(treemacs-add-project-to-workspace :which-key "add-project-to-workspace")
  "0pd" '(treemacs-remove-project-from-workspace :which-key "remove-project")
  "0pr" '(treemacs-rename-project :which-key "rename-project")
- "0pp" '(treemacs-projectile :which-key "projectile")
 
  ;; files
 
@@ -123,10 +122,6 @@
  "fyn" '(cfg/copy-file-name :which-key "File name")
  "fyN" '(cfg/copy-file-name-base :which-key "File name, no ext")
  "fyy" '(cfg/copy-file-path :which-key "File full path")
- "fyC" '(cfg/projectile-copy-file-path-with-line-column :which-key "projectile-copy-file-path-with-line-column")
- "fyD" '(cfg/projectile-copy-directory-path :which-key "projectile-copy-directory-path")
- "fyL" '(cfg/projectile-copy-file-path-with-line :which-key "projectile-copy-file-path-with-line")
- "fyY" '(cfg/projectile-copy-file-path :which-key "projectile-copy-file-path")
  "fb"  '(bookmark-jump :which-key "bookmark-jump")
  "fB"  '(:ignore t :which-key "bookmarks")
  "fBb" '(bookmark-jump :which-key "bookmark-jump")
@@ -316,36 +311,23 @@
  "Du" '(ediff-update-diffs :which-key "ediff-update-diffs")
  "Dq" '(ediff-quit :which-key "ediff-quit")
 
- ;; projects, projectile
+ ;; projects
 
  "p"   '(:ignore t :which-key "projects")
- "p;"  '(:ignore t :which-key "search/grep")
- "p;;" '(projectile-grep :which-key "grep")
- "p;g" '(projectile-ag :which-key "ag")
- "p;r" '(projectile-ripgrep :which-key "ripgrep")
+
  "p/"  '(vc-git-grep :which-key "git-grep")
- "p!"  '(projectile-run-shell-command-in-root :which-key "run-shell-command-in-root")
- "p&"  '(projectile-run-async-shell-command-in-root :which-key "run-async-shell-command-in-root")
- "p%"  '(projectile-replace-regexp :which-key "replace-regexp")
- "pa"  '(projectile-toggle-between-implementation-and-test :which-key "toggle-between-implementation-and-test")
- "pb"  '(projectile-switch-to-buffer :which-key "switch-to-buffer")
- "pc"  '(projectile-compile-project :which-key "compile-project")
- "pd"  '(projectile-find-dir :which-key "find-dir")
- "pD"  '(projectile-dired :which-key "dired")
- "pe"  '(projectile-edit-dir-locals :which-key "edit-dir-locals")
- "pf"  '(projectile-find-file :which-key "find-file")
- "pF"  '(projectile-find-file-dwim :which-key "find-file-dwim")
- "pg"  '(projectile-find-tag :which-key "find-tag")
- "pG"  '(projectile-regenerate-tags :which-key "regenerate-tags")
- "pI"  '(projectile-invalidate-cache :which-key "invalidate-cache")
- "pk"  '(projectile-kill-buffers :which-key "kill-buffers")
- "pK"  '(projectile-add-known-project :which-key "add-known-project")
- "pp"  '(projectile-switch-project :which-key "switch-project")
- "pr"  '(projectile-recentf :which-key "recentf")
- "pR"  '(projectile-replace :which-key "replace")
- "pM"  '(projectile-remove-known-project :which-key "remove-known-project")
- "pT"  '(projectile-test-project :which-key "test-project")
- "pv"  '(projectile-vc :which-key "vc")
+ "p!"  '(project-shell-command :which-key "shell-command")
+ "p&"  '(project-async-shell-command :which-key "async-shell-command")
+ "p%"  '(project-query-replace-regexp :which-key "replace-regexp")
+ "pb"  '(project-switch-to-buffer :which-key "switch-to-buffer")
+ "pc"  '(project-compile :which-key "project-compile")
+ "pd"  '(project-find-dir :which-key "find-dir")
+ "pD"  '(project-dired :which-key "dired")
+ "pf"  '(project-find-file :which-key "find-file")
+ "pF"  '(project-or-external-find-file :which-key "find-file-or-external")
+ "pk"  '(project-kill-buffers :which-key "kill-buffers")
+ "pp"  '(project-switch-project :which-key "switch-project")
+ "pv"  '(project-vc-dir :which-key "vc")
 
  ;; git, magit
 
