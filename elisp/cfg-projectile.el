@@ -20,7 +20,7 @@
          ([project-kill-buffers]              . projectile-kill-buffers)
          ([project-switch-project]            . projectile-switch-project)
          ([project-vc-dir]                    . projectile-vc)
-	 )
+         ([project-forget-project]            . projectile-remove-known-project))
   :init
   (projectile-mode)
   (setq projectile-switch-project-action #'projectile-dired)
@@ -215,10 +215,9 @@
  "poM" '(projectile-remove-known-project :which-key "pe-remove-known-project")
  "poI" '(projectile-invalidate-cache :which-key "pe-invalidate-cache")
  "por" '(projectile-recentf :which-key "pe-recentf")
- "p;"  '(:ignore t :which-key "projectile_search/grep")
- "p;;" '(projectile-grep :which-key "grep")
- "p;g" '(projectile-ag :which-key "ag")
- "p;r" '(projectile-ripgrep :which-key "ripgrep"))
+ "p;g" '(projectile-grep :which-key "pe-grep")
+ "p;a" '(projectile-ag :which-key "pe-ag")
+ "p;r" '(projectile-ripgrep :which-key "pe-ripgrep"))
 
 
 (provide 'cfg-projectile)

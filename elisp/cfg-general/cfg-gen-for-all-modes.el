@@ -329,6 +329,10 @@
  "pk"  '(project-kill-buffers :which-key "kill-buffers")
  "pp"  '(project-switch-project :which-key "switch-project")
  "pv"  '(project-vc-dir :which-key "vc")
+ "pM"  '(project-forget-project :which-key "forget-project")
+ "p;"  '(:ignore t :which-key "search/grep")
+ "p;;" '(project-find-regexp :which-key "find-regexp")
+
 
  ;; git, magit
 
