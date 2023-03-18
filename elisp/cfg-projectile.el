@@ -7,9 +7,19 @@
 
 (use-package projectile
   :ensure t
-  :bind (;; Remaps - emacs native:
-	 ;; Remaps - emacs plugins:
-         ([remap projectile-ripgrep]             . consult-ripgrep)
+  :bind (([project-shell-command]             . projectile-run-shell-command-in-root)
+         ([project-shell]                     . projectile-run-shell)
+         ([project-async-shell-command]       . projectile-run-async-shell-command-in-root)
+         ([project-query-replace-regexp]      . projectile-replace-regexp)
+         ([project-switch-to-buffer]          . projectile-switch-to-buffer)
+         ([project-compile]                   . projectile-compile-project)
+         ([project-find-dir]                  . projectile-find-dir)
+         ([project-dired]                     . projectile-dired)
+         ([project-find-file]                 . projectile-find-file)
+         ([project-or-external-find-file]     . projectile-find-other-file)
+         ([project-kill-buffers]              . projectile-kill-buffers)
+         ([project-switch-project]            . projectile-switch-project)
+         ([project-vc-dir]                    . projectile-vc)
 	 )
   :init
   (projectile-mode)
@@ -68,6 +78,7 @@
   :after general
   :config
   )
+
 ;; def advice
 ;; https://stackoverflow.com/questions/70042843/how-to-advice-add-a-function-with-no-arguments-to-a-function-that-takes-argument
 
@@ -78,8 +89,7 @@
 (advice-add 'cfg/-adv-projectile-buffer-file :after #'cfg/delete-current-buffer-file)
 (advice-add 'cfg/-adv-projectile-buffer-file :after #'cfg/rename-current-buffer-file)
 
-;; org-projectile
-;; ^ optional package:
+;; optional package - org-projectile:
 ;; https://github.com/IvanMalison/org-projectile
 
 ;; additional defuns for projectile (from spacemacs):
@@ -181,7 +191,7 @@
     (message "WARNING: Current buffer is not visiting a file!")))
 
 
-;; general.el for projectile:
+;; general.el - configuration for projectile:
 
 (general-define-key
  :states '(normal visual emacs)

@@ -317,6 +317,7 @@
 
  "p/"  '(vc-git-grep :which-key "git-grep")
  "p!"  '(project-shell-command :which-key "shell-command")
+ "ps"  '(project-shell :which-key "shell")
  "p&"  '(project-async-shell-command :which-key "async-shell-command")
  "p%"  '(project-query-replace-regexp :which-key "replace-regexp")
  "pb"  '(project-switch-to-buffer :which-key "switch-to-buffer")
