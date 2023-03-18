@@ -1,7 +1,8 @@
 ;;; cfg-projectile.el --- configfuration for projectile -*- lexical-binding: t -*-
 ;;; Commentary:
 
-;; Everything what is connected with "projectile"
+;; Everything what is connected with "projectile". This file contains also general key mapping.
+;; Basically everything (including keys) what is connected with projectile is inside this file.
 
 ;;; Code:
 

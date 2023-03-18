@@ -11,7 +11,7 @@
 (require 'cfg-ediff-diff-vdiff)
 (require 'cfg-formatting)
 (require 'cfg-grep-recentf)
-(require 'cfg-projectile)
+;; (require 'cfg-projectile)
 (require 'cfg-fly-modes)
 (require 'cfg-i-buffer-menu)
 (require 'cfg-markdown)
