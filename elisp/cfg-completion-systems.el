@@ -108,12 +108,12 @@
          ([remap evil-paste-pop]                  . consult-yank-pop)
 	 )
   :config (progn
-	    (defun cfg/-consult-grep-always-choose-dir (orig &rest args)
+	    (defun cfg/-adv-consult-grep-always-choose-dir (orig &rest args)
 	      "Add prefix argument and always choose directory for consult-grep"
 	      (setq prefix-arg '(4))
 	      (funcall orig args))
-	    (advice-add 'consult-grep    :around #'cfg/-consult-grep-always-choose-dir)
-	    (advice-add 'consult-ripgrep :around #'cfg/-consult-grep-always-choose-dir)
+	    (advice-add 'consult-grep    :around #'cfg/-adv-consult-grep-always-choose-dir)
+	    (advice-add 'consult-ripgrep :around #'cfg/-adv-consult-grep-always-choose-dir)
 
 	    ;; consult git-grep with
 	    ;; -F will remove regexp filtering for the grep

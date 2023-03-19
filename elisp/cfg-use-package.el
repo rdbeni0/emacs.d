@@ -9,6 +9,8 @@
 ;; add site-elisp to load-path :
 
 (add-to-list 'load-path (expand-file-name "site-elisp" user-emacs-directory))
+;; files from "cfg-gen-optional" should be loaded manually, via (require '):
+(add-to-list 'load-path (expand-file-name "elisp/cfg-general/cfg-gen-optional" user-emacs-directory))
 
 ;; TODO: add also subdirs
 ;;

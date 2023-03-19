@@ -19,3 +19,6 @@
  "." '(quoted-insert :which-key "quoted-insert")
  "," '(erc-cmd-QUERY :which-key "cmd-QUERY-private-msg")
  "g" '(erc-image-mode :which-key "toggle-image-mode"))
+
+(provide 'cfg-gen-erc-mode)
+;;; cfg-gen-erc-mode.el ends here
