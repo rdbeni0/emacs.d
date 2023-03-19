@@ -62,7 +62,7 @@
   (setq-local corfu-auto t
               corfu-auto-delay 0
               corfu-auto-prefix 2
-              completion-styles '(basic))
+              )
   )
 
 ;; Add extensions
