@@ -8,8 +8,8 @@
  "<C-mouse-4>" 'text-scale-increase
  "<C-mouse-5>" 'text-scale-decrease
 
- "<f5><f4>" 'completion-at-point
- "<f5><f6>" 'dabbrev-expand
+ "<f5><f4>" '(dabbrev-expand :which-key "dabbrev-expand")
+ "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf")
 
  ;; tabbar legacy plugin
 
@@ -165,8 +165,8 @@
  ;; completions
 
  "<f5>"     '(:ignore t :which-key "completions")
- "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
- "<f5><f6>" '(dabbrev-expand :which-key "dabbrev-expand")
+ "<f5><f4>" '(dabbrev-expand :which-key "dabbrev-expand")
+ "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf")
 
  ;; windows
 

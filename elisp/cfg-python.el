@@ -15,8 +15,7 @@
   (add-hook 'anaconda-mode-hook 'anaconda-eldoc-mode)
 
   ;; turn off anaconda-mode-map, because it seems it could overwrite ggtags keymap (and general.el):
-  (setcdr anaconda-mode-map nil)
-  )
+  (setcdr anaconda-mode-map nil))
 
 (defun cfg/enable-anaconda-mode ()
   "Enable anaconda-mode for all python buffers in the future (for corrent emacs session only)."
