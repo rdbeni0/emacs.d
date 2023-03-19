@@ -1,12 +1,8 @@
-;;; cfg-company-yasnippets.el --- configfuration for company-mode and yasnippets -*- lexical-binding: t -*-
+;;; cfg-company.el --- configfuration for company-mode -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;; company-mode
 ;; https://company-mode.github.io/
-
-;; yasnippet:
-;; https://github.com/joaotavora/yasnippet
-;; https://www.emacswiki.org/emacs/Yasnippet
 
 ;;; Code:
 
@@ -18,7 +14,7 @@
   (global-company-mode 1)
   (setq company-idle-delay              0   ;; no delay at all
 	;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
-	company-minimum-prefix-length   1   ;; show completion after 1 character (default is 3!)
+	company-minimum-prefix-length   2   ;; show completion after 1 character (default is 3!)
 	company-show-numbers            t
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
 	;; transformers - could be changed "per mode": https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
@@ -42,32 +38,37 @@
           rcirc-mode
 	  vterm-mode
           minibuffer-inactive-mode))
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.
-  ;; FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
+  ;; IF YASNIPPET IS AVAILABLE, THEN FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
   ;; SOURCES:
   ;; https://github.com/company-mode/company-mode/issues/839
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
-  (defun cfg/company-backend-with-yas (backends)
-    "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
-  Taken from https://github.com/syl20bnr/spacemacs/pull/179."
-    (if (and (listp backends) (memq 'company-yasnippet backends))
-	backends
-      (append (if (consp backends)
-		  backends
-		(list backends))
-	      '(:with company-yasnippet))))
-  ;; <TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
-  (defun cfg/yas-expand-or-company-complete (&optional arg)
-    (interactive)
-    (or (yas-expand) (company-indent-or-complete-common arg)))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; MORE OPTIONS:
-  (with-eval-after-load 'company
-    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-    (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))
 
-  (setq company-dabbrev-downcase nil) ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
+  (when (require 'yasnippet nil 'noerror)
+
+    (defun cfg/company-backend-with-yas (backends)
+      "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
+  Taken from https://github.com/syl20bnr/spacemacs/pull/179."
+      (if (and (listp backends) (memq 'company-yasnippet backends))
+	  backends
+	(append (if (consp backends)
+		    backends
+		  (list backends))
+		'(:with company-yasnippet))))
+    ;; <TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
+    (defun cfg/yas-expand-or-company-complete (&optional arg)
+      (interactive)
+      (or (yas-expand) (company-indent-or-complete-common arg)))
+
+    (with-eval-after-load 'company
+      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+      (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
+  (setq company-dabbrev-downcase nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS:
@@ -94,57 +95,66 @@
 			     (set (make-local-variable 'company-backends) '())
 			     (add-to-list 'company-backends 'company-capf)
 			     (add-to-list 'company-backends '(company-ac-php-backend company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			     (when (require 'yasnippet nil 'noerror)
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
 				    (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
 				    (add-to-list 'company-backends '(company-elisp company-capf company-files)) ;; capf is working great with elisp code
-				    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+				    (when (require 'yasnippet nil 'noerror)
+				      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'sh-mode-hook (lambda ()
 			    (set (make-local-variable 'company-backends) '())
 			    (add-to-list 'company-backends 'company-capf)
 			    (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			    (when (require 'yasnippet nil 'noerror)
+			      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'cperl-mode-hook (lambda ()
 			       (set (make-local-variable 'company-backends) '())
 			       (add-to-list 'company-backends 'company-capf)
 			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			       (when (require 'yasnippet nil 'noerror)
+				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'web-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     (add-to-list 'company-backends 'company-capf)
 			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			     (when (require 'yasnippet nil 'noerror)
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'c-mode-hook (lambda ()
 			   (set (make-local-variable 'company-backends) '())
 			   (add-to-list 'company-backends 'company-capf)
 			   (add-to-list 'company-backends '(company-dabbrev-code company-cmake comany-clang company-files company-gtags company-keywords company-dabbrev))
-			   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			   (when (require 'yasnippet nil 'noerror)
+			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())
 				(add-to-list 'company-backends 'company-capf)
 				(add-to-list 'company-backends '(company-anaconda company-dabbrev-code company-files company-keywords company-gtags company-dabbrev)) ;; anaconda-mode
-				(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+				(when (require 'yasnippet nil 'noerror)
+				  (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'snippet-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
 				 (add-to-list 'company-backends 'company-capf)
 				 (add-to-list 'company-backends 'company-gtags)
 				 (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
-				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+				 (when (require 'yasnippet nil 'noerror)
+				   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'org-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     (add-to-list 'company-backends 'company-capf)
 			     (add-to-list 'company-backends 'company-gtags)
 			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
-			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+			     (when (require 'yasnippet nil 'noerror)
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   ;; some optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
   (add-hook 'notmuch-message-mode-hook (lambda ()
@@ -152,21 +162,27 @@
 					 (add-to-list 'company-backends 'company-gtags)
 					 (add-to-list 'company-backends 'company-capf)
 					 (add-to-list 'company-backends '(notmuch-company company-files company-dabbrev company-dabbrev-code))
-					 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+					 (when (require 'yasnippet nil 'noerror)
+					   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))
 					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
-
-
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; additional packages for company:
 
 ;; python:
 ;; https://github.com/pythonic-emacs/company-anaconda
 
 (use-package company-anaconda
-  :after company
+  :after anaconda-mode
   :ensure t
   )
+
+;; python - OPTIONAL:
+;; https://github.com/emacsorphanage/company-jedi
+;; (use-package company-jedi
+;;   :ensure t
+;; )
 
 ;; php
 ;; https://github.com/xcwen/ac-php
@@ -177,7 +193,9 @@
   :config
   ;; ac-php uses its own tags format. By default all tags located at ~/.ac-php/tags-<project-directory>. For example, if the real path of the project is /home/jim/ac-php/phptest, then tags will be placed at ~/.ac-php/tags-home-jim-ac-php-phptest/. And you can redefine the base path (~/.ac-php) using ac-php-tags-path variable.
   (setq ac-php-tags-path (expand-file-name ".cache/.ac-php" user-emacs-directory))
-  )
+  (add-hook 'php-mode-hook (lambda ()
+			     (require 'company-php)
+			     (ac-php-core-eldoc-setup))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -188,10 +206,10 @@
   :config
   (company-statistics-mode)
   (setq company-statistics-size 5000)
-  (setq company-statistics-file (expand-file-name ".cache/company-statistics-cache.el" user-emacs-directory))
-  )
+  (setq company-statistics-file (expand-file-name ".cache/company-statistics-cache.el" user-emacs-directory)))
 
 ;; https://github.com/expez/company-quickhelp
+
 
 (use-package company-quickhelp
   :after company
@@ -213,56 +231,13 @@
   (setq company-quickhelp-delay 0.0)
   (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
   (add-hook 'company-mode-hook #'company-quickhelp-mode)
-  (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1)) ; TODO - migrate to general.el
+  (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1))
 
+(custom-set-variables
+ '(company-quickhelp-color-background "dark red")
+ '(company-quickhelp-color-foreground "dim gray")
+ '(company-quickhelp-delay 0.0)
+ '(company-quickhelp-mode t))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;; yasnippets
-;; Documentation: https://joaotavora.github.io/yasnippet/
-
-(use-package yasnippet
-  :ensure t
-  :config
-  ;; add yasnippet to all backends:
-  ;; (yas-global-mode 1)
-  )
-
-;; https://github.com/AndreaCrotti/yasnippet-snippets
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Adding a custom/dynamic yasnippet directory:
-;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
-;; and dymamic dir - example of code:
-(setq yasnippets-dynamic-data-dir
-      (substring
-       ;;
-       ;; EXAMPLES:
-       ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
-       ;;
-       (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
-       0 -1))
-
-;; and then:
-;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
-;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package yasnippet-snippets
-  :ensure t
-  :config
-  ;; add yas-minor-mode per MAJOR mode - not global:
-  (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
-  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
-  (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
-  (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
-  (add-hook 'web-mode-hook #'yas-minor-mode) ;; front end
-  (add-hook 'c-mode-hook #'yas-minor-mode) ;; c files only
-  (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
-  (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
-  (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
-  (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
-  (add-hook 'notmuch-message-mode-hook #'yas-minor-mode) ;; notmuch-message-mode
-  (yas-reload-all))
-
-(provide 'cfg-company-yasnippets)
-;;; cfg-company-yasnippets.el ends here
+(provide 'cfg-company)
+;;; cfg-company.el ends here

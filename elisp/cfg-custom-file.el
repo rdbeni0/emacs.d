@@ -8,10 +8,6 @@
 ;; custom-set-variables
 
 (custom-set-variables
- '(company-quickhelp-color-background "dark red")
- '(company-quickhelp-color-foreground "dim gray")
- '(company-quickhelp-delay 0.0)
- '(company-quickhelp-mode t)
  '(doc-view-resolution 150)
  '(doc-view-scale-internally nil)
  '(erc-image-inline-rescale 330)

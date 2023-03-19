@@ -28,17 +28,6 @@
       (message "anaconda-mode is on")
     (anaconda-mode)))
 
-;; https://github.com/pythonic-emacs/company-anaconda
-(use-package company-anaconda
-  :ensure t
-  )
-
-;; OPTIONAL:
-;; https://github.com/emacsorphanage/company-jedi
-;; (use-package company-jedi
-;;   :ensure t
-;; )
-
 ;;;; pyimport
 ;; https://melpa.org/#/pyimport
 

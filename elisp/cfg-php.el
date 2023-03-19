@@ -7,14 +7,9 @@
 
 (use-package php-mode
   :ensure t
-  :init
-  (add-hook 'php-mode-hook (lambda ()
-			     (require 'company-php)
-			     (ac-php-core-eldoc-setup)))
   )
 
 ;; https://github.com/OVYA/php-cs-fixer
-
 (use-package php-cs-fixer
   :ensure t
   :after php-mode
