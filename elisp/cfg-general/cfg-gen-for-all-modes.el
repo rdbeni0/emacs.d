@@ -5,10 +5,11 @@
  :keymaps 'global
 
  "<M-tab>" 'cfg/alternate-buffer
- ;; "S-<iso-lefttab>" 'indent-for-tab-command
- "S-<iso-lefttab>" 'cfg/yas-expand-or-company-complete
  "<C-mouse-4>" 'text-scale-increase
  "<C-mouse-5>" 'text-scale-decrease
+
+ "<f5><f4>" 'completion-at-point
+ "<f5><f6>" 'dabbrev-expand
 
  ;; tabbar legacy plugin
 
@@ -147,7 +148,7 @@
  "bN"  '(cfg/new-empty-buffer :which-key "new-empty-buffer")
  "bx"  '(kill-buffer-and-window :which-key "kill-buffer-and-window")
  "bX"  '(cfg/kill-other-buffers :which-key "kill-other-buffers")
- "by"  '(:ignore t :which-key "yas_company")
+ "by"  '(:ignore t :which-key "yasnippet")
  "byy" '(yas-describe-tables :which-key "yas-describe-tables")
  "bm"  '(:ignore t :which-key "modes")
  "bmv" '(auto-revert-mode :which-key "auto-revert-mode")
@@ -165,9 +166,7 @@
 
  "<f5>"     '(:ignore t :which-key "completions")
  "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
- "<f5><f5>" '(company-files :which-key "company-files")
  "<f5><f6>" '(dabbrev-expand :which-key "dabbrev-expand")
- "<f5><f7>" '(company-ispell :which-key "company-ispell")
 
  ;; windows
 

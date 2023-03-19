@@ -239,5 +239,8 @@
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
 
+;; load keybindings from general.el framework:
+(require 'cfg-gen-company)
+
 (provide 'cfg-company)
 ;;; cfg-company.el ends here

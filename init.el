@@ -30,7 +30,7 @@
 (require 'cfg-webpaste-browsers)
 (require 'cfg-python)
 (require 'cfg-yasnippets)
-(require 'cfg-company)
+;; (require 'cfg-company)
 (require 'cfg-os-linux-tools)
 (require 'cfg-tramp-sudo-ssh)
 (require 'cfg-e-shell-terminals)
