@@ -12,7 +12,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; common options:
   (global-company-mode 1)
-  (setq company-idle-delay              nil ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
+  (setq company-idle-delay              0.7 ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
 	;; if (setq company-idle-delay nil), then autocompletion will be turned off
 	;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
 	company-minimum-prefix-length   2   ;; show completion after 1 character (default is 3!)
@@ -96,65 +96,64 @@
 
   (add-hook 'php-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
-			     ;; (add-to-list 'company-backends 'company-capf)
+			     (add-to-list 'company-backends 'company-capf) ;; ac-php is more important
 			     (add-to-list 'company-backends '(company-ac-php-backend company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
 			     (when (require 'yasnippet nil 'noerror)
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
-				    ;; (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
-				    ;; (add-to-list 'company-backends '(company-elisp company-capf company-files)) ;; capf is working great with elisp code
-				    (add-to-list 'company-backends '(company-elisp company-files company-dabbrev-code company-keywords company-dabbrev)) ;; capf is working great with elisp code
+				    (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
+				    (add-to-list 'company-backends '(company-elisp company-capf company-files)) ;; capf is working great with elisp code
 				    (when (require 'yasnippet nil 'noerror)
 				      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'sh-mode-hook (lambda ()
 			    (set (make-local-variable 'company-backends) '())
+			    (add-to-list 'company-backends 'company-capf)
 			    (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			    ;; (add-to-list 'company-backends 'company-capf)
 			    (when (require 'yasnippet nil 'noerror)
 			      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'cperl-mode-hook (lambda ()
 			       (set (make-local-variable 'company-backends) '())
+			       (add-to-list 'company-backends 'company-capf)
 			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			       ;; (add-to-list 'company-backends 'company-capf)
 			       (when (require 'yasnippet nil 'noerror)
 				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'web-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
+			     (add-to-list 'company-backends 'company-capf)
 			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
-			     ;; (add-to-list 'company-backends 'company-capf)
 			     (when (require 'yasnippet nil 'noerror)
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'c-mode-hook (lambda ()
 			   (set (make-local-variable 'company-backends) '())
-			   (add-to-list 'company-backends '(company-dabbrev-code company-cmake comany-clang company-files company-gtags company-keywords company-dabbrev))
 			   ;; (add-to-list 'company-backends 'company-capf)
+			   (add-to-list 'company-backends '(company-keywords company-dabbrev-code company-cmake comany-clang company-files company-gtags company-dabbrev))
 			   (when (require 'yasnippet nil 'noerror)
 			     (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())
-				(add-to-list 'company-backends '(company-anaconda company-dabbrev-code company-files company-keywords company-gtags company-dabbrev)) ;; anaconda-mode
-				;; (add-to-list 'company-backends 'company-capf)
+				(add-to-list 'company-backends 'company-capf)  ;; anaconda-mode is more important
+				(add-to-list 'company-backends '(company-anaconda company-dabbrev-code company-keywords company-files company-gtags company-dabbrev))
 				(when (require 'yasnippet nil 'noerror)
 				  (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'snippet-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
 				 (add-to-list 'company-backends 'company-gtags)
+				 (add-to-list 'company-backends 'company-capf)
 				 (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
-				 ;; (add-to-list 'company-backends 'company-capf)
 				 (when (require 'yasnippet nil 'noerror)
 				   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
   (add-hook 'org-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
-			     ;; (add-to-list 'company-backends 'company-capf)
+			     (add-to-list 'company-backends 'company-capf)
 			     (add-to-list 'company-backends 'company-gtags)
 			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
 			     (when (require 'yasnippet nil 'noerror)
@@ -165,7 +164,7 @@
 					 (set (make-local-variable 'company-backends) '())
 					 (add-to-list 'company-backends 'company-gtags)
 					 (add-to-list 'company-backends '(notmuch-company company-files company-dabbrev company-dabbrev-code))
-					 ;; (add-to-list 'company-backends 'company-capf)
+					 (add-to-list 'company-backends 'company-capf)
 					 (when (require 'yasnippet nil 'noerror)
 					   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))
 					 (setq require-final-newline nil))) ;; no new lines after inserting snippet

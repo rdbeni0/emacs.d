@@ -10,6 +10,7 @@
 
  "<f5><f4>" '(dabbrev-expand :which-key "dabbrev-expand")
  "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf")
+ "C-<iso-lefttab>" 'completion-at-point
 
  ;; tabbar legacy plugin
 

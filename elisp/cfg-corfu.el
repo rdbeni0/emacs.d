@@ -11,8 +11,9 @@
   :ensure t
   ;; Optional customizations
   :custom
+  ;; (corfu-auto t)                 ;; Enable auto completion
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
+
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
@@ -56,7 +57,7 @@
   ;;   (setq-local corfu-auto t
   ;; 		corfu-auto-delay 0
   ;; 		corfu-auto-prefix 2
-  ;; 		completion-styles '(orderless-fast))
+  ;; 		completion-styles '(orderless-fast)) ;; warning, completion-styles
   ;;   )
 
   (setq-local corfu-auto t
@@ -64,6 +65,9 @@
               corfu-auto-prefix 2
               )
   )
+
+;; yasnippet:
+;; https://github.com/elken/cape-yasnippet
 
 ;; Add extensions
 ;; (use-package cape
