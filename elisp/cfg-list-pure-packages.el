@@ -12,7 +12,6 @@
 	   s
 	   htmlize
 	   command-log-mode
-	   ;; json-mode
 	   ;; elisp-format
 	   simpleclip
 	   fzf
