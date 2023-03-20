@@ -40,7 +40,7 @@
   (global-corfu-mode)
   :config
   ;; TAB cycle if there are only few candidates
-  (setq completion-cycle-threshold 5)
+  ;; (setq completion-cycle-threshold 5)
 
   ;; Aggressive completion, cheap prefix filtering.
 

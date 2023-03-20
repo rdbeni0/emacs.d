@@ -6,6 +6,7 @@
  :major-modes '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode)
  :prefix ","
  "`"  '(:ignore t :which-key "flycheck")
+ "``" '(flycheck-list-errors :which-key "list-errors")
  "`l" '(flycheck-list-errors :which-key "list-errors")
  "`t" '(flycheck-mode :which-key "toggle-flycheck")
  "`," '(flycheck-display-error-at-point :which-key "display-error")
@@ -30,3 +31,9 @@
  "x" '(flycheck-error-list-explain-error :which-key "explain-error")
  "]" '(flycheck-error-list-next-error :which-key "next-error")
  "[" '(flycheck-error-list-previous-error :which-key "previous-error"))
+
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'flycheck-error-list-mode-map
+ :major-modes 'flycheck-error-list-mode
+ "q" 'kill-this-buffer)
