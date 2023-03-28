@@ -7,5 +7,4 @@
  :prefix ","
  "c"  '(compile :which-key "compile")
  "="  '(:ignore t :which-key "format")
- "==" '(format-all-buffer :which-key "format-all-buffer")
- )
+ "==" '(format-all-buffer :which-key "format-all-buffer"))
