@@ -22,6 +22,8 @@
 			 ;; (unless (executable-find "foo") (insert "foo : NOT FOUND\n"))
 			 (if (executable-find "git") (insert "git : FOUND\n") (insert "git : NOT FOUND\n"))
 			 (if (executable-find "find") (insert "find : FOUND\n") (insert "find : NOT FOUND\n"))
+			 (if (executable-find "clang-format") (insert "clang-format : FOUND\n") (insert "clang-format : NOT FOUND : c/c++ formatting will not work!\n"))
+			 (if (executable-find "make") (insert "make : FOUND\n") (insert "make : NOT FOUND : makefile will not be used!\n"))
 			 )
     (switch-to-buffer buffer)
     ;; (pop-to-buffer buffer)
