@@ -1,5 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; configure lists - if you want to add any mode, do it here:
+;; https://www.emacswiki.org/emacs/ListModification
 
 ;; common:
 
@@ -7,8 +8,8 @@
 
 (setq list-gen-mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode))
 
-(setq list-gen-mode-map (delete-dups list-gen-mode-map)) ;; remove duplicates
-(setq list-gen-mode (delete-dups list-gen-mode))
+(delete-dups list-gen-mode) ;; remove duplicates
+(delete-dups list-gen-mode-map)
 
 ;; ggtags and dumb-jump:
 
