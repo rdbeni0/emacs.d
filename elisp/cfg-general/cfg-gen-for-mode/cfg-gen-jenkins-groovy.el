@@ -5,7 +5,6 @@
  :keymaps '(groovy-mode-map jenkinsfile-mode-map)
  :major-modes '(groovy-mode jenkinsfile-mode)
  :prefix ","
- "," '(ffap :which-key "act_ffap")
  "r" '(groovy-electric-mode :which-key "g-toggle-electric-mode")
  "="  '(:ignore t :which-key "format")
  "==" '(indent-region :which-key "indent-region")

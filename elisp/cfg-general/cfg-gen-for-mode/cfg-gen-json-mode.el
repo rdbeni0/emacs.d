@@ -6,9 +6,6 @@
  :major-modes 'json-mode
  :prefix ","
  "," '(ffap :which-key "act_ffap")
- "="  '(:ignore t :which-key "format")
- "==" '(format-all-buffer :which-key "format-all-buffer")
- "=b" '(format-all-buffer :which-key "format-all-buffer")
  "=i" '(json-mode-beautify :which-key "jm-beautify")
  "=p" '(json-pretty-print-buffer :which-key "pretty-print-buffer")
  "=o" '(json-pretty-print-buffer-ordered :which-key "pretty-print-buffer-ordered")

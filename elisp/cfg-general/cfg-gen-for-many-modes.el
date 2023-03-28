@@ -24,6 +24,14 @@
 (setq list-gen-mode-flycheck (seq-difference list-gen-mode '(ssh-config-mode jenkinsfile-mode fish-mode)))
 (setq list-gen-mode-map-flycheck (seq-difference list-gen-mode-map '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map)))
 
+;; format
+
+(setq list-gen-mode-format (seq-difference list-gen-mode '(ssh-config-mode)))
+(setq list-gen-mode-map-format (seq-difference list-gen-mode-map '(ssh-config-mode-map)))
+
+(setq list-gen-mode-format (append list-gen-mode '(json-mode markdown-mode)))
+(setq list-gen-mode-map-format (append list-gen-mode-map '(json-mode-map markdown-mode-map)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; comments:
 
