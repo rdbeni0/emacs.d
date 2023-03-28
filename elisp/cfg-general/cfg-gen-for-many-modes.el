@@ -1,14 +1,27 @@
-(setq list_gen_mode_map '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map c++-mode-map nxml-mode-map groovy-mode-map jenkinsfile-mode-map))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; configure lists - if you want to add any mode, do it here:
 
-(setq list_gen_mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode))
+;; common:
+
+(setq list-gen-mode-map '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map c++-mode-map nxml-mode-map groovy-mode-map jenkinsfile-mode-map))
+
+(setq list-gen-mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode))
+
+(setq list-gen-mode-map (delete-dups list-gen-mode-map)) ;; remove duplicates
+(setq list-gen-mode (delete-dups list-gen-mode))
+
+;; ggtags and dumb-jump:
+
+(setq list-gen-mode-map-ggtags (append list-gen-mode-map '(ggtags-mode-map ggtags-global-mode-map)))
+(setq list-gen-mode-ggtags (append list-gen-mode '(ggtags-mode ggtags-global-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; comments:
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list_gen_mode_map
- :major-modes list_gen_mode
+ :keymaps list-gen-mode-map
+ :major-modes list-gen-mode
  :prefix ","
  ","  '(ffap :which-key "act_ffap")
  "k"  '(:ignore t :which-key "comments")
@@ -17,22 +30,16 @@
  "km" '(comment-region :which-key "comment-region")
  "kn" '(uncomment-region :which-key "uncomment-region")
  "kj" '(comment-line :which-key "comment-line")
- "kt" '(comment-kill :which-key "comment-kill")
- )
+ "kt" '(comment-kill :which-key "comment-kill"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ggtags and dumb-jump:
 
-(push 'ggtags-mode-map list_gen_mode_map)
-(push 'ggtags-global-mode-map list_gen_mode_map)
-(push 'ggtags-mode list_gen_mode)
-(push 'ggtags-global-mode list_gen_mode)
-
 ;; with prefix:
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list_gen_mode_map
- :major-modes list_gen_mode
+ :keymaps list-gen-mode-map-ggtags
+ :major-modes list-gen-mode-ggtags
  :prefix ","
  "."  '(:ignore t :which-key "ggtags")
  ".f" '(ggtags-find-file  :which-key "ggt-find-file")
@@ -61,8 +68,8 @@
 ;; without prefix:
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list_gen_mode_map
- :major-modes list_gen_mode
+ :keymaps list-gen-mode-map
+ :major-modes list-gen-mode
  "gf" '(ggtags-find-file :which-key "ggt-find-file")
  "gS" '(ggtags-view-search-history :which-key "ggt-show-shistory")
  "gr" '(ggtags-grep :which-key "ggt-grep")
@@ -85,8 +92,8 @@
 
 ;; (general-define-key
 ;;  :states '(normal visual emacs insert)
-;;  :keymaps list_gen_mode_map
-;;  :major-modes list_gen_mode
+;;  :keymaps list-gen-mode-map
+;;  :major-modes list-gen-mode
 ;;  "<f5>"     '(:ignore t :which-key "completions")
 ;;  "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
 ;;  )
