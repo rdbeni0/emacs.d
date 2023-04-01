@@ -132,10 +132,12 @@
   (defun cfg/-hook-c-cpp-mode ()
     (set (make-local-variable 'company-backends) '())
     ;; (add-to-list 'company-backends 'company-capf)
-    (add-to-list 'company-backends '(company-keywords company-dabbrev-code company-cmake comany-clang company-files company-gtags company-dabbrev))
+    (add-to-list 'company-backends '(company-cmake company-files company-gtags company-dabbrev))
+    (add-to-list 'company-backends '(company-clang company-keywords company-dabbrev-code))
     (when (require 'yasnippet nil 'noerror)
       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
 
+  ;; (add-hook 'c-mode-common-hook 'cfg/-hook-c-cpp-mode)
   (add-hook 'c-mode-hook 'cfg/-hook-c-cpp-mode)
   (add-hook 'c++-mode-hook 'cfg/-hook-c-cpp-mode)
 
