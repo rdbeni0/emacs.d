@@ -10,6 +10,7 @@
 (require 'cfg-evil)
 (require 'cfg-ediff-diff-vdiff)
 (require 'cfg-formatting)
+(require 'cfg-tree-sitter)
 (require 'cfg-grep-recentf)
 ;; (require 'cfg-projectile)
 (require 'cfg-fly-modes)
