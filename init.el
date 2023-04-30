@@ -38,6 +38,7 @@
 (require 'cfg-general-which-keys)
 (require 'cfg-completion-systems)
 ;; (require 'cfg-completion-systems-native)
+(require 'cfg-lsp-dap)
 (require 'cfg-custom-file)
 (require 'cfg-themes-fonts)
 (require 'cfg-mode-line-hl)

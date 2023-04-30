@@ -291,6 +291,7 @@
  "hdk" '(describe-key :which-key "describe-key")
  "hdy" '(describe-keymap :which-key "describe-mode")
  "hdo" '(describe-font :which-key "describe-font")
+ "hda" '(what-cursor-position :which-key "show-face-font-under-point")
  "hdm" '(describe-mode :which-key "describe-mode")
  "hdi" '(describe-minor-mode :which-key "describe-minor-mode")
  "hdt" '(describe-theme :which-key "describe-theme")

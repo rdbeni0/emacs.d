@@ -33,8 +33,8 @@
 
  "l"   '(:ignore t :which-key "org-static-blog")
  "ld"  '(org-static-blog-mode :which-key "osb-mode")
- "lh"  '(org-static-blog-publish :which-key "osb-publish")
- "ll"  '(org-static-blog-publish-file :which-key "osb-publish-file")
+ "ll"  '(org-static-blog-publish :which-key "osb-publish")
+ "lf"  '(org-static-blog-publish-file :which-key "osb-publish-file")
  "la"  '(org-static-blog-open-matching-publish-file :which-key "osb-open-matching-pub-file")
  "ln"  '(org-static-blog-open-next-post :which-key "osb-open-next-post")
  "lm"  '(org-static-blog-open-previous-post :which-key "osb-open-prev-post")

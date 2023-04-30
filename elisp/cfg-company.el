@@ -12,10 +12,10 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; common options:
   (global-company-mode 1)
-  (setq company-idle-delay              0.7 ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
+  (setq company-idle-delay              0.5 ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
 	;; if (setq company-idle-delay nil), then autocompletion will be turned off
 	;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
-	company-minimum-prefix-length   2   ;; show completion after 1 character (default is 3!)
+	company-minimum-prefix-length   2   ;; show completion after 2 characters (default is 3!)
 	company-show-numbers            t
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
 	;; transformers - could be changed "per mode": https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups

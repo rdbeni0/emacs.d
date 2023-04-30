@@ -16,7 +16,7 @@
  "g" '(:ignore t :which-key "goto")
  "h" '(:ignore t :which-key "help")
  "r" '(:ignore t :which-key "refactor")
- "s" '(:ignore t :which-key "sessions")
+ "w" '(:ignore t :which-key "sessions")
 
  "\\" '(:ignore t :which-key "eglot")
  "\\\\" '(eglot :which-key "eglot")
