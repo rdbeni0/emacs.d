@@ -12,7 +12,9 @@
   :ensure t
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+         (lsp-mode . lsp-enable-which-key-integration)
+         (sh-mode . lsp-deferred)
+	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (lsp))))
   :commands (lsp lsp-deferred))
 
 (use-package lsp-ui
@@ -33,9 +35,22 @@
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+                         (require 'lsp-pyright)
+                         (lsp-deferred))))  ; or lsp-deferred
 
+;;;;;;;;;;;;;;;;;;;;;;;;; C/C++:
+;; default is: https://emacs-lsp.github.io/lsp-mode/page/lsp-clangd/
+;; should be installed as system package
+
+;; https://github.com/MaskRay/ccls/wiki/lsp-mode
+;; optional for C/C++:
+
+;; (use-package ccls
+;;   :ensure t
+;;   :configure
+;;   (setq ccls-executable "/usr/bin/ccls"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;; https://github.com/emacs-lsp/lsp-mode/issues/1530
 ;; (evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
