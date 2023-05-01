@@ -13,8 +13,7 @@
 ;;; Code:
 
 (defcustom project-root-markers
-  '("Cargo.toml" "compile_commands.json" "compile_flags.txt"
-    "project.clj" ".git" "deps.edn" "shadow-cljs.edn")
+  '(".gitignore" ".dir-locals.el")
   "Files or directories that indicate the root of a project."
   :type '(repeat string)
   :group 'project)
@@ -35,7 +34,12 @@
             (setq path (file-name-directory (directory-file-name path)))
           (throw 'found (cons 'transient path)))))))
 
-(add-to-list 'project-find-functions #'cfg/-project-find-root)
+(add-hook 'project-find-functions #'cfg/-project-find-root)
+
+;; https://grtcdr.tn/posts/2023-03-01.html
+
+(setq project-vc-extra-root-markers '(".gitignore" ".dir-locals.el"))
+(setq project-vc-ignores '(".ccls-cache/" ".git/"))
 
 (provide 'cfg-project)
 ;;; cfg-project.el ends here
