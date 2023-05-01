@@ -24,7 +24,9 @@
          ([remap project-forget-project]            . projectile-remove-known-project))
   :init
   (projectile-mode)
-  (setq projectile-switch-project-action #'projectile-dired)
+  ;; https://docs.projectile.mx/projectile/configuration.html#projectile-commander
+  ;; other possibilities: projectile-find-file or projectile-dired
+  (setq projectile-switch-project-action #'projectile-commander)
   (setq projectile-project-compilation-cmd "make -k ")
   (setq projectile-enable-caching t)
 
