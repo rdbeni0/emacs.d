@@ -243,7 +243,7 @@
   (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1))
 
 (custom-set-variables
- '(company-quickhelp-color-background "dark red")
+ '(company-quickhelp-color-background "grey12")
  '(company-quickhelp-color-foreground "dim gray")
  '(company-quickhelp-mode t))
 

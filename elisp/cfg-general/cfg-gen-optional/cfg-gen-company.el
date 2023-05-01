@@ -8,7 +8,9 @@
 
  ;; "S-<iso-lefttab>" 'indent-for-tab-command
  "S-<iso-lefttab>" 'cfg/yas-expand-or-company-complete
+ "C-`" 'yas-insert-snippet
 
+ "<f5>`"  '(yas-insert-snippet :which-key "yas-insert-snippet")
  "<f5><f5>"  '(company-complete-common :which-key "company-complete")
  "<f5><iso-lefttab>"  '(cfg/yas-expand-or-company-complete :which-key "yas-expand-or-company-complet") ;; or company-indent-or-complete-common
  "<f5><f7>"  '(company-yasnippet :which-key "company-yasnippet")

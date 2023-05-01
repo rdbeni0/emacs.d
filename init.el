@@ -13,6 +13,7 @@
 (require 'cfg-tree-sitter)
 (require 'cfg-grep-recentf)
 ;; (require 'cfg-projectile)
+(require 'cfg-project)
 (require 'cfg-fly-modes)
 (require 'cfg-i-buffer-menu)
 (require 'cfg-markdown)

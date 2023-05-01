@@ -17,6 +17,7 @@
 	 ("\\.bash_aliases\\'" . conf-mode)
 	 ("\\.muttrc\\'" . conf-mode)
 	 ("fish_variables\\'" . conf-mode)
+	 ("\\pkgs_arch.txt\\'" . conf-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.md\\'" . gfm-mode)
 	 ("\\.markdown\\'" . gfm-mode)

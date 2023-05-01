@@ -14,8 +14,11 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
          (sh-mode . lsp-deferred)
-	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (lsp))))
+	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp))))
   :commands (lsp lsp-deferred))
+
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+(setq lsp-headerline-breadcrumb-enable nil)
 
 (use-package lsp-ui
   :ensure t
@@ -39,16 +42,18 @@
                          (lsp-deferred))))  ; or lsp-deferred
 
 ;;;;;;;;;;;;;;;;;;;;;;;;; C/C++:
-;; default is: https://emacs-lsp.github.io/lsp-mode/page/lsp-clangd/
-;; should be installed as system package
+;; clangd and ccls should be installed as system packages
+;; default lsp client is clangd: https://emacs-lsp.github.io/lsp-mode/page/lsp-clangd/
+;; https://github.com/clangd/clangd
 
+;; but it seems that ccls is little more updated.
+;; https://github.com/MaskRay/ccls
 ;; https://github.com/MaskRay/ccls/wiki/lsp-mode
-;; optional for C/C++:
 
-;; (use-package ccls
-;;   :ensure t
-;;   :configure
-;;   (setq ccls-executable "/usr/bin/ccls"))
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "/usr/bin/ccls"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
