@@ -7,6 +7,7 @@
  "px"  '(:ignore t :which-key "exec")
  "p4"  '(:ignore t :which-key "oth-window")
  "p5"  '(:ignore t :which-key "oth-frame")
+ "pA"  '(projectile-add-known-project :which-key "add-known-project")
  "fyC" '(cfg/projectile-copy-file-path-with-line-column :which-key "projectile-copy-file-path-with-line-column")
  "fyD" '(cfg/projectile-copy-directory-path :which-key "projectile-copy-directory-path")
  "fyL" '(cfg/projectile-copy-file-path-with-line :which-key "projectile-copy-file-path-with-line")
