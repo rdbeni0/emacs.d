@@ -30,22 +30,23 @@
   )
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; PYTHON:
-
 ;; python : https://github.com/emacs-lsp/lsp-pyright
 ;; https://microsoft.github.io/pyright/#/installation
 ;; required: "pip install pyright"
+
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (lsp-deferred))))  ; or lsp-deferred
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; C/C++:
 ;; clangd and ccls should be installed as system packages
 ;; default lsp client is clangd: https://emacs-lsp.github.io/lsp-mode/page/lsp-clangd/
 ;; https://github.com/clangd/clangd
-
 ;; but it seems that ccls is little more updated.
 ;; https://github.com/MaskRay/ccls
 ;; https://github.com/MaskRay/ccls/wiki/lsp-mode
@@ -55,12 +56,9 @@
   :config
   (setq ccls-executable "/usr/bin/ccls"))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; https://emacs-lsp.github.io/lsp-mode/page/installation/
-;; https://github.com/emacs-lsp/lsp-mode/issues/1530
-;; (evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
-(general-def 'normal lsp-mode :definer 'minor-mode "\\" lsp-command-map)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; load keybindings from general.el framework:
+(require 'cfg-gen-lsp-dap-mode)
 
 (provide 'cfg-lsp-dap)
 ;;; cfg-lsp-dap.el ends here

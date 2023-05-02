@@ -1,8 +1,13 @@
 ;; general-lsp-mode : TODO
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;; https://github.com/emacs-lsp/lsp-mode/issues/1530
 ;; ^ evil modes and lsp-mode prefix-key on Gitter
 ;; So in that case it should be mapped as: *evil-defined-key*
+;; (evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
+
+(general-def 'normal lsp-mode :definer 'minor-mode "\\" lsp-command-map)
 
 (general-define-key
  :prefix "\\"
@@ -36,3 +41,6 @@
  "\\s" '(eglot-forget-pending-continuations :which-key "forget-pending-continuations")
  "\\i" '(eglot-find-implementation :which-key "find-implementation")
  "\\a" '(eglot-signal-didChangeConfiguration :which-key "didChangeConfiguration"))
+
+(provide 'cfg-gen-lsp-dap-mode)
+;;; cfg-gen-lsp-dap-mode.el ends here

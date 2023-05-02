@@ -16,6 +16,7 @@
 (require 'cfg-project)
 (require 'cfg-fly-modes)
 (require 'cfg-i-buffer-menu)
+(require 'cfg-persp-desktop)
 (require 'cfg-markdown)
 (require 'cfg-json-xml)
 (require 'cfg-web-front-end)
