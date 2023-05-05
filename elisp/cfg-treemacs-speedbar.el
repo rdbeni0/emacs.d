@@ -17,7 +17,7 @@
   (setq
    treemacs-show-hidden-files               t
    treemacs-indentation                     1
-   ;; treemacs-follow-mode                     1
+   treemacs-follow-mode                     1
    treemacs-project-follow-mode             t
    )
   (treemacs-resize-icons 18) ;; icon's size

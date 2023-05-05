@@ -12,6 +12,8 @@
 ;; desktop+
 ;; https://github.com/ffevotte/desktop-plus
 ;; https://emacs.stackexchange.com/questions/19190/desktop-save-mode-fails-to-save-window-layout/45829#45829
+;; optional and interesting tweaks: 
+;; https://stackoverflow.com/questions/4477376/some-emacs-desktop-save-questions-how-to-change-it-to-save-in-emacs-d-emacs
 ;; desktop+ is simpler package and approach than perspective.el:
 (use-package desktop+
   :ensure t
@@ -37,9 +39,17 @@
   ;; MUST be here to avoid ugly warning:
   ;; more: https://stackoverflow.com/questions/58615798/how-to-use-leader-key-as-part-of-package-prefix
   (setq persp-mode-prefix-key (kbd "C-c p"))
-  ;; TURN OFF by default:
-  ;; (persp-mode)
-  (add-hook 'kill-emacs-hook #'persp-state-save))
+  (setq persp-state-default-file (expand-file-name "desktops/.persp" user-emacs-directory))
+
+  ;; TURN OFF by default - comment/uncomment below section:
+
+  ;; (persp-mode t)
+  ;; (add-hook 'kill-emacs-hook #'persp-state-save)
+  ;; https://github.com/nex3/perspective-el#sample-use-cases
+  ;; (consult-customize consult--source-buffer :hidden t :default nil)
+  ;; (add-to-list 'consult-buffer-sources persp-consult-source)
+
+  )
 
 ;; load keybindings from general.el framework:
 (require 'cfg-gen-persp-desktop)
