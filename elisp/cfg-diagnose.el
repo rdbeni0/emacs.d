@@ -20,7 +20,7 @@
     ;; (set-buffer buffer)
     (with-current-buffer "*exec-find*" (insert "executable-find raport:\n\n")
 			 ;; (unless (executable-find "foo") (insert "foo : NOT FOUND\n"))
-			 (if (executable-find "ripgrep") (insert "ripgrep : FOUND\n") (insert "ripgrep : NOT FOUND\n"))
+			 (if (executable-find "rg") (insert "rg : FOUND\n") (insert "rg (ripgrep) : NOT FOUND\n"))
 			 (if (executable-find "git") (insert "git : FOUND\n") (insert "git : NOT FOUND\n"))
 			 (if (executable-find "find") (insert "find : FOUND\n") (insert "find : NOT FOUND\n"))
 			 (if (executable-find "fd") (insert "fd : FOUND\n") (insert "fd : NOT FOUND. Project filtering will be corrupted!\n"))
