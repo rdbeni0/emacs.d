@@ -55,9 +55,8 @@ mouse-2: kill %S"
                                 (tabbar-current-tabset)))))))))
 (use-package tabbar
   :ensure t
-  :init
-  (tabbar-mode 1)
   :config
+  ;; (tabbar-mode 1)
   ;;  (setq tabbar-separator (quote (1.0)))
 
   (defun cfg/px-tabbar-buffer-groups ()

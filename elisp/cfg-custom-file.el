@@ -30,9 +30,7 @@
  '(tab-bar-close-button-show nil)
  '(tab-bar-mode t)
  '(tab-bar-tab-hints t)
- '(tabbar-mode t nil (tabbar))
- '(tabbar-mwheel-mode t nil (tabbar))
- '(tabbar-separator '(0.2))
+ '(tabbar-separator '(1))
  '(term-buffer-maximum-size 0))
 
 ;; custom-set-faces
