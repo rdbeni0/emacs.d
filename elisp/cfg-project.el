@@ -5,6 +5,9 @@
 ;; https://github.com/emacs-mirror/emacs/blob/master/lisp/progmodes/project.el
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Projects.html
 
+;; projectl.el vs projectile:
+;; https://www.youtube.com/watch?v=1sn8m5u5VaE
+
 ;; Potential enhancements:
 ;; https://andreyorst.gitlab.io/posts/2022-07-16-project-el-enhancements/
 ;; https://emacs.stackexchange.com/questions/58463/project-el-override-project-root-with-dir-local-var
@@ -15,7 +18,7 @@
 
 ;;; Code:
 
-(setq project-vc-extra-root-markers '(".gitignore" ".dir-locals.el"))
+(setq project-vc-extra-root-markers '(".gitignore" ".dir-locals.el" ".project"))
 (setq project-vc-ignores '(".ccls-cache/" ".git/"))
 ;; (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m))
 
