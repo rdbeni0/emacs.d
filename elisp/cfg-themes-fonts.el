@@ -37,6 +37,18 @@
 ;; (load-theme 'wheatgrass t)
 
 ;; FONTS
+
+(use-package nerd-icons
+  :ensure t
+  ;; :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
+
+;; https://github.com/rainstormstudio/nerd-icons.el
+
 ;; issues and workarounds:
 ;; https://github.com/syl20bnr/spacemacs/issues/3477
 ;; https://www.emacswiki.org/emacs/SetFonts
