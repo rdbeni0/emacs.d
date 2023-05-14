@@ -21,6 +21,7 @@
 
 (use-package multi-vterm
   :ensure t
+  :after vterm
   ;; :config
   )
 
