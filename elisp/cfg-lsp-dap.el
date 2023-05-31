@@ -16,8 +16,9 @@
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
-         (sh-mode . lsp-deferred)
-	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp))))
+         ;; (sh-mode . lsp-deferred)
+	 ;; ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp)))
+	 )
   :commands (lsp lsp-deferred)
   :config
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -60,9 +61,9 @@
 
 (use-package lsp-pyright
   :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp-deferred))))  ; or lsp-deferred
+  :hook (
+	 ;; (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred))) ; or lsp-deferred
+	 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; C/C++:
