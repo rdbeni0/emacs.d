@@ -18,9 +18,8 @@
               (message "Copied URL to clipboard: %S" url)
               (simpleclip-set-contents url))))
 
-;; default browser: firefox
 (setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "firefox")
+(setq browse-url-generic-program "brave") ;; default browser: firefox or brave
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Goto-Address-mode.html
 (global-goto-address-mode)

@@ -24,7 +24,7 @@
         web-mode-enable-current-column-highlight t
         web-mode-enable-current-element-highlight t))
 
-;; OPTIONAL: https://github.com/skeeto/skewer-mode - REPL inside the firefox
+;; OPTIONAL: https://github.com/skeeto/skewer-mode - REPL inside the web browser
 
 (provide 'cfg-web-front-end)
 ;;; cfg-web-front-end.el ends here
