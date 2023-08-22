@@ -34,7 +34,7 @@
   (cdr project))
 
 (defun cfg/-project-files-in-directory (dir)
-  "Use `fd' to list files in DIR. `.gitignore' will be uased as default ignore list."
+  "Use `fd' to list files in DIR. `.gitignore' will be used as default ignore list."
   (let* ((default-directory dir)
          (localdir (file-local-name (expand-file-name dir)))
          (command (format "fd -L -H --ignore-file .gitignore -t f -0 . %s" localdir)))
@@ -64,11 +64,12 @@
           (throw 'found (cons 'transient path)))))))
 
 (add-hook 'project-find-functions #'cfg/-project-find-root)
-;; (add-to-list 'project-find-functions 'cfg/-project-try-local)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Optional:
 ;; Its working, but above solution is better.
+
+;; (add-to-list 'project-find-functions 'cfg/-project-try-local)
 
 ;; (defun cfg/-project-try-local (dir)
 ;;   "Determine if DIR is a non-Git project.

@@ -5,7 +5,6 @@
 
 ;;; Code:
 
-
 ;; tab-bar : since emacs 27 version
 (tab-bar-mode 1)
 
@@ -140,7 +139,7 @@ mouse-2: kill %S"
 	   ((or (string= (file-name-extension (buffer-name)) "gcs")) "XML")
 
 	   ((or (eq major-mode 'dired-mode)) "DIRED")
-	   
+
 	   ((or (eq major-mode 'recentf-dialog-mode)) "RECENTF-BKM")
 	   ((or (eq major-mode 'bookmark-bmenu-mode)) "RECENTF-BKM")
 
@@ -185,5 +184,7 @@ mouse-2: kill %S"
 
   ;; end of use-package....
   )
+
+
 (provide 'cfg-tabs)
 ;;; cfg-tabs.el ends here
