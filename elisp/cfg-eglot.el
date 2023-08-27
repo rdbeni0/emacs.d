@@ -6,6 +6,21 @@
 
 ;;; Code:
 
+;; (require 'eglot)
+
+(use-package eglot
+  :ensure t
+  :hook (eglot-managed-mode . (lambda () (flymake-mode -1)))
+  :config
+  ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
+  (add-hook 'python-mode-hook 'eglot-ensure))
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; load keybindings from general.el framework:

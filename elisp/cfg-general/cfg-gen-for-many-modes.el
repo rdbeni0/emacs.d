@@ -51,9 +51,10 @@
 
  ;; xref remapping with dumb-jump as a backend:
  "."  '(:ignore t :which-key "xref")
- ".b" '(xref-find-references :which-key "xref-ref")
- ".h" '(xref-find-definitions :which-key "xref-def")
- ".c" '(xref-pop-marker-stack :which-key "xref-jump-back")
+ ".r" '(xref-find-references :which-key "xref-ref")
+ ".d" '(xref-find-definitions :which-key "xref-def")
+ ".b" '(xref-go-back :which-key "xref-go-back")
+ ".B" '(xref-go-forward :which-key "xref-go-forward")
  ".s" '(xref-find-apropos :which-key "xref-apropos")
  )
 
@@ -63,16 +64,18 @@
  :keymaps list-gen-mode-map
  :major-modes list-gen-mode
 
- "gb" '(xref-find-references :which-key "xref-ref")
- "gh" '(xref-find-definitions :which-key "xref-def")
- "gc" '(xref-pop-marker-stack :which-key "xref-jump-back")
+ "gr" '(xref-find-references :which-key "xref-ref")
+ "gd" '(xref-find-definitions :which-key "xref-def")
+ "gb" '(xref-go-back :which-key "xref-go-back")
+ "gB" '(xref-go-forward :which-key "xref-go-forward")
  "gs" '(xref-find-apropos :which-key "xref-apropos")
+
  "g."  '(:ignore t :which-key "xref")
- "g.b" '(xref-find-references :which-key "xref-ref")
- "g.h" '(xref-find-definitions :which-key "xref-def")
- "g.c" '(xref-pop-marker-stack :which-key "xref-jump-back")
- "g.s" '(xref-find-apropos :which-key "xref-apropos")
- )
+ "g.r" '(xref-find-references :which-key "xref-ref")
+ "g.d" '(xref-find-definitions :which-key "xref-def")
+ "g.b" '(xref-go-back :which-key "xref-go-back")
+ "g.B" '(xref-go-forward :which-key "xref-go-forward")
+ "g.s" '(xref-find-apropos :which-key "xref-apropos"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; F-keys (also in insert mode) - example:

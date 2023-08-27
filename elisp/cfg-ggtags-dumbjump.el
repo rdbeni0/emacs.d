@@ -52,7 +52,7 @@
   :config
   (setq ggtags-completing-read-function nil)
   ;; optional and not required:
-  (setq ggtags-executable-directory "~/.emacs.d/ggtags/bin")
+  (setq ggtags-executable-directory "~/.emacs.d/tools/bin")
   (add-hook 'prog-mode-hook
             (lambda ()
 	      (ggtags-mode))))
