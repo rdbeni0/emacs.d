@@ -107,7 +107,7 @@ universalctags-pygments-native:\
 ;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects...
 #+end_src
 
--- *OPTIONAL*: if you like to use `gtags` cmd outside your emacs, then add this env variables into your system:
+-- *OPTIONAL*: if you like to use =gtags= cmd outside your emacs, then add this env variables into your system:
 
 #+BEGIN_EXAMPLE
 export GTAGSCONF=$HOME/.emacs.d/tools/gtags.conf
