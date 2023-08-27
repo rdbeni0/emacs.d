@@ -46,7 +46,8 @@
  :keymaps 'anaconda-mode-map
  :major-modes 'anaconda-mode
  :prefix ","
- "ak" '(xref-pop-marker-stack :which-key "xref-pop-marker-stack")
+ "ab" '(xref-go-back :which-key "xref-go-back")
+ "aB" '(xref-go-forward :which-key "xref-go-forward")
  "a?" '(anaconda-mode-show-doc :which-key "anaconda-mode-show-doc")
  "aa" '(anaconda-mode-find-assignments :which-key "find-assignments")
  "aA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
@@ -61,7 +62,8 @@
  :states '(normal visual emacs)
  :keymaps 'anaconda-mode-map
  :major-modes 'anaconda-mode
- "gk" '(xref-pop-marker-stack :which-key "xref-pop-marker-stack")
+ "gb" '(xref-go-back :which-key "xref-go-back")
+ "gB" '(xref-go-forward :which-key "xref-go-forward")
  "g?" '(anaconda-mode-show-doc :which-key "show-doc")
  "ga" '(anaconda-mode-find-assignments :which-key "find-assignments")
  "gA" '(anaconda-mode-find-assignments-other-window :which-key "find-assignments-ot-window")
