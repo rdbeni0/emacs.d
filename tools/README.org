@@ -1,4 +1,4 @@
-Local dir for various tools.
+Local dir for various tools. To install, add the following config to your elisp code:
 
 #+begin_src emacs-lisp
 ;; customize PATH and exec-path:
