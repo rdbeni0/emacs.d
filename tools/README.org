@@ -59,7 +59,7 @@ Please be aware that GNU Global is not using git as version control system. Inst
 Set GNU Global latest version (only for that one shell session):
 
 #+begin_src emacs-lisp
-export GTAGSFTPVERSION=6.6.8
+export GTAGSFTPVERSION=6.6.10
 #+end_src
 
 When your version will be set, then go ahead with whole installation:
