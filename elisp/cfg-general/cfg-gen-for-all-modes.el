@@ -43,7 +43,6 @@
  :states '(normal visual emacs)
  :keymaps 'global
  "gl" '(goto-line :which-key "goto-line")
- "g/" '(vc-git-grep :which-key "git-grep")
  "g'" '(vc-git-grep :which-key "git-grep")
  "q"  'kill-this-buffer
  "zq" '(evil-quit :which-key "evil-quit")
@@ -255,7 +254,6 @@
  ;; search
 
  "s"   '(:ignore t :which-key "search")
- "s/"  '(vc-git-grep :which-key "git-grep")
  "so"  '(locate :which-key "locate")
  "sl"  '(goto-line :which-key "goto-line")
  "si"  '(:ignore t :which-key "isearch")
@@ -275,8 +273,6 @@
  "sqp" '(project-query-replace-regexp :which-key "project-query-replace-regexp")
  "sqr" '(map-query-replace-regexp :which-key "map-query-replace-regexp")
  "sqf" '(dired-do-find-regexp-and-replace :which-key "dired-do-find-regexp-and-replace")
- "sg"  '(:ignore t :which-key "git-grep")
- "sg/" '(vc-git-grep :which-key "git-grep")
  "sg'" '(vc-git-grep :which-key "git-grep")
 
  ;; help

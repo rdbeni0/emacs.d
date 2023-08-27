@@ -7,5 +7,9 @@
 ;;; Code:
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; load keybindings from general.el framework:
+(require 'cfg-gen-eglot-mode)
+
 (provide 'cfg-eglot)
 ;;; cfg-eglot.el ends here

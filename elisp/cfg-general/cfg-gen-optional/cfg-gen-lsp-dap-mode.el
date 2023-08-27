@@ -1,4 +1,4 @@
-;; general-lsp-mode : TODO
+;; general-lsp-dap-mode : TODO
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
@@ -21,26 +21,7 @@
  "g" '(:ignore t :which-key "goto")
  "h" '(:ignore t :which-key "help")
  "r" '(:ignore t :which-key "refactor")
- "w" '(:ignore t :which-key "sessions")
-
- "\\" '(:ignore t :which-key "eglot")
- "\\\\" '(eglot :which-key "eglot")
- "\\/" '(eglot-rename :which-key "rename")
- "\\b" '(eglot-format-buffer :which-key "format-buffer")
- "\\p" '(eglot-help-at-point :which-key "help-at-point")
- "\\o" '(eglot-code-actions :which-key "code-actions")
- "\\c" '(eglot-clear-status :which-key "clear-status")
- "\\=" '(eglot-format :which-key "format")
- "\\w" '(eglot-shutdown :which-key "shutdown")
- "\\r" '(eglot-reconnect :which-key "reconnect")
- "\\e" '(eglot-stderr-buffer :which-key "stderr-buffer")
- "\\t" '(eglot-events-buffer :which-key "events-buffer")
- "\\l" '(eglot-find-declaration :which-key "find-declaration")
- "\\n" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
- "\\m" '(eglot--managed-mode :which-key "managed-mode")
- "\\s" '(eglot-forget-pending-continuations :which-key "forget-pending-continuations")
- "\\i" '(eglot-find-implementation :which-key "find-implementation")
- "\\a" '(eglot-signal-didChangeConfiguration :which-key "didChangeConfiguration"))
+ "w" '(:ignore t :which-key "sessions"))
 
 (provide 'cfg-gen-lsp-dap-mode)
 ;;; cfg-gen-lsp-dap-mode.el ends here

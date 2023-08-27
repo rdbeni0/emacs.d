@@ -93,10 +93,10 @@
          ([remap find-dired]                      . consult-find)
          ([remap yank-pop]                        . consult-yank-pop)
          ([remap kmacro-view-macro-repeat]        . consult-kmacro)
-         ([remap xref-show-xrefs-function]        . consult-xref)
-         ([remap xref-show-definitions-function]  . consult-xref)
-         ([remap xref-find-references]            . consult-xref)
-         ([remap xref-find-definitions]           . consult-xref)
+         ;; ([remap xref-show-xrefs-function]        . consult-xref)
+         ;; ([remap xref-show-definitions-function]  . consult-xref)
+         ;; ([remap xref-find-references]            . consult-xref)
+         ;; ([remap xref-find-definitions]           . consult-xref)
          ([remap flymake-show-diagnostic]         . consult-flymake)
          ([remap flymake-show-buffer-diagnostics] . consult-flymake)
          ([remap flymake-show-diagnostics-buffer] . consult-flymake)
@@ -114,6 +114,11 @@
 	      (funcall orig args))
 	    (advice-add 'consult-grep    :around #'cfg/-adv-consult-grep-always-choose-dir)
 	    (advice-add 'consult-ripgrep :around #'cfg/-adv-consult-grep-always-choose-dir)
+
+	    ;; Use Consult to select xref locations with preview
+	    (setq xref-show-xrefs-function #'consult-xref
+		  xref-show-definitions-function #'consult-xref)
+
 
 	    ;; consult git-grep with
 	    ;; -F will remove regexp filtering for the grep

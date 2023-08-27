@@ -14,7 +14,7 @@
 (delete-dups list-gen-mode) ;; remove duplicates
 (delete-dups list-gen-mode-map)
 
-;; ggtags and dumb-jump:
+;; ggtags:
 
 (setq list-gen-mode-map-ggtags (append list-gen-mode-map '(ggtags-mode-map ggtags-global-mode-map)))
 (setq list-gen-mode-ggtags (append list-gen-mode '(ggtags-mode ggtags-global-mode)))
@@ -47,7 +47,32 @@
  "km" '(comment-region :which-key "comment-region")
  "kn" '(uncomment-region :which-key "uncomment-region")
  "kj" '(comment-line :which-key "comment-line")
- "kt" '(comment-kill :which-key "comment-kill"))
+ "kt" '(comment-kill :which-key "comment-kill")
+
+ ;; xref remapping with dumb-jump as a backend:
+ "."  '(:ignore t :which-key "xref")
+ ".b" '(xref-find-references :which-key "xref-ref")
+ ".h" '(xref-find-definitions :which-key "xref-def")
+ ".c" '(xref-pop-marker-stack :which-key "xref-jump-back")
+ ".s" '(xref-find-apropos :which-key "xref-apropos")
+ )
+
+;; without prefix:
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps list-gen-mode-map
+ :major-modes list-gen-mode
+
+ "gb" '(xref-find-references :which-key "xref-ref")
+ "gh" '(xref-find-definitions :which-key "xref-def")
+ "gc" '(xref-pop-marker-stack :which-key "xref-jump-back")
+ "gs" '(xref-find-apropos :which-key "xref-apropos")
+ "g."  '(:ignore t :which-key "xref")
+ "g.b" '(xref-find-references :which-key "xref-ref")
+ "g.h" '(xref-find-definitions :which-key "xref-def")
+ "g.c" '(xref-pop-marker-stack :which-key "xref-jump-back")
+ "g.s" '(xref-find-apropos :which-key "xref-apropos")
+ )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; F-keys (also in insert mode) - example:
