@@ -1,14 +1,26 @@
-Local dir for gnu global tags:
+Local dir for various tools.
+
+#+begin_src emacs-lisp
+;; customize PATH and exec-path:
+
+(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/tools/bin") path-separator (getenv "PATH")))
+(add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/tools/bin"))
+#+end_src
+
+-- *OPTIONAL*: if you like to use tools outside your emacs, then add this into the =$PATH= (env variable):
+
+#+BEGIN_EXAMPLE
+export PATH="$PATH:$HOME/.emacs.d/tools/bin"
+#+END_EXAMPLE
+
+* GNU Global tags
 
 GNU global: https://www.gnu.org/software/global/
-
 Emacs package: https://github.com/leoliu/ggtags
-
 Emacs package for helm: https://github.com/emacsorphanage/helm-gtags (install it if you are helm user)
-
 We can use both emacs packages independly.
 
-* installation
+** installation
 
 -- remove all =*tags= packages on your OS. They can cause errors, be outdated or misconfigured.
 We will use tagging systems directly: via emacs and this local directory.
@@ -82,12 +94,7 @@ universalctags-pygments-native:\
 -- customize your elisp with below code:
 
 #+begin_src emacs-lisp
-;; customize PATH and exec-path:
-
-(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/tools/bin") path-separator (getenv "PATH")))
-(add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/tools/bin"))
-
-;; now we can configure GTAGS* env variables:
+;; GTAGS* env variables:
 
 (setenv "GTAGSCONF" (concat (getenv "HOME") "/.emacs.d/tools/gtags.conf"))
 (setenv "GTAGSLABEL" "new-ctags") ;; it means "universal-ctags" only as default, this option is faster than "pygments"
@@ -97,8 +104,3 @@ universalctags-pygments-native:\
 
 For more env variables, please see man:  https://www.gnu.org/software/global/manual/global.html#ENVIRONMENT
 
--- *OPTIONAL*: if you like to use ggtags outside your emacs, then add this into the =$PATH= (env variable):
-
-#+BEGIN_EXAMPLE
-export PATH="$PATH:$HOME/.emacs.d/tools/bin"
-#+END_EXAMPLE
