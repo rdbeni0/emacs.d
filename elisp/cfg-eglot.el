@@ -13,7 +13,8 @@
   :hook (eglot-managed-mode . (lambda () (flymake-mode -1)))
   :config
   ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-  (add-hook 'python-mode-hook 'eglot-ensure))
+  ;; (add-hook 'python-mode-hook 'eglot-ensure)
+  )
 
 (use-package flycheck-eglot
   :ensure t
