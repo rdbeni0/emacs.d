@@ -15,10 +15,13 @@ export PATH="$PATH:$HOME/.emacs.d/tools/bin"
 
 * GNU Global tags
 
-GNU global: https://www.gnu.org/software/global/
-Emacs package: https://github.com/leoliu/ggtags
-Emacs package for helm: https://github.com/emacsorphanage/helm-gtags (install it if you are helm user)
-We can use both emacs packages independly.
+GNU global: https://www.gnu.org/software/global/  
+
+Emacs package: https://github.com/leoliu/ggtags  
+
+Emacs package for helm: https://github.com/emacsorphanage/helm-gtags (install it if you are helm user)  
+
+We can use both emacs packages independly.  
 
 ** installation
 
