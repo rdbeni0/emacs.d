@@ -11,7 +11,7 @@
   ;; ggtags solution seems to be better and faster for "jump to definitions", but anaconda-mode is great for code completion.
   ;; it will be disabled by default:
 
-  ;; (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'anaconda-mode-hook 'anaconda-eldoc-mode)
 
   ;; turn off anaconda-mode-map, because it seems it could overwrite ggtags keymap (and general.el):
@@ -26,6 +26,9 @@
   (if (bound-and-true-p anaconda-mode)
       (message "anaconda-mode is on")
     (anaconda-mode)))
+
+;;;; https://github.com/pythonic-emacs/anaconda-mode#pythonpath
+;; (add-to-list 'python-shell-extra-pythonpaths "/path/to/the/project")
 
 ;;;; pyimport
 ;; https://melpa.org/#/pyimport
