@@ -20,7 +20,7 @@
 	  (lambda (host)
 	    (term-send-raw-string (format "export PS1=\"[\\[\\033[1;35m\\]\\h\\[\\033[0m\\]:\\[\\033[1;32m\\]\\$PWD\\[\\033[0m\\]]\n$ \"
 sed -i '/exec env ENV=.. HISTFILE=~..tramp_history/d' ~/.bash_history
-LS_COLORS=$LS_COLORS'di=0:36' ; export LS_COLORS
+LS_COLORS=$LS_COLORS'di=0;36' ; export LS_COLORS
 echo \"\" > ~/.tramp_history
 clear
 export HISTFILE=~/.bash_history
