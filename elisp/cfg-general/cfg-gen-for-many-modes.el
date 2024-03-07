@@ -14,11 +14,6 @@
 (delete-dups list-gen-mode) ;; remove duplicates
 (delete-dups list-gen-mode-map)
 
-;; ggtags:
-
-(setq list-gen-mode-map-ggtags (append list-gen-mode-map '(ggtags-mode-map ggtags-global-mode-map)))
-(setq list-gen-mode-ggtags (append list-gen-mode '(ggtags-mode ggtags-global-mode)))
-
 ;; flycheck:
 
 (setq list-gen-mode-flycheck (seq-difference list-gen-mode '(ssh-config-mode jenkinsfile-mode fish-mode)))

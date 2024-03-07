@@ -1,6 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ggtags:
 
+;; ggtags - list:
+;; for more info see "cfg-gen-for-many-modes.el"
+
+(setq list-gen-mode-map-ggtags (append list-gen-mode-map '(ggtags-mode-map ggtags-global-mode-map)))
+(setq list-gen-mode-ggtags (append list-gen-mode '(ggtags-mode ggtags-global-mode)))
+
+
 ;; with prefix:
 (general-define-key
  :states '(normal visual emacs)
@@ -72,3 +79,6 @@
  "s/m" '(ggtags-mode :which-key "ggtags-mode")
  "s/g" '(ggtags-create-tags :which-key "ggt-create-tags")
  "s/u" '(ggtags-update-tags :which-key "ggt-update-tags"))
+
+(provide 'cfg-gen-ggtags)
+;;; cfg-gen-ggtags.el ends here

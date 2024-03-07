@@ -42,5 +42,8 @@
 ;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough, then "pygments" can cover less popular languages
 ;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
 
+;; load keybindings from general.el framework:
+(require 'cfg-gen-ggtags)
+
 (provide 'cfg-ggtags)
 ;;; cfg-ggtags.el ends here
