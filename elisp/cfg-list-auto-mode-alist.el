@@ -21,6 +21,7 @@
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.md\\'" . gfm-mode)
 	 ("\\.markdown\\'" . gfm-mode)
+	 ("\\.nix\\'" . nix-mode)
 	 ("\\.zsh\\'" . sh-mode)
 	 ("\\.bashrc\\'" . sh-mode)
 	 ("\\.bash_profile\\'" . sh-mode)

@@ -54,7 +54,7 @@
        ("Less" (prettier "--print-width" "185"))
        ("Lua" lua-fmt)
        ("Markdown" (prettier "--print-width" "185"))
-       ("Nix" nixpkgs-fmt)
+       ("Nix" nixfmt)
        ("Objective-C" clang-format)
        ("OCaml" ocp-indent)
        ("Perl" (perltidy "--quiet" "--standard-error-output" "--perl-best-practices" "-l=185"))
