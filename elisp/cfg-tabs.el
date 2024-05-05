@@ -5,8 +5,8 @@
 
 ;;; Code:
 
-;; tab-bar : since emacs 27 version
-(tab-bar-mode 1)
+;; tab-bar : since emacs 27 version (new version of tabs)
+;(tab-bar-mode 1)
 
 ;; tabbar legacy plugin
 ;; Introduction:
