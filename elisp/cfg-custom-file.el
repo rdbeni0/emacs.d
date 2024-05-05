@@ -28,8 +28,6 @@
    '(ol-bbdb ol-bibtex ol-docview ol-eww ol-gnus ol-info ol-irc ol-mhe org-mouse ol-rmail ol-w3m))
  '(package-selected-packages '(perl-quote use-package))
  '(tab-bar-close-button-show nil)
- '(tab-bar-mode t)
- '(tab-bar-tab-hints t)
  '(tabbar-separator '(1))
  '(term-buffer-maximum-size 0))
 
