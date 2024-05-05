@@ -282,6 +282,7 @@
  "hc"  '(customize :which-key "customize")
  "ht"  '(load-theme :which-key "load-theme")
  "hI"  '(Info-search :which-key "info-search")
+ "hw"  '(where-is :which-key "where-is")
  "hd"  '(:ignore t :which-key "describe")
  "hdf" '(describe-function :which-key "describe-function")
  "hdk" '(describe-key :which-key "describe-key")
