@@ -16,6 +16,7 @@
 
  "<S-next>" 'tabbar-backward
  "<S-prior>" 'tabbar-forward
+ "<S-home>" 'tabbar-mode
  ;;   "<header-line> <mouse-1>" '(tabbar-press-home :wk t)
  ;;   "<header-line> <mouse-2>" '(tabbar-press-home :wk t)
  ;;   "<header-line> <mouse-3>" '(tabbar-press-home :wk t)
@@ -68,6 +69,7 @@
  "<left>" 'tab-previous
  "<right>" 'tab-next
  "<deletechar>" 'tab-close
+ "<home>" 'tabbar-mode
  "<next>" 'tabbar-backward
  "<prior>" 'tabbar-forward
 
@@ -177,6 +179,7 @@
  "wt <down>" '(tab-new :which-key "tab-new")
  "wt <left>" '(tab-previous :which-key "tab-previous")
  "wt <right>" '(tab-next :which-key "tab-next")
+ "wt <home>" '(tabbar-mode :which-key "tabbar-mode")
  "wt <next>" '(tabbar-backward :which-key "tabbar-backward")
  "wt <prior>" '(tabbar-forward :which-key "tabbar-forward")
  "ww"  '(other-window :which-key "other-window")

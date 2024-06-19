@@ -111,6 +111,9 @@ mouse-2: kill %S"
 	   ((or (eq major-mode 'php-mode)) "PHP")
 	   ((or (string= (file-name-extension (buffer-name)) "php")) "PHP")
 
+	   ((or (eq major-mode 'nix-mode)) "NIX")
+	   ((or (string= (file-name-extension (buffer-name)) "nix")) "NIX")
+
 	   ((or (eq major-mode 'cc-mode)) "C")
 	   ((or (eq major-mode 'c++-mode)) "C")
 	   ((or (eq major-mode 'makefile-gmake-mode)) "C")
