@@ -1,0 +1,1 @@
+/nix/store/nawpg38prgwb7d5d1rm6mrh3sv1bxbfg-home-manager-files/DEV/emacs/emacs.d_default/elisp/cfg-env.el
