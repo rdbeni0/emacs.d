@@ -28,6 +28,7 @@
 	 ("zlogin\\'" . sh-mode)
 	 ("zshenv\\'" . sh-mode)
 	 ("zshrc\\'" . sh-mode)
+	 ("\\.php$'" . phpunit-mode)
 	 ("~/\\.ssh/config\\'" . ssh-config-mode)
 	 ("ssh_config\\'" . ssh-config-mode)
 	 ("sshd_config\\'" . ssh-config-mode)

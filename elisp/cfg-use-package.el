@@ -28,9 +28,11 @@
 ;; The following lines tell emacs where on the internet to look up for new packages (elisp repositories):
 ;; WARNING! The same settings could be used separately for epm (.epm.el) package - so please also look at .epm.el file
 
-(setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")
+(setq package-archives '(
+                        ("gnu"       . "http://elpa.gnu.org/packages/")
                          ("melpa"     . "https://melpa.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+			  ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ))
 
 ;; WARNING! Do not use marmalade - is an obsolete repository : https://marmalade-repo.org/#download
 

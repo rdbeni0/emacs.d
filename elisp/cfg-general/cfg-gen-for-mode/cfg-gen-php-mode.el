@@ -6,6 +6,11 @@
  :major-modes 'php-mode
  :prefix ","
  "j"  '(imenu :which-key "imenu")
+ "t"  '(:ignore t :which-key "phpunit")
+ "tt" '(phpunit-current-test :which-key "phpunit-current-test")
+ "tc" '(phpunit-current-class :which-key "phpunit-current-class")
+ "tp" '(phpunit-current-project :which-key "phpunit-current-project")
+ "tg" '(phpunit-group :which-key "phpunit-group")
  "="  '(:ignore t :which-key "format")
  "=o" '(cfg/php-custom-file-format :which-key "php-custom-format")
  "=c" '(php-cs-fixer-fix :which-key "php-cs-fixer")

@@ -37,9 +37,16 @@
     )
   (add-hook 'php-mode-hook 'cfg/-my-php-mode-setup))
 
+;; https://github.com/nlamirault/phpunit.el
+;; https://melpa.org/#/phpunit
+(use-package phpunit
+  :ensure t
+  :after php-mode
+  )
 
+
+;; enable xref-find-references for php:
 (require 'semantic/symref/grep)
-
 (add-to-list 'semantic-symref-filepattern-alist '(php-mode "*.php"))
 
 (provide 'cfg-php)
