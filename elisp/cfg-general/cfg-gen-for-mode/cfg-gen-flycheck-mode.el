@@ -7,7 +7,7 @@
  :prefix ","
  "`"  '(:ignore t :which-key "flycheck")
  "``" '(flycheck-list-errors :which-key "list-errors")
- "`l" '(flycheck-list-errors :which-key "list-errors")
+ "`l" '(cfg/flycheck-list-errors-below :which-key "list-errors-below")
  "`t" '(flycheck-mode :which-key "toggle-flycheck")
  "`," '(flycheck-display-error-at-point :which-key "display-error")
  "`'" '(flycheck-mode :which-key "flycheck-mode")
@@ -30,10 +30,12 @@
  "S" '(flycheck-error-list-reset-filter :which-key "reset-filter")
  "x" '(flycheck-error-list-explain-error :which-key "explain-error")
  "]" '(flycheck-error-list-next-error :which-key "next-error")
- "[" '(flycheck-error-list-previous-error :which-key "previous-error"))
+ "[" '(flycheck-error-list-previous-error :which-key "previous-error")
+ "q" '(kill-buffer-and-window :which-key "quit")
+ "Q" '(kill-buffer :which-key "kill-this-buffer"))
 
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'flycheck-error-list-mode-map
  :major-modes 'flycheck-error-list-mode
- "q" 'kill-this-buffer)
+ "q" 'kill-buffer-and-window)
