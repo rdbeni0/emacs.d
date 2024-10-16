@@ -1,3 +1,5 @@
+;;; cfg-gen-for-many-modes.el --- general.el for many modes -*- lexical-binding: t -*-
+
 (require 'seq)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -85,3 +87,6 @@
 ;;  "<f5>"     '(:ignore t :which-key "completions")
 ;;  "<f5><f4>" '(completion-at-point :which-key "completion-at-point-capf")
 ;;  )
+
+(provide 'cfg-gen-for-many-modes)
+;;; cfg-gen-for-many-modes.el ends here

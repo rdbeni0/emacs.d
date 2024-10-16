@@ -1,3 +1,5 @@
+;;; cfg-gen-for-all-modes.el --- general.el for all modes -*- lexical-binding: t -*-
+
 ;; no space + no which-key
 
 (general-define-key
@@ -12,20 +14,7 @@
  "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf")
  "C-<tab>" 'completion-at-point
 
- ;; tabbar legacy plugin
-
- "<S-next>" 'tabbar-backward
- "<S-prior>" 'tabbar-forward
- "<S-home>" 'tabbar-mode
- ;;   "<header-line> <mouse-1>" '(tabbar-press-home :wk t)
- ;;   "<header-line> <mouse-2>" '(tabbar-press-home :wk t)
- ;;   "<header-line> <mouse-3>" '(tabbar-press-home :wk t)
- "<header-line> <mouse-9>" 'tabbar-forward-group
- "<header-line> <drag-mouse-9>" 'tabbar-forward-group
- "<header-line> <mouse-8>" 'tabbar-backward-group
- "<header-line> <drag-mouse-8>" 'tabbar-backward-group
-
- ;; tab (emacs 27++)
+ ;; tab-bar-mode (emacs 27++)
 
  "<mouse-9>" 'tab-next
  "<drag-mouse-9>" 'tab-next
@@ -38,7 +27,7 @@
  "<M-mouse-2>" 'tab-close
  "<M-drag-mouse-2>" 'tab-close)
 
-;; no space + which-key + no whick-key : normal mode
+;; no space + which-key + no which-key : normal mode
 
 (general-define-key
  :states '(normal visual emacs)
@@ -59,9 +48,6 @@
  ;; GLOBAL and no prefix:
 
  "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
- "<mouse-1>" '(tabbar-mode :which-key "tbb-mode")
- "<mouse-3>" '(tabbar-press-home :which-key "tbb-home")
- "<mouse-2>" '(tabbar-backward-group :which-key "tbb-backward")
  "SPC" '(execute-extended-command :which-key "M-x")
  "!" '(shell-command :which-key "shell cmd")
  "<up>" 'tab-rename
@@ -69,9 +55,6 @@
  "<left>" 'tab-previous
  "<right>" 'tab-next
  "<deletechar>" 'tab-close
- "<home>" 'tabbar-mode
- "<next>" 'tabbar-backward
- "<prior>" 'tabbar-forward
 
  ;; macros:
 
@@ -82,40 +65,23 @@
  "Qn"  '(kmacro-cycle-ring-previous :which-key "kmacro-previous")
  "Qv"  '(kmacro-view-macro-repeat :which-key "kmacro-view-macro")
 
- ;; treemacs:
-
- "0"   '(:ignore t :which-key "treemacs")
- "00"  '(treemacs :which-key "treemacs")
- "0o"  '(treemacs-switch-workspace :which-key "switch-workspace")
- "0w"  '(:ignore t :which-key "treemacs-workspaces")
- "0ww" '(treemacs-switch-workspace :which-key "switch-workspace")
- "0wa" '(treemacs-create-workspace :which-key "create-workspace")
- "0wd" '(treemacs-remove-workspace :which-key "remove-workspace")
- "0wr" '(treemacs-rename-workspace :which-key "rename-workspace")
- "0wf" '(treemacs-set-fallback-workspace :which-key "set-fallback-workspace")
- "0we" '(treemacs-edit-workspaces :which-key "edit-workspaces")
- "0wn" '(treemacs-next-workspaces :which-key "next-workspace")
- "0p"  '(:ignore t :which-key "treemacs-projects")
- "0pa" '(treemacs-add-project :which-key "add-project")
- "0pA" '(treemacs-add-project-to-workspace :which-key "add-project-to-workspace")
- "0pd" '(treemacs-remove-project-from-workspace :which-key "remove-project")
- "0pr" '(treemacs-rename-project :which-key "rename-project")
-
  ;; files
 
  "f"   '(:ignore t :which-key "files")
  "ff"  '(find-file :which-key "find-file")
  "fa"  '(cfg/ffap :which-key "ffap")
- "fz"  '(fzf :which-key "fzf")
  "fR"  '(cfg/rename-current-buffer-file :which-key "rename-current-buffer-file")
  "fE"  '(cfg/sudo-edit :which-key "sudo-edit")
  "fv"  '(revert-buffer :which-key "revert-refresh-buffer")
  "fV"  '(auto-revert-mode :which-key "auto-revert-mode")
- "fr"  '(recentf-open-files :which-key "recentf")
+ "fe"  '(recentf-open-files :which-key "recentf")
+ "fr"  '(cfg/recentf-jump-open :which-key "recentf jump")
  "fs"  '(save-buffer :which-key "save buffer")
  "fo"  '(save-some-buffers :which-key "save-some-buffers")
  "fD"  '(cfg/delete-current-buffer-file :which-key "delete-current-buffer-file")
- "fd"  '(dired :which-key "dired")
+ "fd"  '(:ignore t :which-key "dired")
+ "fds"  '(cfg/sudired :which-key "sudired")
+ "fdd"  '(dired :which-key "dired")
  "fy"  '(:ignore t :which-key "Yank/Copy")
  "fyp" '(cfg/show-file-name :which-key "show-file-name")
  "fyb" '(cfg/copy-buffer-name :which-key "Buffer Name")
@@ -138,31 +104,26 @@
 
  "b"   '(:ignore t :which-key "buffers")
  "bu"  '(cfg/dos2unix :which-key "dos2unix")
- "be"  '(revert-buffer :which-key "revert-refresh-buffer")
+ "br"  '(revert-buffer :which-key "revert-refresh-buffer")
  "by"  '(evil-paste-pop :which-key "yank-pop")
  "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
  "bB"  '(switch-to-buffer-other-window :which-key "switch-to-buffer-other-window")
  "bs"  '(sort-lines :which-key "sort-lines")
- "bF"  '(format-all-buffer :which-key "format-all-buffer")
  "bv"  '(ibuffer :which-key "ibuffer")
  "bt"  '(eval-buffer :which-key "eval-buffer")
  "bd"  '(kill-this-buffer :which-key "kill-this-buffer")
  "bN"  '(cfg/new-empty-buffer :which-key "new-empty-buffer")
  "bx"  '(kill-buffer-and-window :which-key "kill-buffer-and-window")
  "bX"  '(cfg/kill-other-buffers :which-key "kill-other-buffers")
- "ba"  '(:ignore t :which-key "yasnippet")
- "byy" '(yas-describe-tables :which-key "yas-describe-tables")
- "bm"  '(:ignore t :which-key "modes")
- "bmv" '(auto-revert-mode :which-key "auto-revert-mode")
+ "ba"  '(auto-revert-mode :which-key "auto-revert")
+ "bm"  '(:ignore t :which-key "core modes")
  "bmp" '(python-mode :which-key "python-mode")
- "bmP" '(anaconda-mode :which-key "anaconda-mode")
- "bmg" '(ggtags-mode :which-key "ggtags-mode")
  "bmt" '(text-mode :which-key "text-mode")
  "bmo" '(org-mode :which-key "org-mode")
  "bmc" '(conf-mode :which-key "conf-mode")
  "bme" '(emacs-lisp-mode :which-key "emacs-lisp-mode")
- "bmw" '(web-mode :which-key "web-mode")
- "bmf" '(format-all-mode :which-key "format-all-mode")
+ "bmx" '(nxml-mode :which-key "nxml-mode")
+ "bmj" '(js-json-mode :which-key "js-json-mode")
 
  ;; completions
 
@@ -179,9 +140,6 @@
  "wt <down>" '(tab-new :which-key "tab-new")
  "wt <left>" '(tab-previous :which-key "tab-previous")
  "wt <right>" '(tab-next :which-key "tab-next")
- "wt <home>" '(tabbar-mode :which-key "tabbar-mode")
- "wt <next>" '(tabbar-backward :which-key "tabbar-backward")
- "wt <prior>" '(tabbar-forward :which-key "tabbar-forward")
  "ww"  '(other-window :which-key "other-window")
  "we"  '(delete-other-windows :which-key "delete-other-windows")
  "ws"  '(split-window-below :which-key "split-window-below")
@@ -205,54 +163,26 @@
  ;; apps
 
  "a"    '(:ignore t :which-key "apps")
+ "aa"   '(calendar :which-key "calendar")
+ "ad"   '(dired :which-key "dired")
  "am"   '(man :which-key "man")
  "al"   '(:ignore t :which-key "eln")
  "all"  '(cfg/eln-compile-only-safe :which-key "eln-compile-only-safe")
  "als"  '(cfg/eln-compile-site-elisp :which-key "eln-compile-site-elisp")
  "alg"  '(cfg/eln-compile-elisp-general :which-key "eln-compile-elisp-general")
  "ale"  '(cfg/eln-compile-elisp :which-key "eln-compile-elisp")
- "aw"   '(:ignore t :which-key "webpaste")
- "awk"  '(webpaste-paste-buffer :which-key "webpaste-paste-buffer")
- "awl"  '(webpaste-paste-region :which-key "webpaste-paste-region")
- "aa"   '(:ignore t :which-key "notmuch")
- "aan"  '(notmuch-mua-new-mail :which-key "notmuch-mua-new-mail")
- "aaa"  '(notmuch-jump-search :which-key "notmuch-jump-search")
- "aaj"  '(notmuch-jump-search :which-key "notmuch-jump-search")
- "aah"  '(notmuch :which-key "notmuch-hello")
- "aap"  '(cfg/notmuch-poll-mbsync :which-key "notmuch-poll-mbsync")
- "ae"   '(:ignore t :which-key "erc/irc")
+ "ae"   '(:ignore t :which-key "irc")
+ "aer"  '(rcirc :which-key "rcirc")
  "ac"   '(:ignore t :which-key "calculators")
  "acc"  '(calculator :which-key "calculator")
  "acd"  '(calc-dispatch :which-key "calc-dispatch")
- "aq"   '(quick-calc :which-key "quick-calc")
- "ao"   '(:ignore t :which-key "operating system")
- "aop"  '(pacfiles :which-key "pacfiles")
+ "acq"  '(quick-calc :which-key "quick-calc")
  "as"   '(:ignore t :which-key "shells")
- "ar"   '(:ignore t :which-key "regexp")
- "asm"  '(cfg/multi-term-buffer-rn :which-key "multi-term_bash")
+ "ase"  '(eshell :which-key "eshell")
  "asa"  '(ansi-term :which-key "ansi-term_bash")
- "asv"  '(multi-vterm :which-key "multi-vterm_fish")
- "asx"  '(cfg/my-named-shell :which-key "my-named-m-x-shell_bash")
- "asX"  '(shell :which-key "m-x-shell_bash")
+ "asx"  '(cfg/C-u-M-x-shell :which-key "C-u-M-x-shell_bash")
+ "asX"  '(shell :which-key "M-x-shell_bash")
  "asp"  '(run-python :which-key "python-shell")
- "ast"  '(tramp-term :which-key "tramp-term")
- "aeD"  '(cfg/erc-default-servers :which-key "erc-default-servers")
- "aeE"  '(erc-tls :which-key "erc-tls")
- "aer"  '(rcirc :which-key "rcirc")
- "aee"  '(erc :which-key "erc")
- "ael"  '(:ignore t :which-key "erc-view-log-mode")
- "aelf" '(cfg/erc-find-logfile :which-key "erc-find-logfile")
- "aelv" '(erc-view-log-mode :which-key "erc-view-log-mode")
- "aelr" '(erc-view-log-reload-file :which-key "erc-view-log-reload-file")
- "ael>" '(erc-view-log-next-mention :which-key "erc-view-log-next-mention")
- "ael<" '(erc-view-log-previous-mention :which-key "erc-view-log-previous-mention")
- "arr"  '(regex-tool :which-key "regex-tool")
- "arq"  '(regex-tool-quit :which-key "regex-tool-quit")
- "ad"   '(:ignore t :which-key "dired")
- "adw"  '(wdired-change-to-wdired-mode :which-key "wdired-mode")
- "adW"  '(wdired-exit :which-key "wdired-exit")
- "add"  '(dired :which-key "dired")
- "adD"  '(cfg/sudired :which-key "sudired")
 
  ;; search
 
@@ -281,23 +211,25 @@
  ;; help
 
  "h"   '(:ignore t :which-key "help")
- "hi"  '(info :which-key "info")
- "hc"  '(customize :which-key "customize")
- "ht"  '(load-theme :which-key "load-theme")
  "hI"  '(Info-search :which-key "info-search")
- "hw"  '(where-is :which-key "where-is")
+ "ha" '(apropos :which-key "apropos")
+ "hc"  '(customize :which-key "customize")
  "hd"  '(:ignore t :which-key "describe")
+ "hi"  '(info :which-key "info")
+ "hm"  '(cfg/show-major-mode :which-key "show-major-mode")
+ "ht"  '(load-theme :which-key "load-theme")
+ "hw"  '(where-is :which-key "where-is-key")
+ "hdM" '(describe-mode :which-key "describe-mode")
+ "hdc" '(describe-char :which-key "describe-char")
+ "hde" '(what-cursor-position :which-key "show-face-font-under-point")
  "hdf" '(describe-function :which-key "describe-function")
- "hdk" '(describe-key :which-key "describe-key")
- "hdy" '(describe-keymap :which-key "describe-mode")
- "hdo" '(describe-font :which-key "describe-font")
- "hda" '(what-cursor-position :which-key "show-face-font-under-point")
- "hdm" '(describe-mode :which-key "describe-mode")
  "hdi" '(describe-minor-mode :which-key "describe-minor-mode")
+ "hdk" '(describe-key :which-key "describe-key")
+ "hdo" '(describe-font :which-key "describe-font")
+ "hdp" '(describe-package :which-key "describe-package")
  "hdt" '(describe-theme :which-key "describe-theme")
  "hdv" '(describe-variable :which-key "describe-variable")
- "hdp" '(describe-package :which-key "describe-package")
- "hdc" '(describe-char :which-key "describe-char")
+ "hdy" '(describe-keymap :which-key "describe-mode")
 
  ;; diff
 
@@ -315,7 +247,6 @@
  ;; projects
 
  "p"   '(:ignore t :which-key "projects")
-
  "p/"  '(vc-git-grep :which-key "git-grep")
  "p!"  '(project-shell-command :which-key "shell-command")
  "ps"  '(project-shell :which-key "shell")
@@ -334,20 +265,11 @@
  "p;"  '(:ignore t :which-key "search/grep")
  "p;;" '(project-find-regexp :which-key "find-regexp")
 
-
  ;; git, magit
 
  "g"  '(:ignore t :which-key "git")
  "g/" '(vc-git-grep :which-key "git-grep")
- "g'" '(vc-git-grep :which-key "git-grep")
- "gb" '(magit-blame :which-key "magit-blame")
- "gc" '(magit-clone :which-key "magit-clone")
- "gi" '(magit-init :which-key "magit-init")
- "gs" '(magit-status :which-key "magit-status")
- "gm" '(magit-dispatch :which-key "magit-dispatch")
- "gL" '(magit-list-repositories :which-key "magit-list-repositories")
- "gS" '(magit-stage-file :which-key "magit-stage-file")
- "gU" '(magit-unstage-file :which-key "magit-unstage-file")
- "gr" '(magit-refresh :which-key "magit-refresh")
- "gd" '(magit-diff :which-key "magit-diff")
- "gf" '(magit-find-file :which-key "magit-find-file"))
+ "g'" '(vc-git-grep :which-key "git-grep"))
+
+(provide 'cfg-gen-for-all-modes)
+;;; cfg-gen-for-all-modes.el ends here
