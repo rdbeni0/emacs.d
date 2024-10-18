@@ -35,15 +35,15 @@
   :defer t
   :config
 
-  ;; please create correct "rcirc.el" file inside ~/.emacs.d/local_data/rcirc.el (or other emacs dir)
+  ;; please create correct "rcirc.el" file inside ~/.emacs.d/data/local/rcirc.el (or other emacs dir)
   ;; Please add below variables inside this file:
   ;; (setq rcirc-server-alist ...
   ;; (setq rcirc-authinfo ...
 
-  (if (file-readable-p (expand-file-name "local_data/rcirc.el" user-emacs-directory))
-      (load (expand-file-name "local_data/rcirc.el" user-emacs-directory)) ; if true, load additional variables for rcirc
+  (if (file-readable-p (expand-file-name "data/local/rcirc.el" user-emacs-directory))
+      (load (expand-file-name "data/local/rcirc.el" user-emacs-directory)) ; if true, load additional variables for rcirc
 					; if false, then message with "WARNING" will appear during initialization of rcirc:
-    (message "WARNING! File local_data/rcirc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct rcirc options!"))
+    (message "WARNING! File data/local/rcirc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct rcirc options!"))
 
   (add-to-list 'window-size-change-functions 'cfg/rcirc-dynamic-fill-column)
   (setq rcirc-prompt "»» ")
