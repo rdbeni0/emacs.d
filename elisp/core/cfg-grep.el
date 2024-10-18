@@ -36,6 +36,7 @@
 
       (grep (format "%s %s | xargs -0 grep -n -i \"%s\" " pattern)))))
 
+;;;; handle symlinks via grep and find:
 ;; grep command - add "-R" to follow symlinks:
 (setq grep-command "grep --color=auto -nH --null -R -e ")
 ;; https://stackoverflow.com/questions/28915372/change-the-default-find-grep-command-in-emacs

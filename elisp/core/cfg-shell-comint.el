@@ -9,7 +9,7 @@
 (use-package shell
   :config
   ;; https://stackoverflow.com/questions/9514495/how-to-define-a-function-to-run-multiple-shells-on-emacs
-  (defun cfg/my-named-shell ()
+  (defun cfg/C-u-M-x-shell ()
     "Equivalent to C-u M-x shell RET"
     (interactive)
     (let ((current-prefix-arg '(4)))

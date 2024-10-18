@@ -12,13 +12,14 @@
 (use-package treemacs
   :ensure t
   :config
-  (require 'treemacs-project-follow-mode)
+  ;;;; Probably not required. Not working in Ubuntu LTS:
+  ;; (require 'treemacs-project-follow-mode)
+  ;; (setq treemacs-project-follow-mode t)
   (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
   (setq
    treemacs-show-hidden-files               t
    treemacs-indentation                     1
    treemacs-follow-mode                     1
-   treemacs-project-follow-mode             t
    )
   (treemacs-resize-icons 18) ;; icon's size
   (setq-local imenu-create-index-function #'ggtags-build-imenu-index)

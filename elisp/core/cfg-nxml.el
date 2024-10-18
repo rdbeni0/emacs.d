@@ -26,8 +26,7 @@
 (use-package nxml-mode
   :config
   ;; load general.el and keybindings:
-  (require 'cfg-gen-co-nxml-mode)
-  )
+  (require 'cfg-gen-co-nxml-mode))
 
 (provide 'cfg-nxml)
 ;;; cfg-nxml.el ends here
