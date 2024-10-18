@@ -1,0 +1,1 @@
+A directory containing assets such as fonts, CSS files, JS libs, templates, additional images, or icons.
