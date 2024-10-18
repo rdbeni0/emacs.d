@@ -16,6 +16,7 @@ export PATH="$PATH:$HOME/.emacs.d/data/tools/bin"
 * GNU Global tags
 
 GNU global: https://www.gnu.org/software/global/  
+
 Emacs package: https://github.com/leoliu/ggtags  
 
 We can use both emacs packages independly.  
