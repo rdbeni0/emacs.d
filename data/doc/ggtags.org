@@ -4,8 +4,6 @@ GNU global: https://www.gnu.org/software/global/
 
 Emacs package: https://github.com/leoliu/ggtags  
 
-We can use both emacs packages independly.  
-
 ** installation
 
 -- remove all =*tags= packages on your OS. They can cause errors, be outdated or misconfigured.
