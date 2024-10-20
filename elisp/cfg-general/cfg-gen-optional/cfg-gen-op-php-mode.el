@@ -1,4 +1,4 @@
-;;; cfg-gen-op-php-mode.el --- general.el for org-mode -*- lexical-binding: t -*-
+;;; cfg-gen-op-php-mode.el --- general.el for php-mode -*- lexical-binding: t -*-
 
 (general-define-key
  :states '(normal visual emacs)
