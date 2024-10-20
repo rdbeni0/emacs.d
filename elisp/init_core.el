@@ -13,6 +13,7 @@
 (require 'cfg-which-key) ;; OK
 (require 'cfg-eglot) ;; OK
 (require 'cfg-ediff) ;; OK
+(require 'cfg-tree-sitter) ;; OK
 (require 'cfg-i-buffer-menu) ;; OK
 (require 'cfg-diagnose) ;; OK
 (require 'cfg-common-options) ;;
@@ -36,5 +37,6 @@
 (require 'cfg-org) ;; OK
 (require 'cfg-irc) ;; OK
 (require 'cfg-man-help) ;; OK
+(require 'cfg-flyspell) ;; OK
 (require 'cfg-doc-view-image) ;; OK
 (require 'cfg-links-web-browsers) ;; OK

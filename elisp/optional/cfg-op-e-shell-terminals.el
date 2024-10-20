@@ -53,7 +53,9 @@
 
 (use-package fish-mode
   :ensure t
-  )
+  :config
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-fish-mode))
 
 (add-hook 'fish-mode-hook (lambda () (add-hook 'before-save-hook 'fish_indent-before-save)))
 
