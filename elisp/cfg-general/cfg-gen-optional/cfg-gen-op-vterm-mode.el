@@ -13,5 +13,5 @@
  "<delete>" 'vterm-send-delete
  "<backspace>" 'vterm-send-backspace)
 
- (provide 'cfg-gen-op-vterm-mode)
+(provide 'cfg-gen-op-vterm-mode)
 ;;; cfg-gen-op-vterm-mode.el ends here
