@@ -17,7 +17,7 @@
 (require 'cfg-i-buffer-menu) ;; OK
 (require 'cfg-diagnose) ;; OK
 (require 'cfg-common-options) ;;
-(require 'cfg-line-numbers) ;; TODO - 1/ "defcustom display-line-numbers-exempt-mode", 2/ "highlight-indent-guides"
+(require 'cfg-line-numbers-hl) ;; TODO - 1/ "defcustom display-line-numbers-exempt-mode", 2/ "highlight-indent-guides"
 (require 'cfg-emacs-lisp) ;; OK
 (require 'cfg-python) ;; OK
 (require 'cfg-perl) ;; OK

@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Mode-Line.html
+;; "Each Emacs window (aside from minibuffer windows) typically has a mode line at the bottom, which displays status information about the buffer displayed in the window."
 ;;
 ;; A string is printed verbatim in the mode line except for %-constructs:
 ;;   %b -- print buffer name.      %f -- print visited file name.

@@ -1,4 +1,4 @@
-;;; cfg-line-numbers.el --- configure line numbers -*- lexical-binding: t -*-
+;;; cfg-line-numbers-hl.el --- configure line numbers and highlighting -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; More options:
@@ -25,5 +25,7 @@
 
 (global-display-line-numbers-mode)
 
-(provide 'cfg-line-numbers)
-;;; cfg-line-numbers.el ends here
+(global-hl-line-mode 1) ; highlight current line
+
+(provide 'cfg-line-numbers-hl)
+;;; cfg-line-numbers-hl.el ends here
