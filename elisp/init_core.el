@@ -27,6 +27,7 @@
 (require 'cfg-js-json) ;; OK
 (require 'cfg-sh-script) ;; OK
 (require 'cfg-shell-comint) ;; OK
+(require 'cfg-term) ;; OK
 (require 'cfg-grep) ;; OK
 (require 'cfg-recentf) ;; OK
 (require 'cfg-custom-file) ;; TODO - duzo zmiennych dla wielu mode

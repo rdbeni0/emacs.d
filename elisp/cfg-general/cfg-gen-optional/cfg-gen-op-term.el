@@ -1,4 +1,4 @@
-;;; cfg-gen-op-term.el --- general.el for various tems and shells -*- lexical-binding: t -*-
+;;; cfg-gen-op-term.el --- general.el for various terms and shells -*- lexical-binding: t -*-
 
 ;; space as leader-key + which-key
 
