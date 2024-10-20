@@ -28,7 +28,9 @@ clear
 (use-package ssh-config-mode
   :ensure t
   :config
-  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock))
+  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-ssh-config-mode))
 
 ;;;;;; ssh.el
 ;; https://github.com/ieure/ssh-el

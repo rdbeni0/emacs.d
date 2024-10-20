@@ -1,9 +1,9 @@
 ;;; cfg-e-shell-terminals.el --- configfuration for eshell, shell and terminals -*- lexical-binding: t -*-
 ;;; Commentary:
-
+;;
 ;; Configuration for: multi-term, ansi-term, shell, terminals, eshell...
 ;; ... but NOT for shell script editing.
-
+;;
 ;;; Code:
 
 ;; vterm and multi-vterm:
