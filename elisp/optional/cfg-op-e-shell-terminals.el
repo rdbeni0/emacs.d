@@ -17,7 +17,9 @@
 	    (lambda ()
 	      (setq hl-line-mode -1)
 	      (setq-local global-hl-line-mode nil)
-	      )))
+	      ))
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-vterm-mode))
 
 (use-package multi-vterm
   :ensure t
