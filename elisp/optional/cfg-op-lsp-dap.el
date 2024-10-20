@@ -17,8 +17,7 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
          (sh-mode . lsp-deferred)
-	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp)))
-	 )
+	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp))))
   :commands (lsp lsp-deferred)
   :config
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -84,8 +83,6 @@
   :ensure t
   :config
   (setq ccls-executable "ccls"))
-
-
 
 (provide 'cfg-op-lsp-dap)
 ;;; cfg-op-lsp-dap.el ends here
