@@ -1,4 +1,4 @@
-;;; cfg-op-webpaste.el --- configfuration for webpaste -*- lexical-binding: t -*-
+;;; cfg-op-webpaste-htmlize.el --- configfuration for webpaste -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configuration for https://github.com/etu/webpaste.el
@@ -19,5 +19,9 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-webpaste))
 
-(provide 'cfg-op-webpaste)
-;;; cfg-op-webpaste.el ends here
+;; https://github.com/hniksic/emacs-htmlize
+(use-package htmlize
+  :ensure t)
+
+(provide 'cfg-op-webpaste-htmlize)
+;;; cfg-op-webpaste-htmlize.el ends here

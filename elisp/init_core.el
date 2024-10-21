@@ -4,7 +4,7 @@
 
 (require 'cfg-performance-native-comp) ;; OK
 (require 'cfg-use-package) ;; OK
-(require 'cfg-list-core-packages) ;; TODO - pomyslec co z brakujacymi paczkami, np. htmlize
+(require 'cfg-list-core-packages) ;; OK
 (require 'cfg-list-auto-mode-alist) ;; TODO - zadeklarowac per mode
 (require 'cfg-evil) ;; OK
 (require 'cfg-general) ;; OK
