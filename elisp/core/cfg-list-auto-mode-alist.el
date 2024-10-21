@@ -22,8 +22,7 @@
 	 ("\\.bash_profile\\'" . sh-mode)
 	 ("zlogin\\'" . sh-mode)
 	 ("zshenv\\'" . sh-mode)
-	 ("zshrc\\'" . sh-mode)
-	 )
+	 ("zshrc\\'" . sh-mode))
        auto-mode-alist))
 
 (provide 'cfg-list-auto-mode-alist)

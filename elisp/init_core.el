@@ -5,7 +5,7 @@
 (require 'cfg-performance-native-comp) ;; OK
 (require 'cfg-use-package) ;; OK
 (require 'cfg-list-core-packages) ;; OK
-(require 'cfg-list-auto-mode-alist) ;; TODO - zadeklarowac per mode
+(require 'cfg-list-auto-mode-alist) ;; OK
 (require 'cfg-evil) ;; OK
 (require 'cfg-general) ;; OK
 (require 'cfg-format) ;; OK
@@ -13,7 +13,6 @@
 (require 'cfg-which-key) ;; OK
 (require 'cfg-eglot) ;; OK
 (require 'cfg-ediff) ;; OK
-(require 'cfg-tree-sitter) ;; OK
 (require 'cfg-i-buffer-menu) ;; OK
 (require 'cfg-diagnose) ;; OK
 (require 'cfg-common-options) ;;

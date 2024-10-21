@@ -24,7 +24,6 @@
       (display-line-numbers-mode)))
 
 (global-display-line-numbers-mode)
-
 (global-hl-line-mode 1) ; highlight current line
 
 (provide 'cfg-line-numbers-hl)

@@ -1,4 +1,4 @@
-;;; cfg-tree-sitter.el --- tree sitter -*- lexical-binding: t -*-
+;;; cfg-op-core-tree-sitter.el --- tree sitter -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Tree sitter for Emacs.
@@ -18,5 +18,5 @@
 
 (global-tree-sitter-mode)
 
-(provide 'cfg-tree-sitter)
-;;; cfg-tree-sitter.el ends here
+(provide 'cfg-op-core-tree-sitter)
+;;; cfg-op-core-tree-sitter.el ends here
