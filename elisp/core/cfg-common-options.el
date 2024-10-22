@@ -64,6 +64,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (custom-set-variables
+ '(auth-source-save-behavior nil)
  '(warning-suppress-types '((frameset))))
 
 (provide 'cfg-common-options)
