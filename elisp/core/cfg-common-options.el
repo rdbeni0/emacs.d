@@ -63,7 +63,8 @@
 ;; (menu-bar-mode   -1)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-
+(custom-set-variables
+ '(warning-suppress-types '((frameset))))
 
 (provide 'cfg-common-options)
 ;;; cfg-common-options.el ends here
