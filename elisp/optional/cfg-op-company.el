@@ -217,8 +217,6 @@
   (setq company-statistics-file (expand-file-name ".cache/company-statistics-cache.el" user-emacs-directory)))
 
 ;; https://github.com/expez/company-quickhelp
-
-
 (use-package company-quickhelp
   :after company
   :ensure t
@@ -235,16 +233,18 @@
 	(goto-char (point-min)))
       (display-buffer doc-buffer t))
     )
-  (company-quickhelp-mode 1)
-  (setq company-quickhelp-delay 0.3)
   (add-hook 'global-company-mode-hook #'company-quickhelp-mode)
   (add-hook 'company-mode-hook #'company-quickhelp-mode)
   (add-hook 'company-quickhelp-mode 'turn-on-tempbuf-mode)
   (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1))
 
+;; (company-quickhelp-mode 1)
+;; (setq company-quickhelp-delay 0.2)
 (custom-set-variables
- '(company-quickhelp-color-background "grey12")
- '(company-quickhelp-color-foreground "dim gray")
+ '(company-quickhelp-color-background "grey12") ;; "white"
+ '(company-quickhelp-color-foreground "dim gray") ;; "black"
+ '(company-quickhelp-mode t)
+ '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
 
 ;; load keybindings from general.el framework:
