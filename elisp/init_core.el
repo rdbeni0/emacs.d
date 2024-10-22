@@ -11,6 +11,7 @@
 (require 'cfg-format) ;; OK
 (require 'cfg-hideshow) ;; OK
 (require 'cfg-which-key) ;; OK
+(require 'cfg-tab-bar) ;; OK
 (require 'cfg-eglot) ;; OK
 (require 'cfg-ediff) ;; OK
 (require 'cfg-i-buffer-menu) ;; OK

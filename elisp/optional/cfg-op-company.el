@@ -1,11 +1,9 @@
 ;;; cfg-op-company.el --- configfuration for company-mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; company-mode
-;; https://company-mode.github.io/
-;;
 ;;; Code:
 
+;; https://company-mode.github.io/
 (use-package company
   :ensure t
   :config
@@ -48,26 +46,26 @@
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
 
   (when (require 'yasnippet nil 'noerror)
-
-    (defun cfg/company-backend-with-yas (backends)
-      "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
+    (prog
+     (defun cfg/company-backend-with-yas (backends)
+       "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
   Taken from https://github.com/syl20bnr/spacemacs/pull/179."
-      (if (and (listp backends) (memq 'company-yasnippet backends))
-	  backends
-	(append (if (consp backends)
-		    backends
-		  (list backends))
-		'(:with company-yasnippet))))
-    ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
-    (defun cfg/yas-expand-or-company-complete (&optional arg)
-      (interactive)
-      (or
-       (yas-expand)
-       (company-indent-or-complete-common arg)))
+       (if (and (listp backends) (memq 'company-yasnippet backends))
+	   backends
+	 (append (if (consp backends)
+		     backends
+		   (list backends))
+		 '(:with company-yasnippet))))
+     ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
+     (defun cfg/yas-expand-or-company-complete (&optional arg)
+       (interactive)
+       (or
+	(yas-expand)
+	(company-indent-or-complete-common arg)))
 
-    (with-eval-after-load 'company
-      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-      (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))))
+     (with-eval-after-load 'company
+       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+       (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
@@ -180,7 +178,6 @@
 
 ;; python:
 ;; https://github.com/pythonic-emacs/company-anaconda
-
 (use-package company-anaconda
   :after anaconda-mode
   :ensure t
@@ -194,7 +191,6 @@
 
 ;; php
 ;; https://github.com/xcwen/ac-php
-
 (use-package company-php
   :after company
   :ensure t
@@ -208,7 +204,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://github.com/company-mode/company-statistics
-
 (use-package company-statistics
   :ensure t
   :config

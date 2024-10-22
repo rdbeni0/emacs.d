@@ -52,8 +52,11 @@ mouse-2: kill %S"
   :ensure t
   :config
 
+  (custom-set-variables
+   '(tabbar-mwheel-mode t)
+   '(tabbar-separator '(0.2)))
+
   ;; (tabbar-mode 1)
-  ;;  (setq tabbar-separator (quote (1.0)))
 
   ;; Config for tabbar-mode for ERC (turn off header):
   (setq erc-header-line-format nil)
@@ -176,8 +179,8 @@ mouse-2: kill %S"
 
 	   (t "user"))))
 
-  ;; keys
-  ;; TODO : migrate to general.el
+  ;; keys:
+  ;; TODO : migrate below to general.el
 
   (setq tabbar-help-on-tab-function 'cfg/px-tabbar-buffer-help-on-tab)
   (setq tabbar-select-tab-function 'cfg/px-tabbar-buffer-select-tab)
