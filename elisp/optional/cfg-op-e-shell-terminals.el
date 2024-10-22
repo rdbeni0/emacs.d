@@ -7,7 +7,6 @@
 ;;; Code:
 
 ;; vterm and multi-vterm:
-
 (use-package vterm
   :ensure t
   :config
@@ -37,7 +36,6 @@
   (setq term-buffer-maximum-size 0))
 
 ;; https://unix.stackexchange.com/questions/182211/automaticaly-rename-new-buffer-in-term-mode
-
 (defun cfg/multi-term-buffer-rn ()
   "Open multi-term buffer with special name and prefix, it could be useful for custom buffer filtering (via tabs or list-buffers)"
   (interactive)
@@ -76,8 +74,6 @@
 	      (make-local-variable 'font-lock-function)
 	      (setq font-lock-function (lambda (_) nil))
 	      (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t))))
-
-
 
 (provide 'cfg-e-shell-terminals)
 ;;; cfg-e-shell-terminals.el ends here

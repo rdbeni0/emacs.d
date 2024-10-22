@@ -18,9 +18,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-C-i-jump nil) ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
+  (setq evil-want-C-i-jump nil)  ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
   :config
   (evil-mode 1)
+  (setq evil-auto-indent nil)
   ;; woarkarounds to add ESC as "quit" button everywhere :
   (define-key evil-normal-state-map [escape] 'keyboard-quit)
   (define-key evil-visual-state-map [escape] 'keyboard-quit)
@@ -53,7 +54,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :after evil
   :config
   (evil-collection-init))
-
 
 ;; https://github.com/Somelauw/evil-org-mode
 (use-package evil-org
