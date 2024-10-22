@@ -20,6 +20,8 @@
 	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp))))
   :commands (lsp lsp-deferred)
   :config
+  (custom-set-variables
+   '(lsp-restart 'ignore))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; main features: https://emacs-lsp.github.io/lsp-mode/page/main-features/
   ;; nice example of config: https://github.com/emacs-lsp/lsp-mode/issues/3497
