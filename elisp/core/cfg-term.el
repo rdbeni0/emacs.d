@@ -10,7 +10,7 @@
   :config
   ;; The maximum size in lines for term buffers.
   ;; Term buffers are truncated from the top to be no greater than this number.
-  ;; Notice that a setting of 0 means "don’t truncate anything".
+  ;; Notice that a setting of "0" means "don’t truncate anything".
   (setq term-buffer-maximum-size 0)
   ;; load general.el and keybindings:
   (require 'cfg-gen-co-term))
