@@ -24,15 +24,15 @@
 (use-package multi-vterm
   :ensure t
   :after vterm
-  ;; :config
-  )
+  :config
+  (setq multi-vterm-buffer-name "vterm"))
 
 ;; ansi-term and multi-term and:
 
 (use-package multi-term
   :ensure t
   :config
-  (setq multi-term-program "/bin/bash") ;; bash, but not fish
+  (setq multi-term-program "bash") ;; bash, but not fish
   (setq shell-default-shell 'multi-term)
   (setq term-buffer-maximum-size 0))
 
