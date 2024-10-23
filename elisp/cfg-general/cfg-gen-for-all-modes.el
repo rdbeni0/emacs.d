@@ -163,9 +163,9 @@
  ;; apps
 
  "a"    '(:ignore t :which-key "apps")
- "aa"   '(calendar :which-key "calendar")
  "ad"   '(dired :which-key "dired")
  "am"   '(man :which-key "man")
+ "an"   '(calendar :which-key "calendar")
  "al"   '(:ignore t :which-key "eln")
  "all"  '(cfg/eln-compile-only-safe :which-key "eln-compile-only-safe")
  "als"  '(cfg/eln-compile-site-elisp :which-key "eln-compile-site-elisp")
