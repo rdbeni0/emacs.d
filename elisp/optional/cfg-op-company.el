@@ -46,7 +46,7 @@
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
 
   (when (require 'yasnippet nil 'noerror)
-    (prog
+    (progn
      (defun cfg/company-backend-with-yas (backends)
        "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
   Taken from https://github.com/syl20bnr/spacemacs/pull/179."

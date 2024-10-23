@@ -1,6 +1,6 @@
 (load (expand-file-name "elisp/init_core.el" user-emacs-directory))
 
-;; OPTIONAL - common packages:
+;; Common packages:
 (require 'cfg-op-completion-systems)
 (require 'cfg-op-doom-themes-fonts)
 (require 'cfg-op-doom-mode-line)
@@ -9,8 +9,10 @@
 (require 'cfg-op-dumbjump)
 (require 'cfg-op-epm)
 (require 'cfg-op-evil)
+(require 'cfg-op-dired)
+(require 'cfg-op-webpaste-htmlize)
 
-;; OPTIONAL - langs:
+;; Langs:
 (require 'cfg-op-magit)
 (require 'cfg-op-format)
 (require 'cfg-op-python)
@@ -20,3 +22,4 @@
 (require 'cfg-op-groovy-jenkins)
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
+(require 'cfg-op-web-mode)
