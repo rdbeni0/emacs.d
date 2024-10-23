@@ -11,7 +11,9 @@
 (require 'display-line-numbers)
 
 (defcustom display-line-numbers-exempt-modes '(eshell-mode shell-mode ansi-term-mode erc-mode)
-  "Major modes on which to disable the linum mode, exempts them from global requirement"
+  "Major modes on which to disable the linum mode, exempts them from global requirement.  
+  If you want customize (add new variables), then use push or add-to-list: 
+  https://www.gnu.org/software/emacs/manual/html_node/elisp/List-Variables.html "
   :group 'display-line-numbers
   :type 'list
   :version "green")

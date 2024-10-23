@@ -2,43 +2,43 @@
 
 ;; order is important:
 
-(require 'cfg-performance-native-comp) ;; OK
-(require 'cfg-use-package) ;; OK
-(require 'cfg-abbrevs) ;; OK
-(require 'cfg-list-core-packages) ;; OK
-(require 'cfg-list-auto-mode-alist) ;; OK
-(require 'cfg-evil) ;; OK
-(require 'cfg-general) ;; OK
-(require 'cfg-format) ;; OK
-(require 'cfg-hideshow) ;; OK
-(require 'cfg-which-key) ;; OK
-(require 'cfg-tab-bar) ;; OK
-(require 'cfg-eglot) ;; OK
-(require 'cfg-ediff) ;; OK
-(require 'cfg-i-buffer-menu) ;; OK
-(require 'cfg-diagnose) ;; OK
-(require 'cfg-common-options) ;;
-(require 'cfg-line-numbers-hl) ;; TODO - 1/ "defcustom display-line-numbers-exempt-mode", 2/ "highlight-indent-guides"
-(require 'cfg-emacs-lisp) ;; OK
-(require 'cfg-python) ;; OK
-(require 'cfg-perl) ;; OK
-(require 'cfg-cc) ;; OK
-(require 'cfg-compile) ;; OK
-(require 'cfg-nxml) ;; OK
-(require 'cfg-js-json) ;; OK
-(require 'cfg-sh-script) ;; OK
-(require 'cfg-shell-comint) ;; OK
-(require 'cfg-term) ;; OK
-(require 'cfg-grep) ;; OK
-(require 'cfg-recentf) ;; OK
-(require 'cfg-custom-file) ;; OK
-(require 'cfg-project) ;; OK
-(require 'cfg-vcs) ;; OK
-(require 'cfg-dired) ;; OK
-(require 'cfg-tramp-sudo) ;; OK
-(require 'cfg-org) ;; OK
-(require 'cfg-irc) ;; OK
-(require 'cfg-man-help) ;; OK
-(require 'cfg-flyspell) ;; OK
-(require 'cfg-doc-view-image) ;; OK
-(require 'cfg-links-web-browsers) ;; OK
+(require 'cfg-performance-native-comp)
+(require 'cfg-use-package)
+(require 'cfg-abbrevs)
+(require 'cfg-list-core-packages)
+(require 'cfg-list-auto-mode-alist)
+(require 'cfg-evil)
+(require 'cfg-general)
+(require 'cfg-format)
+(require 'cfg-hideshow)
+(require 'cfg-which-key)
+(require 'cfg-tab-bar)
+(require 'cfg-eglot)
+(require 'cfg-ediff)
+(require 'cfg-i-buffer-menu)
+(require 'cfg-diagnose)
+(require 'cfg-common-options)
+(require 'cfg-line-numbers-hl)
+(require 'cfg-emacs-lisp)
+(require 'cfg-python)
+(require 'cfg-perl)
+(require 'cfg-cc)
+(require 'cfg-compile)
+(require 'cfg-nxml)
+(require 'cfg-js-json)
+(require 'cfg-sh-script)
+(require 'cfg-shell-comint)
+(require 'cfg-term)
+(require 'cfg-grep)
+(require 'cfg-recentf)
+(require 'cfg-custom-file)
+(require 'cfg-project)
+(require 'cfg-vcs)
+(require 'cfg-dired)
+(require 'cfg-tramp-sudo)
+(require 'cfg-org)
+(require 'cfg-irc)
+(require 'cfg-man-help)
+(require 'cfg-flyspell)
+(require 'cfg-doc-view-image)
+(require 'cfg-links-web-browsers)
