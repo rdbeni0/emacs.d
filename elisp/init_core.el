@@ -4,6 +4,7 @@
 
 (require 'cfg-performance-native-comp) ;; OK
 (require 'cfg-use-package) ;; OK
+(require 'cfg-abbrevs) ;; OK
 (require 'cfg-list-core-packages) ;; OK
 (require 'cfg-list-auto-mode-alist) ;; OK
 (require 'cfg-evil) ;; OK
