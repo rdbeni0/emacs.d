@@ -238,7 +238,6 @@
 (custom-set-variables
  '(company-quickhelp-color-background "grey12") ;; "white"
  '(company-quickhelp-color-foreground "dim gray") ;; "black"
- '(company-quickhelp-mode t)
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
 

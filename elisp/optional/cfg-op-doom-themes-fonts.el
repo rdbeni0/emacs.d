@@ -1,7 +1,7 @@
 ;;; cfg-op-doom-themes-fonts.el --- configure themes and fonts -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Setup for doom themes (black) and fonts.
+;; Setup for (black/dark) doom themes and fonts.
 ;;
 ;;; Code:
 
