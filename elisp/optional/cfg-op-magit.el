@@ -1,4 +1,4 @@
-;;; cfg-magit.el --- configfuration for git/magit  -*- lexical-binding: t -*-
+;;; cfg-op-magit.el --- configfuration for git/magit  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Everything what is connected with Magit: https://magit.vc/
@@ -15,5 +15,5 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-magit))
 
-(provide 'cfg-magit)
-;;; cfg-magit.el ends here
+(provide 'cfg-op-magit)
+;;; cfg-op-magit.el ends here

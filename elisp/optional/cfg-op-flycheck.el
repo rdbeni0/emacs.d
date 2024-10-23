@@ -43,7 +43,7 @@
 ;;;; python-mode - linters, checkers...
 ;;;; we need to know that flycheck has excellent support for python-mode in emacs, but it needs some executables to be installed
 (when (require 'cfg-op-python nil 'noerror)
-  (prog
+  (progn
    (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
    (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
    (setq flycheck-python-mypy-cache-dir (expand-file-name ".cache/mypy" user-emacs-directory)) ;; https://github.com/python/mypy
@@ -56,7 +56,7 @@
 
 ;;;; php
 (when (require 'cfg-op-php nil 'noerror)
-  (prog
+  (progn
    ;; https://melpa.org/#/flycheck-phpstan
    (use-package flycheck-phpstan
      :ensure t

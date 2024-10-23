@@ -1,3 +1,4 @@
+;;; cfg-gen-op-flycheck-mode.el ---  general.el for flycheck -*- lexical-binding: t -*-
 ;; general-flycheck:
 
 (general-define-key
@@ -46,3 +47,6 @@
  :keymaps 'flycheck-error-list-mode-map
  :major-modes 'flycheck-error-list-mode
  "q" 'kill-buffer-and-window)
+
+ (provide 'cfg-gen-op-flycheck-mode)
+;;; cfg-gen-op-flycheck-mode.el ends here
