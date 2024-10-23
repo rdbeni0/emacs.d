@@ -30,7 +30,7 @@
 (require 'cfg-term) ;; OK
 (require 'cfg-grep) ;; OK
 (require 'cfg-recentf) ;; OK
-(require 'cfg-custom-file) ;; TODO - duzo zmiennych dla wielu mode
+(require 'cfg-custom-file) ;; OK
 (require 'cfg-project) ;; OK
 (require 'cfg-vcs) ;; OK
 (require 'cfg-dired) ;; OK

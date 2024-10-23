@@ -17,7 +17,6 @@
 ;; https://github.com/Somelauw/evil-markdown
 ;; this is local package
 (use-package evil-markdown
-  :ensure t
   :after '(evil markdown-mode))
 
 (provide 'cfg-op-markdown)
