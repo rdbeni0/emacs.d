@@ -27,7 +27,8 @@
 (use-package simpleclip
   :ensure t
   :config
-  (simpleclip-mode 1))
+  ;; (simpleclip-mode 1) ;; do NOT turn it on, autoload is enough
+  )
 
 (provide 'cfg-op-evil)
 ;;; cfg-op-evil.el ends here
