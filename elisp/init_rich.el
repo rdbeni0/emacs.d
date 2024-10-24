@@ -2,6 +2,8 @@
 
 ;; Common packages:
 (require 'cfg-op-completion-systems)
+(require 'cfg-op-corfu)
+(require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
 (require 'cfg-op-doom-mode-line)
 (require 'cfg-op-treemacs-speedbar)
@@ -11,6 +13,7 @@
 (require 'cfg-op-evil)
 (require 'cfg-op-dired)
 (require 'cfg-op-webpaste-htmlize)
+(require 'cfg-op-email)
 
 ;; Langs:
 (require 'cfg-op-magit)

@@ -1,4 +1,4 @@
-;;; cfg-tramp-ssh.el --- configfuration for tramp, sudo and ssh -*- lexical-binding: t -*-
+;;; cfg-op-ssh-tramp.el --- configfuration for ssh via tramp and sudo -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Additional configuration for TRAMP and ssh connections.
@@ -7,6 +7,7 @@
 
 ;;;;;; tramp-term
 ;; Note: a large part of the data is also directly embedded in the "tramp-term.el" file (due to the fact that they are located directly in the package).
+;; https://github.com/cuspymd/tramp-term.el
 (use-package tramp-term
   :ensure t
   :config
@@ -23,17 +24,8 @@ export HISTFILE=~/.bash_history
 clear
 " host)))))
 
-;;;;;; ssh-config-mode
-;; https://github.com/jhgorrell/ssh-config-mode-el
-(use-package ssh-config-mode
-  :ensure t
-  :config
-  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-op-ssh-config-mode))
-
 ;;;;;; ssh.el
-;; https://github.com/ieure/ssh-el
+;; https://codeberg.org/emacs-weirdware-abandoned/ssh
 ;; https://github.com/ieure/ssh-el/pull/3
 
 (defun cfg/-make-comint-file-name-prefix ()
@@ -55,5 +47,5 @@ clear
 	      (setq comint-file-name-prefix (cfg/-make-comint-file-name-prefix)))))
 
 
-(provide 'cfg-tramp-ssh)
-;;; cfg-tramp-ssh.el ends here
+(provide 'cfg-op-ssh-tramp)
+;;; cfg-op-ssh-tramp.el ends here
