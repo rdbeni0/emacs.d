@@ -6,7 +6,6 @@
 (require 'cfg-op-company)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
-;; (require 'cfg-op-dark-theme)
 (require 'cfg-op-doom-mode-line)
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-projectile)
@@ -29,3 +28,8 @@
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
 (require 'cfg-op-web-mode)
+
+(use-package simpleclip
+  :ensure t
+  :config
+  (simpleclip-mode 1))

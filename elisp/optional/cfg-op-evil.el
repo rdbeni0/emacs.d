@@ -23,5 +23,10 @@
   (define-key evil-inner-text-objects-map "J" 'evil-indent-plus-i-indent-up-down)
   (define-key evil-outer-text-objects-map "J" 'evil-indent-plus-a-indent-up-down))
 
+(use-package simpleclip
+  :ensure t
+  :config
+  (simpleclip-mode 1))
+
 (provide 'cfg-op-evil)
 ;;; cfg-op-evil.el ends here
