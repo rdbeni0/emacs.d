@@ -16,5 +16,8 @@
 ;; (load-theme 'wheatgrass t)
 ;; (load-theme 'deeper-blue t)
 
+;; height for default font:
+(set-face-attribute 'default nil :height 130)
+
 (provide 'cfg-op-dark-theme)
 ;;; cfg-op-dark-theme.el ends here
