@@ -5,21 +5,6 @@
 ;;
 ;;; Code:
 
-;;; optional themes:
-;;
-;; (use-package reverse-theme
-;;   :ensure t
-;;   )
-;; (use-package moe-theme
-;;    :ensure t
-;; )
-;; tested:
-;; (load-theme 'reverse t)
-;; (load-theme 'doom-dracula t)
-;; (load-theme 'doom-dark+ t)
-;; (load-theme 'wheatgrass t)
-;; (load-theme 'deeper-blue t)
-
 (use-package doom-themes
   :ensure t
   :init
@@ -32,7 +17,6 @@
 (load-theme 'doom-one t)
 
 ;; FONTS
-
 ;; https://github.com/rainstormstudio/nerd-icons.el
 (use-package nerd-icons
   :ensure t

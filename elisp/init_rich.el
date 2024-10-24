@@ -6,6 +6,7 @@
 (require 'cfg-op-company)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
+;; (require 'cfg-op-dark-theme)
 (require 'cfg-op-doom-mode-line)
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-projectile)
