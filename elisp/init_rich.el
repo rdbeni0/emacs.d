@@ -19,6 +19,7 @@
 (require 'cfg-op-magit)
 (require 'cfg-op-format)
 (require 'cfg-op-python)
+(require 'cfg-op-ssh-config)
 (require 'cfg-op-flycheck)
 (require 'cfg-op-markdown)
 (require 'cfg-op-json)
