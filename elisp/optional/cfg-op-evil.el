@@ -23,6 +23,7 @@
   (define-key evil-inner-text-objects-map "J" 'evil-indent-plus-i-indent-up-down)
   (define-key evil-outer-text-objects-map "J" 'evil-indent-plus-a-indent-up-down))
 
+;; this simple package will allow paste and overwrite during visual mode in evil package
 (use-package simpleclip
   :ensure t
   :config

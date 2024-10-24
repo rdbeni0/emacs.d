@@ -28,8 +28,3 @@
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
 (require 'cfg-op-web-mode)
-
-(use-package simpleclip
-  :ensure t
-  :config
-  (simpleclip-mode 1))
