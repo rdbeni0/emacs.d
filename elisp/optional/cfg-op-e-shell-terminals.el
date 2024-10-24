@@ -1,4 +1,4 @@
-;;; cfg-e-shell-terminals.el --- configfuration for eshell, shell and terminals -*- lexical-binding: t -*-
+;;; cfg-op-e-shell-terminals.el --- configfuration for eshell, shell and terminals -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configuration for: multi-term, ansi-term, shell, terminals, eshell...
@@ -6,28 +6,7 @@
 ;;
 ;;; Code:
 
-;; vterm and multi-vterm:
-(use-package vterm
-  :ensure t
-  :config
-  (setq vterm-clear-scrollback t)
-
-  (add-hook 'vterm-mode-hook
-	    (lambda ()
-	      (setq hl-line-mode -1)
-	      (setq-local global-hl-line-mode nil)
-	      ))
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-op-vterm-mode))
-
-(use-package multi-vterm
-  :ensure t
-  :after vterm
-  :config
-  (setq multi-vterm-buffer-name "vterm"))
-
 ;; ansi-term and multi-term and:
-
 (use-package multi-term
   :ensure t
   :config
@@ -75,5 +54,5 @@
 	      (setq font-lock-function (lambda (_) nil))
 	      (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t))))
 
-(provide 'cfg-e-shell-terminals)
-;;; cfg-e-shell-terminals.el ends here
+(provide 'cfg-op-e-shell-terminals)
+;;; cfg-op-e-shell-terminals.el ends here
