@@ -3,6 +3,7 @@
 ;; Common packages:
 (require 'cfg-op-completion-systems)
 (require 'cfg-op-corfu)
+(require 'cfg-op-company)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
 (require 'cfg-op-doom-mode-line)
