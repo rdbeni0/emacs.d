@@ -1,9 +1,6 @@
 ;;; cfg-op-core-dark-theme.el --- configure ediff, diff and vdiff -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Customization for ediff:
-;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
-;;
 ;;; Code:
 
 ;; (load-theme 'tango-dark t)

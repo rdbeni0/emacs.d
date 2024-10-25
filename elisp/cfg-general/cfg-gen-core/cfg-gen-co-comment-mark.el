@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list-gen-mode-map
- :major-modes list-gen-mode
+ :keymaps list-gen-mode-map-comment
+ :major-modes list-gen-mode-comment
  :prefix ","
  "k"  '(:ignore t :which-key "comments")
  "kl" '(comment-dwim :which-key "comment-dwim")

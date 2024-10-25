@@ -3,15 +3,23 @@
 ;; ffap
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list-gen-mode-map
- :major-modes list-gen-mode
+ :keymaps list-gen-mode-map-ffap
+ :major-modes list-gen-mode-ffap
  :prefix ","
- ","  '(ffap :which-key "act_ffap"))
+ ".."  '(ffap :which-key "act_ffap"))
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list-gen-mode-map
- :major-modes list-gen-mode
+ :keymaps '(perl-mode-map cperl-mode-map)
+ :major-modes '(perl-mode cperl-mode)
+ :prefix ","
+ ".." '(cfg/ffap :which-key "ffap_perl"))
+
+;; xref
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps list-gen-mode-map-xref
+ :major-modes list-gen-mode-xref
  :prefix ","
 
  ;; xref remapping with dumb-jump as a backend:
@@ -26,8 +34,8 @@
 ;; without prefix:
 (general-define-key
  :states '(normal visual emacs)
- :keymaps list-gen-mode-map
- :major-modes list-gen-mode
+ :keymaps list-gen-mode-map-xref
+ :major-modes list-gen-mode-xref
 
  "gr" '(xref-find-references :which-key "xref-ref")
  "gd" '(xref-find-definitions :which-key "xref-def")

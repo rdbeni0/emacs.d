@@ -49,7 +49,6 @@
 
  "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
  "SPC" '(execute-extended-command :which-key "M-x")
- "!" '(shell-command :which-key "shell cmd")
  "<up>" 'tab-rename
  "<down>" 'tab-new
  "<left>" 'tab-previous
@@ -163,6 +162,7 @@
  ;; apps
 
  "a"    '(:ignore t :which-key "apps")
+ "a!"   '(shell-command :which-key "shell cmd")
  "ad"   '(dired :which-key "dired")
  "am"   '(man :which-key "man")
  "an"   '(calendar :which-key "calendar")

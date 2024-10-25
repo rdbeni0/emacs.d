@@ -9,7 +9,7 @@
  "="    '(:ignore t :which-key "format")
  "=-"   '(cfg/built-in-format-via-indent :which-key "built-in-format"))
 
-;; cperl
+;; perl/cperl
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(perl-mode-map cperl-mode-map)

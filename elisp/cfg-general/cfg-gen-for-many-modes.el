@@ -7,9 +7,10 @@
 ;; https://www.emacswiki.org/emacs/ListModification
 ;;
 ;; to add element (major mode) - use "append"
-;; to remove element  (major mode) - "seq-difference"
+;; to remove element  (major mode) - use "seq-difference"
+;; to copy whole list - use "copy-sequence"
 
-;; common:
+;; common
 
 (setq list-gen-mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode nix-mode))
 
@@ -18,18 +19,28 @@
 (delete-dups list-gen-mode) ;; remove duplicates
 (delete-dups list-gen-mode-map)
 
-;; flycheck:
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; flycheck
 (setq list-gen-mode-flycheck (seq-difference list-gen-mode '(ssh-config-mode jenkinsfile-mode fish-mode nix-mode)))
 (setq list-gen-mode-map-flycheck (seq-difference list-gen-mode-map '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map nix-mode-map)))
 
-;; format
-
+;; format optional
 (setq list-gen-mode-format (seq-difference list-gen-mode '(ssh-config-mode)))
 (setq list-gen-mode-map-format (seq-difference list-gen-mode-map '(ssh-config-mode-map)))
-
 (setq list-gen-mode-format (append list-gen-mode '(json-mode markdown-mode)))
 (setq list-gen-mode-map-format (append list-gen-mode-map '(json-mode-map markdown-mode-map)))
+
+;; ffap
+(setq list-gen-mode-ffap (copy-sequence list-gen-mode))
+(setq list-gen-mode-map-ffap (copy-sequence list-gen-mode-map))
+
+;; xref
+(setq list-gen-mode-xref (copy-sequence list-gen-mode))
+(setq list-gen-mode-map-xref (copy-sequence list-gen-mode-map))
+
+;; comment (dwim)
+(setq list-gen-mode-comment (copy-sequence list-gen-mode))
+(setq list-gen-mode-map-comment (copy-sequence list-gen-mode-map))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
