@@ -11,6 +11,7 @@
 (require 'cfg-general)
 (require 'cfg-format)
 (require 'cfg-comment)
+(require 'cfg-xref)
 (require 'cfg-hideshow)
 (require 'cfg-which-key)
 (require 'cfg-tab-bar)

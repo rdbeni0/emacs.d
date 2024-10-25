@@ -5,7 +5,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; configure lists - if you want to add any mode, do it here:
 ;; https://www.emacswiki.org/emacs/ListModification
-;; to add - use "append", to remove: "seq-difference":
+;;
+;; to add element (major mode) - use "append"
+;; to remove element  (major mode) - "seq-difference"
 
 ;; common:
 
