@@ -30,10 +30,10 @@
 (setq list-gen-mode-map-format-core (seq-difference list-gen-mode-map '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map)))
 
 ;; format optional
-(setq list-gen-mode-format (seq-difference list-gen-mode '(ssh-config-mode)))
-(setq list-gen-mode-map-format (seq-difference list-gen-mode-map '(ssh-config-mode-map)))
-(setq list-gen-mode-format (append list-gen-mode '(json-mode markdown-mode)))
-(setq list-gen-mode-map-format (append list-gen-mode-map '(json-mode-map markdown-mode-map)))
+(setq list-gen-mode-format-optional (seq-difference list-gen-mode '(ssh-config-mode)))
+(setq list-gen-mode-map-format-optional (seq-difference list-gen-mode-map '(ssh-config-mode-map)))
+(setq list-gen-mode-format-optional (append list-gen-mode '(json-mode markdown-mode)))
+(setq list-gen-mode-map-format-optional (append list-gen-mode-map '(json-mode-map markdown-mode-map)))
 
 ;; ffap
 (setq list-gen-mode-ffap (copy-sequence list-gen-mode))

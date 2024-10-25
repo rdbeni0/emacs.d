@@ -219,7 +219,7 @@
  "hm"  '(cfg/show-major-mode :which-key "show-major-mode")
  "ht"  '(load-theme :which-key "load-theme")
  "hw"  '(where-is :which-key "where-is-key")
- "hdM" '(describe-mode :which-key "describe-mode")
+ "hdm" '(describe-mode :which-key "describe-mode")
  "hdc" '(describe-char :which-key "describe-char")
  "hde" '(what-cursor-position :which-key "show-face-font-under-point")
  "hdf" '(describe-function :which-key "describe-function")
