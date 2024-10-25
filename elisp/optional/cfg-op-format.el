@@ -74,7 +74,7 @@
        ("Zig" zig)
        ("_Angular" (prettier "--print-width" "185")))))
   ;; load general.el and keybindings:
-  (require 'cfg-gen-co-format))
+  (require 'cfg-gen-op-format))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; PYTHON - OPTIONAL SETTINGS:
