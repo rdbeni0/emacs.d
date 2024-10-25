@@ -1,4 +1,12 @@
-;;; cfg-gen-co-xref.el --- general.el for xref -*- lexical-binding: t -*-
+;;; cfg-gen-co-xref-ffap.el --- general.el for xref -*- lexical-binding: t -*-
+
+;; ffap
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps list-gen-mode-map
+ :major-modes list-gen-mode
+ :prefix ","
+ ","  '(ffap :which-key "act_ffap"))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -36,5 +44,5 @@
  "g.B" '(xref-go-forward :which-key "xref-go-forward")
  "g.s" '(xref-find-apropos :which-key "xref-apropos"))
 
-(provide 'cfg-gen-co-xref)
-;;; cfg-gen-co-xref.el ends here
+(provide 'cfg-gen-co-xref-ffap)
+;;; cfg-gen-co-xref-ffap.el ends here

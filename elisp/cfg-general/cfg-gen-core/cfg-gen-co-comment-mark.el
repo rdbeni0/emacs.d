@@ -5,7 +5,6 @@
  :keymaps list-gen-mode-map
  :major-modes list-gen-mode
  :prefix ","
- ","  '(ffap :which-key "act_ffap")
  "k"  '(:ignore t :which-key "comments")
  "kl" '(comment-dwim :which-key "comment-dwim")
  "kk" '(mark-defun :which-key "mark-fun")
