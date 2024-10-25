@@ -6,6 +6,7 @@
  :keymaps list-gen-mode-map-ffap
  :major-modes list-gen-mode-ffap
  :prefix ","
+ "."  '(:ignore t :which-key "ffap")
  ".."  '(ffap :which-key "act_ffap"))
 
 (general-define-key
