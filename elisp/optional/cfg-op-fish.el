@@ -1,4 +1,4 @@
-;;; cfg-op-fish-mode.el --- configfuration for fish-mode -*- lexical-binding: t -*-
+;;; cfg-op-fish.el --- configfuration for fish-mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;;; Code:
@@ -12,5 +12,5 @@
 
 (add-hook 'fish-mode-hook (lambda () (add-hook 'before-save-hook 'fish_indent-before-save)))
 
-(provide 'cfg-op-fish-mode)
-;;; cfg-op-fish-mode.el ends here
+(provide 'cfg-op-fish)
+;;; cfg-op-fish.el ends here
