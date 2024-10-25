@@ -1,12 +1,12 @@
-;;; cfg-op-e-shell-terminals.el --- configfuration for eshell, shell and terminals -*- lexical-binding: t -*-
+;;; cfg-op-e-shell-terminals.el --- configfuration for eshell and terminals -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configuration for: multi-term, ansi-term, shell, terminals, eshell...
+;; Configuration for: multi-term, ansi-term, eshell...
 ;; ... but NOT for shell script editing.
 ;;
 ;;; Code:
 
-;; ansi-term and multi-term and:
+;; ansi-term and multi-term:
 (use-package multi-term
   :ensure t
   :config
@@ -27,16 +27,6 @@
   (setq term-number (+ 1 term-number)))
 
 (setq term-suppress-hard-newline t)
-
-;; fish-mode: Emacs major mode for fish shell scripts.
-
-(use-package fish-mode
-  :ensure t
-  :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-op-fish-mode))
-
-(add-hook 'fish-mode-hook (lambda () (add-hook 'before-save-hook 'fish_indent-before-save)))
 
 ;; colors:
 (use-package xterm-color
