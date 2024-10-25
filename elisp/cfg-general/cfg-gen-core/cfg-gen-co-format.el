@@ -21,7 +21,7 @@
  "=o" '(cfg/perltidy-format :which-key "perltidy-format")
  "=f" '(cfg/perltidy-format-function :which-key "perltidy-format-function"))
 
-;; js-json-mode:
+;; js-json-mode
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'js-json-mode-map
@@ -33,7 +33,7 @@
  "=o" '(json-pretty-print-ordered :which-key "pretty-p-ordered")
  "=r" '(json-pretty-print-buffer-ordered :which-key "pretty-p-buffer-ordered"))
 
-;; nxml-mode:
+;; nxml-mode
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'nxml-mode-map
