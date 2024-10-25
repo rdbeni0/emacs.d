@@ -16,6 +16,8 @@
 	 ("\\.muttrc\\'" . conf-mode)
 	 ("fish_variables\\'" . conf-mode)
 	 ("\\pkgs_arch.txt\\'" . conf-mode)
+	 ("\\.tmux.conf_x11\\'" . conf-mode)
+	 ("\\.Xresources\\'" . conf-xdefaults-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.zsh\\'" . sh-mode)
 	 ("\\.bashrc\\'" . sh-mode)

@@ -36,16 +36,16 @@
 (setq list-gen-mode-map-format-optional (append list-gen-mode-map '(json-mode-map markdown-mode-map)))
 
 ;; ffap
-(setq list-gen-mode-ffap (copy-sequence list-gen-mode))
-(setq list-gen-mode-map-ffap (copy-sequence list-gen-mode-map))
+(setq list-gen-mode-ffap (append list-gen-mode '(conf-mode)))
+(setq list-gen-mode-map-ffap (append list-gen-mode-map '(conf-mode-map)))
 
 ;; xref
 (setq list-gen-mode-xref (copy-sequence list-gen-mode))
 (setq list-gen-mode-map-xref (copy-sequence list-gen-mode-map))
 
 ;; comment (dwim)
-(setq list-gen-mode-comment (copy-sequence list-gen-mode))
-(setq list-gen-mode-map-comment (copy-sequence list-gen-mode-map))
+(setq list-gen-mode-comment (append list-gen-mode '(conf-mode)))
+(setq list-gen-mode-map-comment (append list-gen-mode-map '(conf-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'cfg-gen-for-many-modes)

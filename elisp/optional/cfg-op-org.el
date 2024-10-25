@@ -23,7 +23,6 @@
 ;; https://github.com/org-roam
 ;; https://www.reddit.com/r/OrgRoam/comments/lxl353/what_keybinding_remaps_have_you_done_for_org_roam/
 ;; https://systemcrafters.cc/build-a-second-brain-in-emacs/getting-started-with-org-roam/
-
 (use-package org-roam
   :ensure t
   :init
@@ -40,7 +39,7 @@
 ;; Please create correct "op-org.el" file inside ~/.emacs.d/data/local/op-org.el (or other emacs dir)
 ;; Please add additional configuration for org-static-blog or/and org-roam inside this file.
 (if (file-readable-p (expand-file-name "data/local/op-org.el" user-emacs-directory))
-    (load (expand-file-name "data/local/op-org.el" user-emacs-directory)) ; if true, load additional variables for op-org
+    (load (expand-file-name "data/local/op-org.el" user-emacs-directory)) ; if true, load additional content for op-org
 					; if false, then message with "WARNING" will appear during initialization of op-org:
   (message "WARNING! File data/local/op-org.el inside your emacs.d is not readable (or not exist)! Please create it and add correct op-org options!"))
 
