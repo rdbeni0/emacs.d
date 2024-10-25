@@ -206,7 +206,6 @@
  "sqp" '(project-query-replace-regexp :which-key "project-query-replace-regexp")
  "sqr" '(map-query-replace-regexp :which-key "map-query-replace-regexp")
  "sqf" '(dired-do-find-regexp-and-replace :which-key "dired-do-find-regexp-and-replace")
- "sg'" '(vc-git-grep :which-key "git-grep")
 
  ;; help
 
