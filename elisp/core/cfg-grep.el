@@ -1,7 +1,7 @@
 ;;; cfg-grep.el --- configfuration for grep and recentf filtering -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with "recentf", "grep" and similar filtering.
+;; Everything what is connected with grep.
 ;; https://www.emacswiki.org/emacs/RecentFiles
 ;;
 ;;; Code:
@@ -43,11 +43,6 @@
 ;; change find command to check also for symlinks - it will be used via 'M-x rgrep':
 (setq grep-find-template
       "find <D> <X> \\( -type f -o -type l \\) <F> -exec grep <C> -r -nH -e <R> \\{\\} +")
-
-(defun cfg/ffap ()
-  "Standard verion of `ffatp` command (without embark)."
-  (interactive)
-  (ffap))
 
 (provide 'cfg-grep)
 ;;; cfg-grep.el ends here

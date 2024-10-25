@@ -10,6 +10,7 @@
 ;; to remove element  (major mode) - use "seq-difference"
 ;; to copy whole list - use "copy-sequence"
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; common
 
 (setq list-gen-mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode nix-mode))
@@ -23,6 +24,10 @@
 ;; flycheck
 (setq list-gen-mode-flycheck (seq-difference list-gen-mode '(ssh-config-mode jenkinsfile-mode fish-mode nix-mode)))
 (setq list-gen-mode-map-flycheck (seq-difference list-gen-mode-map '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map nix-mode-map)))
+
+;; format core
+(setq list-gen-mode-format-core (seq-difference list-gen-mode '(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode)))
+(setq list-gen-mode-map-format-core (seq-difference list-gen-mode-map '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map)))
 
 ;; format optional
 (setq list-gen-mode-format (seq-difference list-gen-mode '(ssh-config-mode)))
@@ -43,6 +48,5 @@
 (setq list-gen-mode-map-comment (copy-sequence list-gen-mode-map))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (provide 'cfg-gen-for-many-modes)
 ;;; cfg-gen-for-many-modes.el ends here

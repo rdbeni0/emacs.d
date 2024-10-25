@@ -8,5 +8,10 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-co-xref-ffap))
 
+(defun cfg/ffap ()
+  "Standard verion of `ffatp` command (without embark)."
+  (interactive)
+  (ffap))
+
 (provide 'cfg-xref-ffap)
 ;;; cfg-xref-ffap.el ends here

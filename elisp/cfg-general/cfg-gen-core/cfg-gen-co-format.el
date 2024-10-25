@@ -3,8 +3,8 @@
 ;; "shell-script-mode is an alias for ‘sh-mode’ in ‘sh-script.el’."
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(emacs-lisp-mode-map sh-mode-map python-mode-map cc-mode-map c-mode-map c++-mode-map html-mode-map awk-mode-map js-mode-map)
- :major-modes '(emacs-lisp-mode sh-mode python-mode cc-mode c-mode c++-mode html-mode awk-mode js-mode)
+ :keymaps list-gen-mode-map-format-core
+ :major-modes list-gen-mode-format-core
  :prefix ","
  "="    '(:ignore t :which-key "format")
  "=-"   '(cfg/built-in-format-via-indent :which-key "built-in-format"))
