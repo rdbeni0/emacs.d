@@ -236,8 +236,8 @@
 ;; (company-quickhelp-mode 1)
 ;; (setq company-quickhelp-delay 0.2)
 (custom-set-variables
- '(company-quickhelp-color-background "grey12") ;; "white"
- '(company-quickhelp-color-foreground "dim gray") ;; "black"
+ '(company-quickhelp-color-background "yellow") ;; "blue"
+ '(company-quickhelp-color-foreground "black")  ;; "white"
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
 
