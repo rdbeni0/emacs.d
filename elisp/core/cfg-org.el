@@ -18,14 +18,14 @@
   :ensure t
   :config
 
-  ;; please create correct "org.el" file inside ~/.emacs.d/data/local/org.el (or other emacs dir)
+  ;; please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
   ;; Please add below variables inside this file:
   ;; (setq org-agenda-files ...
 
-  (if (file-readable-p (expand-file-name "data/local/org.el" user-emacs-directory))
-      (load (expand-file-name "data/local/org.el" user-emacs-directory)) ; if true, load additional variables for org-mode
+  (if (file-readable-p (expand-file-name "data/local/lo-org.el" user-emacs-directory))
+      (require 'lo-org) ; if true, load additional variables for org-mode
 					; if false, then message with "WARNING" will appear during initialization of org-mode:
-    (message "WARNING! File data/local/org.el inside your emacs.d is not readable (or not exist)! Please create it and add correct org-mode options!"))
+    (message "WARNING! File data/local/lo-org.el inside your emacs.d is not readable (or not exist)! Please create it and add correct org-mode options!"))
 
   (require 'org-compat)
   ;; load general.el and keybindings:

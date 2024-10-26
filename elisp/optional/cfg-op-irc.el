@@ -218,7 +218,7 @@
 							 (inhibit-same-window . t)
 							 (inhibit-switch-frame . t)
 							 (mode . erc-mode))))
-  ;; please create correct "erc.el" file inside ~/.emacs.d/data/local/erc.el (or other emacs dir)
+  ;; please create correct "lo-erc.el" file inside ~/.emacs.d/data/local/lo-erc.el (or other emacs dir)
   ;; Please add below variables and data inside this file:
   ;; (setq erc-server-list ...
   ;; (setq erc-autojoin-channels-alist ...
@@ -227,10 +227,10 @@
   ;; (setq erc-track-exclude ...
   ;; (setq-default erc-ignore-list ...
 
-  (if (file-readable-p (expand-file-name "data/local/erc.el" user-emacs-directory))
-      (load (expand-file-name "data/local/erc.el" user-emacs-directory)) ; if true, load additional variables for erc
+  (if (file-readable-p (expand-file-name "data/local/lo-erc.el" user-emacs-directory))
+      (require 'lo-erc) ; if true, load additional variables for erc
 					; if false, then message with "WARNING" will appear during initialization of erc:
-    (message "WARNING! File data/local/erc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct erc options!"))
+    (message "WARNING! File data/local/lo-erc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct erc options!"))
 
   ;; load keybindings from general.el framework:
   (require 'cfg-gen-op-irc)
