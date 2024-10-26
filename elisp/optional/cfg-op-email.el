@@ -154,7 +154,6 @@
     (interactive)
     (notmuch-search (completing-read "Notmuch search: " (mapcar (lambda (x) (plist-get x :query)) notmuch-saved-searches))))
 
-  ;; https://github.com/vifon/emacs-config/blob/master/emacs.d/lisp/40-email.el#L106=
   (defun cfg/notmuch-fcc-replace ()
     (interactive)
     (message-remove-header "Fcc")
@@ -195,7 +194,7 @@
   ;; (setq message-signature ...
 
   (if (file-readable-p (expand-file-name "data/local/lo-email.el" user-emacs-directory))
-      (require 'lo-email) ; if true, load additional variables for email
+      (require 'lo-email) ; if true, load additional elisp for email
 					; if false, then message with "WARNING" will appear during initialization of email:
     (message "WARNING! File data/local/lo-email.el inside your emacs.d is not readable (or not exist)! Please create it and add correct email options!"))
 
