@@ -218,7 +218,7 @@
 							 (inhibit-same-window . t)
 							 (inhibit-switch-frame . t)
 							 (mode . erc-mode))))
-  ;; please create correct "lo-erc.el" file inside ~/.emacs.d/data/local/lo-erc.el (or other emacs dir)
+  ;; Please create correct "lo-erc.el" file inside ~/.emacs.d/data/local/lo-erc.el (or other emacs dir)
   ;; Please add below variables and data inside this file:
   ;; (setq erc-server-list ...
   ;; (setq erc-autojoin-channels-alist ...

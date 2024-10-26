@@ -1,7 +1,7 @@
 ;;; cfg-org.el --- configfuration for org mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with famous "org-mode".
+;; Everything what is connected with `org-mode'.
 ;;
 ;;; Code:
 
@@ -18,7 +18,7 @@
   :ensure t
   :config
 
-  ;; please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
+  ;; Please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
   ;; Please add below variables inside this file:
   ;; (setq org-agenda-files ...
 
