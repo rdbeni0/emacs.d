@@ -25,9 +25,8 @@
 
  ;; xref remapping with dumb-jump as a backend:
  "."  '(:ignore t :which-key "xref")
- ".r" '(xref-find-references :which-key "xref-ref")
  ".d" '(xref-find-definitions :which-key "xref-def")
- ".h" '(xref-find-definitions :which-key "xref-def")
+ ".h" '(xref-find-references :which-key "xref-ref")
  ".b" '(xref-go-back :which-key "xref-go-back")
  ".B" '(xref-go-forward :which-key "xref-go-forward")
  ".s" '(xref-find-apropos :which-key "xref-apropos"))
@@ -38,17 +37,15 @@
  :keymaps list-gen-mode-map-xref
  :major-modes list-gen-mode-xref
 
- "gr" '(xref-find-references :which-key "xref-ref")
  "gd" '(xref-find-definitions :which-key "xref-def")
- "gh" '(xref-find-definitions :which-key "xref-def")
+ "gh" '(xref-find-references :which-key "xref-ref")
  "gb" '(xref-go-back :which-key "xref-go-back")
  "gB" '(xref-go-forward :which-key "xref-go-forward")
  "gs" '(xref-find-apropos :which-key "xref-apropos")
 
  "g."  '(:ignore t :which-key "xref")
- "g.r" '(xref-find-references :which-key "xref-ref")
  "g.d" '(xref-find-definitions :which-key "xref-def")
- "g.h" '(xref-find-definitions :which-key "xref-def")
+ "g.h" '(xref-find-references :which-key "xref-ref")
  "g.b" '(xref-go-back :which-key "xref-go-back")
  "g.B" '(xref-go-forward :which-key "xref-go-forward")
  "g.s" '(xref-find-apropos :which-key "xref-apropos"))

@@ -33,6 +33,7 @@
  :states '(normal visual emacs)
  :keymaps 'global
  "gl" '(goto-line :which-key "goto-line")
+ "gr" '(revert-buffer :which-key "revert-buffer")
  "g'" '(vc-git-grep :which-key "git-grep")
  "q"  'kill-this-buffer
  "zq" '(evil-quit :which-key "evil-quit")
