@@ -31,7 +31,9 @@
     ("qssql" "#+BEGIN_SRC sql\n\n#+END_SRC\n" nil 0)
     ("qslua" "#+BEGIN_SRC lua\n\n#+END_SRC\n" nil 0)
     ("qqex" "#+BEGIN_EXAMPLE\n\n\#+END_EXAMPLE\n" nil 0)
-    ("qqs" "#+BEGIN_SRC\n\n#+END_SRC\n" nil 0)
+    ("qqsr" "#+BEGIN_SRC\n\n#+END_SRC\n" nil 0)
+    ("qqprop" ":PROPERTIES:\n:CUSTOM_ID: XXX\n:END:\n" nil 0)
+    ("qqqu" "#+BEGIN_QUOTE\n\n#+END_QUOTE\n" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -64,6 +66,11 @@
 (define-abbrev-table 'python-mode-abbrev-table
   '(
     ("qqs" "#!/usr/bin/env python\n# -*- coding: utf-8 -*-" nil 0)
+    ("qqdefh" "def help():\n    print('X')\n    exit()\n" nil 0)
+    ("qqif" "#OPerators: == != > >= <= and or not\nif (OP):\n    X" nil 0)
+    ("qqife" "#OPerators: == != > >= <= and or not\nif (OP):\n    X\nelse:\n    X" nil 0)
+    ("qqife1" "#OPerators: == != > >= <= and or not\nif (OP):\n    X\nelif (OP):\n    X\nelse:\n    X" nil 0)
+    ("qqife2" "#OPerators: == != > >= <= and or not\nif (OP):\n    X\nelif (OP):\n    X\nelif (OP):\n    X\nelse:\n    X" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
