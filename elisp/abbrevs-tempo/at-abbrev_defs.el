@@ -55,7 +55,12 @@
 ;; (setq cperl-mode-abbrev-table nil)
 (define-abbrev-table 'cperl-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env perl\n# -*- coding: utf-8 -*-" nil 0)
+    ("qqs" "#!/usr/bin/env bash\n# -*- coding: utf-8 -*-\n\nuse strict;\nuse warnings;\n" nil 0)
+    ("qqsubh" "sub help {\n    print \"Usage: ...\\n\";\n    exit;\n}" nil 0)
+    ("qqif" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n}" nil 0)
+    ("qqife" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n} else {\n    # code here\n}" nil 0)
+    ("qqife1" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n} elsif (CO) {\n    # code here\n} else {\n    # code here\n}" nil 0)
+    ("qqife2" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n} elsif (CO) {\n    # code here\n} elsif (CO) {\n    # code here\n} else {\n    # code here\n}" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -67,10 +72,11 @@
   '(
     ("qqs" "#!/usr/bin/env python\n# -*- coding: utf-8 -*-" nil 0)
     ("qqdefh" "def help():\n    print('X')\n    exit()\n" nil 0)
-    ("qqif" "#OPerators: == != > >= <= and or not\nif (OP):\n    X" nil 0)
-    ("qqife" "#OPerators: == != > >= <= and or not\nif (OP):\n    X\nelse:\n    X" nil 0)
-    ("qqife1" "#OPerators: == != > >= <= and or not\nif (OP):\n    X\nelif (OP):\n    X\nelse:\n    X" nil 0)
-    ("qqife2" "#OPerators: == != > >= <= and or not\nif (OP):\n    X\nelif (OP):\n    X\nelif (OP):\n    X\nelse:\n    X" nil 0)
+    ("qqif" "#COnditions: == != > >= <= and or not\nif (CO):\n    X" nil 0)
+    ("qqife" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelse:\n    X" nil 0)
+    ("qqife1" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelif (CO):\n    X\nelse:\n    X" nil 0)
+    ("qqife2" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelif (CO):\n    X\nelif (CO):\n    X\nelse:\n    X" nil 0)
+    ("qqimp" "import re, os, sys\n" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -119,6 +119,7 @@
  "ba"  '(auto-revert-mode :which-key "auto-revert")
  "bm"  '(:ignore t :which-key "core modes")
  "bmp" '(python-mode :which-key "python-mode")
+ "bml" '(cperl-mode :which-key "cperl-mode")
  "bmt" '(text-mode :which-key "text-mode")
  "bmo" '(org-mode :which-key "org-mode")
  "bmc" '(conf-mode :which-key "conf-mode")
