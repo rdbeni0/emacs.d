@@ -1,4 +1,4 @@
-;;; cfg-abbrevs.el --- configfuration for abbrevs -*- lexical-binding: t -*-
+;;; cfg-abbrevs-tempo.el --- configfuration for abbrevs and tempo -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html
@@ -17,5 +17,5 @@
 	   (file-readable-p abbrev-file-name))
   (require 'cfg-abbrevs-defs))
 
-(provide 'cfg-abbrevs)
-;;; cfg-abbrevs.el ends here
+(provide 'cfg-abbrevs-tempo)
+;;; cfg-abbrevs-tempo.el ends here
