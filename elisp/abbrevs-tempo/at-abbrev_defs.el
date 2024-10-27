@@ -1,13 +1,12 @@
-;;; cfg-abbrevs-defs.el --- abbrevs definitions -*- lexical-binding: t -*-
+;;; at-abbrev_defs.el --- Abbrev defs (public) -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Abbrevs definitions (public).
+;; Abbrev definitions (public).
 ;;
 ;;; Code:
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; START -> TABLE OF CONTENT
+;;;; TOC - TABLE OF CONTENT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode
 ;; emacs-lisp-mode
@@ -43,8 +42,8 @@
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table
   '(
     ("qqatt" "(define-abbrev-table \'XXX-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0)\n    ))" nil 0) ;; define new at
-    ("qqata" "    (\"qq\" \"#n\" nil 0)" nil 0) ;; add element to the at
-    ("qqatd" "(define-abbrev XXX-mode-abbrev-table \"qq\" \"\n\")" nil 0)
+    ("qqata" "    (\"qq\" \"#\\n\" nil 0)" nil 0) ;; add element to the at
+    ("qqatd" "(define-abbrev XXX-mode-abbrev-table \"qq\" \"\\n\")" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -77,19 +76,5 @@
     ("qqs" "#!/usr/bin/env bash" nil 0)
     ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; END -> quietly-read-abbrev-file
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; This file should be used for private abbrevs.
-;; If the user has a file of abbrevs, read it (unless -batch):
-
-(when (and (not noninteractive)
-	   (file-exists-p abbrev-file-name)
-	   (file-readable-p abbrev-file-name))
-  (progn
-    (quietly-read-abbrev-file abbrev-file-name)
-    (require 'at-long-lines)
-    ))
-
-(provide 'cfg-abbrevs-defs)
-;;; cfg-abbrevs-defs.el ends here
+(provide 'at-abbrev_defs)
+;;; at-abbrev_defs.el ends here

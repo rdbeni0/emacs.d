@@ -12,10 +12,16 @@
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silently)
 
+;; If the user has a file of abbrevs, read it (unless -batch):
 (when (and (not noninteractive)
 	   (file-exists-p abbrev-file-name)
 	   (file-readable-p abbrev-file-name))
-  (require 'cfg-abbrevs-defs))
+  (progn
+    (require 'at-abbrev_defs) ;; main file with abbrev defs
+    (require 'at-long-lines) ;; defs with long lines
+    ;; This file should be used for private abbrevs:
+    (quietly-read-abbrev-file abbrev-file-name)
+    ))
 
 (provide 'cfg-abbrevs-tempo)
 ;;; cfg-abbrevs-tempo.el ends here
