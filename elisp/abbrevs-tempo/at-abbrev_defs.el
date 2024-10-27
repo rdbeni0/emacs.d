@@ -41,7 +41,7 @@
 ;; (setq emacs-lisp-mode-abbrev-table nil)
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table
   '(
-    ("qqatt" "(define-abbrev-table \'XXX-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0)\n    ))" nil 0) ;; define new at
+    ("qqatt" "(define-abbrev-table 'XXX-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0)\n    ))" nil 0) ;; define new at
     ("qqata" "    (\"qq\" \"#\\n\" nil 0)" nil 0) ;; add element to the at
     ("qqatd" "(define-abbrev XXX-mode-abbrev-table \"qq\" \"\\n\")" nil 0)
     ))
