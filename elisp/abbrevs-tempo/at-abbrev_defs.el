@@ -68,7 +68,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; (setq python-mode-abbrev-table nil)
-
 (define-abbrev-table 'python-mode-abbrev-table
   '(
     ("qqs" "#!/usr/bin/env python\n# -*- coding: utf-8 -*-" nil 0 :system t)
