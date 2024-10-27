@@ -8,6 +8,7 @@
 
 ;; files/packages from "optional" namespace should be loaded manually, via (require '):
 (add-to-list 'load-path (expand-file-name "elisp/optional" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "elisp/abbrevs-tempo" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "elisp/site-elisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "data/local" user-emacs-directory))
 

@@ -42,10 +42,9 @@
 ;; (setq emacs-lisp-mode-abbrev-table nil)
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table
   '(
-    ("qqatt" "(define-abbrev-table \'XXX-YYY-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0)\n    ))" nil 0) ;; define new at
+    ("qqatt" "(define-abbrev-table \'XXX-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0)\n    ))" nil 0) ;; define new at
     ("qqata" "    (\"qq\" \"#n\" nil 0)" nil 0) ;; add element to the at
-    ("qqll" ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n" nil 0)
-    ("qqlh" ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n;;;; HEADER1\n;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n" nil 0)
+    ("qqatd" "(define-abbrev XXX-mode-abbrev-table \"qq\" \"\n\")" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -56,8 +55,6 @@
 (define-abbrev-table 'cperl-mode-abbrev-table
   '(
     ("qqs" "#!/usr/bin/env perl" nil 0)
-    ("qqll" "###############################################################################\n" nil 0)
-    ("qqlh" "###############################################################################\n#### HEADER1\n###############################################################################\n" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -68,8 +65,6 @@
 (define-abbrev-table 'python-mode-abbrev-table
   '(
     ("qqs" "#!/usr/bin/env python" nil 0)
-    ("qqll" "###############################################################################\n" nil 0)
-    ("qqlh" "###############################################################################\n#### HEADER1\n###############################################################################\n" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -80,8 +75,6 @@
 (define-abbrev-table 'sh-mode-abbrev-table
   '(
     ("qqs" "#!/usr/bin/env bash" nil 0)
-    ("qqll" "###############################################################################\n" nil 0)
-    ("qqlh" "###############################################################################\n#### HEADER1\n###############################################################################\n" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -93,7 +86,10 @@
 (when (and (not noninteractive)
 	   (file-exists-p abbrev-file-name)
 	   (file-readable-p abbrev-file-name))
-  (quietly-read-abbrev-file abbrev-file-name))
+  (progn
+    (quietly-read-abbrev-file abbrev-file-name)
+    (require 'at-long-lines)
+    ))
 
 (provide 'cfg-abbrevs-defs)
 ;;; cfg-abbrevs-defs.el ends here
