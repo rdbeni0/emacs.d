@@ -51,25 +51,25 @@
 
   (when (require 'yasnippet nil 'noerror)
     (progn
-     (defun cfg/company-backend-with-yas (backends)
-       "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
+      (defun cfg/company-backend-with-yas (backends)
+	"Add :with company-yasnippet to ALL company BACKENDS - not only to one.
   Taken from https://github.com/syl20bnr/spacemacs/pull/179."
-       (if (and (listp backends) (memq 'company-yasnippet backends))
-	   backends
-	 (append (if (consp backends)
-		     backends
-		   (list backends))
-		 '(:with company-yasnippet))))
-     ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
-     (defun cfg/yas-expand-or-company-complete (&optional arg)
-       (interactive)
-       (or
-	(yas-expand)
-	(company-indent-or-complete-common arg)))
+	(if (and (listp backends) (memq 'company-yasnippet backends))
+	    backends
+	  (append (if (consp backends)
+		      backends
+		    (list backends))
+		  '(:with company-yasnippet))))
+      ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
+      (defun cfg/yas-expand-or-company-complete (&optional arg)
+	(interactive)
+	(or
+	 (yas-expand)
+	 (company-indent-or-complete-common arg)))
 
-     (with-eval-after-load 'company
-       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-       (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))))
+      (with-eval-after-load 'company
+	(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+	(setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
@@ -105,8 +105,8 @@
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
-				    (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
-				    (add-to-list 'company-backends '(company-elisp company-capf company-files)) ;; capf is working great with elisp code
+				    ;; capf is working great with elisp code, and company-elisp is obsolete
+				    (add-to-list 'company-backends '(company-abbrev :separate  company-keywords company-capf company-files company-dabbrev-code))
 				    (when (require 'yasnippet nil 'noerror)
 				      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
