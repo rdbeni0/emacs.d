@@ -21,6 +21,8 @@
   (add-hook 'c-mode-hook #'yas-minor-mode) ;; c files only
   (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
   (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
+  (add-hook 'nix-mode-hook #'yas-minor-mode) ;; Nix
+  (add-hook 'json-mode-hook #'yas-minor-mode) ;; json
   (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
   (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
   (add-hook 'notmuch-message-mode-hook #'yas-minor-mode) ;; notmuch-message-mode
