@@ -5,6 +5,7 @@
 (require 'cfg-performance-native-comp)
 (require 'cfg-use-package)
 (require 'cfg-abbrevs)
+(require 'cfg-abbrevs-defs)
 (require 'cfg-list-core-packages)
 (require 'cfg-list-auto-mode-alist)
 (require 'cfg-evil)

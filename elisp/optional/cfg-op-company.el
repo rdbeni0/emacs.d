@@ -6,6 +6,10 @@
 ;; https://company-mode.github.io/
 (use-package company
   :ensure t
+  :bind (;; Remaps - emacs native:
+         ([remap expand-abbrev]                     . company-abbrev)
+         ([remap dabbrev-expand]                    . company-dabbrev)
+	 )
   :config
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; common options:
