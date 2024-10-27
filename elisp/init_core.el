@@ -1,10 +1,8 @@
 (add-to-list 'load-path (expand-file-name "elisp/core" user-emacs-directory)) ; additional/optional load-path will be configured in cfg-use-package
 
 ;; order is important:
-
 (require 'cfg-performance-native-comp)
 (require 'cfg-use-package)
-(require 'cfg-abbrevs-tempo)
 (require 'cfg-list-core-packages)
 (require 'cfg-list-auto-mode-alist)
 (require 'cfg-evil)
@@ -44,3 +42,4 @@
 (require 'cfg-flyspell)
 (require 'cfg-doc-view-image)
 (require 'cfg-links-web-browsers)
+(require 'cfg-abbrevs-tempo) ;; should be loaded after any prog- mode (bcz will overwrite existing abbrev table)

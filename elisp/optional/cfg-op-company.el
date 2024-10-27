@@ -106,7 +106,7 @@
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
 				    ;; capf is working great with elisp code, and company-elisp is obsolete
-				    (add-to-list 'company-backends '(company-abbrev :separate  company-keywords company-capf company-files company-dabbrev-code))
+				    (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-capf company-files company-dabbrev-code))
 				    (when (require 'yasnippet nil 'noerror)
 				      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
@@ -119,8 +119,8 @@
 
   (add-hook 'cperl-mode-hook (lambda ()
 			       (set (make-local-variable 'company-backends) '())
-			       (add-to-list 'company-backends 'company-capf)
-			       (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			       ;; company-capf, company-gtags
+			       (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
 			       (when (require 'yasnippet nil 'noerror)
 				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
