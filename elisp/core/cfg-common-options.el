@@ -15,6 +15,9 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/10347
 ;; So probably it's better to turn it off:
 
+;; don't ask about .dir-locals.el variables:
+(setq-default enable-local-variables :all)
+
 (setq create-lockfiles nil)
 
 ;; https://stackoverflow.com/questions/25245134/stop-emacs-creating-autosave-files-in-the-same-directory
