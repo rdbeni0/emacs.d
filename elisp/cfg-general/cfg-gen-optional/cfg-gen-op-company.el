@@ -1,7 +1,6 @@
 ;;; cfg-gen-op-company.el --- general.el - configuration for company-mode -*- lexical-binding: t -*-
 
 ;; global - no space + no which-key
-
 (general-define-key
  :states '(normal visual emacs insert)
  :keymaps 'global
@@ -19,14 +18,10 @@
  "<f5>o" '(company-diag :which-key "company-diagnose"))
 
 ;; global - space as leader-key + which-key
-
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'override
  :prefix "SPC"
-
- ;; completions
-
  ;; "<f5><f5>"  '(company-complete-common :which-key "company-abbrev")
  "<f5><iso-lefttab>"  '(cfg/yas-expand-or-company-complete :which-key "yas-expand-or-company-complet") ;; or company-indent-or-complete-common
  "<f5><f7>"  '(company-yasnippet :which-key "company-yasnippet")
