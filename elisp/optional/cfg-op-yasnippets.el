@@ -11,6 +11,7 @@
 (use-package yasnippet
   :ensure t
   :config
+  (setq yas-snippet-dirs (append yas-snippet-dirs (expand-file-name "data/yasnippets" user-emacs-directory)))
   ;; add yas-minor-mode per MAJOR mode - not global:
   (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
   (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
@@ -32,18 +33,16 @@
 (use-package yasnippet-snippets
   :ensure t
   :config
-  ;; Adding a custom/dynamic yasnippet directory:
-  ;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
-  ;; and dymamic dir - example of code:
-  (setq yasnippets-dynamic-data-dir
-	(substring
-	 ;;
-	 ;; EXAMPLES:
-	 ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
-	 ;;
-	 (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
-	 0 -1))
-  ;; and then:
+  ;;; Not required anymore.
+  ;;; Adding a custom/dynamic yasnippet directory:
+  ;;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
+  ;;; and dymamic dir - example of code:
+  ;;
+  ;; (setq yasnippets-dynamic-data-dir
+  ;; 	(substring
+  ;; 	 ;; (shell-command-to-string "find ~/.emacs.d/elpa/ -type d -iname snippets")
+  ;; 	 (shell-command-to-string "ls -d ~/.emacs.d/elpa/yasnippet-snippets-*/snippets")
+  ;; 	 0 -1))
   ;; (setq yas-snippet-dirs (append yas-snippet-dirs (list yasnippets-dynamic-data-dir)))
   )
 

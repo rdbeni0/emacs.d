@@ -126,8 +126,8 @@
 
   (add-hook 'web-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
-			     (add-to-list 'company-backends 'company-capf)
-			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-gtags company-keywords company-dabbrev))
+			     ;; company-capf, company-gtags
+			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
 			     (when (require 'yasnippet nil 'noerror)
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
@@ -160,9 +160,8 @@
 
   (add-hook 'org-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
-			     (add-to-list 'company-backends 'company-capf)
-			     (add-to-list 'company-backends 'company-gtags)
-			     (add-to-list 'company-backends '(company-dabbrev-code company-files company-keywords company-dabbrev))
+			     ;; company-capf, company-gtags
+			     (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))
 			     (when (require 'yasnippet nil 'noerror)
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 

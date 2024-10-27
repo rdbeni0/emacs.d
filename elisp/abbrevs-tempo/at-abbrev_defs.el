@@ -53,7 +53,7 @@
 ;; (setq cperl-mode-abbrev-table nil)
 (define-abbrev-table 'cperl-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env perl" nil 0)
+    ("qqs" "#!/usr/bin/env perl\n# -*- coding: utf-8 -*-" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,7 +63,7 @@
 ;; (setq python-mode-abbrev-table nil)
 (define-abbrev-table 'python-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env python" nil 0)
+    ("qqs" "#!/usr/bin/env python\n# -*- coding: utf-8 -*-" nil 0)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -73,7 +73,7 @@
 ;; (setq sh-mode-abbrev-table nil)
 (define-abbrev-table 'sh-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env bash" nil 0)
+    ("qqs" "#!/usr/bin/env bash\n# -*- coding: utf-8 -*-" nil 0)
     ))
 
 (provide 'at-abbrev_defs)

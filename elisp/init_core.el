@@ -42,4 +42,4 @@
 (require 'cfg-flyspell)
 (require 'cfg-doc-view-image)
 (require 'cfg-links-web-browsers)
-(require 'cfg-abbrevs-tempo) ;; should be loaded after any prog- mode (bcz will overwrite existing abbrev table)
+(require 'cfg-abbrevs-tempo) ;; should be loaded AFTER any prog- mode (bcz will overwrite existing abbrev table)
