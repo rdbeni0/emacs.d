@@ -15,6 +15,26 @@
 ;; sh-mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Shortcuts / namespaces
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Here you will find general rules and shortcuts (namespaces) for abbrevs. 
+;; The shortcuts will be based on C or C++ (e.g. `include' as `qqinc' instead of import as `qqimp').
+;;
+;; qqdb   :  databases, sql
+;; qqdeb  :  debug info
+;; qqfi   :  file handling; file operations
+;; qqfun  :  function; definitions
+;; qqif   :  if...else if... else statements (overall conditionals)
+;; qqinc  :  include; loading external libraries
+;; qqst   :  start; everything related to the beginning of the file, e.g. shebang or declarations for editor settings
+;; qqstr  :  string; manipulations with strings
+;; qqsys  :  sys, system(); run commands
+;; qqte   :  tests
+;; qqurl  :  url; curl, http/rest requests
+;;
+;; qqsk   : skeletons; larger code templates
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ORG-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
