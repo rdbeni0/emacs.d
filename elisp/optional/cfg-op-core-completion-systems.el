@@ -43,7 +43,18 @@
   (progn
     (fido-vertical-mode 1)
     (define-key icomplete-minibuffer-map (kbd "<right>") 'icomplete-fido-ret)
-    (define-key icomplete-minibuffer-map (kbd "<left>") 'icomplete-fido-backward-updir)))
+    (define-key icomplete-minibuffer-map (kbd "<left>") 'icomplete-fido-backward-updir)
+    (setopt completion-auto-help 'always)                  ; Open completion always; `lazy' another option
+    (setopt completion-auto-select 'second-tab)            ; Much more eager
+    (setopt completion-cycle-threshold 1)                  ; TAB cycles candidates
+    (setopt completion-styles '(basic initials substring)) ; Different styles to match input to candidates
+    (setopt completions-detailed t)                        ; Show annotations
+    (setopt completions-format 'one-column)
+    (setopt completions-group t)
+    (setopt completions-max-height 20)                     ; This is arbitrary
+    (setopt tab-always-indent 'complete)                   ; When I hit TAB, try to complete, otherwise, indent
+    (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
+    ))
 
 (provide 'cfg-op-core-completion-systems)
 ;;; cfg-op-core-completion-systems.el ends here
