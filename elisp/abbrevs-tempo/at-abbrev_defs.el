@@ -55,8 +55,8 @@
 ;; (setq cperl-mode-abbrev-table nil)
 (define-abbrev-table 'cperl-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env perl\n# -*- coding: utf-8 -*-\n\nuse strict;\nuse warnings;\n" nil 0 :system t)
-    ("qqsubh" "sub help {\n    print \"Usage: ...\\n\";\n    exit;\n}" nil 0 :system t)
+    ("qqst" "#!/usr/bin/env perl\n# -*- coding: utf-8 -*-\n\nuse strict;\nuse warnings;\n" nil 0 :system t)
+    ("qqfunh" "sub help {\n    print \"Usage: ...\\n\";\n    exit;\n}" nil 0 :system t)
     ("qqif" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n}" nil 0 :system t)
     ("qqife" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n} else {\n    # code here\n}" nil 0 :system t)
     ("qqife1" "# COnditions: == != > >= <= eq ne gt ge lt le\nif (CO) {\n    # code here\n} elsif (CO) {\n    # code here\n} else {\n    # code here\n}" nil 0 :system t)
@@ -70,13 +70,13 @@
 ;; (setq python-mode-abbrev-table nil)
 (define-abbrev-table 'python-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env python\n# -*- coding: utf-8 -*-" nil 0 :system t)
-    ("qqdefh" "def help():\n    print('X')\n    exit()\n" nil 0 :system t)
+    ("qqst" "#!/usr/bin/env python\n# -*- coding: utf-8 -*-" nil 0 :system t)
+    ("qqfunh" "def help():\n    print('X')\n    exit()\n" nil 0 :system t)
     ("qqif" "#COnditions: == != > >= <= and or not\nif (CO):\n    X" nil 0 :system t)
     ("qqife" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelse:\n    X" nil 0 :system t)
     ("qqife1" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelif (CO):\n    X\nelse:\n    X" nil 0 :system t)
     ("qqife2" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelif (CO):\n    X\nelif (CO):\n    X\nelse:\n    X" nil 0 :system t)
-    ("qqimp" "import re, os, sys\n" nil 0 :system t)
+    ("qqinc" "import re, os, sys\n" nil 0 :system t)
     ))
 
 (define-skeleton python-argparse-skeleton
@@ -94,7 +94,7 @@
   "if __name__ == \"__main__\":\n"
   "    main()\n")
 
-(define-abbrev python-mode-abbrev-table "qqdefargp" "#SKELETON > Insert a Python argparse example with def main()." 'python-argparse-skeleton :system t)
+(define-abbrev python-mode-abbrev-table "qqskargp" "#SKELETON > Insert a Python argparse example with def main()." 'python-argparse-skeleton :system t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; SH-MODE
@@ -103,7 +103,7 @@
 ;; (setq sh-mode-abbrev-table nil)
 (define-abbrev-table 'sh-mode-abbrev-table
   '(
-    ("qqs" "#!/usr/bin/env bash\n# -*- coding: utf-8 -*-" nil 0 :system t)
+    ("qqst" "#!/usr/bin/env bash\n# -*- coding: utf-8 -*-" nil 0 :system t)
     ))
 
 (provide 'at-abbrev_defs)
