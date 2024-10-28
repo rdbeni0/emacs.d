@@ -26,10 +26,10 @@
 ;; qqfun  :  function; definitions
 ;; qqif   :  if...else if... else statements (overall conditionals)
 ;; qqinc  :  include; loading external libraries
+;; qqopt  :  options; getopt - parsing program options (CLI args and flags)
 ;; qqsta  :  start; everything related to the beginning of the file, e.g. shebang or declarations for editor settings
 ;; qqstr  :  string; manipulations with strings
 ;; qqsys  :  sys, system(); run commands
-;; qqopt  :  options; getopt - parsing program options (CLI args and flags)
 ;; qqte   :  tests
 ;; qqurl  :  url; curl, http/rest requests
 ;;
