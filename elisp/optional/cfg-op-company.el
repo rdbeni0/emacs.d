@@ -78,7 +78,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY):
+  ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY, NOT GLOBALLY):
   ;; https://www.reddit.com/r/emacs/comments/ba6blj/company_looking_for_comprehensive_documentation/
   ;; ^ "(set (make-local-variable 'company-backends) '())" should be used (seems to be the most correct way)
   ;; OTHER EXAMPLE:
@@ -88,10 +88,10 @@
   ;;
   ;; How TO MANIPULATE BACKENDS PER MAJOR MODE:
   ;; 1) clean and make local var (set (make-local-variable 'company-backends) '()) - from now it will be empty
-  ;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be messy and slow)
-  ;; 2A) the less important  backends should be at the beginning
-  ;; 2B) the most important - should be declared at the end
-  ;; 3) run emacs and check variable "company-backends" as "describe-variable" and also use M-x company-diag in real examples
+  ;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be messy and slow):
+  ;; 2A) the most important - backends should be at the beginning (from the left side of the list)
+  ;; 2B) the less important - should be declared at the end (from the right side of the list)
+  ;; 3) run emacs and check variable `company-backends' as `describe-variable' and also use M-x `company-diag' in real examples
   ;; 4) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options for particular mode
   ;; 5) OPTIONAL: no new line for particular mode: https://github.com/joaotavora/yasnippet/issues/192
   ;; just add: (setq require-final-newline nil) into particular mode hook
@@ -118,6 +118,13 @@
 			    (when (require 'yasnippet nil 'noerror)
 			      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
+  (add-hook 'nix-mode-hook (lambda ()
+			     (set (make-local-variable 'company-backends) '())
+			     ;; company-capf, company-gtags
+			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
+			     (when (require 'yasnippet nil 'noerror)
+			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+
   (add-hook 'cperl-mode-hook (lambda ()
 			       (set (make-local-variable 'company-backends) '())
 			       ;; company-capf, company-gtags
@@ -132,20 +139,9 @@
 			     (when (require 'yasnippet nil 'noerror)
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
-  (defun cfg/-hook-c-cpp-mode ()
-    (set (make-local-variable 'company-backends) '())
-    ;; company-capf, company-gtags
-    (add-to-list 'company-backends '(company-abbrev :separate company-clang company-cmake company-dabbrev-code company-keywords company-files company-dabbrev))
-    (when (require 'yasnippet nil 'noerror)
-      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
-
-  ;; (add-hook 'c-mode-common-hook 'cfg/-hook-c-cpp-mode)
-  (add-hook 'c-mode-hook 'cfg/-hook-c-cpp-mode)
-  (add-hook 'c++-mode-hook 'cfg/-hook-c-cpp-mode)
-
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())
-				 ;; company-capf, company-gtags
+				;; company-capf, company-gtags
 				(add-to-list 'company-backends '(company-abbrev :separate company-anaconda company-dabbrev-code company-keywords company-files company-dabbrev))
 				(when (require 'yasnippet nil 'noerror)
 				  (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
@@ -164,15 +160,40 @@
 			     (when (require 'yasnippet nil 'noerror)
 			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
 
-  ;; some optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
+  ;; optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
   (add-hook 'notmuch-message-mode-hook (lambda ()
 					 (set (make-local-variable 'company-backends) '())
-					 (add-to-list 'company-backends 'company-gtags)
-					 (add-to-list 'company-backends '(notmuch-company company-files company-dabbrev company-dabbrev-code))
-					 (add-to-list 'company-backends 'company-capf)
+					 ;; company-gtags
+					 (add-to-list 'company-backends '(company-abbrev :separate company-capf notmuch-company company-files company-dabbrev company-dabbrev-code))
 					 (when (require 'yasnippet nil 'noerror)
 					   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))
 					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
+
+  (defun cfg/-hook-c-cpp-mode ()
+    (set (make-local-variable 'company-backends) '())
+    ;; company-capf, company-gtags
+    (add-to-list 'company-backends '(company-abbrev :separate company-clang company-cmake company-dabbrev-code company-keywords company-files company-dabbrev))
+    (when (require 'yasnippet nil 'noerror)
+      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+
+  ;; (add-hook 'c-mode-common-hook 'cfg/-hook-c-cpp-mode)
+  (add-hook 'c-mode-hook 'cfg/-hook-c-cpp-mode)
+  (add-hook 'c++-mode-hook 'cfg/-hook-c-cpp-mode)
+
+  (defun cfg/-hook-SHARED-COMPANY-mode ()
+    (set (make-local-variable 'company-backends) '())
+    ;; company-gtags
+    (add-to-list 'company-backends '(company-abbrev :separate company-capf company-dabbrev-code company-keywords company-files company-dabbrev))
+    (when (require 'yasnippet nil 'noerror)
+      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+
+  (add-hook 'conf-mode 'cfg/-hook-SHARED-COMPANY-mode)
+  (add-hook 'conf-unix-mode 'cfg/-hook-SHARED-COMPANY-mode)
+  (add-hook 'conf-space-mode 'cfg/-hook-SHARED-COMPANY-mode)
+  (add-hook 'conf-windows-mode 'cfg/-hook-SHARED-COMPANY-mode)
+  (add-hook 'conf-xdefaults-mode 'cfg/-hook-SHARED-COMPANY-mode)
+  (add-hook 'nxml-mode 'cfg/-hook-SHARED-COMPANY-mode)
+  (add-hook 'js-json-mode 'cfg/-hook-SHARED-COMPANY-mode)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
