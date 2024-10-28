@@ -3,6 +3,10 @@
 ;;
 ;;; Code:
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; USE-PACKAGE:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; https://company-mode.github.io/
 (use-package company
   :ensure t
@@ -20,7 +24,9 @@
 	company-minimum-prefix-length   2   ;; show completion after 2 characters (default is 3!)
 	company-show-numbers            t
 	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
-	;; transformers - could be changed "per mode": https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
+	;; transformers - could be changed "per mode":
+	;; https://github.com/company-mode/company-mode/issues/818
+	;; https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
 	;; https://company-mode.github.io/manual/Backends.html
 	company-transformers '(company-sort-by-statistics company-sort-by-backend-importance delete-dups)) ;; or  / company-sort-by-occurrence
   ;; Press SPACE will accept the highlighted candidate and insert a space
@@ -196,8 +202,11 @@
   (add-hook 'js-json-mode 'cfg/-hook-SHARED-COMPANY-mode)
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; additional packages for company:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; ADDITIONAL PACKAGES FOR COMPANY (BACKENDS):
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; AI: https://github.com/TommyX12/company-tabnine
 
 ;; python:
 ;; https://github.com/pythonic-emacs/company-anaconda
@@ -224,7 +233,9 @@
 			     (require 'company-php)
 			     (ac-php-core-eldoc-setup))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; ADDITIONAL PACKAGES AND CONFIGURATION FOR COMPANY (NOT BACKENDS):
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://github.com/company-mode/company-statistics
 (use-package company-statistics
