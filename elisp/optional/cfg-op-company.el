@@ -11,7 +11,7 @@
 (use-package company
   :ensure t
   :bind (;; Remaps - emacs native:
-         ([remap expand-abbrev]                     . company-abbrev)
+         ([remap cfg/expand-abbrev]                 . company-abbrev)
          ([remap dabbrev-expand]                    . company-dabbrev)
 	 )
   :config
