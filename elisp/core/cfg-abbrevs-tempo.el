@@ -20,8 +20,7 @@
     (require 'at-abbrev_defs) ;; main file with abbrev defs
     (require 'at-long-lines) ;; defs with long lines
     ;; This file should be used for private abbrevs:
-    (quietly-read-abbrev-file abbrev-file-name)
-    ))
+    (quietly-read-abbrev-file abbrev-file-name)))
 
 (defun cfg/expand-abbrev ()
   "Try to expand abbrev at point. If no expansion, prompt to select from the current mode's abbrev table."
@@ -34,7 +33,7 @@
 	  (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
 		 (expansion (abbrev-expansion abbrev abbrev-table)))
 	    (when expansion
-	      ;; slightly dangerous; delete from beginning of line to point
+	      ;; Slightly dangerous, but should work - delete from beginning of line to point and insert abbrev:
 	      (delete-region (line-beginning-position) (point))
 	      (insert expansion)))
 	(message "No abbrev found.")))))
