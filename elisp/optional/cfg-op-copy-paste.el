@@ -1,5 +1,7 @@
-;;; cfg-op-wayland.el --- configfuration for emacs 29+ under wayland -*- lexical-binding: t -*-
+;;; cfg-op-copy-paste.el --- configfuration for copy/paste  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Manipulations with copy/paste (wsl/wayland/x11).
 ;;
 ;;; Code:
 
@@ -13,23 +15,26 @@
 				      :noquery t))
   (process-send-string wl-copy-process text)
   (process-send-eof wl-copy-process))
+
 (defun wl-paste ()
   (if (and wl-copy-process (process-live-p wl-copy-process))
       nil ; should return nil if we're the current paste owner
     (shell-command-to-string "wl-paste -n | tr -d \r")))
 
 (setq interprogram-cut-function 'wl-copy)
+
+;; Currently not required:
 ;; (setq interprogram-paste-function 'wl-paste)
 
-;; this simple package will allow paste and overwrite during visual mode in evil package
-(use-package simpleclip
-  :ensure t
-  :bind (;; Remaps - emacs native:
-         ([remap simpleclip-paste]                  . yank)
-	 )
-  :config
-  (simpleclip-mode 1)
-  )
+;; additional experiments with copy/cut/paste:
+;(use-package simpleclip
+;  :ensure t
+;  :bind (;; Remaps - use emacs native again:
+;         ([remap simpleclip-paste]                  . yank)
+;  	 )
+;  :config
+;  ;; (simpleclip-mode 1)
+;  )
 
-(provide 'cfg-op-wayland)
-;;; cfg-op-wayland.el ends here
+(provide 'cfg-op-copy-paste)
+;;; cfg-op-copy-paste.el ends here

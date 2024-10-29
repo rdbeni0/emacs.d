@@ -15,7 +15,7 @@
 (require 'cfg-op-dired)
 (require 'cfg-op-webpaste-htmlize)
 (require 'cfg-op-email)
-(require 'cfg-op-wayland)
+(require 'cfg-op-copy-paste)
 
 ;; Langs:
 (require 'cfg-op-magit)
