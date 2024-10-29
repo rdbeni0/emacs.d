@@ -23,5 +23,19 @@
     (quietly-read-abbrev-file abbrev-file-name)
     ))
 
+(defun cfg/expand-abbrev ()
+  "Try to expand abbrev at point. If no expansion, prompt to select from the current mode's abbrev table."
+  (interactive)
+  (if (expand-abbrev)
+      (message "Abbrev expanded")
+    (let* ((abbrev-table-symbol (intern (concat (symbol-name major-mode) "-abbrev-table")))
+	   (abbrev-table (and (boundp abbrev-table-symbol) (symbol-value abbrev-table-symbol))))
+      (if abbrev-table
+	  (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
+		 (expansion (abbrev-expansion abbrev abbrev-table)))
+	    (when expansion
+	      (insert expansion)))
+	(message "No abbrev found.")))))
+
 (provide 'cfg-abbrevs-tempo)
 ;;; cfg-abbrevs-tempo.el ends here

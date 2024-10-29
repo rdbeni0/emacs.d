@@ -11,7 +11,7 @@
  "<C-mouse-5>" 'text-scale-decrease
 
  "<f5><f4>" '(dabbrev-expand :which-key "dabbrev-expand")
- "<f5><f5>" '(expand-abbrev :which-key "expand-abbrev")
+ "<f5><f5>" '(cfg/expand-abbrev :which-key "expand-abbrev")
  "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf")
  "C-<tab>" 'completion-at-point
 
@@ -131,7 +131,7 @@
 
  "<f5>"     '(:ignore t :which-key "completions")
  "<f5><f4>" '(dabbrev-expand :which-key "dabbrev-expand")
- "<f5><f5>" '(expand-abbrev :which-key "expand-abbrev")
+ "<f5><f5>" '(cfg/expand-abbrev :which-key "expand-abbrev")
  "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf")
 
  ;; windows
