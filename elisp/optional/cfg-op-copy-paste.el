@@ -26,7 +26,9 @@
 ;; Currently not required:
 ;; (setq interprogram-paste-function 'wl-paste)
 
+;;
 ;; additional experiments with copy/cut/paste:
+;;
 ;(use-package simpleclip
 ;  :ensure t
 ;  :bind (;; Remaps - use emacs native again:
