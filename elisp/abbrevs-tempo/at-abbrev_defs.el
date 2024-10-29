@@ -22,16 +22,16 @@
 ;;
 ;; qqdb   :  databases, sql
 ;; qqdeb  :  debug info
-;; qqfi   :  file handling; file operations
+;; qqfih  :  file handling; file operations
 ;; qqfun  :  function; definitions
 ;; qqif   :  if...else if... else statements (overall conditionals)
 ;; qqinc  :  include; loading external libraries
-;; qqlin  :  lines; long lines via comments
+;; qqlin  :  lines; long lines of comments
 ;; qqopt  :  options; getopt - parsing program options (CLI args and flags)
 ;; qqsta  :  start; everything related to the beginning of the file, e.g. shebang or declarations for editor settings
 ;; qqstr  :  string; manipulations with strings
 ;; qqsys  :  sys, system(); run commands
-;; qqte   :  tests
+;; qqtes  :  tests
 ;; qqurl  :  url; curl, http/rest requests
 ;;
 ;; qsk    : skeletons; larger code templates
@@ -99,8 +99,8 @@
     ("qqife1" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelif (CO):\n    X\nelse:\n    X" nil 0 :system t)
     ("qqife2" "#COnditions: == != > >= <= and or not\nif (CO):\n    X\nelif (CO):\n    X\nelif (CO):\n    X\nelse:\n    X" nil 0 :system t)
     ("qqinc" "import re, os, sys\n" nil 0 :system t)
-    ("qqfiw1" "with open(\'X\', \'a\') as file:\n    file.write(\"\\nNew Line\")" nil 0 :system t)
-    ("qqfir1" "with open(\'X\', \'r\') as file:\n    for line in file:\n        print(line.strip())\n" nil 0 :system t)
+    ("qqfihw1" "with open(\'X\', \'a\') as file:\n    file.write(\"\\nNew Line\")" nil 0 :system t)
+    ("qqfihr1" "with open(\'X\', \'r\') as file:\n    for line in file:\n        print(line.strip())\n" nil 0 :system t)
     ))
 
 (define-skeleton python-argparse-skeleton
@@ -130,7 +130,7 @@
   "        file.write(new_line)\n")
 
 (define-abbrev python-mode-abbrev-table "qskopt1" "#SKELETON> Argparse - example with def main()." 'python-argparse-skeleton :system t)
-(define-abbrev python-mode-abbrev-table "qskfi1" "#SKELETON> File handling - replace text line by line in a file." 'python-file-replace-skeleton :system t)
+(define-abbrev python-mode-abbrev-table "qskfih1" "#SKELETON> File handling - replace text line by line in a file." 'python-file-replace-skeleton :system t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; SH-MODE
