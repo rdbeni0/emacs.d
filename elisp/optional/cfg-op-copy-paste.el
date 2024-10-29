@@ -10,8 +10,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; WAYLAND
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Currently not required in KDE 6.1++ plasma (optional experiments):
+;; Currently not required for KDE 6.1++ plasma (optional experiments):
 
 ;; https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4
 ;; (setq wl-copy-process nil)
@@ -34,18 +33,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; X11/XORG
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;
 ;; additional experiments with copy/cut/paste (not required for wayland, but can be useful for X11):
 ;;
-					;(use-package simpleclip
-					;  :ensure t
-					;  :bind (;; Remaps - use emacs native again:
-					;         ([remap simpleclip-paste]                  . yank)
-					;  	 )
-					;  :config
-					;  ;; (simpleclip-mode 1)
-					;  )
+;;(use-package simpleclip
+;;  :ensure t
+;;  :bind (;; Remaps - use emacs native again:
+;;         ([remap simpleclip-paste]                  . yank)
+;;  	 )
+;;  :config
+;;  ;; (simpleclip-mode 1)
+;;  )
 
 (provide 'cfg-op-copy-paste)
 ;;; cfg-op-copy-paste.el ends here
