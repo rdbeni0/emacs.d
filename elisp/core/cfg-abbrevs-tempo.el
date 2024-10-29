@@ -27,13 +27,15 @@
   "Try to expand abbrev at point. If no expansion, prompt to select from the current mode's abbrev table."
   (interactive)
   (if (expand-abbrev)
-      (message "Abbrev expanded")
+      (message "Abbrev expanded.")
     (let* ((abbrev-table-symbol (intern (concat (symbol-name major-mode) "-abbrev-table")))
 	   (abbrev-table (and (boundp abbrev-table-symbol) (symbol-value abbrev-table-symbol))))
       (if abbrev-table
 	  (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
 		 (expansion (abbrev-expansion abbrev abbrev-table)))
 	    (when expansion
+	      ;; slightly dangerous; delete from beginning of line to point
+	      (delete-region (line-beginning-position) (point))
 	      (insert expansion)))
 	(message "No abbrev found.")))))
 
