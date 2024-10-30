@@ -16,5 +16,11 @@
  :prefix ","
  "c"    '(emacs-lisp-native-compile-and-load :which-key "compile-and-load"))
 
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps '(emacs-lisp-mode-map)
+ :major-modes '(emacs-lisp-mode)
+ "gr" '(revert-buffer :which-key "revert-buffer"))
+
 (provide 'cfg-gen-co-emacs-lisp-mode)
 ;;; cfg-gen-co-emacs-lisp-mode.el ends here

@@ -45,6 +45,7 @@
 ;; (setq initial-scratch-message "AgaMacs") ; print a default message in the empty scratch buffer opened at startup
 (setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
 (setq inhibit-startup-message t)
+(setq initial-major-mode 'emacs-lisp-mode)
 (set-cursor-color "#ffffff")
 
 ;;;; optional - use "M-x eshell" instead of *scratch*:
