@@ -11,7 +11,8 @@
 (use-package yasnippet
   :ensure t
   :config
-  (setq yas-snippet-dirs (append yas-snippet-dirs (expand-file-name "data/yasnippets" user-emacs-directory)))
+  (when (file-directory-p (expand-file-name "data/yasnippets" user-emacs-directory))
+    (setq yas-snippet-dirs (append yas-snippet-dirs (list (expand-file-name "data/yasnippets" user-emacs-directory)))))
   ;; add yas-minor-mode per MAJOR mode - not global:
   (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
   (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
@@ -35,7 +36,7 @@
 (use-package yasnippet-snippets
   :ensure t
   :config
-  ;;; Not required anymore.
+  ;;; NOT required anymore:
   ;;; Adding a custom/dynamic yasnippet directory:
   ;;; https://stackoverflow.com/questions/46696009/adding-a-custom-yasnippet-directory-to-spacemacs
   ;;; and dymamic dir - example of code:
