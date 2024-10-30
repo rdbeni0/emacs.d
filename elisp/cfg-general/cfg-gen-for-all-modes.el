@@ -50,8 +50,7 @@
  ;; GLOBAL and no prefix:
 
  "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
- "SPC" '(execute-extended-command-for-buffer :which-key "M-X")
- "x" '(execute-extended-command :which-key "M-x")
+ "SPC" '(execute-extended-command :which-key "M-x")
  "<up>" 'tab-rename
  "<down>" 'tab-new
  "<left>" 'tab-previous
@@ -105,6 +104,7 @@
  ;; buffers
 
  "b"   '(:ignore t :which-key "buffers")
+ "b SPC" '(execute-extended-command-for-buffer :which-key "M-X")
  "bu"  '(cfg/dos2unix :which-key "dos2unix")
  "br"  '(revert-buffer :which-key "revert-refresh-buffer")
  "by"  '(evil-paste-pop :which-key "yank-pop")
