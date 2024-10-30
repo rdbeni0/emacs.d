@@ -151,6 +151,7 @@
  :keymaps '(notmuch-hello-mode-map)
  :major-modes '(notmuch-hello-mode)
  "r" 'notmuch-refresh-this-buffer
+ "gr" 'notmuch-refresh-this-buffer
  "R" 'notmuch-refresh-all-buffers
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
@@ -164,6 +165,7 @@
  :keymaps '(notmuch-tree-mode-map)
  :major-modes '(notmuch-tree-mode)
  "r" 'notmuch-refresh-this-buffer
+ "gr" 'notmuch-refresh-this-buffer
  "R" 'notmuch-refresh-all-buffers
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
@@ -193,6 +195,7 @@
  "s" 'cfg/notmuch-fuzzy-search
  "F" 'cfg/notmuch-fuzzy-search
  "r" 'notmuch-refresh-this-buffer
+ "gr" 'notmuch-refresh-this-buffer
  "R" 'notmuch-refresh-all-buffers
  "u" 'cfg/notmuch-toggle-tag-show-unread
  "a" 'cfg/notmuch-toggle-tag-show-arch
@@ -211,6 +214,7 @@
  :keymaps '(notmuch-search-mode-map)
  :major-modes '(notmuch-search-mode)
  "r" 'notmuch-refresh-this-buffer
+ "gr" 'notmuch-refresh-this-buffer
  "R" 'notmuch-refresh-all-buffers
  "T" 'notmuch-search-filter-by-tag
  "u" 'cfg/notmuch-toggle-tag-search-unread
