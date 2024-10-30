@@ -50,7 +50,8 @@
  ;; GLOBAL and no prefix:
 
  "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
- "SPC" '(execute-extended-command :which-key "M-x")
+ "SPC" '(execute-extended-command-for-buffer :which-key "M-X")
+ "x" '(execute-extended-command :which-key "M-x")
  "<up>" 'tab-rename
  "<down>" 'tab-new
  "<left>" 'tab-previous
