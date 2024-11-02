@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;
 ;; Manipulations with copy/paste (wsl/wayland/x11).
+;; Example of implementation:
+;; https://github.com/nathantypanski/emacs.d/blob/master/config/my-copy.el
 ;;
 ;; KDE issues:
 ;; https://discuss.kde.org/t/plasma-6-2-arch-linux-copy-paste-issues/23162/7
