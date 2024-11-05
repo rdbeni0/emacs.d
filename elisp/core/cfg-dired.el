@@ -8,10 +8,11 @@
 
 (use-package dired
   :config
+  ;; http://xahlee.info/emacs/emacs/emacs_dired_tips.html
+
   ;; for dired-jump
   (when (< emacs-major-version 28) (require 'dired-x))
 
-  ;; http://xahlee.info/emacs/emacs/emacs_dired_tips.html
   ;; "Make dired use the same buffer for viewing directory":
   ;; Dired - reuse buffer
   ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
