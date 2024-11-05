@@ -9,12 +9,14 @@
 ;; Please also configure modeline after usage of this plugin...
 (use-package evil-anzu
   :after evil
+  :ensure t
   :config
   (global-anzu-mode +1))
 
 ;; https://github.com/TheBB/evil-indent-plus
 (use-package evil-indent-plus
   :after 'evil
+  :ensure t
   :config
   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
   (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)

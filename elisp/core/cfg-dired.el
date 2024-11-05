@@ -10,15 +10,22 @@
   :config
   ;; for dired-jump
   (when (< emacs-major-version 28) (require 'dired-x))
+
   ;; http://xahlee.info/emacs/emacs/emacs_dired_tips.html
   ;; "Make dired use the same buffer for viewing directory":
+  ;; Dired - reuse buffer
+  ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
   (when (>= emacs-major-version 28)
-    (setq dired-kill-when-opening-new-dired-buffer t))
+    (progn
+      (setq dired-kill-when-opening-new-dired-buffer t)
+      (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
+		  'dired-find-file)))
 
   (when (< emacs-major-version 28)
     (progn
       (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
       (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))) ; was dired-up-directory
+      (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-find-alternate-file)
       ))
 
   ;; When you do copy files, emacs prompts for a target dir.

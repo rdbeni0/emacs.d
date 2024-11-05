@@ -6,31 +6,6 @@
 ;;
 ;;; Code:
 
-;; Dired - reuse buffer
-;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
-;; Possible issues with mouse integration:
-;; https://emacs.stackexchange.com/questions/35536/dired-mouse-click-open-folder-in-the-same-window
-;; ... so the best option seems to be dired-single:
-(use-package dired-single
-  :ensure t
-  :config
-  (defun cfg/dired-init ()
-    "Bunch of stuff to run for dired, either immediately or when it's loaded.
-  Optional since emacs 29++"
-    (define-key dired-mode-map [remap dired-find-file]
-		'dired-single-buffer)
-    (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
-		'dired-single-buffer-mouse)
-    (define-key dired-mode-map [remap dired-up-directory]
-		'dired-single-up-directory))
-  (put 'dired-find-alternate-file 'disabled nil)
-  ;; if dired's already loaded, then the keymap will be bound
-  (if (boundp 'dired-mode-map)
-      ;; we're good to go; just add our bindings
-      (cfg/dired-init)
-    ;; it's not loaded yet, so add our bindings to the load-hook
-    (add-hook 'dired-load-hook 'cfg/dired-init)))
-
 ;; https://elpa.gnu.org/packages/dired-du.html
 (use-package dired-du
   :ensure t
