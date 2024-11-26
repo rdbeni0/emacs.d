@@ -6,7 +6,7 @@
 (use-package xref
   :config
   ;; load general.el and keybindings:
-  (require 'cfg-gen-co-xref-ffap))
+  (require 'cfg-gen-co-xref-ffap-imenu))
 
 (defun cfg/ffap ()
   "Standard verion of `ffatp` command (without embark)."

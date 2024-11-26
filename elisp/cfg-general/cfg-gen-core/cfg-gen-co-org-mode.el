@@ -9,8 +9,7 @@
  "c" '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
  "p" '(org-priority :which-key "org-priority")
  "g" '(org-goto :which-key "org-goto")
- "j" '(imenu :which-key "imenu")
- "." '(org-cycle :which-key "cycle")
+ "y" '(org-cycle :which-key "cycle")
  "A" '(org-attach :which-key "org-attach")
 
  "e" '(:ignore t :which-key "export")

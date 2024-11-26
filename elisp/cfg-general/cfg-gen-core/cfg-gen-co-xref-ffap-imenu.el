@@ -1,13 +1,14 @@
-;;; cfg-gen-co-xref-ffap.el --- general.el for xref -*- lexical-binding: t -*-
+;;; cfg-gen-co-xref-ffap-imenu.el --- general.el for xref -*- lexical-binding: t -*-
 
-;; ffap
+;; ffap and imenu
 (general-define-key
  :states '(normal visual emacs)
  :keymaps list-gen-mode-map-ffap
  :major-modes list-gen-mode-ffap
  :prefix ","
  "."  '(:ignore t :which-key "ffap")
- ".."  '(ffap :which-key "act_ffap"))
+ ".."  '(ffap :which-key "act_ffap")
+ ".m"  '(imenu :which-key "imenu"))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -50,5 +51,5 @@
  "g.B" '(xref-go-forward :which-key "xref-go-forward")
  "g.s" '(xref-find-apropos :which-key "xref-apropos"))
 
-(provide 'cfg-gen-co-xref-ffap)
-;;; cfg-gen-co-xref-ffap.el ends here
+(provide 'cfg-gen-co-xref-ffap-imenu)
+;;; cfg-gen-co-xref-ffap-imenu.el ends here

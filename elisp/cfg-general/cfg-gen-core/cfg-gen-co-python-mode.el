@@ -5,7 +5,6 @@
  :keymaps 'python-mode-map
  :major-modes 'python-mode
  :prefix ","
- "j"  '(imenu :which-key "imenu")
  "h"  '(python-check :which-key "python-check")
  "s"  '(run-python :which-key "python-shell")
  "v"  '(:ignore t :which-key "venv")

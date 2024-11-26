@@ -5,7 +5,6 @@
  :keymaps '(perl-mode-map cperl-mode-map)
  :major-modes '(perl-mode cperl-mode)
  :prefix ","
- "j"  '(imenu :which-key "imenu")
  "!"  '(executable-interpret :which-key "exec-script")
  "o"  '(cperl-perldoc-at-point :which-key "perldoc-at-point")
  "O"  '(cperl-perldoc :which-key "cperl-perldoc")

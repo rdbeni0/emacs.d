@@ -198,7 +198,7 @@
  "sii" '(isearch-forward :which-key "isearch-forward")
  "sib" '(isearch-backward :which-key "isearch-backward")
  "s'"  '(vc-git-grep :which-key "git-grep")
- "sj"  '(imenu :which-key "imenu")
+ "sm"  '(imenu :which-key "imenu")
  "sn"  '(find-name-dired :which-key "find-name-dired")
  "sd"  '(find-grep-dired :which-key "find-grep-dired")
  "sz"  '(zrgrep :which-key "zrgrep")

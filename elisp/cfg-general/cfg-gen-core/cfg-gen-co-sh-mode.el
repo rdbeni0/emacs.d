@@ -9,7 +9,6 @@
  "\\" '(sh-backslash-region :which-key "backslash-region")
  "#"  '(sh-set-shell :which-key "set-shell")
  "!"  '(executable-interpret :which-key "exec-script")
- "j"  '(imenu :which-key "imenu")
  "c"  '(:ignore t :which-key "code_templates")
  "ci" '(sh-if :which-key "if")
  "co" '(sh-for :which-key "for")

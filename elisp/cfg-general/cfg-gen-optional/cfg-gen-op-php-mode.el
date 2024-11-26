@@ -5,7 +5,6 @@
  :keymaps 'php-mode-map
  :major-modes 'php-mode
  :prefix ","
- "j"  '(imenu :which-key "imenu")
  "t"  '(:ignore t :which-key "phpunit")
  "tt" '(phpunit-current-test :which-key "phpunit-current-test")
  "tc" '(phpunit-current-class :which-key "phpunit-current-class")

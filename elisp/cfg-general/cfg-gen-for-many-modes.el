@@ -35,14 +35,18 @@
 (setq list-gen-mode-map-format-core (seq-difference list-gen-mode-map '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map)))
 
 ;; format optional
-(setq list-gen-mode-format-optional (seq-difference list-gen-mode '(ssh-config-mode)))
-(setq list-gen-mode-map-format-optional (seq-difference list-gen-mode-map '(ssh-config-mode-map)))
-(setq list-gen-mode-format-optional (append list-gen-mode '(json-mode markdown-mode)))
-(setq list-gen-mode-map-format-optional (append list-gen-mode-map '(json-mode-map markdown-mode-map)))
+(setq list-gen-mode-format-optional (append
+				     (seq-difference list-gen-mode '(ssh-config-mode))
+				     '(json-mode markdown-mode)))
+(setq list-gen-mode-map-format-optional (append
+					 (seq-difference list-gen-mode-map '(ssh-config-mode-map))
+					 '(json-mode-map markdown-mode-map)))
 
-;; ffap
+;; ffap and imenu
 (setq list-gen-mode-ffap  (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-ffap  (append list-gen-mode-map list-gen-mode-conf-mode-map))
+(setq list-gen-mode-ffap (append list-gen-mode-ffap '(org-mode)))
+(setq list-gen-mode-map-ffap (append list-gen-mode-map-ffap '(org-mode-map)))
 
 ;; xref
 (setq list-gen-mode-xref (copy-sequence list-gen-mode))

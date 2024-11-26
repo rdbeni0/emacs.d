@@ -22,7 +22,7 @@
 ;;
 ;; prefix:
 ;;
-;; qq    : public common abbrevs (system)
+;; qq    : public common abbrevs (system scope)
 ;; qs    : public skeletons; larger code templates
 ;; qz    : private abbrevs (defined in abbrev_defs)
 ;; qx    : private skeletons (defined in abbrev_defs or somewhere else)
