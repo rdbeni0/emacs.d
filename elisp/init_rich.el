@@ -14,7 +14,9 @@
 (require 'cfg-op-evil)
 (require 'cfg-op-dired)
 (require 'cfg-op-webpaste-htmlize)
+(require 'cfg-op-line-numbers)
 (require 'cfg-op-email)
+(require 'cfg-op-vterm)
 
 ;; Langs:
 (require 'cfg-op-magit)
@@ -28,4 +30,5 @@
 (require 'cfg-op-groovy-jenkins)
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
+(require 'cfg-op-org)
 (require 'cfg-op-web-mode)

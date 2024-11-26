@@ -7,7 +7,6 @@
  :keymaps 'override
  :prefix "SPC"
  "asm"  '(cfg/multi-term-buffer-rn :which-key "multi-term_bash")
- "asv"  '(multi-vterm :which-key "multi-vterm")
  "ast"  '(tramp-term :which-key "tramp-term"))
 
 (provide 'cfg-gen-op-term)

@@ -13,5 +13,11 @@
  "<delete>" 'vterm-send-delete
  "<backspace>" 'vterm-send-backspace)
 
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'override
+ :prefix "SPC"
+ "asv"  '(multi-vterm :which-key "multi-vterm"))
+
 (provide 'cfg-gen-op-vterm-mode)
 ;;; cfg-gen-op-vterm-mode.el ends here
