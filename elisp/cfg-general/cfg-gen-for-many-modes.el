@@ -12,14 +12,16 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; common prog modes
-
 (setq list-gen-mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode nix-mode lisp-interaction-mode))
 
 (setq list-gen-mode-map '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map c++-mode-map nxml-mode-map groovy-mode-map jenkinsfile-mode-map nix-mode-map lisp-interaction-mode-map))
 
+;; remove duplicates (if any)
+(delete-dups list-gen-mode)
+(delete-dups list-gen-mode-map)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; conf-modes
-
 (setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode))
 (setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map))
 
@@ -50,11 +52,7 @@
 (setq list-gen-mode-comment (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-comment (append list-gen-mode-map list-gen-mode-conf-mode-map))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; remove duplicates (if any)
-
-(delete-dups list-gen-mode)
-(delete-dups list-gen-mode-map)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'cfg-gen-for-many-modes)
 ;;; cfg-gen-for-many-modes.el ends here
