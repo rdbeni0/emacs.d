@@ -16,6 +16,7 @@
  :keymaps 'image-mode-map
  :major-modes 'image-mode
  :prefix ","
+ "/" '(ffap :which-key "act_ffap")
  "d" '(image-dired :which-key "image-dired")
  "c" '(image-toggle-display :which-key "toggle-display")
  "<left>" '(image-previous-file :which-key "prev-file")
