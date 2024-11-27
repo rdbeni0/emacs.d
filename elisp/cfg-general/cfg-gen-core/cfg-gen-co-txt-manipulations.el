@@ -18,6 +18,7 @@
  ".b"  '(delete-blank-lines :which-key "del-blank-lines")
  ".c"  '(center-region :which-key "center-region")
  ".d"  '(cfg/downcase-region :which-key "downcase")
+ ".e"  '(cfg/duplicate-current-line-or-region :which-key "dup-line-or-reg")
  ".g"  '(fill-paragraph :which-key "fill-paragraph")
  ".j"  '(cfg/join-lines-in-region-add-spc :which-key "join-lines-spc")
  ".l" '(kill-whole-line :which-key "kill-line")

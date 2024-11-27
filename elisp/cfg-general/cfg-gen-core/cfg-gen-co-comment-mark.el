@@ -7,6 +7,7 @@
  :prefix ","
  "k"  '(:ignore t :which-key "comments")
  "kl" '(comment-dwim :which-key "comment-dwim")
+ "ke" '(cfg/duplicate-and-comment-current-line-or-region :which-key "comment-dup-line-or-reg")
  "kk" '(mark-defun :which-key "mark-fun")
  "km" '(comment-region :which-key "comment-region")
  "kn" '(uncomment-region :which-key "uncomment-region")
