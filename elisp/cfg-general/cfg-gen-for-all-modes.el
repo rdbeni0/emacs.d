@@ -84,6 +84,7 @@
  "fds"  '(cfg/sudired :which-key "sudired")
  "fdd"  '(dired :which-key "dired")
  "fy"  '(:ignore t :which-key "Yank/Copy")
+ "fw"  '(cfg/open-with :which-key "open-with")
  "fyp" '(cfg/show-file-name :which-key "show-file-name")
  "fyb" '(cfg/copy-buffer-name :which-key "Buffer Name")
  "fyc" '(cfg/copy-file-path-with-line-column :which-key "File path with line and column")
