@@ -39,8 +39,8 @@
       (insert return-string))))
 
 (defun cfg/toggle-case-active ()
-  "Toggle the letter case of current word or text selection.
-   Toggles between: Toggles between: 'all lower', 'Init Caps', 'ALL CAPS'."
+  "Toggle the letter case of current word or text selection (active region).
+Toggles between: 'all lower', 'Init Caps', 'ALL CAPS'."
   (interactive)
   (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
     (if (region-active-p)
@@ -64,6 +64,40 @@
       (upcase-region p1 p2) (put this-command 'state "all caps"))
      ((string= "all caps" (get this-command 'state))
       (downcase-region p1 p2) (put this-command 'state "all lower")))))
+
+(defun cfg/join-lines-in-region (start end)
+  "Join all lines in the selected region into one line, handling both Unix and Windows EOLs."
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (while (re-search-forward "\r?\n+" end t)
+      (replace-match ""))))
+
+(defun cfg/join-lines-in-region-add-spc (start end)
+  "Join all lines in the selected region into one line, handling both Unix and Windows EOLs.
+  Add space instead of EOL."
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (while (re-search-forward "\r?\n+" end t)
+      (replace-match " "))))
+
+;; https://www.emacswiki.org/emacs/DosToUnix
+(defun cfg/dos2unix (buffer)
+  "Automate M-% C-q C-m RET C-q C-j RET"
+  (interactive "*b")
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward (string ?\C-m) nil t)
+      (replace-match (string ?\C-j) nil t))))
+
+(defun cfg/unix2dos (buffer)
+  "Automate replacing C-q C-j (\\n) with C-q C-m C-j (\\r\\n)."
+  (interactive "*b")
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward (string ?\C-j) nil t)
+      (replace-match (string ?\C-m ?\C-j) nil t))))
 
 (provide 'cfg-txt-manipulations)
 ;;; cfg-txt-manipulations.el ends here

@@ -32,15 +32,6 @@
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
 (electric-indent-mode -1)               ; https://www.reddit.com/r/emacs/comments/2mu7yi/disable_electric_indent_mode/
 
-;; https://www.emacswiki.org/emacs/DosToUnix
-(defun cfg/dos2unix (buffer)
-  "Automate M-% C-q C-m RET C-q C-j RET"
-  (interactive "*b")
-  (save-excursion
-    (goto-char (point-min))
-    (while (search-forward (string ?\C-m) nil t)
-      (replace-match (string ?\C-j) nil t))))
-
 ;; turn off scratch buffer and startup screen:
 ;; (setq initial-scratch-message "AgaMacs") ; print a default message in the empty scratch buffer opened at startup
 (setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
