@@ -10,6 +10,7 @@
 (require 'cfg-format)
 (require 'cfg-comment)
 (require 'cfg-xref-ffap)
+(require 'cfg-txt-manipulations)
 (require 'cfg-hideshow)
 (require 'cfg-which-key)
 (require 'cfg-tab-bar)

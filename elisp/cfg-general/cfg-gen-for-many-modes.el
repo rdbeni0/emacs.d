@@ -36,7 +36,7 @@
 
 ;; format optional
 (setq list-gen-mode-format-optional (append
-				     (seq-difference list-gen-mode '(ssh-config-mode ))
+				     (seq-difference list-gen-mode '(ssh-config-mode))
 				     '(json-mode)))
 (setq list-gen-mode-map-format-optional (append
 					 (seq-difference list-gen-mode-map '(ssh-config-mode-map))
@@ -55,6 +55,10 @@
 ;; comment (dwim)
 (setq list-gen-mode-comment (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-comment (append list-gen-mode-map list-gen-mode-conf-mode-map))
+
+;; text manipulations
+(setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode)))
+(setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-conf-mode-map) '(org-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
