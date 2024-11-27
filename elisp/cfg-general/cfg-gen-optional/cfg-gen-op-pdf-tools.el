@@ -5,7 +5,7 @@
  :keymaps 'pdf-view-mode-map
  :major-modes 'pdf-view-mode
  :prefix ","
- "," '(pdf-view-goto-page :which-key "goto-page")
+ "e" '(pdf-view-goto-page :which-key "goto-page")
  "<home>"'(pdf-view-first-page :which-key "first-page")
  "<end>" '(pdf-view-last-page :which-key "last-page")
  "k" '(pdf-view-shrink :which-key "shrink")

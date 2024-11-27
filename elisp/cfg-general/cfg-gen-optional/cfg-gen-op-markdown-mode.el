@@ -5,7 +5,6 @@
  :keymaps '(markdown-mode-map gfm-mode-map)
  :major-modes '(markdown-mode gfm-mode)
  :prefix ","
- "," '(ffap :which-key "act_ffap")
 
  "i" '(:ignore t :which-key "insert")
  "il" '(markdown-insert-link :which-key "insert-link")

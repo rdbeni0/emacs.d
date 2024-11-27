@@ -5,7 +5,7 @@
  :keymaps '(grep-mode-map wgrep-mode-map)
  :major-modes '(grep-mode wgrep-mode)
  :prefix ","
- "," '(ffap :which-key "act_ffap")
+ "l" '(ffap :which-key "act_ffap")
  "g" '(grep-mode :which-key "grep-mode")
  "p" '(wgrep-change-to-wgrep-mode :which-key "wgrep-change-to-wgrep-mode")
  "e" '(wgrep-exit :which-key "wg-exit")

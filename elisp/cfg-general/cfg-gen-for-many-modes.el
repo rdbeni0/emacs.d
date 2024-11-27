@@ -45,8 +45,8 @@
 ;; ffap and imenu
 (setq list-gen-mode-ffap  (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-ffap  (append list-gen-mode-map list-gen-mode-conf-mode-map))
-(setq list-gen-mode-ffap (append list-gen-mode-ffap '(org-mode)))
-(setq list-gen-mode-map-ffap (append list-gen-mode-map-ffap '(org-mode-map)))
+(setq list-gen-mode-ffap (append list-gen-mode-ffap '(org-mode markdown-mode gfm-mode)))
+(setq list-gen-mode-map-ffap (append list-gen-mode-map-ffap '(org-mode-map markdown-mode-map gfm-mode-map)))
 
 ;; xref
 (setq list-gen-mode-xref (copy-sequence list-gen-mode))

@@ -5,7 +5,6 @@
  :keymaps 'nxml-mode-map
  :major-modes 'nxml-mode
  :prefix ","
- ","  '(ffap :which-key "act_ffap")
  "v"  '(cfg/xml-xsd-validate :which-key "validate-xsd-xmllint"))
 
 (provide 'cfg-gen-co-nxml-mode)

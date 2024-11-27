@@ -6,16 +6,17 @@
  :keymaps list-gen-mode-map-ffap
  :major-modes list-gen-mode-ffap
  :prefix ","
- "."  '(:ignore t :which-key "ffap")
- ".."  '(ffap :which-key "act_ffap")
- ".m"  '(imenu :which-key "imenu"))
+ "/"  '(:ignore t :which-key "goto")
+ "//"  '(ffap :which-key "act_ffap")
+ "/e"  '(goto-line :which-key "goto-line")
+ "/m"  '(imenu :which-key "imenu"))
 
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(perl-mode-map cperl-mode-map)
  :major-modes '(perl-mode cperl-mode)
  :prefix ","
- ".." '(cfg/ffap :which-key "ffap_perl"))
+ "//" '(cfg/ffap :which-key "ffap_perl"))
 
 ;; xref
 (general-define-key
@@ -25,12 +26,12 @@
  :prefix ","
 
  ;; xref remapping with dumb-jump as a backend:
- "."  '(:ignore t :which-key "xref")
- ".d" '(xref-find-definitions :which-key "xref-def")
- ".h" '(xref-find-references :which-key "xref-ref")
- ".b" '(xref-go-back :which-key "xref-go-back")
- ".B" '(xref-go-forward :which-key "xref-go-forward")
- ".s" '(xref-find-apropos :which-key "xref-apropos"))
+ "/"  '(:ignore t :which-key "goto")
+ "/d" '(xref-find-definitions :which-key "xref-def")
+ "/h" '(xref-find-references :which-key "xref-ref")
+ "/b" '(xref-go-back :which-key "xref-go-back")
+ "/B" '(xref-go-forward :which-key "xref-go-forward")
+ "/s" '(xref-find-apropos :which-key "xref-apropos"))
 
 ;; without prefix:
 (general-define-key
@@ -42,14 +43,7 @@
  "gh" '(xref-find-references :which-key "xref-ref")
  "gb" '(xref-go-back :which-key "xref-go-back")
  "gB" '(xref-go-forward :which-key "xref-go-forward")
- "gs" '(xref-find-apropos :which-key "xref-apropos")
-
- "g."  '(:ignore t :which-key "xref")
- "g.d" '(xref-find-definitions :which-key "xref-def")
- "g.h" '(xref-find-references :which-key "xref-ref")
- "g.b" '(xref-go-back :which-key "xref-go-back")
- "g.B" '(xref-go-forward :which-key "xref-go-forward")
- "g.s" '(xref-find-apropos :which-key "xref-apropos"))
+ "gs" '(xref-find-apropos :which-key "xref-apropos"))
 
 (provide 'cfg-gen-co-xref-ffap-imenu)
 ;;; cfg-gen-co-xref-ffap-imenu.el ends here

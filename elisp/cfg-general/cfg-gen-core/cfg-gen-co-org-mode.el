@@ -5,7 +5,6 @@
  :keymaps '(org-mode-map org-static-blog-mode-map)
  :major-modes '(org-mode org-static-blog-mode)
  :prefix ","
- "," '(ffap :which-key "act_ffap")
  "c" '(org-ctrl-c-ctrl-c :which-key "org-ctrl-c-ctrl-c")
  "p" '(org-priority :which-key "org-priority")
  "g" '(org-goto :which-key "org-goto")

@@ -5,8 +5,7 @@
  :states '(normal visual emacs)
  :keymaps 'js-json-mode-map
  :major-modes 'js-json-mode
- :prefix ","
- "," '(ffap :which-key "act_ffap"))
+ :prefix ",")
 
 (provide 'cfg-gen-co-js-mode)
 ;;; cfg-gen-co-js-mode.el ends here

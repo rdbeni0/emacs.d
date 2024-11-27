@@ -10,7 +10,6 @@
  "n"  '(json-navigator-navigate-after-point :which-key "navigate-after-point")
  "r"  '(json-navigator-navigate-region :which-key "navigate-region")
  ;; built-in functionality:
- ","  '(ffap :which-key "act_ffap")
  "=p" '(json-pretty-print-buffer :which-key "pretty-p-buffer")
  "=o" '(json-pretty-print-buffer-ordered :which-key "pretty-p-buffer-ordered")
  "=r" '(json-pretty-print-ordered :which-key "pretty-p-ordered"))
