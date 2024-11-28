@@ -4,6 +4,7 @@
 ;; Everything what is connected with "projectile". This file also contains some additional key mapping.
 ;; Basically everything (including keys) what is connected with projectile is inside this file.
 ;; Docs: https://docs.projectile.mx/projectile/index.html
+;; https://github.com/bbatsov/projectile/
 ;;
 ;;; Code:
 

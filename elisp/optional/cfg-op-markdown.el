@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;
 ;; Setup for markdown-mode.
+;; https://jblevins.org/projects/markdown-mode/
 ;;
 ;;; Code:
 

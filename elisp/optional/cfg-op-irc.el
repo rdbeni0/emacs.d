@@ -6,6 +6,7 @@
 ;; https://www.reddit.com/r/emacs/comments/8ml6na/tip_how_to_make_erc_fun_to_use/
 ;;
 ;; Additional ERC examples:
+;; https://www.emacswiki.org/emacs/ERC
 ;; https://www.reddit.com/r/emacs/comments/75i1bs/ircerc_setup/
 ;; https://gist.github.com/chumpage/1243771
 ;; https://github.com/bbatsov/emacs-dev-kit/blob/master/erc-config.el
@@ -94,6 +95,7 @@
   (setq erc-generate-log-file-name-function (quote erc-generate-log-file-name-with-date))
 
   ;; nickserv/password
+  ;; https://www.emacswiki.org/emacs/ErcNickserv
   (setq erc-prompt-for-nickserv-password nil)
 
   :config
