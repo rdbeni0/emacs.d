@@ -24,5 +24,9 @@ export HISTFILE=~/.bash_history
 clear
 " host)))))
 
+;;;;;; emacs-ssh-deploy
+;; warte sprawdzenia
+;; https://github.com/cjohansson/emacs-ssh-deploy
+
 (provide 'cfg-op-ssh-tramp)
 ;;; cfg-op-ssh-tramp.el ends here
