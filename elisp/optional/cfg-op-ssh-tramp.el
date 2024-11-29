@@ -25,7 +25,7 @@ clear
 " host)))))
 
 ;;;;;; emacs-ssh-deploy
-;; warte sprawdzenia
+;; worth checking out:
 ;; https://github.com/cjohansson/emacs-ssh-deploy
 
 (provide 'cfg-op-ssh-tramp)
