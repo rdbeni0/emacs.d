@@ -27,7 +27,8 @@
  "<f5><f7>"  '(company-yasnippet :which-key "company-yasnippet")
  "<f5><f8>"  '(company-ispell :which-key "company-ispell")
  "<f5><f9>"  '(company-files :which-key "company-files")
- "<f5>o" '(company-diag :which-key "company-diagnose"))
+ "<f5>o" '(company-diag :which-key "company-diagnose")
+ "<f5>`"  '(yas-insert-snippet :which-key "yas-insert-snippet"))
 
 (provide 'cfg-gen-op-company)
 ;;; cfg-gen-op-company.el ends here
