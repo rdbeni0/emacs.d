@@ -76,6 +76,7 @@
  "fv"  '(revert-buffer :which-key "revert-refresh-buffer")
  "fV"  '(auto-revert-mode :which-key "auto-revert-mode")
  "fe"  '(recentf-open-files :which-key "recentf")
+ "fp"  '(pwd :which-key "pwd")
  "fr"  '(cfg/recentf-jump-open :which-key "recentf jump")
  "fs"  '(save-buffer :which-key "save buffer")
  "fo"  '(save-some-buffers :which-key "save-some-buffers")
