@@ -20,6 +20,8 @@
 	 ("\\.html?\\'" . web-mode)
 	 ("\\.js?\\'" . web-mode)
 	 ("\\.css?\\'" . web-mode)
+	 ("\\.nix_stable?\\'" . nix-mode)
+	 ("\\.nix_unstable?\\'" . nix-mode)
 	 ) auto-mode-alist))
 
 (provide 'cfg-op-list-auto-mode-alist)
