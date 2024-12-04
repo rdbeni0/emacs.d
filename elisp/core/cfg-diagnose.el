@@ -32,6 +32,8 @@
 			 (if (executable-find "pyright") (insert "pyright : FOUND\n") (insert "pyright : NOT FOUND : lsp for python will not work!\n"))
 			 (if (executable-find "ccls") (insert "ccls : FOUND\n") (insert "ccls : NOT FOUND : lsp for c/c++ will not work!\n"))
 			 (if (executable-find "clangd") (insert "clangd : FOUND\n") (insert "clangd : NOT FOUND : lsp for c/c++ will not work!\n"))
+			 (if (file-exists-p "~/.local/share/fonts/NFM.ttf") (insert "file/font NFM.ttf : FOUND\n") (insert "font NFM.ttf : NOT FOUND : doom-modeline will not work correctly: https://github.com/seagle0128/doom-modeline ! \n"))
+
 			 )
     (switch-to-buffer buffer)
     ;; (pop-to-buffer buffer)
