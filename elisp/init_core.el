@@ -19,6 +19,7 @@
 (require 'cfg-i-buffer-menu)
 (require 'cfg-diagnose)
 (require 'cfg-common-options)
+(require 'cfg-coding-systems)
 (require 'cfg-line-numbers-hl)
 (require 'cfg-emacs-lisp)
 (require 'cfg-python)

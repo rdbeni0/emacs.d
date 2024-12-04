@@ -4,8 +4,7 @@
 ;; Basic setup for backups, startup, lockfiles, utf-8 encoding
 ;;
 ;;; Code:
-(setq delete-old-versions -1 )		; delete excess backup versions silently
-(setq make-backup-files nil)	        ; turn off backups
+
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Interlocking.html
 
@@ -22,12 +21,10 @@
 
 ;; https://stackoverflow.com/questions/25245134/stop-emacs-creating-autosave-files-in-the-same-directory
 
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ; transform backups file name
 (setq ring-bell-function 'ignore )	; silent bell when you make a mistake
-(setq coding-system-for-read 'utf-8 )	; use utf-8 by default
-(setq coding-system-for-write 'utf-8 )
-(setq default-process-coding-system '(utf-8 . utf-8))
+
+;; Fix archaic defaults
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
 (electric-indent-mode -1)               ; https://www.reddit.com/r/emacs/comments/2mu7yi/disable_electric_indent_mode/
@@ -61,6 +58,38 @@
 (custom-set-variables
  '(auth-source-save-behavior nil)
  '(warning-suppress-types '((frameset))))
+
+;;
+;; https://codeberg.org/ashton314/emacs-bedrock/src/branch/main/init.el
+;;
+
+;; Save history of minibuffer
+(savehist-mode)
+
+;; Move through windows with Ctrl-<arrow keys>
+(windmove-default-keybindings 'control) ; You can use other modifiers here
+
+;; Make right-click do something sensible
+(when (display-graphic-p)
+  (context-menu-mode))
+
+;; turn off backups - OPTIONAL:
+;; (setq make-backup-files nil)
+
+(setq delete-old-versions -1 )		; delete excess backup versions silently
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
+
+;; Don't litter file system with *~ backup files; put them all inside
+;; ~/.emacs.d/backup or wherever
+(defun cfg/-backup-file-name (fpath)
+  "Return a new file path of a given file path.
+If the new path's directories does not exist, create them."
+  (let* ((backupRootDir (concat user-emacs-directory "backups/"))
+         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
+         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
+    (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
+    backupFilePath))
+(setopt make-backup-file-name-function 'cfg/-backup-file-name)
 
 (provide 'cfg-common-options)
 ;;; cfg-common-options.el ends here
