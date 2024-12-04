@@ -8,6 +8,7 @@
 ;; http://xahlee.info/emacs/emacs/emacs_icomplete_mode.html
 ;; http://xahlee.info/emacs/emacs/emacs_fido_mode.html
 ;; https://www.masteringemacs.org/article/introduction-to-ido-mode
+;; https://www.masteringemacs.org/article/understanding-minibuffer-completion
 ;; https://karthinks.com/software/more-batteries-included-with-emacs/
 ;;
 ;;; Code:

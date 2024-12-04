@@ -65,5 +65,8 @@
 ;; ;; Smaller font for inactive mode line:
 ;; (set-face-attribute 'mode-line-inactive nil :height 0.85)
 
+; this information is useless for most:
+(setopt display-time-default-load-average nil)
+
 (provide 'cfg-op-core-mode-line)
 ;;; cfg-op-core-mode-line.el ends here

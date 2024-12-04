@@ -60,6 +60,14 @@
  '(auth-source-save-behavior nil)
  '(warning-suppress-types '((frameset))))
 
+;; Optional Misc. UI tweaks
+;; (blink-cursor-mode -1)                                ; Steady cursor
+;; (pixel-scroll-precision-mode)                         ; Smooth scrolling
+
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Switching-Buffers.html
+;; OPTIONAL - Make switching buffers more consistent:
+;; (setopt switch-to-buffer-obey-display-actions t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; MOUSE INTEGRATION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -67,6 +75,11 @@
 ;; Make right-click do something sensible
 (when (display-graphic-p)
   (context-menu-mode))
+
+;;OPTIONAL - Enable horizontal scrolling
+;;To Be Checked:
+;; (setopt mouse-wheel-tilt-scroll t)
+;; (setopt mouse-wheel-flip-direction t)
 
 (provide 'cfg-common-options)
 ;;; cfg-common-options.el ends here
