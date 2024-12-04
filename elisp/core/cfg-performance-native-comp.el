@@ -85,11 +85,36 @@
   )
 
 ;; >>>>>>>>>>>>>>>>>> OVERALL PERFORMANCE OPTIONS
-;; see Doom Emacs for inspiration: https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
+;; see Doom Emacs for inspiration:
+;; https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
+;; Other examples:
+;; https://news.ycombinator.com/item?id=39190110
+;; https://www.reddit.com/r/emacs/comments/r7qah6/emacs_is_bloat_and_memory_intensive/
 
-(setq gc-cons-threshold most-positive-fixnum)
-;; (setq gc-cons-threshold 100000000)
+;; Set garbage collection threshold to 8GB:
+(setq gc-cons-threshold #x200000000)
+;;(setq gc-cons-threshold most-positive-fixnum)
+
 (setq read-process-output-max (* 1024 1024))
+
+;; https://akrl.sdf.org/#orgc15a10d
+;; When idle for 15sec run the GC no matter what:
+;; This action ss to set a timer using run-with-idle-timer.
+;; That means that every time Emacs will be idle for 15 secs we'll garbage collect once.
+;; The assumption is that the probability that we are going to input a command exactly after 15 secs is rather low.
+
+(defmacro k-time (&rest body)
+  "Measure and return the time it takes evaluating BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+
+(defvar k-gc-timer
+  (run-with-idle-timer 15 t
+                       (lambda ()
+                         (message "Garbage Collector has run for %.06fsec"
+                                  (k-time (garbage-collect))))))
+
 
 (provide 'cfg-performance-native-comp)
 ;;; cfg-performance-native-comp.el ends here
