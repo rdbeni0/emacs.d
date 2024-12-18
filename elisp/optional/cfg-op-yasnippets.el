@@ -10,7 +10,9 @@
 
 (use-package yasnippet
   :ensure t
-  :bind (([remap company-indent-or-complete-common]             . cfg/yas-expand-or-company-complete))
+  :bind (
+	 ([remap company-indent-or-complete-common]             . cfg/yas-expand-or-company-complete)
+	 ([remap company-complete]                        . cfg/yas-expand-or-company-complete))
   :config
   (when (file-directory-p (expand-file-name "data/yasnippets" user-emacs-directory))
     (setq yas-snippet-dirs (append yas-snippet-dirs (list (expand-file-name "data/yasnippets" user-emacs-directory)))))
@@ -55,7 +57,7 @@
 	(interactive)
 	(or
 	 ;; (yas-expand)
-	 (company-yasnippet)
+	 (company-yasnippet arg)
 	 (company-indent-or-complete-common arg)))
 
       (with-eval-after-load 'company
