@@ -62,7 +62,7 @@
 
       (with-eval-after-load 'company
 	(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-	(setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))))
+	)))
   )
 
 ;; https://github.com/AndreaCrotti/yasnippet-snippets
