@@ -32,9 +32,9 @@
   ;; alternative - add yasnippet to all backends:
   ;; (yas-global-mode 1)
 
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.
-  ;; IF YASNIPPET IS AVAILABLE, THEN FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
+  ;; IF YASNIPPET IS AVAILABLE, THEN FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE:
   ;; SOURCES:
   ;; https://github.com/company-mode/company-mode/issues/839
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
@@ -54,7 +54,8 @@
       (defun cfg/yas-expand-or-company-complete (&optional arg)
 	(interactive)
 	(or
-	 (yas-expand)
+	 ;; (yas-expand)
+	 (company-yasnippet)
 	 (company-indent-or-complete-common arg)))
 
       (with-eval-after-load 'company
