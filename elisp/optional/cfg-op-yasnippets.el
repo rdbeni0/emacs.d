@@ -35,14 +35,16 @@
   ;; (yas-global-mode 1)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.
-  ;; IF YASNIPPET IS AVAILABLE, THEN FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE:
-  ;; SOURCES:
+  ;; Manipulation's with yasnippets + company-backends.
+  ;; If yasnippet is available, then try to force yasnippets enabled everywhere with company-mode.
+  ;; Sources:
   ;; https://github.com/company-mode/company-mode/issues/839
   ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
 
   (when (require 'company nil 'noerror)
     (progn
+
+      ;; Optional:
       (defun cfg/company-backend-with-yas (backends)
 	"Add :with company-yasnippet to ALL company BACKENDS - not only to one.
   Taken from https://github.com/syl20bnr/spacemacs/pull/179."
@@ -52,12 +54,13 @@
 		      backends
 		    (list backends))
 		  '(:with company-yasnippet))))
+
+
       ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
       (defun cfg/yas-expand-or-company-complete (&optional arg)
 	(interactive)
 	(or
-	 ;; (yas-expand)
-	 (company-yasnippet arg)
+	 (company-yasnippet arg) ;; (yas-expand)
 	 (company-indent-or-complete-common arg)))
 
       (with-eval-after-load 'company

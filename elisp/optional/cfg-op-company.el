@@ -82,7 +82,10 @@
       (add-hook 'php-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
 				 ;; company-capf, company-gtags
-				 (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))))))
+				 (if (require 'company-php nil 'noerror)
+				     (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
+				   (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
+				   )))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
@@ -173,20 +176,6 @@
 ;; (use-package company-jedi
 ;;   :ensure t
 ;; )
-
-(when (require 'php-mode nil 'noerror)
-  ;; php
-  ;; https://github.com/xcwen/ac-php
-  (progn
-    (use-package company-php
-      :after company
-      :ensure t
-      :config
-      ;; ac-php uses its own tags format. By default all tags located at ~/.ac-php/tags-<project-directory>. For example, if the real path of the project is /home/jim/ac-php/phptest, then tags will be placed at ~/.ac-php/tags-home-jim-ac-php-phptest/. And you can redefine the base path (~/.ac-php) using ac-php-tags-path variable.
-      (setq ac-php-tags-path (expand-file-name ".cache/.ac-php" user-emacs-directory))
-      (add-hook 'php-mode-hook (lambda ()
-				 (require 'company-php)
-				 (ac-php-core-eldoc-setup))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ADDITIONAL PACKAGES AND CONFIGURATION FOR COMPANY (NOT BACKENDS):
