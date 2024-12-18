@@ -49,35 +49,6 @@
           minibuffer-inactive-mode))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.
-  ;; IF YASNIPPET IS AVAILABLE, THEN FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
-  ;; SOURCES:
-  ;; https://github.com/company-mode/company-mode/issues/839
-  ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
-
-  (when (require 'yasnippet nil 'noerror)
-    (progn
-      (defun cfg/company-backend-with-yas (backends)
-	"Add :with company-yasnippet to ALL company BACKENDS - not only to one.
-  Taken from https://github.com/syl20bnr/spacemacs/pull/179."
-	(if (and (listp backends) (memq 'company-yasnippet backends))
-	    backends
-	  (append (if (consp backends)
-		      backends
-		    (list backends))
-		  '(:with company-yasnippet))))
-      ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
-      (defun cfg/yas-expand-or-company-complete (&optional arg)
-	(interactive)
-	(or
-	 (yas-expand)
-	 (company-indent-or-complete-common arg)))
-
-      (with-eval-after-load 'company
-	(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-	(setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))))
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
   (setq company-dabbrev-downcase nil)
 
@@ -107,82 +78,60 @@
       (add-hook 'php-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
 				 ;; company-capf, company-gtags
-				 (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
-				 (when (require 'yasnippet nil 'noerror)
-				   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))))
+				 (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
 				    (set (make-local-variable 'company-backends) '())
 				    ;; capf is working great with elisp code, and company-elisp is obsolete
 				    ;; company-capf, company-gtags
-				    (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-capf company-files company-dabbrev-code))
-				    (when (require 'yasnippet nil 'noerror)
-				      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+				    (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-capf company-files company-dabbrev-code))))
 
   (add-hook 'sh-mode-hook (lambda ()
 			    (set (make-local-variable 'company-backends) '())
 			    ;; company-capf, company-gtags
-			    (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
-			    (when (require 'yasnippet nil 'noerror)
-			      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+			    (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
 
   (add-hook 'nix-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     ;; company-capf, company-gtags
-			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
-			     (when (require 'yasnippet nil 'noerror)
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
 
   (add-hook 'cperl-mode-hook (lambda ()
 			       (set (make-local-variable 'company-backends) '())
 			       ;; company-capf, company-gtags
-			       (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
-			       (when (require 'yasnippet nil 'noerror)
-				 (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+			       (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
 
   (add-hook 'web-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     ;; company-capf, company-gtags
-			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
-			     (when (require 'yasnippet nil 'noerror)
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
 
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())
 				;; company-capf, company-gtags
-				(add-to-list 'company-backends '(company-abbrev :separate company-anaconda company-dabbrev-code company-keywords company-files company-dabbrev))
-				(when (require 'yasnippet nil 'noerror)
-				  (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+				(add-to-list 'company-backends '(company-abbrev :separate company-anaconda company-dabbrev-code company-keywords company-files company-dabbrev))))
 
   (add-hook 'snippet-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
 				 ;; company-capf, company-gtags
-				 (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))
-				 (when (require 'yasnippet nil 'noerror)
-				   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+				 (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))))
 
   (add-hook 'org-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     ;; company-capf, company-gtags
-			     (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))
-			     (when (require 'yasnippet nil 'noerror)
-			       (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))))
+			     (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))))
 
   ;; optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
   (add-hook 'notmuch-message-mode-hook (lambda ()
 					 (set (make-local-variable 'company-backends) '())
 					 ;; company-gtags
 					 (add-to-list 'company-backends '(company-abbrev :separate company-capf notmuch-company company-files company-dabbrev company-dabbrev-code))
-					 (when (require 'yasnippet nil 'noerror)
-					   (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends)))
 					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
 
   (defun cfg/-hook-c-cpp-mode ()
     (set (make-local-variable 'company-backends) '())
     ;; company-capf, company-gtags
-    (add-to-list 'company-backends '(company-abbrev :separate company-clang company-cmake company-dabbrev-code company-keywords company-files company-dabbrev))
-    (when (require 'yasnippet nil 'noerror)
-      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+    (add-to-list 'company-backends '(company-abbrev :separate company-clang company-cmake company-dabbrev-code company-keywords company-files company-dabbrev)))
 
   ;; (add-hook 'c-mode-common-hook 'cfg/-hook-c-cpp-mode)
   (add-hook 'c-mode-hook 'cfg/-hook-c-cpp-mode)
@@ -191,9 +140,7 @@
   (defun cfg/-hook-SHARED-COMPANY-mode ()
     (set (make-local-variable 'company-backends) '())
     ;; company-gtags
-    (add-to-list 'company-backends '(company-abbrev :separate company-capf company-dabbrev-code company-keywords company-files company-dabbrev))
-    (when (require 'yasnippet nil 'noerror)
-      (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))))
+    (add-to-list 'company-backends '(company-abbrev :separate company-capf company-dabbrev-code company-keywords company-files company-dabbrev)))
 
   (add-hook 'conf-mode 'cfg/-hook-SHARED-COMPANY-mode)
   (add-hook 'conf-unix-mode 'cfg/-hook-SHARED-COMPANY-mode)

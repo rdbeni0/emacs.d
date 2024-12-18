@@ -10,6 +10,7 @@
 
 (use-package yasnippet
   :ensure t
+  :bind (([remap company-indent-or-complete-common]             . cfg/yas-expand-or-company-complete))
   :config
   (when (file-directory-p (expand-file-name "data/yasnippets" user-emacs-directory))
     (setq yas-snippet-dirs (append yas-snippet-dirs (list (expand-file-name "data/yasnippets" user-emacs-directory)))))
@@ -30,6 +31,35 @@
   (yas-reload-all)
   ;; alternative - add yasnippet to all backends:
   ;; (yas-global-mode 1)
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; MANIPULATION'S WITH COMPANY-BACKENDS + YASNIPPETS.
+  ;; IF YASNIPPET IS AVAILABLE, THEN FORCE YASNIPPETS ENABLED EVERYWHERE WITH COMPANY-MODE :
+  ;; SOURCES:
+  ;; https://github.com/company-mode/company-mode/issues/839
+  ;; https://www.reddit.com/r/emacs/comments/bm8r3c/help_how_do_i_get_yasnippet_names_to_show_up_in/
+
+  (when (require 'company nil 'noerror)
+    (progn
+      (defun cfg/company-backend-with-yas (backends)
+	"Add :with company-yasnippet to ALL company BACKENDS - not only to one.
+  Taken from https://github.com/syl20bnr/spacemacs/pull/179."
+	(if (and (listp backends) (memq 'company-yasnippet backends))
+	    backends
+	  (append (if (consp backends)
+		      backends
+		    (list backends))
+		  '(:with company-yasnippet))))
+      ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
+      (defun cfg/yas-expand-or-company-complete (&optional arg)
+	(interactive)
+	(or
+	 (yas-expand)
+	 (company-indent-or-complete-common arg)))
+
+      (with-eval-after-load 'company
+	(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+	(setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)))))
   )
 
 ;; https://github.com/AndreaCrotti/yasnippet-snippets
