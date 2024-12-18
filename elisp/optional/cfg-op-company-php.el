@@ -24,7 +24,5 @@
 				 (ac-php-core-eldoc-setup))))
     ))
 
-
-
 (provide 'cfg-op-company-php)
 ;;; cfg-op-company-php.el ends here
