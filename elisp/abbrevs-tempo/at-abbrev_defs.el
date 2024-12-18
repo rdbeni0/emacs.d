@@ -160,6 +160,10 @@
 (define-abbrev-table 'php-mode-abbrev-table
   '(
     ("qqsta" "#!/usr/bin/env php\n<?php\n" nil 0 :system t)
+    ("qqifc" "// COnditions strict: > >= === !== <= <\n// COnditions non strict: == != <=>\nif ($condition) {\n    // code here\n}" nil 0 :system t)
+    ("qqifce" "// COnditions strict: > >= === !== <= <\n// COnditions non strict: == != <=>\nif ($condition) {\n    // code here\n} else {\n    // code here\n}" nil 0 :system t)
+    ("qqifce1" "// COnditions strict: > >= === !== <= <\n// COnditions non strict: == != <=>\nif ($condition) {\n    // code here\n} elseif ($condition) {\n    // code here\n} else {\n    // code here\n}" nil 0 :system t)
+    ("qqifce2" "// COnditions strict: > >= === !== <= <\n// COnditions non strict: == != <=>\nif ($condition) {\n    // code here\n} elseif ($condition) {\n    // code here\n} elseif ($condition) {\n    // code here\n} else {\n    // code here\n}" nil 0 :system t)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
