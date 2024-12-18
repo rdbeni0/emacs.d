@@ -31,5 +31,6 @@
 (require 'cfg-op-groovy-jenkins)
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
+(require 'cfg-op-company-php)
 (require 'cfg-op-org)
 (require 'cfg-op-web-mode)
