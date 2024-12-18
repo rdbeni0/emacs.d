@@ -54,12 +54,12 @@
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY FRONTENDS:
+  ;;
   (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; COMPANY BACKENDS:
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY, NOT GLOBALLY):
+  ;;
   ;; https://www.reddit.com/r/emacs/comments/ba6blj/company_looking_for_comprehensive_documentation/
   ;; ^ "(set (make-local-variable 'company-backends) '())" should be used (seems to be the most correct way)
   ;; OTHER EXAMPLE:
@@ -82,6 +82,7 @@
       (add-hook 'php-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
 				 ;; company-capf, company-gtags
+				 ;; OPTIONALLY load "company-php" as "company-ac-php-backend" (if lsp is not to be used, it is best to enable it then):
 				 (if (require 'company-php nil 'noerror)
 				     (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
 				   (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
