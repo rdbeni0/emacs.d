@@ -11,13 +11,14 @@
   :ensure t
   )
 
-;; orglink
+;; OPTIONAL: orglink
+;; Similar to: https://www.gnu.org/software/emacs/manual/html_node/emacs/Goto-Address-mode.html
+;;
 ;; https://github.com/tarsius/orglink
-;; https://emacs.stackexchange.com/questions/30521/rendering-urls-as-clickable-links
-(use-package orglink
-  :ensure t
-  :config
-  (global-orglink-mode 1))
+;; (use-package orglink
+;;   :ensure t
+;;   :config
+;;   (global-orglink-mode 1))
 
 ;; org-roam
 ;; https://github.com/org-roam
@@ -32,9 +33,10 @@
   (org-roam-db-location (expand-file-name "data/org-roam.db" user-emacs-directory))
   (org-roam-completion-everywhere t)
   :config
-  (org-roam-setup)
-  ;; load general.el and keybindings - will be used also for other packages:
-  (require 'cfg-gen-op-org-mode))
+  (org-roam-setup))
+
+;; load general.el and keybindings - will be used also for other packages:
+(require 'cfg-gen-op-org-mode)
 
 ;; Please create correct "lo-op-org.el" file inside ~/.emacs.d/data/local/lo-op-org.el (or other emacs dir)
 ;; Please add additional configuration for org-static-blog or/and org-roam inside this file.
