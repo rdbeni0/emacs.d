@@ -131,6 +131,7 @@
  "bmc" '(conf-mode :which-key "conf-mode")
  "bme" '(emacs-lisp-mode :which-key "emacs-lisp-mode")
  "bmx" '(nxml-mode :which-key "nxml-mode")
+ "bmv" '(visual-line-mode :which-key "visual-line-mode")
  "bmj" '(js-json-mode :which-key "js-json-mode")
 
  ;; completions
