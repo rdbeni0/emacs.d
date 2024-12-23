@@ -30,12 +30,16 @@
 ;; shortcut:
 ;;
 ;; cfg  :  config; app configs
+;; cla  :  class
 ;; dbs  :  databases, sql
 ;; deb  :  debug info
+;; exc  :  exceptions
 ;; fih  :  file handling; file operations
-;; fun  :  function; definitions
+;; fun  :  function, definitions, submodules
 ;; ifc  :  if conditions; ...else if... else statements (overall conditionals)
-;; inc  :  include; loading external libraries
+;; inc  :  include, import; loading external libraries
+;; lfo  :  loop: for
+;; lwh  :  loop: while
 ;; lin  :  lines; long lines of comments
 ;; opt  :  options; getopt - parsing program options (CLI args and flags)
 ;; sta  :  start; everything related to the beginning of the file, e.g. shebang or declarations for editor settings
@@ -116,7 +120,7 @@
 (define-skeleton python-argparse-skeleton
   "Insert a Python argparse example with def main()."
   nil
-  "\n#!/usr/bin/env python\n"
+  "#!/usr/bin/env python\n"
   "# -*- coding: utf-8 -*-\n\n"
   "import argparse\n\n"
   "def main():\n"
@@ -131,7 +135,7 @@
 (define-skeleton python-file-replace-skeleton
   "Insert Python code to replace text line by line in a file."
   nil
-  "\n#SKELETON> In the case of 'with open (...)' file.close() is automatic (not required).\n"
+  "#SKELETON> In the case of 'with open (...)' file.close() is automatic (not required).\n"
   "with open('X', 'r') as file:\n"
   "    lines = file.readlines()\n\n"
   "with open('X', 'w') as file:\n"
@@ -139,8 +143,16 @@
   "        new_line = line.replace(\"" (skeleton-read "Old text: ") "\", \"" (skeleton-read "New text: ") "\")\n"
   "        file.write(new_line)\n")
 
-(define-abbrev python-mode-abbrev-table "qsopt1" "#SKELETON> Argparse - example with def main()." 'python-argparse-skeleton :system t)
-(define-abbrev python-mode-abbrev-table "qsfih1" "#SKELETON> File handling - replace text line by line in a file." 'python-file-replace-skeleton :system t)
+(define-abbrev python-mode-abbrev-table "qsopt1" "#SKELETON> Argparse - example with def main().\n" 'python-argparse-skeleton :system t)
+(define-abbrev python-mode-abbrev-table "qsfih1" "#SKELETON> File handling - replace text line by line in a file.\n" 'python-file-replace-skeleton :system t)
+;; python-mode skeletons:
+(define-abbrev python-mode-abbrev-table "qscla1" "#SKELETON> Insert class (via python-mode).\n" 'python-skeleton-class :system t)
+(define-abbrev python-mode-abbrev-table "qsfun1" "#SKELETON> Insert def (via python-mode).\n" 'python-skeleton-def :system t)
+(define-abbrev python-mode-abbrev-table "qslfo1" "#SKELETON> Insert for loop (via python-mode).\n" 'python-skeleton-for :system t)
+(define-abbrev python-mode-abbrev-table "qslwh1" "#SKELETON> Insert while loop (via python-mode).\n" 'python-skeleton-while :system t)
+(define-abbrev python-mode-abbrev-table "qsifc1" "#SKELETON> Insert if (via python-mode).\n" 'python-skeleton-if :system t)
+(define-abbrev python-mode-abbrev-table "qsinc1" "#SKELETON> Insert import (via python-mode).\n" 'python-skeleton-import :system t)
+(define-abbrev python-mode-abbrev-table "qsexc1" "#SKELETON> Insert try.. catch block (via python-mode).\n" 'python-skeleton-try :system t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; SH-MODE
