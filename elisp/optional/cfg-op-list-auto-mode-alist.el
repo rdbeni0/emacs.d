@@ -20,6 +20,7 @@
 	 ("\\.html?\\'" . web-mode)
 	 ("\\.js?\\'" . web-mode)
 	 ("\\.css?\\'" . web-mode)
+	 ("\\.twig?\\'" . web-mode)
 	 ("\\.nix_stable?\\'" . nix-mode)
 	 ("\\.nix_unstable?\\'" . nix-mode)
 	 ) auto-mode-alist))
