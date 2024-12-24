@@ -86,6 +86,9 @@
 				 (if (require 'company-php nil 'noerror)
 				     (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
 				   (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
+
+
+
 				   )))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
@@ -215,8 +218,9 @@
 ;; (company-quickhelp-mode 1)
 ;; (setq company-quickhelp-delay 0.2)
 (custom-set-variables
- '(company-quickhelp-color-background "yellow") ;; "blue"
- '(company-quickhelp-color-foreground "black")  ;; "white"
+ '(company-quickhelp-color-background "green") ;; "blue"
+ '(company-quickhelp-color-foreground "yellow")  ;; "white"
+ '(company-quickhelp-use-propertized-text nil)
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
 

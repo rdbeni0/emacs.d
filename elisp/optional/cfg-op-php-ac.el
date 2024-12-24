@@ -1,8 +1,8 @@
-;;; cfg-op-company-php.el --- configfuration for company-mode and PHP -*- lexical-binding: t -*-
+;;; cfg-op-php-ac.el --- configfuration for ac-php -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configuration for company-php and ac: https://github.com/xcwen/ac-php
-;; Which can be used as a lighter alternative to lsp-mode with php.
+;; Which can be used as a lighter alternative to lsp-mode/eglot with php.
 ;; Enable this module only if you don't want to use lsp & php (for various reasons).
 ;;
 ;;; Code:
@@ -10,7 +10,6 @@
 
 (when (require 'php-mode nil 'noerror)
   (progn
-
     (use-package company-php
       :after company
       :ensure t
@@ -21,8 +20,10 @@
       (setq ac-php-tags-path (expand-file-name ".cache/.ac-php" user-emacs-directory))
       (add-hook 'php-mode-hook (lambda ()
 				 (require 'company-php)
-				 (ac-php-core-eldoc-setup))))
-    ))
+				 (ac-php-core-eldoc-setup)))
+      ;; load general.el and keybindings:
+      (require 'cfg-gen-op-php-ac)
+      )))
 
-(provide 'cfg-op-company-php)
-;;; cfg-op-company-php.el ends here
+(provide 'cfg-op-php-ac)
+;;; cfg-op-php-ac.el ends here
