@@ -86,9 +86,6 @@
 				 (if (require 'company-php nil 'noerror)
 				     (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
 				   (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
-
-
-
 				   )))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
