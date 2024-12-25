@@ -8,8 +8,21 @@
 (use-package nix-mode
   :ensure t
   :config
+
+  (with-eval-after-load 'eglot
+    (dolist (mode '((nix-mode . ("nixd"))))
+      (add-to-list 'eglot-server-programs mode)))
+
+  (add-hook 'nix-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'eglot-format nil t)
+              (eglot-ensure)
+	      ))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-nix-mode))
+
+;; https://github.com/nix-community/nixd/blob/main/nixd/docs/editor-setup.md
 
 (provide 'cfg-op-nix)
 ;;; cfg-op-nix.el ends here

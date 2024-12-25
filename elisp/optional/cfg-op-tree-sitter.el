@@ -19,6 +19,16 @@
 
 ;; (global-tree-sitter-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; https://github.com/emacs-php/php-ts-mode
+;; Since php 8.4 is broken
+
+;; (if (require 'php-ts-mode nil 'noerror)
+;;     (message "php-ts-mode is already installed")
+;;   (package-vc-install "https://github.com/emacs-php/php-ts-mode"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq major-mode-remap-alist
  '((yaml-mode . yaml-ts-mode)
    (bash-mode . bash-ts-mode)
