@@ -123,6 +123,7 @@
  "bx"  '(kill-buffer-and-window :which-key "kill-buffer-and-window")
  "bX"  '(cfg/kill-other-buffers :which-key "kill-other-buffers")
  "ba"  '(auto-revert-mode :which-key "auto-revert")
+ "bA"  '(global-auto-revert-mode :which-key "global-auto-revert")
  "bm"  '(:ignore t :which-key "core modes")
  "bmp" '(python-mode :which-key "python-mode")
  "bml" '(cperl-mode :which-key "cperl-mode")
