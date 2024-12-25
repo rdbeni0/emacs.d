@@ -18,6 +18,20 @@
  :prefix ","
  "//" '(cfg/ffap :which-key "ffap_perl"))
 
+;; xref
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps list-gen-mode-map-xref
+ :major-modes list-gen-mode-xref
+ :prefix ","
+ ;; xref remapping with dumb-jump as a backend:
+ "/"  '(:ignore t :which-key "goto")
+ "/d" '(xref-find-definitions :which-key "xref-def")
+ "/h" '(xref-find-references :which-key "xref-ref")
+ "/b" '(xref-go-back :which-key "xref-go-back")
+ "/B" '(xref-go-forward :which-key "xref-go-forward")
+ "/s" '(xref-find-apropos :which-key "xref-apropos"))
+
 (general-define-key
  :states '(normal visual emacs)
  :keymaps list-gen-mode-map-xref
