@@ -57,8 +57,8 @@
 (setq list-gen-mode-map-comment (append list-gen-mode-map list-gen-mode-conf-mode-map))
 
 ;; text manipulations
-(setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode robots-txt-mode)))
-(setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-conf-mode-map) '(org-mode-map robots-txt-mode-map)))
+(setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode)))
+(setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-conf-mode-map) '(org-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
