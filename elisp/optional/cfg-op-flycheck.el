@@ -14,13 +14,12 @@
   ;; The value of this variable is either an integer denoting the
   ;; maximum number of errors per syntax checker and buffer, or nil to
   ;; not limit the errors reported from a syntax checker.
-
   ;; If this variable is a number and a syntax checker reports more
   ;; errors than the value of this variable, its errors are not
   ;; discarded, and not highlighted in the buffer or available in the
   ;; error list.  The affected syntax checker is also disabled for
   ;; future syntax checks of the buffer.
-  ;; Do NOT disable checked:
+  ;; Do NOT disable checker:
   (setq flycheck-checker-error-threshold nil)
 
 
@@ -39,8 +38,7 @@
   :config
   ;; should be enabled/disabled manually via "M-x flycheck-eglot-mode":
   ;; After quite thorough checking, it turned out that this mode must be enabled:
-  (global-flycheck-eglot-mode 1)
-  )
+  (global-flycheck-eglot-mode 1))
 
 (use-package flycheck-checkbashisms
   :ensure t
@@ -63,7 +61,7 @@
         (switch-to-buffer "*Flycheck errors*")))))
 
 (defun cfg/flycheck-enable-checker ()
-  "Enable disabled checked in flycheck."
+  "Enable disabled checker in flycheck."
   (interactive)
   (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
     (call-interactively #'flycheck-disable-checker)))

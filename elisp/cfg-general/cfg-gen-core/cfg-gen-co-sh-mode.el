@@ -6,7 +6,7 @@
  :keymaps 'sh-mode-map
  :major-modes 'sh-mode
  :prefix ","
- "\\" '(sh-backslash-region :which-key "backslash-region")
+ "b" '(sh-backslash-region :which-key "backslash-region")
  "#"  '(sh-set-shell :which-key "set-shell")
  "!"  '(executable-interpret :which-key "exec-script")
  "c"  '(:ignore t :which-key "code_templates")
