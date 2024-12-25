@@ -1,5 +1,7 @@
 ;;; cfg-gen-co-eglot-mode.el --- eglot keybindings -*- lexical-binding: t -*-
 
+;; https://joaotavora.github.io/eglot/#Eglot-Commands
+;; https://www.gnu.org/software/emacs/manual/html_node/eglot/Eglot-Commands.html
 (general-define-key
  :prefix "\\"
  :states '(normal visual emacs)
