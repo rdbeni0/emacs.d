@@ -4,6 +4,7 @@
 ;; Everything what is connected with PHP programming
 ;; 2021 year: https://www.reddit.com/r/emacs/comments/ms8nvc/emacs_php_mode/
 ;; https://github.com/emacs-php
+;; https://melpa.org/#/?q=php
 ;;
 ;;; Code:
 
@@ -44,6 +45,10 @@
 						"concat_space"
 						))
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; TODO: https://github.com/Junker/flycheck-php-noverify
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://melpa.org/#/psalm
 (use-package psalm
