@@ -11,6 +11,8 @@
   (add-hook 'php-mode-hook
             (lambda ()
               (setq eglot-report-progress nil)
+	      (setq eglot-events-buffer-size 0)
+	      (setq eglot-autoshutdown t)
               (eglot-ensure))))
 
 (provide 'cfg-op-php-lsp)
