@@ -10,7 +10,9 @@
 (when (require 'php-mode nil 'noerror)
   (add-hook 'php-mode-hook
             (lambda ()
-              (eglot-ensure))))
+	      (add-to-list 'eglot-stay-out-of 'company)
+            (eglot-ensure)
+	      )))
 
 (provide 'cfg-op-php-lsp)
 ;;; cfg-op-php-lsp.el ends here

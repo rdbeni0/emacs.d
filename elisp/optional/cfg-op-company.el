@@ -85,7 +85,7 @@
 				 ;; OPTIONALLY load "company-php" as "company-ac-php-backend" (if lsp is not to be used, it is best to enable it then):
 				 (if (require 'company-php nil 'noerror)
 				     (add-to-list 'company-backends '(company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
-				   (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
+				   (add-to-list 'company-backends '(company-capf :separate company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
 				   )))))
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
