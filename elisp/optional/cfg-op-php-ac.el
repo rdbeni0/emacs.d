@@ -21,6 +21,11 @@
       (add-hook 'php-mode-hook (lambda ()
 				 (require 'company-php)
 				 (ac-php-core-eldoc-setup)))
+
+      ;; enable xref-find-references for php:
+      ;; https://github.com/xcwen/ac-php/issues/75
+      (require 'semantic/symref/grep)
+      (add-to-list 'semantic-symref-filepattern-alist '(php-mode "*.php"))
       ;; load general.el and keybindings:
       (require 'cfg-gen-op-php-ac)
       )))

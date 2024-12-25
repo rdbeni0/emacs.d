@@ -9,15 +9,38 @@
   :ensure t
   :config
   (global-flycheck-mode)
+
+  ;; Maximum errors allowed per syntax checker.
+  ;; The value of this variable is either an integer denoting the
+  ;; maximum number of errors per syntax checker and buffer, or nil to
+  ;; not limit the errors reported from a syntax checker.
+
+  ;; If this variable is a number and a syntax checker reports more
+  ;; errors than the value of this variable, its errors are not
+  ;; discarded, and not highlighted in the buffer or available in the
+  ;; error list.  The affected syntax checker is also disabled for
+  ;; future syntax checks of the buffer.
+  ;; Do NOT disable checked:
+  (setq flycheck-checker-error-threshold nil)
+
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-flycheck-mode))
 
+;; https://github.com/flycheck/flycheck-eglot
 (use-package flycheck-eglot
   :ensure t
   :after (flycheck eglot)
+  ;; By default, the Flycheck-Eglot considers the Eglot to be the only provider of syntax checks.
+  ;; The LSP-mode with Flycheck and the Eglot with Flymake behave in a similar way. It is assumed that all suitable checkers are plugged in the LSP server. In most cases, this is what you need. However, in case you need to use an Eglot checker in parallel with regular Flycheck checkers, there is a variable flycheck-eglot-exclusive that controls this. You can override it system wide:
+  ;; :custom (flycheck-eglot-exclusive nil)
+  ;; ... or "per major mode" (via hook).
   :hook (eglot-managed-mode . (lambda () (flymake-mode -1)))
   :config
-  (global-flycheck-eglot-mode 1))
+  ;; should be enabled/disabled manually via "M-x flycheck-eglot-mode":
+  ;; After quite thorough checking, it turned out that this mode must be enabled:
+  (global-flycheck-eglot-mode 1)
+  )
 
 (use-package flycheck-checkbashisms
   :ensure t
@@ -39,63 +62,26 @@
         (other-window 1)
         (switch-to-buffer "*Flycheck errors*")))))
 
+(defun cfg/flycheck-enable-checker ()
+  "Enable disabled checked in flycheck."
+  (interactive)
+  (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
+    (call-interactively #'flycheck-disable-checker)))
+
 ;;;; python
 ;;;; python-mode - linters, checkers...
 ;;;; we need to know that flycheck has excellent support for python-mode in emacs, but it needs some executables to be installed
 (when (require 'cfg-op-python nil 'noerror)
   (progn
-   (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
-   (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
-   (setq flycheck-python-mypy-cache-dir (expand-file-name ".cache/mypy" user-emacs-directory)) ;; https://github.com/python/mypy
-   (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
-   ;; https://www.reddit.com/r/emacs/comments/gqymvz/how_to_force_flycheck_to_select_a_specific_syntax/
-   ;; https://www.flycheck.org/en/latest/languages.html#python
-   (flycheck-add-next-checker 'python-flake8 'python-pylint 'python-mypy)
-   ;; (flycheck-add-next-checker 'python-flake8)
-   ))
-
-;;;; php
-(when (require 'cfg-op-php nil 'noerror)
-  (progn
-   ;; https://melpa.org/#/flycheck-phpstan
-   (use-package flycheck-phpstan
-     :ensure t
-     )
-
-   ;; https://melpa.org/#/flycheck-psalm
-   (use-package flycheck-psalm
-     :ensure t
-     )
-
-   (defun cfg/-my-php-mode-setup ()
-     "My PHP-mode hook - integration with flycheck."
-     (require 'flycheck-phpstan)
-     (require 'flycheck-psalm)
-
-     ;;
-     ;; In any given buffer where Flycheck is enabled, only one checker may be run at a time.
-     ;;
-     ;; However, any number of checkers can be run in sequence:
-     ;; (defun flycheck-add-next-checker checker next &optional append)
-     ;;
-     ;; In such a sequence, after the first checker has finished running and its errors have been reported, the next checker of the sequence runs and its errors are reported, etc. until there are no more checkers in the sequence. This sequence is called a checker chain.
-
-     ;; e.g. run "psalm" after "php":
-     (flycheck-add-next-checker 'php 'psalm)
-     ;; etc:
-     (flycheck-add-next-checker 'psalm 'php-phpmd)
-
-     ;; Next may also be a cons cell (level . next-checker), where next-checker is a symbol denoting the syntax checker to run after checker, and level is an error level. The next-checker will then only be run if there is no current error whose level is more severe than level.
-     ;; If level is t, then next-checker is run regardless of the current errors.
-     ;;
-     ;; Run 'phpstan only if 'php-phpmd produced no errors (only warnings and info diagnostics):
-     (flycheck-add-next-checker 'php-phpmd '(warning . phpstan))
-
-     ;; (add-to-list 'flycheck-disabled-checkers 'phpstan)
-     ;; (flycheck-mode t) ; not required, should be enabled globally
-     )
-
-   (add-hook 'php-mode-hook 'cfg/-my-php-mode-setup)))
+    (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
+    (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
+    (setq flycheck-python-mypy-cache-dir (expand-file-name ".cache/mypy" user-emacs-directory)) ;; https://github.com/python/mypy
+    (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
+    ;; https://www.reddit.com/r/emacs/comments/gqymvz/how_to_force_flycheck_to_select_a_specific_syntax/
+    ;; https://www.flycheck.org/en/latest/languages.html#python
+    (flycheck-add-next-checker 'python-flake8 'python-pylint 'python-mypy)
+    ;; (flycheck-add-next-checker 'python-flake8)
+    ))
 
 (provide 'cfg-op-flycheck)
 ;;; cfg-op-flycheck.el ends here

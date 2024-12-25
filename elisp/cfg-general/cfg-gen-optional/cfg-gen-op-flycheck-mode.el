@@ -12,7 +12,10 @@
  "`t" '(flycheck-mode :which-key "toggle-flycheck")
  "`," '(flycheck-display-error-at-point :which-key "show-error-at-point")
  "`." '(flycheck-copy-errors-as-kill :which-key "copy-error-at-point")
- "`'" '(flycheck-mode :which-key "flycheck-mode")
+ "`e" '(cfg/flycheck-enable-checker :which-key "enable-checker")
+ "`d" '(flycheck-disable-checker :which-key "disable-checker")
+ "`m" '(flycheck-mode :which-key "flycheck-mode")
+ "`f" '(flycheck-eglot-mode :which-key "toggle-flycheck-eglot")
  "`'" '(flycheck-buffer :which-key "flycheck-buffer")
  "`]" '(flycheck-next-error :which-key "next-error")
  "`[" '(flycheck-previous-error :which-key "previous-error")
@@ -21,6 +24,12 @@
  "`V" '(flycheck-verify-checker :which-key "verify-checker")
  "`s" '(flycheck-select-checker :which-key "select-checker")
  "`?" '(flycheck-describe-checker :which-key "describe-checker"))
+
+(general-define-key
+ :prefix "\\"
+ :states '(normal visual emacs)
+ :keymaps 'override
+ "f" '(flycheck-eglot-mode :which-key "toggle-flycheck-eglot"))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -36,7 +45,7 @@
  "q" '(kill-buffer-and-window :which-key "quit")
  "Q" '(kill-buffer :which-key "kill-this-buffer"))
 
- (general-define-key
+(general-define-key
  :states '(normal visual emacs)
  :keymaps '(perl-mode-map cperl-mode-map)
  :major-modes '(perl-mode cperl-mode)
@@ -49,5 +58,5 @@
  :major-modes 'flycheck-error-list-mode
  "q" 'kill-buffer-and-window)
 
- (provide 'cfg-gen-op-flycheck-mode)
+(provide 'cfg-gen-op-flycheck-mode)
 ;;; cfg-gen-op-flycheck-mode.el ends here

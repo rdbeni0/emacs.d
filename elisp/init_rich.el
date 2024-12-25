@@ -33,7 +33,6 @@
 (require 'cfg-op-groovy-jenkins)
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
-(require 'cfg-op-php-lsp)
-;; (require 'cfg-op-php-ac)
+(require 'cfg-op-php-lsp) ;; alternative: (require 'cfg-op-php-ac)
 (require 'cfg-op-org)
 (require 'cfg-op-web-mode)
