@@ -64,6 +64,16 @@
   :ensure t
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; https://github.com/emacs-php/php-ts-mode
+
+(if (require 'php-ts-mode nil 'noerror)
+    (message "php-ts-mode is already installed")
+  (package-vc-install "https://github.com/emacs-php/php-ts-mode"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 (defun cfg/-my-php-mode-setup ()
   "My PHP-mode hook - integration with flycheck."
   (require 'flycheck-phpstan)
