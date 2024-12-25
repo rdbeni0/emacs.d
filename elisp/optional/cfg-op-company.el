@@ -101,8 +101,8 @@
 
   (add-hook 'nix-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
-			     ;; company-capf, company-gtags
-			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
+			     ;; company-capf will be used via nix LSP, company-gtags
+			     (add-to-list 'company-backends '(company-capf :separate company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
 
   (add-hook 'cperl-mode-hook (lambda ()
 			       (set (make-local-variable 'company-backends) '())

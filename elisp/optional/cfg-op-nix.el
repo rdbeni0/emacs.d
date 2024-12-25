@@ -16,6 +16,7 @@
   (add-hook 'nix-mode-hook
             (lambda ()
               (add-hook 'before-save-hook 'eglot-format nil t)
+	      (add-to-list 'eglot-stay-out-of 'company)
               (eglot-ensure)
 	      ))
 
