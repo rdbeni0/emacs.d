@@ -8,6 +8,7 @@
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
 (require 'cfg-op-doom-mode-line)
+(require 'cfg-op-pgtk)
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-projectile)
 (require 'cfg-op-dumbjump)

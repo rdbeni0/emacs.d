@@ -48,6 +48,13 @@
 ;; kill unnecessary compilation buffer:
 ;; please check cfg- file with tempbuf configuration or try to experiment with (kill-buffer ) ...
 
+;; manipulations with font rendering:
+;; https://www.reddit.com/r/emacs/comments/14c4l8j/way_to_make_emacs_feel_smoother/
+(setq jit-lock-stealth-time 1.25)
+(setq jit-lock-stealth-nice 0.5) ;; Seconds between font locking.
+(setq jit-lock-chunk-size 4096)
+(setq jit-lock-defer-time 0)
+
 ;;  >>>>>>>>>>>>>>>>>> DEFUNS FOR COMPILATION OF PARTICULAR DIRECTORIES:
 ;; All below defuns should me executed manually via M-x or via CLI scripts:
 
