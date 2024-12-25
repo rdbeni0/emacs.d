@@ -29,6 +29,11 @@
       (call-interactively #'composer-require)))
   )
 
+;; https://github.com/emacs-php/robots-txt-mode
+(use-package robots-txt-mode
+  :ensure t
+  :config)
+
 ;; https://github.com/OVYA/php-cs-fixer
 (use-package php-cs-fixer
   :ensure t
