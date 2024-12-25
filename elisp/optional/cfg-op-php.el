@@ -13,6 +13,22 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-php-mode))
 
+;; https://github.com/emacs-php/composer.el
+(use-package composer
+  :ensure t
+  :config
+  (defun cfg/composer-global ()
+    "Run `composer' (global) sub command (with completing read)"
+    (interactive)
+    (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
+      (call-interactively #'composer)))
+  (defun cfg/composer-require-dev ()
+    "Run 'composer require --dev' command"
+    (interactive)
+    (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
+      (call-interactively #'composer-require)))
+  )
+
 ;; https://github.com/OVYA/php-cs-fixer
 (use-package php-cs-fixer
   :ensure t
