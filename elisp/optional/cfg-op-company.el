@@ -164,26 +164,13 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; ADDITIONAL PACKAGES FOR COMPANY (BACKENDS):
+;;;; ADDITIONAL PACKAGES FOR COMPANY (BACKEND):
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; AI: https://github.com/TommyX12/company-tabnine
 
-;; python:
-;; https://github.com/pythonic-emacs/company-anaconda
-(use-package company-anaconda
-  :after anaconda-mode
-  :ensure t
-  )
-
-;; python - OPTIONAL:
-;; https://github.com/emacsorphanage/company-jedi
-;; (use-package company-jedi
-;;   :ensure t
-;; )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; ADDITIONAL PACKAGES AND CONFIGURATION FOR COMPANY (NOT BACKENDS):
+;;;; ADDITIONAL PACKAGES AND CONFIGURATION FOR COMPANY (FRONTEND):
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://github.com/company-mode/company-statistics
@@ -225,6 +212,9 @@
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; END
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; load keybindings from general.el framework:
 (require 'cfg-gen-op-company)
 

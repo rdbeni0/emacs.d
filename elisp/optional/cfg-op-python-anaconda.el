@@ -23,7 +23,6 @@
   ;; turn off anaconda-mode-map, because it seems it could overwrite ggtags keymap (and general.el):
   (setcdr anaconda-mode-map nil))
 
-
 (defun cfg/enable-anaconda-mode ()
   "Enable anaconda-mode for all python buffers in the future (for corrent emacs session only)."
   (interactive)
@@ -31,6 +30,22 @@
   (if (bound-and-true-p anaconda-mode)
       (message "anaconda-mode is on")
     (anaconda-mode)))
+
+;; integration with company-mode:
+;; https://github.com/pythonic-emacs/company-anaconda
+
+(when (require 'company nil 'noerror)
+  (progn
+    (use-package company-anaconda
+      :after anaconda-mode
+      :ensure t
+      )))
+
+;; python and company - optional (and similar):
+;; https://github.com/emacsorphanage/company-jedi
+;; (use-package company-jedi
+;;   :ensure t
+;; )
 
 (provide 'cfg-op-python-anaconda)
 ;;; cfg-op-python-anaconda.el ends here

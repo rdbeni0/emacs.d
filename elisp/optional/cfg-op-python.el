@@ -28,8 +28,8 @@
 	      (sphinx-doc-mode t))))
 
 ;;;; integration with flycheck
-;;;; python-mode - linters, checkers...
-;;;; we need to know that flycheck has excellent support for python-mode in emacs, but it needs some executables to be installed
+;; python-mode - linters, checkers...
+;; we need to know that flycheck has excellent support for python-mode in emacs, but it needs some executables to be installed
 (when (require 'flycheck nil 'noerror)
   (progn
     (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
