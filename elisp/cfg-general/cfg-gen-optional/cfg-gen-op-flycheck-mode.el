@@ -61,5 +61,14 @@
  "j" 'flycheck-error-list-next-error
  "k" 'flycheck-error-list-previous-error)
 
+;; global mode
+;; no space + no which-key
+(general-define-key
+ :states '(normal visual emacs insert)
+ :keymaps list-gen-mode-map-flycheck
+ :major-modes list-gen-mode-flycheck
+ "M-n" 'flycheck-previous-error
+ "M-p" 'flycheck-next-error)
+
 (provide 'cfg-gen-op-flycheck-mode)
 ;;; cfg-gen-op-flycheck-mode.el ends here

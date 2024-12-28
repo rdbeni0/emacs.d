@@ -5,6 +5,7 @@
 (require 'cfg-use-package)
 (require 'cfg-list-core-packages)
 (require 'cfg-list-auto-mode-alist)
+(require 'cfg-env)
 (require 'cfg-evil)
 (require 'cfg-general)
 (require 'cfg-format)

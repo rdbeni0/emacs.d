@@ -22,6 +22,8 @@
   ;; Do NOT disable checker:
   (setq flycheck-checker-error-threshold nil)
 
+  ;; add some delay for better performance
+  (setq flycheck-display-errors-delay 0.8)
 
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-flycheck-mode))

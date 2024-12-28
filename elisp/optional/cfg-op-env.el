@@ -1,1 +1,0 @@
-/nix/store/w0xk6n24z3q682qlc8cjk1q07ms3ch6y-home-manager-files/DEV/emacs/emacs.d_dev/elisp/optional/cfg-op-env.el

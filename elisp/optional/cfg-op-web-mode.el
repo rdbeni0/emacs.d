@@ -4,6 +4,8 @@
 ;; Everything what is connected with web-mode
 ;; https://web-mode.org/
 ;; https://github.com/fxbois/web-mode
+;; https://themkat.net/2022/10/04/emacs_web_mode_mixed.html
+;; https://github.com/smihica/emmet-mode - unmaintained, but still useful
 ;;
 ;;; Code:
 
