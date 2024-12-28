@@ -23,7 +23,7 @@
  "'" '(lsp-bridge-code-action :which-key "code-actions")
  "f" '(lsp-bridge-diagnostic-list :which-key "diagnostic")
  "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
- "i" '(lsp-bridge-toggle-sdcv-helper :which-key "toggle-dict-comletion")
+ "i" '(lsp-bridge-toggle-sdcv-helper :which-key "toggle-dict-compl")
 
  "e" '(:ignore t :which-key "lsp-bridge-peek")
  "ee" '(lsp-bridge-peek :which-key "peek")
