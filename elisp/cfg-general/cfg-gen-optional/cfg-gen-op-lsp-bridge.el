@@ -1,4 +1,4 @@
-;;; cfg-gen-op-lsp-bridge.el --- general.el for lsp and dap -*- lexical-binding: t -*-
+;;; cfg-gen-op-lsp-bridge.el --- general.el for lsp-bridge -*- lexical-binding: t -*-
 
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#keymap
 (general-define-key
