@@ -125,8 +125,7 @@
   ;; (flycheck-mode t) ; not required, should be enabled globally
 
   ;; and finally - select the first checked from the list:
-  (flycheck-select-checker 'php)
-  )
+  (flycheck-select-checker 'php))
 
 (add-hook 'php-mode-hook 'cfg/-my-php-mode-setup)
 

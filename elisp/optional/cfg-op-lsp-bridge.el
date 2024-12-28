@@ -8,7 +8,11 @@
 ;;
 ;; installation via NixOS:
 ;; https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=lsp-bridge
+;; https://github.com/manateelazycat/lsp-bridge/wiki/NixOS
 ;;
+;; https://www.reddit.com/r/emacs/comments/vhqewj/lspbridge_is_good/
+;;
+;; acm - Asynchronous Completion Menu
 ;;; Code:
 
 (use-package lsp-bridge
@@ -16,11 +20,14 @@
   (global-lsp-bridge-mode)
   (setq lsp-bridge-php-lsp-server "phpactor"))
 
-;; acm - Asynchronous Completion Menu
+;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#customize-language-server-configuration-file
+;; A little tip, if you use a direnv setup (e.g. with nix-shell), make sure to use a hook like this (this is for the envrc package):
+(add-hook 'envrc-mode-hook 'lsp-bridge-restart-process)
 
-
-;; Manipulations with company-mode:
-;; turn off AUTOcomplete, but keep it optional to manually triggering:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Manipulations with company-mode:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
 (setq company-idle-delay nil)
 
 (provide 'cfg-op-lsp-bridge)
