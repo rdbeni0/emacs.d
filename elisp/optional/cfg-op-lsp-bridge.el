@@ -18,7 +18,9 @@
 (use-package lsp-bridge
   :config
   (global-lsp-bridge-mode)
-  (setq lsp-bridge-php-lsp-server "phpactor"))
+  (setq lsp-bridge-php-lsp-server "phpactor")
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-lsp-bridge))
 
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#customize-language-server-configuration-file
 ;; A little tip, if you use a direnv setup (e.g. with nix-shell), make sure to use a hook like this (this is for the envrc package):

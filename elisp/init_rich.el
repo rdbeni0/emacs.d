@@ -10,7 +10,7 @@
 (require 'cfg-op-doom-mode-line)
 ;; (require 'cfg-op-tree-sitter)
 (require 'cfg-op-pgtk)
-(require 'cfg-op-eglot)
+(require 'cfg-op-core-eglot)
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-projectile)
 (require 'cfg-op-dumbjump)
