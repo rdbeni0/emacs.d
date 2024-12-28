@@ -117,7 +117,11 @@
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())
 				;; company-capf, company-gtags
-				(add-to-list 'company-backends '(company-abbrev :separate company-anaconda company-dabbrev-code company-keywords company-files company-dabbrev))))
+
+				(if (require 'anaconda-mode nil 'noerror)
+      				    (add-to-list 'company-backends '(company-abbrev :separate company-anaconda company-dabbrev-code company-keywords company-files company-dabbrev))
+      				  (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-keywords company-files company-dabbrev))
+				  )))
 
   (add-hook 'snippet-mode-hook (lambda ()
 				 (set (make-local-variable 'company-backends) '())
