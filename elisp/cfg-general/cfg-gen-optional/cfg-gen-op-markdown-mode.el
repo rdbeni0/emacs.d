@@ -2,14 +2,16 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(markdown-mode-map gfm-mode-map)
- :major-modes '(markdown-mode gfm-mode)
+ :keymaps '(markdown-mode-map gfm-mode-map gfm-view-mode-map)
+ :major-modes '(markdown-mode gfm-mode gfm-view-mode)
  :prefix ","
 
  "<down>" '(markdown-move-down :which-key "mv-down")
  "<up>" '(markdown-move-up :which-key "mv-up")
  "<right>" '(markdown-demote :which-key "demote")
  "<left>" '(markdown-promote :which-key "promote")
+ 
+ "a" '(read-only-mode :which-key "toggle-read-only")
 
  "i" '(:ignore t :which-key "insert")
  "i-" '(markdown-insert-hr :which-key "hr")
@@ -34,6 +36,7 @@
  "rp" '(markdown-pre-region :which-key "pre-region")
  "ru" '(markdown-unused-refs  :which-key "unused-refs")
  "rt" '(:ignore t :which-key "toggle")
+ "rta" '(read-only-mode :which-key "toggle-read-only")
  "rtf" '(markdown-toggle-fontify-code-blocks-natively  :which-key "toggle-code-blocks-fonts")
  "rtg" '(markdown-toggle-gfm-checkbox  :which-key "toggle-gfm-checkbox")
  "rth" '(markdown-toggle-math  :which-key "toggle-math")
@@ -73,6 +76,14 @@
  "b{"  '(markdown-backward-block :which-key "backward-block")
  "b}"  '(markdown-forward-block :which-key "forward-block")
  "bc"  '(markdown-insert-gfm-code-block :which-key "insert-gfm-code-block"))
+
+;; gfm-view-mode - no prefix, it will override evil keymaps:
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'gfm-view-mode-map
+ :major-modes 'gfm-view-mode
+ "q" '(kill-buffer-and-window :which-key "quit")
+ "Q" '(kill-buffer :which-key "kill-this-buffer"))
 
 (provide 'cfg-gen-op-markdown-mode)
 ;;; cfg-gen-op-markdown-mode.el ends here

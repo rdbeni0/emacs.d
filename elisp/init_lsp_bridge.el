@@ -3,8 +3,8 @@
 ;; Common packages:
 (require 'cfg-op-completion-systems)
 (require 'cfg-op-company) ;; company should be FIRST, because after that some variables will be overwritten via lsp-bridge
-(require 'cfg-op-lsp-bridge)
 (require 'cfg-op-yasnippets)
+(require 'cfg-op-lsp-bridge)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
 (require 'cfg-op-doom-mode-line)

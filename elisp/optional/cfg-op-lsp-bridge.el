@@ -1,8 +1,9 @@
-;;; cfg-op-php-lsp-bridge.el --- configfuration for lsp-bridge.el -*- lexical-binding: t -*-
+;;; cfg-op-php-lsp-bridge.el --- configfuration for lsp-bridge -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; https://github.com/manateelazycat/lsp-bridge
-;; Experimental package. Installation:
+;; Experimental package. 
+;; Installation on emacs:
 ;; When using lsp-bridge, please first disable other completion plugins, such as lsp-mode, eglot, company, corfu, etc.
 ;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration.
 ;;
@@ -15,10 +16,13 @@
 ;; acm - Asynchronous Completion Menu
 ;;; Code:
 
+;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#lsp-server-options
+;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#options
 (use-package lsp-bridge
   :config
   (global-lsp-bridge-mode)
   (setq lsp-bridge-php-lsp-server "phpactor")
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-lsp-bridge))
 
