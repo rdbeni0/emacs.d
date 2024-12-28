@@ -1,4 +1,4 @@
-;;; cfg-op-eglot.el --- eglot -*- lexical-binding: t -*-
+;;; cfg-op-core-eglot.el --- eglot -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Optional settings for eglot in emacs.
@@ -10,5 +10,5 @@
 ;; load keybindings from general.el framework:
 (require 'cfg-gen-op-eglot-mode)
 
-(provide 'cfg-op-eglot)
-;;; cfg-op-eglot.el ends here
+(provide 'cfg-op-core-eglot)
+;;; cfg-op-core-eglot.el ends here

@@ -4,9 +4,9 @@
 ;; https://github.com/manateelazycat/lsp-bridge
 ;; Experimental package. Installation:
 ;; When using lsp-bridge, please first disable other completion plugins, such as lsp-mode, eglot, company, corfu, etc.
-;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration
+;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration.
 ;;
-;; installation via NixOS:
+;; Installation via NixOS:
 ;; https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=lsp-bridge
 ;; https://github.com/manateelazycat/lsp-bridge/wiki/NixOS
 ;;
