@@ -18,7 +18,9 @@
  "`f" '(flycheck-eglot-mode :which-key "toggle-flycheck-eglot")
  "`'" '(flycheck-buffer :which-key "flycheck-buffer")
  "`]" '(flycheck-next-error :which-key "next-error")
+ "`<down>" '(flycheck-next-error :which-key "next-error")
  "`[" '(flycheck-previous-error :which-key "previous-error")
+ "`<up>" '(flycheck-previous-error :which-key "previous-error")
  "`0" '(flycheck-first-error :which-key "first-error")
  "`v" '(flycheck-verify-setup :which-key "verify-setup")
  "`V" '(flycheck-verify-checker :which-key "verify-checker")
@@ -32,10 +34,15 @@
  :prefix ","
  "s" '(flycheck-error-list-set-filter :which-key "set-filter")
  "r" '(flycheck-error-list-check-source :which-key "check-source")
- "S" '(flycheck-error-list-reset-filter :which-key "reset-filter")
+ "S" '(flycheck-error-list-reset-filter :which-key "unfilter")
+ "u" '(flycheck-error-list-reset-filter :which-key "unfilter")
  "x" '(flycheck-error-list-explain-error :which-key "explain-error")
  "]" '(flycheck-error-list-next-error :which-key "next-error")
+ "<down>" '(flycheck-error-list-next-error :which-key "next-error")
+ "j" '(flycheck-error-list-next-error :which-key "next-error")
  "[" '(flycheck-error-list-previous-error :which-key "previous-error")
+ "<up>" '(flycheck-error-list-previous-error :which-key "previous-error")
+ "k" '(flycheck-error-list-previous-error :which-key "previous-error")
  "q" '(kill-buffer-and-window :which-key "quit")
  "Q" '(kill-buffer :which-key "kill-this-buffer"))
 
@@ -50,7 +57,9 @@
  :states '(normal visual emacs)
  :keymaps 'flycheck-error-list-mode-map
  :major-modes 'flycheck-error-list-mode
- "q" 'kill-buffer-and-window)
+ "q" 'kill-buffer-and-window
+ "j" 'flycheck-error-list-next-error
+ "k" 'flycheck-error-list-previous-error)
 
 (provide 'cfg-gen-op-flycheck-mode)
 ;;; cfg-gen-op-flycheck-mode.el ends here

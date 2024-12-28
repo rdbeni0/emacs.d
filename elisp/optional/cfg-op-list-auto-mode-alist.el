@@ -28,6 +28,7 @@
 	 ("\\.twig?\\'" . web-mode)
          ("\\.[agj]sp\\'" . web-mode)
          ("\\.as[cp]x\\'" . web-mode)
+	 ;; nix mode
 	 ("\\.nix_stable?\\'" . nix-mode)
 	 ("\\.nix_unstable?\\'" . nix-mode)
 	 ("\\.nix\\'" . nix-mode)

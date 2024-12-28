@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;
 ;; https://github.com/manateelazycat/lsp-bridge
-;; Experimental package. 
+;; Experimental package.
 ;; Installation on emacs:
 ;; When using lsp-bridge, please first disable other completion plugins, such as lsp-mode, eglot, company, corfu, etc.
 ;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration.

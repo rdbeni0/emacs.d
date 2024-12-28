@@ -22,6 +22,8 @@
  "<down>" '(lsp-bridge-popup-documentation-scroll-down :which-key "popup-doc-down")
  "'" '(lsp-bridge-code-action :which-key "code-actions")
  "f" '(lsp-bridge-diagnostic-list :which-key "diagnostic")
+ "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
+ "i" '(lsp-bridge-toggle-sdcv-helper :which-key "toggle-dict-comletion")
 
  "e" '(:ignore t :which-key "lsp-bridge-peek")
  "ee" '(lsp-bridge-peek :which-key "peek")
@@ -59,9 +61,65 @@
 
  "\\" '(:ignore t :which-key "server")
  "\\r" '(lsp-bridge-restart-process :which-key "reconnect")
+ "\\p" '(lsp-bridge-profile-dump :which-key "profile-dump")
  "\\q" '(lsp-bridge-kill-process :which-key "kill-process")
  "\\Q" '(lsp-bridge-stop-process :which-key "kill-process") ;; "stop" is alias for lsp-bridge-kill-process
  "\\m" '(lsp-bridge-mode :which-key "lsp-bridge-mode"))
+
+;; diagnostic, ref-mode
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'lsp-bridge-ref-mode-map
+ :major-modes 'lsp-bridge-ref-mode
+ :prefix ","
+ "A" '(lsp-bridge-ref-quit :which-key "edit-discard-C-c_C-q")
+ "a" '(lsp-bridge-ref-apply-changed :which-key "edit-apply-C-c_C-c")
+ "D" '(lsp-bridge-ref-remove-line-from-results :which-key "remove-result")
+ "F" '(lsp-bridge-ref-filter-mismatch-results :which-key "filter-mismatch")
+ "X" '(lsp-bridge-ref-filter-mismatch-files :which-key "mismatch-files")
+ "e" '(lsp-bridge-ref-switch-to-edit-mode :which-key "toggle-edit-mode")
+ "E" '(lsp-bridge-ref-switch-to-view-mode :which-key "view-mode")
+ "f" '(lsp-bridge-ref-filter-match-results :which-key "filter")
+ "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
+
+ "<left>" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
+ "h" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
+ "<down>" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
+ "j" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
+ "]" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
+ "<up>" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "[" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "k" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "<right>" '(lsp-bridge-ref-jump-prev-file :which-key "jump-prev-file")
+ "l" '(lsp-bridge-ref-jump-prev-file :which-key "jump-prev-file")
+
+ "r" '(lsp-bridge-ref-replace-all-matches :which-key "replace")
+ "u" '(lsp-bridge-ref-unfilter :which-key "unfilter")
+ "x" '(lsp-bridge-ref-filter-match-files :which-key "match-files")
+ "q" '(lsp-bridge-ref-quit :which-key "quit")
+ "Q" '(kill-buffer-and-window :which-key "kill-this-buffer"))
+
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'lsp-bridge-ref-mode-map
+ :major-modes 'lsp-bridge-ref-mode
+ "A" 'lsp-bridge-ref-quit
+ "D" 'lsp-bridge-ref-remove-line-from-results
+ "F" 'lsp-bridge-ref-filter-mismatch-results
+ "Q" 'kill-buffer-and-window
+ "X" 'lsp-bridge-ref-filter-mismatch-files
+ "a" 'lsp-bridge-ref-apply-changed
+ "e" 'lsp-bridge-ref-switch-to-edit-mode
+ "f" 'lsp-bridge-ref-filter-match-results
+ "h" 'lsp-bridge-ref-jump-next-file
+ "j" 'lsp-bridge-ref-jump-next-keyword
+ "k" 'lsp-bridge-ref-jump-prev-keyword
+ "l" 'lsp-bridge-ref-jump-prev-file
+ "q" 'lsp-bridge-ref-quit
+ "r" 'lsp-bridge-ref-replace-all-matches
+ "u" 'lsp-bridge-ref-unfilter
+ "x" 'lsp-bridge-ref-filter-match-files
+ )
 
 (provide 'cfg-gen-op-lsp-bridge)
 ;;; cfg-gen-op-lsp-bridge.el ends here
