@@ -72,42 +72,48 @@
  :keymaps 'lsp-bridge-ref-mode-map
  :major-modes 'lsp-bridge-ref-mode
  :prefix ","
- "A" '(lsp-bridge-ref-quit :which-key "edit-discard-C-c_C-q")
- "a" '(lsp-bridge-ref-apply-changed :which-key "edit-apply-C-c_C-c")
- "D" '(lsp-bridge-ref-remove-line-from-results :which-key "remove-result")
- "F" '(lsp-bridge-ref-filter-mismatch-results :which-key "filter-mismatch")
- "X" '(lsp-bridge-ref-filter-mismatch-files :which-key "mismatch-files")
- "e" '(lsp-bridge-ref-switch-to-edit-mode :which-key "toggle-edit-mode")
- "E" '(lsp-bridge-ref-switch-to-view-mode :which-key "view-mode")
- "f" '(lsp-bridge-ref-filter-match-results :which-key "filter")
  "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
-
- "<left>" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
- "h" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
  "<down>" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
- "j" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
- "]" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
- "<up>" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
- "[" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
- "k" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "<left>" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
  "<right>" '(lsp-bridge-ref-jump-prev-file :which-key "jump-prev-file")
+ "<up>" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "A" '(lsp-bridge-ref-quit :which-key "edit-discard-C-c_C-q")
+ "D" '(lsp-bridge-ref-remove-line-from-results :which-key "remove-result")
+ "E" '(lsp-bridge-ref-switch-to-view-mode :which-key "view-mode")
+ "F" '(lsp-bridge-ref-filter-mismatch-results :which-key "filter-mismatch")
+ "Q" '(kill-buffer-and-window :which-key "kill-this-buffer")
+ "X" '(lsp-bridge-ref-filter-mismatch-files :which-key "mismatch-files")
+ "[" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "]" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
+ "a" '(lsp-bridge-ref-apply-changed :which-key "edit-apply-C-c_C-c")
+ "e" '(lsp-bridge-ref-switch-to-edit-mode :which-key "toggle-edit-mode")
+ "f" '(lsp-bridge-ref-filter-match-results :which-key "filter")
+ "h" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
+ "j" '(lsp-bridge-ref-jump-next-keyword :which-key "jump-next")
+ "k" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
  "l" '(lsp-bridge-ref-jump-prev-file :which-key "jump-prev-file")
-
+ "q" '(lsp-bridge-ref-quit :which-key "quit")
  "r" '(lsp-bridge-ref-replace-all-matches :which-key "replace")
  "u" '(lsp-bridge-ref-unfilter :which-key "unfilter")
- "x" '(lsp-bridge-ref-filter-match-files :which-key "match-files")
- "q" '(lsp-bridge-ref-quit :which-key "quit")
- "Q" '(kill-buffer-and-window :which-key "kill-this-buffer"))
+ "x" '(lsp-bridge-ref-filter-match-files :which-key "match-files"))
 
 (general-define-key
  :states '(normal visual emacs)
  :keymaps 'lsp-bridge-ref-mode-map
  :major-modes 'lsp-bridge-ref-mode
+ "," 'lsp-bridge-diagnostic-copy
+ "<down>" 'lsp-bridge-ref-jump-next-keyword
+ "<left>" 'lsp-bridge-ref-jump-next-file
+ "<right>" 'lsp-bridge-ref-jump-prev-file
+ "<up>" 'lsp-bridge-ref-jump-prev-keyword
  "A" 'lsp-bridge-ref-quit
  "D" 'lsp-bridge-ref-remove-line-from-results
+ "E" 'lsp-bridge-ref-switch-to-view-mode
  "F" 'lsp-bridge-ref-filter-mismatch-results
  "Q" 'kill-buffer-and-window
  "X" 'lsp-bridge-ref-filter-mismatch-files
+ "[" 'lsp-bridge-ref-jump-prev-keyword
+ "]" 'lsp-bridge-ref-jump-next-keyword
  "a" 'lsp-bridge-ref-apply-changed
  "e" 'lsp-bridge-ref-switch-to-edit-mode
  "f" 'lsp-bridge-ref-filter-match-results
