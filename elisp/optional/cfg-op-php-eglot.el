@@ -1,4 +1,4 @@
-;;; cfg-op-php-lsp.el --- configfuration for php programming via LSP -*- lexical-binding: t -*-
+;;; cfg-op-php-eglot.el --- configfuration for php programming via EGLOT -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; https://github.com/phpactor/phpactor
@@ -17,5 +17,5 @@
               (eglot-ensure)
 	      )))
 
-(provide 'cfg-op-php-lsp)
-;;; cfg-op-php-lsp.el ends here
+(provide 'cfg-op-php-eglot)
+;;; cfg-op-php-eglot.el ends here

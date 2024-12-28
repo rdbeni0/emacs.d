@@ -26,12 +26,6 @@
  "`?" '(flycheck-describe-checker :which-key "describe-checker"))
 
 (general-define-key
- :prefix "\\"
- :states '(normal visual emacs)
- :keymaps 'override
- "f" '(flycheck-eglot-mode :which-key "toggle-flycheck-eglot"))
-
-(general-define-key
  :states '(normal visual emacs)
  :keymaps 'flycheck-error-list-mode-map
  :major-modes 'flycheck-error-list-mode

@@ -13,11 +13,10 @@
   (setq eglot-report-progress nil)
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
-
+  ;; Experiments with different servers:
   ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
   ;; (add-hook 'python-mode-hook 'eglot-ensure)
-  ;; load keybindings from general.el framework:
-  (require 'cfg-gen-co-eglot-mode))
+  )
 
 (provide 'cfg-eglot)
 ;;; cfg-eglot.el ends here

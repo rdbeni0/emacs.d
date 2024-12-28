@@ -1,4 +1,4 @@
-;;; cfg-gen-co-eglot-mode.el --- eglot keybindings -*- lexical-binding: t -*-
+;;; cfg-gen-op-eglot-mode.el --- eglot keybindings -*- lexical-binding: t -*-
 
 ;; https://joaotavora.github.io/eglot/#Eglot-Commands
 ;; https://www.gnu.org/software/emacs/manual/html_node/eglot/Eglot-Commands.html
@@ -8,6 +8,7 @@
  :keymaps 'override
  "=" '(eglot-format :which-key "format")
  "0" '(eglot-format-buffer :which-key "format-buffer")
+ "f" '(flycheck-eglot-mode :which-key "toggle-flycheck-eglot")
  ";" '(eglot-rename :which-key "rename")
  "'" '(eglot-code-actions :which-key "code-actions")
  "[" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
@@ -24,5 +25,5 @@
  "\\t" '(eglot-events-buffer :which-key "events-buffer")
  "\\w" '(eglot-shutdown :which-key "shutdown"))
 
-(provide 'cfg-gen-co-eglot-mode)
-;;; cfg-gen-co-eglot-mode.el ends here
+(provide 'cfg-gen-op-eglot-mode)
+;;; cfg-gen-op-eglot-mode.el ends here

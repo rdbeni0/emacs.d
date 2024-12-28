@@ -2,15 +2,14 @@
 
 ;; Common packages:
 (require 'cfg-op-completion-systems)
-(require 'cfg-op-corfu)
-(require 'cfg-op-company)
-;; (require 'cfg-op-yasnippets)
+(require 'cfg-op-company) ;; company should be FIRST, because after that some variables will be overwritten via lsp-bridge
+(require 'cfg-op-lsp-bridge)
+(require 'cfg-op-yasnippets)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-doom-themes-fonts)
 (require 'cfg-op-doom-mode-line)
 ;; (require 'cfg-op-tree-sitter)
 (require 'cfg-op-pgtk)
-(require 'cfg-op-eglot)
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-projectile)
 (require 'cfg-op-dumbjump)
@@ -34,6 +33,5 @@
 (require 'cfg-op-groovy-jenkins)
 (require 'cfg-op-nix)
 (require 'cfg-op-php)
-(require 'cfg-op-php-eglot) ;; alternative: (require 'cfg-op-php-ac)
 (require 'cfg-op-org)
 (require 'cfg-op-web-mode)
