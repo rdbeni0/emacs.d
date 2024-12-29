@@ -30,5 +30,12 @@
 
 ;; OPTIONAL: https://github.com/skeeto/skewer-mode - REPL inside the web browser
 
+(use-package company-web
+  :ensure t
+  :config
+  (require 'company-web-html)
+  :defer t
+  :after (company))
+
 (provide 'cfg-op-web-mode)
 ;;; cfg-op-web-mode.el ends here
