@@ -24,17 +24,30 @@
   ;; use in global-mode, but disable per particular mode:
   (global-lsp-bridge-mode)
 
-  ;; popup menu seems to be broken, better to use standard completion at the bottom:
+  ;; popup menu seems to be broken and unstable, better to use standard completion at the bottom:
   (setq lsp-bridge-code-action-enable-popup-menu nil)
 
   ;; multiserver - custom user config and json files:
   (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge" user-emacs-directory))
 
+  ;; fallbacks
+  (setq lsp-bridge-find-def-fallback-function #'xref-find-definitions)
+  (setq lsp-bridge-find-ref-fallback-function #'xref-find-references)
+  (setq lsp-bridge-find-def-return-fallback-function #'xref-go-back)
+
   ;; optional debug if something is wrong:
   ;; (setq lsp-bridge-enable-log t)
 
   ;; (setq lsp-bridge-enable-completion-in-minibuffer t) ;; default is `nil'
-  ;; (setq lsp-bridge-enable-inlay-hint t) ;; good, but better to use via setq-local
+  ;; (setq lsp-bridge-enable-inlay-hint t) ;; good, but better to use this via setq-local
+  ;; (setq lsp-bridge-enable-hover-diagnostic t)
+  ;; (setq lsp-bridge-enable-org-babel t)
+
+  (setq lsp-bridge-diagnostic-fetch-idle 0.9) ;; default is 0.5
+
+  (setq acm-enable-tabnine nil)
+  (setq acm-enable-codeium nil)
+  (setq acm-enable-copilot nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Exclusion from selected major-modes:
@@ -60,7 +73,7 @@
   ;; And as failback - we can try `pylsp'
   ;; pyright/basedpyright - currently "code actions" are broken, so must be executed with `ruff-lsp' (so as multiserver)
 
-  (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff") ;; so in summary - this is the best option for now
+  (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff") ;; so in summary: this is the best option for now
 
   ;; (add-hook 'python-mode-hook
   ;;           (lambda ()
