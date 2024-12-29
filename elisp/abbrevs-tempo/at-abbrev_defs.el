@@ -77,6 +77,15 @@
 ;;;; EMACS-LISP-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (setq emacs-lisp-mode-abbrev-table nil)
+(define-abbrev-table 'emacs-lisp-mode-abbrev-table
+  '(
+    ("qqarrt" "(define-abbrev-table 'XXX-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0 :system t)\n    ))" nil 0 :system t) ;; define new at
+    ("qqarra" "    (\"qq\" \"#\\n\" nil 0 :system t)" nil 0 :system t) ;; add element to the at
+    ("qqarrd" "(define-abbrev XXX-mode-abbrev-table \"qq\" \"\\n\")" nil 0 :system t)
+    ("qqsta1" ";;; cfg-XX.el --- XX -*- lexical-binding: t -*-\n;;; Commentary:\n;;\n;;; Code:\n\n(provide 'cfg-XX)\n;;; cfg-XX.el ends here" nil 0 :system t)
+    ))
+
 (define-skeleton emacs-lisp-skeleton-use-package
   "Emacs Lisp skeleton for use-package with useful options"
   nil
@@ -87,42 +96,35 @@
   "  (setq my-package-variable t)\n"
   "  :config\n"
   "  ;; Code to run after package is loaded\n"
-  "  (my-package-initialize)\n"
-  "  :bind\n"
-  "  ;; Key bindings for the package\n"
-  "  (\"C-c p\" . my-package-command)\n"
-  "  :hook\n"
-  "  ;; Hooks to run with the package\n"
-  "  (prog-mode . my-package-mode)\n"
+  "  (setq package-var t)\n"
+  "  ;; load general.el and keybindings:\n"
+  "  (require 'cfg-gen-XX)\n"
+  "  :bind (;; Remaps - replace with emacs native:\n"
+  "  ([remap old-emacs-defun] . new-defun-name))\n"
   "  :custom\n"
   "  ;; Custom variables for the package\n"
   "  (my-package-setting 'value)\n"
-  "  :commands\n"
-  "  ;; Commands to autoload\n"
-  "  my-package-command\n"
   "  :defer t\n"
   "  ;; Defer loading until needed\n"
-  "  :diminish\n"
-  "  ;; Hide the mode from the mode line\n"
-  "  my-package-mode\n"
-  "  :after\n"
-  "  ;; Load only after these packages\n"
-  "  (another-package)\n"
+  "  :after (evil hydra)\n"
   "  :if\n"
   "  ;; Conditional loading based on a variable\n"
   "  (featurep 'another-feature))\n")
 
-
-;; (setq emacs-lisp-mode-abbrev-table nil)
-(define-abbrev-table 'emacs-lisp-mode-abbrev-table
-  '(
-    ("qqarrt" "(define-abbrev-table 'XXX-mode-abbrev-table\n\  '(\n    (\"te\" \"test\" nil 0 :system t)\n    ))" nil 0 :system t) ;; define new at
-    ("qqarra" "    (\"qq\" \"#\\n\" nil 0 :system t)" nil 0 :system t) ;; add element to the at
-    ("qqarrd" "(define-abbrev XXX-mode-abbrev-table \"qq\" \"\\n\")" nil 0 :system t)
-    ("qqsta1" ";;; cfg-XX.el --- XX -*- lexical-binding: t -*-\n;;; Commentary:\n;;\n;;; Code:\n\n(provide 'cfg-XX)\n;;; cfg-XX.el ends here" nil 0 :system t)
-    ))
+(define-skeleton emacs-lisp-skeleteon-skel
+  "Skeleteon for skeleteons"
+  nil
+  "(define-skeleton my-mode-skeleton-name\n"
+  "  \"Description...\"\n"
+  "  nil\n"
+  "  \"  <elisp code>\\n\"\n"
+  ")\n"
+  "\n"
+  "(define-abbrev my-mode-abbrev-table \"qsXXX\" \";; SKELETON> description of functionality.\\n\" 'my-mode-skeleton-name :system t)\n"
+)
 
 (define-abbrev emacs-lisp-mode-abbrev-table "qsinc1" ";; SKELETON> use-package with examples.\n" 'emacs-lisp-skeleton-use-package :system t)
+(define-abbrev emacs-lisp-mode-abbrev-table "qsdef1" ";; SKELETON> skeleton for skeletons.\n" 'emacs-lisp-skeleteon-skel :system t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; CPERL-MODE

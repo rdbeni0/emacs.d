@@ -3,16 +3,16 @@
 ;;
 ;;; Code:
 
+;; https://github.com/smihica/emmet-mode
 (use-package emmet-mode
   :ensure t
-  :init
   :config
+  (add-hook 'web-mode-hook
+            (lambda ()
+	      (emmet-mode)
+	      ))
   ;; load general.el and keybindings:
-  (require 'cfg-gen-op-emmet)
-  :hook
-  (web-mode-hook . emmet-mode)
-  :defer t ;; Defer loading until needed
-  :after (web-mode))
+  (require 'cfg-gen-op-emmet))
 
 (provide 'cfg-op-emmet)
 ;;; cfg-op-emmet.el ends here

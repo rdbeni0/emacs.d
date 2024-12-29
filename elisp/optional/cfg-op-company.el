@@ -112,7 +112,10 @@
   (add-hook 'web-mode-hook (lambda ()
 			     (set (make-local-variable 'company-backends) '())
 			     ;; company-capf, company-gtags
-			     (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))))
+			     (if (require 'company-web nil 'noerror)
+				 (add-to-list 'company-backends '(company-web :separate company-abbrev :separate company-ac-php-backend company-keywords company-dabbrev-code company-files company-dabbrev))
+			       (add-to-list 'company-backends '(company-abbrev :separate company-keywords company-dabbrev-code company-files company-dabbrev))
+			       )))
 
   (add-hook 'python-mode-hook (lambda ()
 				(set (make-local-variable 'company-backends) '())

@@ -35,3 +35,4 @@
 (require 'cfg-op-php)
 (require 'cfg-op-org)
 (require 'cfg-op-web-mode)
+(require 'cfg-op-emmet)
