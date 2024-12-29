@@ -23,7 +23,9 @@
  "'" '(lsp-bridge-code-action :which-key "code-actions")
  "f" '(lsp-bridge-diagnostic-list :which-key "diagnostic")
  "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
- "i" '(lsp-bridge-toggle-sdcv-helper :which-key "toggle-dict-compl")
+ "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
+ "j" '(lsp-bridge-diagnostic-jump-next :which-key "diag-jump-next")
+ "k" '(lsp-bridge-diagnostic-jump-prev :which-key "diag-jump-prev")
 
  "e" '(:ignore t :which-key "lsp-bridge-peek")
  "ee" '(lsp-bridge-peek :which-key "peek")
