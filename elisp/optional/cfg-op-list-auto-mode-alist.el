@@ -16,6 +16,7 @@
 	 ("/sshd?_config\\(\\.d/.*\\.conf\\)?\\'"  . ssh-config-mode)
 	 ("/known_hosts\\'"       . ssh-known-hosts-mode)
 	 ("/authorized_keys?\\'" . ssh-authorized-keys-mode)
+	 ("\\.yaml?\\'" . yaml-mode)
 	 ;; web-mode
 	 ("\\.css?\\'" . web-mode)
 	 ("\\.djhtml\\'" . web-mode)

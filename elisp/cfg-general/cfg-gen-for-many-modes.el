@@ -22,8 +22,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; conf-modes
-(setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode robots-txt-mode))
-(setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map robots-txt-mode-map))
+(setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode robots-txt-mode yaml-mode))
+(setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map robots-txt-mode-map yaml-mode-map))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
@@ -31,16 +31,21 @@
 (setq list-gen-mode-map-flycheck (seq-difference list-gen-mode-map '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map)))
 
 ;; format core
-(setq list-gen-mode-format-core (seq-difference list-gen-mode '(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode)))
-(setq list-gen-mode-map-format-core (seq-difference list-gen-mode-map '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map)))
+(setq list-gen-mode-format-core (append (seq-difference list-gen-mode 
+			    '(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
+			    '(yaml-mode)))
+(setq list-gen-mode-map-format-core (append 
+	    (seq-difference list-gen-mode-map 
+			    '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map)) 
+                            '(yaml-mode-map)))
 
 ;; format optional
 (setq list-gen-mode-format-optional (append
 				     (seq-difference list-gen-mode '(ssh-config-mode))
-				     '(json-mode)))
+				     '(json-mode yaml-mode)))
 (setq list-gen-mode-map-format-optional (append
 					 (seq-difference list-gen-mode-map '(ssh-config-mode-map))
-					 '(json-mode-map)))
+					 '(json-mode-map yaml-mode-map)))
 
 ;; goto (ffap and imenu)
 (setq list-gen-mode-ffap  (append list-gen-mode list-gen-mode-conf-mode))
