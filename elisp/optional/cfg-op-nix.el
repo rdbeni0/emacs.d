@@ -13,12 +13,14 @@
     (dolist (mode '((nix-mode . ("nixd"))))
       (add-to-list 'eglot-server-programs mode)))
 
-  (add-hook 'nix-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook 'eglot-format nil t)
-	      (add-to-list 'eglot-stay-out-of 'company)
-              (eglot-ensure)
-	      ))
+  ;; optional integration with eglot:
+  ;;
+  ;; (add-hook 'nix-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'before-save-hook 'eglot-format nil t)
+  ;; 	      (add-to-list 'eglot-stay-out-of 'company)
+  ;;             (eglot-ensure)
+  ;; 	      ))
 
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-nix-mode))
