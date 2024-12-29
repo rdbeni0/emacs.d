@@ -97,7 +97,6 @@
          ([remap flymake-show-diagnostic]         . consult-flymake)
          ([remap flymake-show-buffer-diagnostics] . consult-flymake)
          ([remap flymake-show-diagnostics-buffer] . consult-flymake)
-         ([remap customize]                       . consult-customize)
          ([remap load-theme]                      . consult-theme)
          ([remap isearch-forward]                 . consult-line)
          ([remap project-switch-to-buffer]        . consult-project-buffer)
