@@ -18,9 +18,10 @@
 
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#lsp-server-options
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#options
+
 (use-package lsp-bridge
   :config
-  ;; use global-mode, but disable per particular mode:
+  ;; use in global-mode, but disable per particular mode:
   (global-lsp-bridge-mode)
 
   ;; popup menu seems to be broken, better to use standard completion at the bottom:
@@ -29,7 +30,7 @@
   ;; multiserver - custom user config and json files:
   (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge" user-emacs-directory))
 
-  ;; optional debug if something is wrong
+  ;; optional debug if something is wrong:
   ;; (setq lsp-bridge-enable-log t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,7 +64,7 @@
   ;; 	      (lsp-bridge-mode)))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;; Load keybindings:
+  ;;;; Load BIG list of keybindings:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (require 'cfg-gen-op-lsp-bridge))
 
