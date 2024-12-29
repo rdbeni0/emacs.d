@@ -101,7 +101,7 @@
  '(org-block-begin-line ((t (:extend t :foreground "red"))))
  '(org-document-info-keyword ((t (:background "dark blue" :foreground "chocolate"))))
  '(org-drawer ((t (:background "light coral" :foreground "dark violet"))))
- '(org-meta-line ((t (:background "dark blue" :foreground "gainsboro" :box (:line-width (1 . 1) :color "magenta" :style released-button)))))
+ '(org-meta-line ((t (:background "gray16" :foreground "peru" :box (:line-width (1 . 1) :color "magenta" :style released-button)))))
  '(org-verbatim ((t (:background "saddle brown" :foreground "peach puff"))))
  '(rcirc-my-nick ((t (:foreground "red"))))
  '(rcirc-server ((t (:foreground "PaleGreen1"))))
