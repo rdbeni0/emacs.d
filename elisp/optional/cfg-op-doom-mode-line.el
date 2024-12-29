@@ -14,11 +14,11 @@
   :config
   (setq doom-modeline-height 23))
 
-;; (set-face-background #'mode-line-inactive "white")
-(set-face-background #'mode-line-inactive "burlywood")
-(set-face-foreground #'mode-line-inactive "black")
+;; ;; (set-face-background #'mode-line-inactive "white")
+;; (set-face-background #'mode-line-inactive "burlywood")
+;; (set-face-foreground #'mode-line-inactive "black")
 
-;; (set-face-background #'mode-line "purple4")
+;; ;; (set-face-background #'mode-line "purple4")
 (set-face-background #'mode-line "DeepPink4")
 (set-face-foreground #'mode-line "yellow")
 

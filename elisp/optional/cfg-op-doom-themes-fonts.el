@@ -119,7 +119,8 @@
  '(term-color-green ((t (:background "lawn green" :foreground "lawn green"))))
  '(term-color-magenta ((t (:background "magenta" :foreground "magenta"))))
  '(term-color-red ((t (:background "red1" :foreground "red1"))))
- '(web-mode-comment-face ((t (:inherit font-lock-comment-face :background "gray1")))))
+ '(web-mode-comment-face ((t (:inherit font-lock-comment-face :background "gray1"))))
+ '(web-mode-doctype-face ((t (:foreground "gray70")))))
 
 (provide 'cfg-op-doom-themes-fonts)
 ;;; cfg-op-doom-themes-fonts.el ends here
