@@ -17,8 +17,8 @@
  "U" '(lsp-bridge-show-documentation :which-key "show-buffer-doc")
  "u" '(lsp-bridge-popup-documentation :which-key "popup-doc")
  "<up>" '(lsp-bridge-popup-documentation-scroll-up :which-key "popup-doc-up")
- "<next>" '(lsp-bridge-popup-documentation-scroll-up :which-key "popup-doc-up")
- "<prior>" '(lsp-bridge-popup-documentation-scroll-down :which-key "popup-doc-down")
+ "<next>" '(lsp-bridge-popup-documentation-scroll-up :which-key "popup-doc-up") ;; PageUp
+ "<prior>" '(lsp-bridge-popup-documentation-scroll-down :which-key "popup-doc-down") ;; PageDown
  "<down>" '(lsp-bridge-popup-documentation-scroll-down :which-key "popup-doc-down")
  "'" '(lsp-bridge-code-action :which-key "code-actions")
  "f" '(lsp-bridge-diagnostic-list :which-key "diag")
