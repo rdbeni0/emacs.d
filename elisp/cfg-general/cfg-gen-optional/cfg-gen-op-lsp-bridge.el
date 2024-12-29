@@ -21,9 +21,9 @@
  "<prior>" '(lsp-bridge-popup-documentation-scroll-down :which-key "popup-doc-down")
  "<down>" '(lsp-bridge-popup-documentation-scroll-down :which-key "popup-doc-down")
  "'" '(lsp-bridge-code-action :which-key "code-actions")
- "f" '(lsp-bridge-diagnostic-list :which-key "diagnostic")
- "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
- "," '(lsp-bridge-diagnostic-copy :which-key "diagnostic-copy")
+ "f" '(lsp-bridge-diagnostic-list :which-key "diag")
+ "F" '(lsp-bridge-workspace-diagnostic-list :which-key "diag-workspace")
+ "," '(lsp-bridge-diagnostic-copy :which-key "diag-copy")
  "j" '(lsp-bridge-diagnostic-jump-next :which-key "diag-jump-next")
  "k" '(lsp-bridge-diagnostic-jump-prev :which-key "diag-jump-prev")
 
