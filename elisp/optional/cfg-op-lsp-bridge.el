@@ -62,10 +62,10 @@
 
   (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff") ;; so in summary - this is the best option for now
 
-  (add-hook 'python-mode-hook
-            (lambda ()
-	      (setq-local lsp-bridge-enable-inlay-hint t)
-  	      ))
+  ;; (add-hook 'python-mode-hook
+  ;;           (lambda ()
+  ;; 	      (setq-local lsp-bridge-enable-inlay-hint t)
+  ;; 	      ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; nix-mode
