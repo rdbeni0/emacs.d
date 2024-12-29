@@ -79,6 +79,7 @@
  "<left>" '(lsp-bridge-ref-jump-next-file :which-key "jump-next-file")
  "<right>" '(lsp-bridge-ref-jump-prev-file :which-key "jump-prev-file")
  "<up>" '(lsp-bridge-ref-jump-prev-keyword :which-key "jump-prev")
+ "<return>" '(lsp-bridge-ref-open-file-and-stay :which-key "open-file")
  "A" '(lsp-bridge-ref-quit :which-key "edit-discard-C-c_C-q")
  "D" '(lsp-bridge-ref-remove-line-from-results :which-key "remove-result")
  "E" '(lsp-bridge-ref-switch-to-view-mode :which-key "view-mode")
@@ -103,7 +104,7 @@
  :states '(normal visual emacs)
  :keymaps 'lsp-bridge-ref-mode-map
  :major-modes 'lsp-bridge-ref-mode
- "," 'lsp-bridge-diagnostic-copy
+ "<return>" 'lsp-bridge-ref-open-file-and-stay
  "<down>" 'lsp-bridge-ref-jump-next-keyword
  "<left>" 'lsp-bridge-ref-jump-next-file
  "<right>" 'lsp-bridge-ref-jump-prev-file
