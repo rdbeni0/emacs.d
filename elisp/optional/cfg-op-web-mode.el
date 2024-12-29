@@ -30,10 +30,14 @@
 
 ;; OPTIONAL: https://github.com/skeeto/skewer-mode - REPL inside the web browser
 
+;; https://github.com/osv/company-web
 (use-package company-web
   :ensure t
   :config
   (require 'company-web-html)
+  ;;;; Additional company-web- backends should be loaded if required:
+  ;; (require 'company-web-jade) ; load company mode jade backend
+  ;; (require 'company-web-slim)
   :defer t
   :after (company))
 
