@@ -33,6 +33,9 @@
   ;; optional debug if something is wrong:
   ;; (setq lsp-bridge-enable-log t)
 
+  ;; (setq lsp-bridge-enable-completion-in-minibuffer t) ;; default is `nil'
+  ;; (setq lsp-bridge-enable-inlay-hint t) ;; good, but better to use via setq-local
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Exclusion from selected major-modes:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -59,24 +62,38 @@
 
   (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff") ;; so in summary - this is the best option for now
 
-  ;; (add-hook 'python-mode-hook
-  ;;           (lambda ()
-  ;; 	      (lsp-bridge-mode)))
+  (add-hook 'python-mode-hook
+            (lambda ()
+	      (setq-local lsp-bridge-enable-inlay-hint t)
+  	      ))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;; nix-mode
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (add-hook 'nix-mode-hook
+            (lambda ()
+	      (setq-local lsp-bridge-enable-inlay-hint t)
+	      ))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;; envrc-mode (direnv)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#customize-language-server-configuration-file
+  ;; A little tip, if you use a direnv setup (e.g. with nix-shell), make sure to use a hook like this (this is for the envrc package):
+
+  (add-hook 'envrc-mode-hook 'lsp-bridge-restart-process)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;; Manipulations with company-mode:
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
+  (setq company-idle-delay nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Load BIG list of keybindings:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (require 'cfg-gen-op-lsp-bridge))
-
-;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#customize-language-server-configuration-file
-;; A little tip, if you use a direnv setup (e.g. with nix-shell), make sure to use a hook like this (this is for the envrc package):
-(add-hook 'envrc-mode-hook 'lsp-bridge-restart-process)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Manipulations with company-mode:
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
-(setq company-idle-delay nil)
 
 (provide 'cfg-op-lsp-bridge)
 ;;; cfg-op-lsp-bridge.el ends here
