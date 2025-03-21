@@ -209,8 +209,8 @@
 ;; (company-quickhelp-mode 1)
 ;; (setq company-quickhelp-delay 0.2)
 (custom-set-variables
- '(company-quickhelp-color-background "green") ;; "blue"
- '(company-quickhelp-color-foreground "yellow")  ;; "white"
+ '(company-quickhelp-color-background "black") ;; "blue" for wayland/pgtk
+ '(company-quickhelp-color-foreground "white")  ;; "white" for waylant/pgtk
  '(company-quickhelp-use-propertized-text nil)
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))

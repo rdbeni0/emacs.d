@@ -26,6 +26,7 @@
 (require 'cfg-op-format)
 (require 'cfg-op-python)
 (require 'cfg-op-fish)
+(require 'cfg-op-lua)
 (require 'cfg-op-ssh-config)
 (require 'cfg-op-flycheck)
 (require 'cfg-op-markdown)
