@@ -63,11 +63,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-;; https://github.com/redguardtoo/evil-matchit
-(use-package evil-matchit
-  :after evil
-  :config
-  (global-evil-matchit-mode 1))
-
 (provide 'cfg-evil)
 ;;; cfg-evil.el ends here

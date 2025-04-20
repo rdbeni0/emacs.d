@@ -25,5 +25,11 @@
   (define-key evil-inner-text-objects-map "J" 'evil-indent-plus-i-indent-up-down)
   (define-key evil-outer-text-objects-map "J" 'evil-indent-plus-a-indent-up-down))
 
+;; https://github.com/redguardtoo/evil-matchit
+(use-package evil-matchit
+  :after evil
+  :config
+  (global-evil-matchit-mode 1))
+
 (provide 'cfg-op-evil)
 ;;; cfg-op-evil.el ends here

@@ -14,10 +14,8 @@
 	   annalist ;; required for "evil-collection"
 	   evil-collection
 	   evil-org
-	   evil-matchit
 	   general
 	   wgrep
-	   ;; evil-indent-plus
 	   ;;
 	   ))
   (unless (package-installed-p core-packages) (package-install core-packages)))
