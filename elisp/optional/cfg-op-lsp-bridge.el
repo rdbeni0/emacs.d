@@ -71,7 +71,7 @@
   ;; `basedpyright' is a fork of pyright with various type checking improvements, improved vscode support and pylance features built into the language server.
   ;; `basedpyright' seems to be better than `pyright', but also very similar
   ;; And as failback - we can try `pylsp'
-  ;; pyright/basedpyright - currently "code actions" are broken, so must be executed with `ruff-lsp' (so as multiserver)
+  ;; pyright/basedpyright - currently "code actions" are broken, so must be executed with `ruff' (so as multiserver)
 
   (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff") ;; so in summary: this is the best option for now
 
