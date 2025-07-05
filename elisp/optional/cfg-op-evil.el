@@ -27,7 +27,8 @@
 
 ;; https://github.com/redguardtoo/evil-matchit
 (use-package evil-matchit
-  :after evil
+  :after 'evil
+  :ensure t
   :config
   (global-evil-matchit-mode 1))
 

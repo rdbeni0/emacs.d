@@ -27,8 +27,9 @@
   ;; popup menu seems to be broken and unstable, better to use standard completion at the bottom:
   (setq lsp-bridge-code-action-enable-popup-menu nil)
 
-  ;; multiserver - custom user config and json files:
-  (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge" user-emacs-directory))
+  ;; langserver and multiserver - custom user config and json files:
+  (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge/multiserver" user-emacs-directory))
+  (setq lsp-bridge-user-langserver-dir (expand-file-name "data/lsp-bridge/langserver" user-emacs-directory))
 
   ;; fallbacks
   (setq lsp-bridge-find-def-fallback-function #'xref-find-definitions)
@@ -93,7 +94,7 @@
   ;;;; lua-mode
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (setq lsp-bridge-lua-lsp-server "sumneko") ;; https://github.com/LuaLS/lua-language-server
+  (setq lsp-bridge-lua-lsp-server "sumneko") ;; https://github.com/LuaLS/lua-language-server - maintainer: sumneko
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; envrc-mode (direnv)
