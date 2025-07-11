@@ -3,11 +3,13 @@
 ;;
 ;;; Code:
 
-;; (load-theme 'tango-dark t)
 (load-theme 'modus-vivendi t) ;; currently the best one
+
+;;; Older but not recommended:
 
 ;; (load-theme 'misterioso t)
 ;; (load-theme 'wombat t)
+;; (load-theme 'tango-dark t)
 
 (set-face-attribute 'default nil :height 130)
 
