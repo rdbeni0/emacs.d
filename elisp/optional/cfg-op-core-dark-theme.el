@@ -4,7 +4,7 @@
 ;;; Code:
 
 (load-theme 'modus-vivendi t) ;; currently the best one - black background
-;; (load-theme 'modus-vivendi-tinted t) ;; currently the best one - night sky black background
+;; (load-theme 'modus-vivendi-tinted t) ;; currently the best one - night sky background
 
 ;;; Older but not recommended:
 
