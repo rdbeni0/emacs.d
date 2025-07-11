@@ -7,7 +7,7 @@
 (require 'cfg-op-lsp-bridge)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-core-dark-theme)
-;; (require 'cfg-op-doom-themes-fonts)
+(require 'cfg-op-fonts)
 (require 'cfg-op-doom-mode-line)
 ;; (require 'cfg-op-tree-sitter)
 (require 'cfg-op-pgtk)
