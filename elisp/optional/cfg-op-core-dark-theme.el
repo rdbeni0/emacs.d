@@ -33,8 +33,8 @@
  '(erc-notice-face ((t (:background "gray21" :foreground "deep sky blue" :weight bold))))
  '(erc-timestamp-face ((t (:foreground "cyan" :weight bold))))
  '(fg:erc-color-face1 ((t (:background "magenta" :foreground "black"))))
- '(font-lock-comment-face ((t (:background "gray9" :foreground "dark orange"))))
- '(font-lock-doc-face ((t (:inherit font-lock-comment-face :background "gray6" :foreground "darl salmon"))))
+ '(font-lock-comment-face ((t (:background "gray15" :foreground "dark orange"))))
+ '(font-lock-doc-face ((t (:inherit font-lock-comment-face :background "gray15" :foreground "darl salmon"))))
  '(font-lock-keyword-face ((t (:background "gray0" :foreground "medium sea green"))))
  '(font-lock-type-face ((t (:background "black" :foreground "gold"))))
  '(markdown-markup-face ((t (:background "gray15" :foreground "yellow"))))
@@ -66,8 +66,8 @@
 ;; (set-face-background #'mode-line-inactive "white")
 ;; (set-face-background #'mode-line-inactive "burlywood")
 ;; (set-face-foreground #'mode-line-inactive "black")
-;; (set-face-background #'mode-line "DeepPink4")
-;; (set-face-foreground #'mode-line "yellow")
+(set-face-background #'mode-line "DeepPink4")
+(set-face-foreground #'mode-line "yellow")
 
 (provide 'cfg-op-core-dark-theme)
 ;;; cfg-op-core-dark-theme.el ends here
