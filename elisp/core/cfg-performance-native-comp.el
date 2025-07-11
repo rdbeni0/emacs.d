@@ -105,10 +105,10 @@
 (setq read-process-output-max (* 1024 1024))
 
 ;; https://akrl.sdf.org/#orgc15a10d
-;; When idle for 15sec run the GC no matter what:
+;; When idle for 30sec run the GC no matter what:
 ;; This action ss to set a timer using run-with-idle-timer.
-;; That means that every time Emacs will be idle for 15 secs we'll garbage collect once.
-;; The assumption is that the probability that we are going to input a command exactly after 15 secs is rather low.
+;; That means that every time Emacs will be idle for 30 secs we'll garbage collect once.
+;; The assumption is that the probability that we are going to input a command exactly after 30 secs is rather low.
 
 (defmacro k-time (&rest body)
   "Measure and return the time it takes evaluating BODY."
@@ -117,7 +117,7 @@
      (float-time (time-since time))))
 
 (defvar k-gc-timer
-  (run-with-idle-timer 15 t
+  (run-with-idle-timer 30 t
                        (lambda ()
                          (message "Garbage Collector has run for %.06fsec"
                                   (k-time (garbage-collect))))))
