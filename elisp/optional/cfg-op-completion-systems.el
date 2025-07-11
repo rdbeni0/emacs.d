@@ -236,9 +236,12 @@ targets."
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
   :ensure t
-  :after embark
+  ;; :after embark
   :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+  (embark-collect-mode . consult-preview-at-point-mode)
+  :config
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-embark))
 
 (provide 'cfg-op-completion-systems)
 ;;; cfg-op-completion-systems.el ends here
