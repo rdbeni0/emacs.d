@@ -28,6 +28,7 @@
  "/!"  '(ibuffer-negate-filter :which-key "negate-filter")
  "/&"  '(ibuffer-and-filter :which-key "and-filter")
  "/*"  '(ibuffer-filter-by-starred-name :which-key "by-starred-name")
+ "//"  '(ibuffer-filter-disable :which-key "disable-filter")
  "/-"  '(ibuffer-filter-disable :which-key "disable-filter")
  "/." '(ibuffer-filter-by-file-extension :which-key "by-extension")
  "/<"  '(ibuffer-filter-by-size-lt :which-key "size <")
