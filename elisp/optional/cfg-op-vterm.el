@@ -8,6 +8,7 @@
   :ensure t
   :config
   (setq vterm-clear-scrollback t)
+  (setq vterm-max-scrollback 99999)
 
   (add-hook 'vterm-mode-hook
 	    (lambda ()

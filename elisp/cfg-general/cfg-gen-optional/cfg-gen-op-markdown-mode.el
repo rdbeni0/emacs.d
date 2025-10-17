@@ -66,7 +66,7 @@
  "el" '(markdown-live-preview-bottom-mode :which-key "live-preview-mode")
  "eo" '(markdown-open :which-key "open")
  "ep" '(markdown-preview :which-key "tmp-preview")
- "ev" '(markdown-live-preview-mode :which-key "live-preview-mode-verical")
+ "ev" '(markdown-live-preview-mode :which-key "live-preview-mode-vertical")
 
  "b" '(:ignore t :which-key "blocks")
  "b'"  '(markdown-edit-code-block :which-key "edit-code-block")
