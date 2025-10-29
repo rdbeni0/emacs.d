@@ -50,8 +50,8 @@
 ;; goto (ffap and imenu)
 (setq list-gen-mode-ffap  (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-ffap  (append list-gen-mode-map list-gen-mode-conf-mode-map))
-(setq list-gen-mode-ffap (append list-gen-mode-ffap '(org-mode)))
-(setq list-gen-mode-map-ffap (append list-gen-mode-map-ffap '(org-mode-map)))
+(setq list-gen-mode-ffap (append list-gen-mode-ffap '(org-mode text-mode)))
+(setq list-gen-mode-map-ffap (append list-gen-mode-map-ffap '(org-mode-map text-mode-map)))
 
 ;; xref
 (setq list-gen-mode-xref (copy-sequence (seq-difference list-gen-mode '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
@@ -62,8 +62,8 @@
 (setq list-gen-mode-map-comment (append list-gen-mode-map list-gen-mode-conf-mode-map))
 
 ;; text manipulations
-(setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode)))
-(setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-conf-mode-map) '(org-mode-map)))
+(setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode text-mode)))
+(setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-conf-mode-map) '(org-mode-map text-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
