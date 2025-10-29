@@ -1,4 +1,4 @@
-;;; cfg-op-persp.el --- configfuration for perspectives -*- lexical-binding: t -*-
+;;; cfg-op-perspective.el --- configfuration for perspectives -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Various options for session management inside Emacs:
@@ -19,7 +19,7 @@
   ;; MUST be here to avoid ugly warning:
   ;; more: https://stackoverflow.com/questions/58615798/how-to-use-leader-key-as-part-of-package-prefix
   (setq persp-mode-prefix-key (kbd "C-c p"))
-  (setq persp-state-default-file (expand-file-name "desktops/.persp" user-emacs-directory))
+  (setq persp-state-default-file (expand-file-name "desktops/.perspectives" user-emacs-directory))
 
   (persp-mode t) ;; TURN ON/OFF - comment/uncomment
   ;; (add-hook 'kill-emacs-hook #'persp-state-save)
@@ -27,7 +27,7 @@
   ;; (consult-customize consult--source-buffer :hidden t :default nil)
   ;; (add-to-list 'consult-buffer-sources persp-consult-source)
   ;; load keybindings from general.el framework:
-  (require 'cfg-op-gen-persp))
+  (require 'cfg-op-gen-perspective))
 
-(provide 'cfg-op-persp)
-;;; cfg-op-persp.el ends here
+(provide 'cfg-op-perspective)
+;;; cfg-op-perspective.el ends here

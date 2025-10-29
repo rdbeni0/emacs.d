@@ -156,8 +156,6 @@
  "J" 'notmuch-jump-search
  "A" 'notmuch-search
  "F" 'cfg/notmuch-fuzzy-search
- "S-<left>" 'tabbar-backward
- "S-<right>" 'tabbar-forward
  "?" 'notmuch-help)
 
 (general-define-key
@@ -176,9 +174,7 @@
  "b" 'cfg/notmuch-toggle-tag-tree-bin
  "d" 'cfg/notmuch-toggle-tag-tree-bin
  "e" 'cfg/notmuch-toggle-tag-tree-flag
- "w" 'cfg/notmuch-toggle-tag-tree-flag
- "S-<left>" 'tabbar-backward
- "S-<right>" 'tabbar-forward)
+ "w" 'cfg/notmuch-toggle-tag-tree-flag)
 
 (general-define-key
  :states '(normal visual emacs)
@@ -205,8 +201,6 @@
  "w" 'cfg/notmuch-toggle-tag-show-flag
  "t" 'notmuch-show-save-attachments
  "." 'cfg/notmuch-show-view-html
- "S-<left>" 'tabbar-backward
- "S-<right>" 'tabbar-forward
  "?" 'notmuch-help)
 
 (general-define-key
@@ -229,8 +223,6 @@
  "s" 'cfg/notmuch-fuzzy-search
  "S"  'notmuch-search-filter
  "T"  'notmuch-search-filter-by-tag
- "S-<left>" 'tabbar-backward
- "S-<right>" 'tabbar-forward
  "?" 'notmuch-help)
 
 (provide 'cfg-gen-op-notmuch-mode)
