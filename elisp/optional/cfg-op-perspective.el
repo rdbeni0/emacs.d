@@ -22,7 +22,7 @@
   ;; (consult-customize consult--source-buffer :hidden t :default nil)
   ;; (add-to-list 'consult-buffer-sources persp-consult-source)
   ;; load keybindings from general.el framework:
-  (require 'cfg-op-gen-perspective))
+  (require 'cfg-gen-op-perspective))
 
 (provide 'cfg-op-perspective)
 ;;; cfg-op-perspective.el ends here
