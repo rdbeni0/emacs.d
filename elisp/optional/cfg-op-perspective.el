@@ -1,17 +1,12 @@
 ;;; cfg-op-perspective.el --- configfuration for perspectives -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Various options for session management inside Emacs:
-;; https://www.emacswiki.org/emacs/SessionManagement
-;; Desktop sessions:
-;; https://www.emacswiki.org/emacs?action=browse;oldid=DeskTop;id=Desktop
+;; https://github.com/nex3/perspective-el
+;; WARNING! perspective-el is incompatible with desktop+ or desktop save session
+;; Perspective does not work with Emacs desktop.el. 
+;; This is because Perspective state stores buffer and window information in frame parameters, and desktop-save-mode does not support saving those types of data.
 ;;
 ;;; Code:
-
-;; https://github.com/Bad-ptr/persp-mode.el
-;; https://github.com/nex3/perspective-el - newest version of persp-mode
-;; WARNING! perspective-el is incompatible with desktop+ or desktop save session
-;; Perspective does not work with Emacs desktop.el. This is because Perspective state stores buffer and window information in frame parameters, and desktop-save-mode does not support saving those types of data.
 
 (use-package perspective
   :ensure t

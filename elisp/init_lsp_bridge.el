@@ -10,6 +10,7 @@
 (require 'cfg-op-fonts)
 (require 'cfg-op-doom-mode-line)
 ;; (require 'cfg-op-tree-sitter)
+(require 'cfg-op-copy-paste)
 (require 'cfg-op-pgtk)
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-projectile)
