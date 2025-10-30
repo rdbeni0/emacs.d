@@ -34,6 +34,7 @@
 
 ;; defuns:
 
+;;;###autoload
 (defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.
   If the universal prefix argument is used then will the windows too."
@@ -44,6 +45,7 @@
     (when (equal '(4) arg) (delete-other-windows))
     (message "Buffers deleted!")))
 
+;;;###autoload
 (defun cfg/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
@@ -56,6 +58,7 @@
                  (mapcar #'car (window-prev-buffers window)))
      nil t)))
 
+;;;###autoload
 (defun cfg/delete-current-buffer-file ()
   "Removes file connected to current buffer and kills buffer."
   (interactive)
@@ -72,6 +75,7 @@
             (message "File deleted: '%s'" filename))
         (message "Canceled: File deletion")))))
 
+;;;###autoload
 (defun cfg/rename-current-buffer-file (&optional arg)
   "Rename the current buffer and the file it is visiting.
   If the buffer isn't visiting a file, ask if it should
@@ -132,6 +136,7 @@
                 ;; ?\a = C-g, ?\e = Esc and C-[
                 ((memq key '(?\a ?\e)) (keyboard-quit))))))))
 
+;;;###autoload
 (defun cfg/new-empty-buffer ()
   "Create a new empty buffer.
   New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
@@ -145,6 +150,7 @@
     (setq buffer-offer-save t)
     $buf))
 
+;;;###autoload
 (defun cfg/toggle-maximize-buffer ()
   "Maximize buffer"
   (interactive)
@@ -158,6 +164,7 @@
 
 ;; https://stackoverflow.com/questions/12715376/emacs-copy-pwd-of-the-current-buffer-to-clipboard
 
+;;;###autoload
 (defun cfg/show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
@@ -217,6 +224,7 @@
                            (1+ (current-column))
                          (current-column))))))
 
+;;;###autoload
 (defun cfg/copy-directory-path ()
   "Copy and show the directory path of the current buffer.
 
@@ -230,6 +238,7 @@
         (message "%s" directory-path))
     (message "WARNING: Current buffer does not have a directory!")))
 
+;;;###autoload
 (defun cfg/copy-file-path ()
   "Copy and show the file path of the current buffer."
   (interactive)
@@ -239,6 +248,7 @@
         (message "%s" file-path))
     (message "WARNING: Current buffer is not attached to a file!")))
 
+;;;###autoload
 (defun cfg/copy-file-name ()
   "Copy and show the file name of the current buffer."
   (interactive)
@@ -248,12 +258,14 @@
         (message "%s" file-name))
     (message "WARNING: Current buffer is not attached to a file!")))
 
+;;;###autoload
 (defun cfg/copy-buffer-name ()
   "Copy and show the name of the current buffer."
   (interactive)
   (kill-new (buffer-name))
   (message "%s" (buffer-name)))
 
+;;;###autoload
 (defun cfg/copy-file-name-base ()
   "Copy and show the file name without its final extension of the current buffer."
   (interactive)
@@ -263,6 +275,7 @@
         (message "%s" file-name))
     (message "WARNING: Current buffer is not attached to a file!")))
 
+;;;###autoload
 (defun cfg/copy-file-path-with-line ()
   "Copy and show the file path of the current buffer, including line number."
   (interactive)
@@ -272,6 +285,7 @@
         (message "%s" file-path))
     (message "WARNING: Current buffer is not attached to a file!")))
 
+;;;###autoload
 (defun cfg/copy-file-path-with-line-column ()
   "Copy and show the file path of the current buffer, including line and column number.
   This function respects the value of the `column-number-indicator-zero-based' variable."
@@ -282,6 +296,7 @@
         (message "%s" file-path))
     (message "WARNING: Current buffer is not attached to a file!")))
 
+;;;###autoload
 (defun cfg/open-with (arg)
   "Open visited file in default external program.
 When in dired mode, open file under the cursor.

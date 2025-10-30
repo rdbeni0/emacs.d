@@ -22,6 +22,7 @@
   ;;;;;;;;;;;;;; Split whole general.el mapping into small pieces:
 
   (require 'cfg-gen-for-all-modes)
+  (require 'cfg-gen-for-all-modes-fkeys)
   (require 'cfg-gen-for-many-modes)
 
   ;;; Load general.el for all modes (global scope) and for many modes (but not all; local scope)...

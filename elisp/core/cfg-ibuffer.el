@@ -12,6 +12,14 @@
   :config
   ;; turn off prompts "yes" or "no":
   (setq ibuffer-expert t)
+
+  (defun cfg/toggle-ibuffer ()
+    "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer`. Otherwise, open ibuffer."
+    (interactive)
+    (if (eq major-mode 'ibuffer-mode)
+	(cfg/alternate-buffer)
+      (ibuffer)))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-co-ibuffer-mode))
 
