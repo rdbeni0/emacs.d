@@ -1,7 +1,7 @@
-;;; cfg-i-buffer-menu.el --- configuration for ibuffer and buffer-menu -*- lexical-binding: t -*-
+;;; cfg-buffers-menu.el --- configuration for tempbuf and buffer-menu -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configuration for tempbuf (tempbuf will kill unused buffers after XX seconds), ibuffer and buffer-menu (M-x Buffer-menu).
+;; Configuration for tempbuf (tempbuf will kill unused buffers after XX seconds) and buffer-menu (M-x Buffer-menu).
 ;; Additional defuns for manipulating with file path and buffers.
 ;;
 ;;; Code:
@@ -32,16 +32,7 @@
 ;; example of usage:
 ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
 
-;; ibuffer
-
-(use-package ibuffer
-  :config
-  ;; turn off prompts "yes" or "no":
-  (setq ibuffer-expert t)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-ibuffer-mode))
-
-;; defuns
+;; defuns:
 
 (defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.
@@ -309,5 +300,5 @@ With a prefix ARG always prompt for command to use."
                     open)))
     (call-process program nil 0 nil current-file-name)))
 
-(provide 'cfg-i-buffer-menu)
-;;; cfg-i-buffer-menu.el ends here
+(provide 'cfg-buffers-menu)
+;;; cfg-buffers-menu.el ends here
