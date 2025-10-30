@@ -119,15 +119,35 @@
  "tl" '(ibuffer-do-toggle-lock :which-key "t-lock")
  "u"  '(ibuffer-unmark-forward :which-key "unmark")
  "v"  '(ibuffer-do-view :which-key "view")
- "x"  '(ibuffer-do-kill-on-deletion-marks :which-key "execute-delete")
- )
+ "x"  '(ibuffer-do-kill-on-deletion-marks :which-key "execute-delete"))
 
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(ibuffer-mode-map)
  :major-modes '(ibuffer-mode)
  "q"  'kill-buffer-and-window
- "Q"  'kill-this-buffer)
+ "Q"  'kill-this-buffer
+ )
+
+(with-eval-after-load 'ibuffer
+
+  ;; Binds in the correct map (ibuffer-name-map)
+  (define-key ibuffer-name-map [mouse-1] #'ibuffer-mouse-visit-buffer)  ; Mouse Left Click: visit-buffer
+  (define-key ibuffer-name-map [mouse-2] #'ibuffer-mouse-toggle-mark)
+  (define-key ibuffer-name-map [mouse-8] #'ibuffer-mouse-toggle-mark)
+  (define-key ibuffer-name-map [mouse-9] #'ibuffer-mouse-toggle-mark)
+
+  ;; (define-key ibuffer-name-map [down-mouse-3] nil)  ; Disable popup on right click
+  ;; (define-key ibuffer-name-map [mouse-3] #'cfg/ibuffer-mouse-mark)  ; Mouse Right Click: select buffer
+  )
+
+(defun cfg/ibuffer-disable-mouse-tooltips ()
+  "Disable mouse tooltips (help-echo) in `ibuffer-mode`."
+  (setq-local help-at-pt-display-when-idle nil)
+  (setq-local tooltip-mode nil)
+  (with-silent-modifications
+    (remove-text-properties (point-min) (point-max) '(help-echo nil))))
+(add-hook 'ibuffer-mode-hook #'cfg/ibuffer-disable-mouse-tooltips)
 
 (provide 'cfg-gen-co-ibuffer-mode)
 ;;; cfg-gen-co-ibuffer-mode.el ends here
