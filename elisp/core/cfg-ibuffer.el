@@ -18,7 +18,8 @@
     (interactive)
     (if (eq major-mode 'ibuffer-mode)
 	(cfg/alternate-buffer)
-      (ibuffer)))
+      (ibuffer)
+      (keyboard-quit)))
 
   ;; load general.el and keybindings:
   (require 'cfg-gen-co-ibuffer-mode))
