@@ -27,7 +27,15 @@
  "cs" '(composer-run-script :which-key "run-script")
  "ct" '(composer-list-packages :which-key "list-packages")
  "cu" '(composer-update :which-key "update")
- "cv" '(composer-run-vendor-bin-command :which-key "run-vendor-bin-command"))
+ "cv" '(composer-run-vendor-bin-command :which-key "run-vendor-bin-command")
+ "s"  '(:ignore t :which-key "phpstan")
+ "ss" '(phpstan-analyze-this-file :which-key "analyze-this-file")
+ "sg" '(phpstan-generate-baseline :which-key "generate-baseline")
+ "sb" '(phpstan-find-baseline-file :which-key "find-baseline-file")
+ "sa" '(phpstan-analyze-file :which-key "analyze-file")
+ "sp" '(phpstan-analyze-project :which-key "analyze-project")
+ "si" '(phpstan-insert-ignore :which-key "insert-ignore")
+ "sd" '(phpstan-insert-dumptype :which-key "insert-dumptype"))
 
 (provide 'cfg-gen-op-php-mode)
 ;;; cfg-gen-op-php-mode.el ends here
