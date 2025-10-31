@@ -9,7 +9,7 @@
  "/"  '(:ignore t :which-key "goto")
  "//"  '(ffap :which-key "act_ffap")
  "/e"  '(goto-line :which-key "goto-line")
- "/m"  '(imenu :which-key "imenu"))
+ "/."  '(imenu :which-key "imenu"))
 
 (general-define-key
  :states '(normal visual emacs)
