@@ -19,9 +19,9 @@
     (if (eq major-mode 'ibuffer-mode)
 	(cfg/alternate-buffer)
       (ibuffer)
-      (when (minibufferp)
-	(abort-recursive-edit))))
-  ;; (deactivate-mark)
+      ;; (when (minibufferp)
+      ;; 	(abort-recursive-edit))
+      (deactivate-mark)))
 
   ;; load general.el and keybindings:
   (require 'cfg-gen-co-ibuffer-mode))
