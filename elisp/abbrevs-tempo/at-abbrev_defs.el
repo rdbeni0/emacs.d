@@ -121,7 +121,7 @@
   ")\n"
   "\n"
   "(define-abbrev my-mode-abbrev-table \"qsXXX\" \";; SKELETON> description of functionality.\\n\" 'my-mode-skeleton-name :system t)\n"
-)
+  )
 
 (define-abbrev emacs-lisp-mode-abbrev-table "qsinc1" ";; SKELETON> use-package with examples.\n" 'emacs-lisp-skeleton-use-package :system t)
 (define-abbrev emacs-lisp-mode-abbrev-table "qsdef1" ";; SKELETON> skeleton for skeletons.\n" 'emacs-lisp-skeleteon-skel :system t)
@@ -230,7 +230,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; LUA-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-abbrev-table 'lua-mode-abbrev-table '())
+(define-abbrev-table 'lua-mode-abbrev-table '(
+					      ("qqsta" "#!/usr/bin/env lua\n-- -*- mode: lua -*-\n" nil 0 :system t)
+					      ))
 
 (provide 'at-abbrev_defs)
 ;;; at-abbrev_defs.el ends here
