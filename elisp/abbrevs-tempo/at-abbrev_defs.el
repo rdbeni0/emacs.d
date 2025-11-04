@@ -230,9 +230,24 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; LUA-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-abbrev-table 'lua-mode-abbrev-table '(
-					      ("qqsta" "#!/usr/bin/env lua\n-- -*- mode: lua -*-\n" nil 0 :system t)
-					      ))
+
+(define-abbrev-table 'lua-mode-abbrev-table
+  '(
+    ("qqsta" "#!/usr/bin/env lua\n-- -*- mode: lua -*-\n" nil 0 :system t)
+
+    ;; if condition
+    ("qqifc" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nend" nil 0 :system t)
+
+    ;; if ... else
+    ("qqifce" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+
+    ;; if ... elseif ... else (1 elseif)
+    ("qqifce1" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+
+    ;; if ... elseif ... elseif ... else (2 elseif)
+    ("qqifce2" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+    ))
+
 
 (provide 'at-abbrev_defs)
 ;;; at-abbrev_defs.el ends here
