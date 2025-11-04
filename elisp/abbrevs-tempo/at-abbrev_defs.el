@@ -236,16 +236,16 @@
     ("qqsta" "#!/usr/bin/env lua\n-- -*- mode: lua -*-\n" nil 0 :system t)
 
     ;; if conditions
-    ("qqifc" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nend" nil 0 :system t)
+    ("qqifc" "-- COnditions:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nend" nil 0 :system t)
 
     ;; if ... else
-    ("qqifce" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+    ("qqifce" "-- COnditions:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
 
     ;; if ... elseif ... else (1 elseif)
-    ("qqifce1" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+    ("qqifce1" "-- COnditions:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
 
     ;; if ... elseif ... elseif ... else (2 elseif)
-    ("qqifce2" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+    ("qqifce2" "-- COnditions:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
 
     ;; FILE HANDLING (qqfih*)
 
