@@ -227,5 +227,10 @@
 ;; (setq notmuch-message-mode-abbrev-table nil)
 (define-abbrev-table 'notmuch-message-mode-abbrev-table '())
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; LUA-MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-abbrev-table 'lua-mode-abbrev-table '())
+
 (provide 'at-abbrev_defs)
 ;;; at-abbrev_defs.el ends here
