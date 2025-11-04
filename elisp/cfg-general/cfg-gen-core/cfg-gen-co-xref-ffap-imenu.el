@@ -7,16 +7,16 @@
  :major-modes list-gen-mode-ffap
  :prefix ","
  "/"  '(:ignore t :which-key "goto")
- "//"  '(ffap :which-key "act_ffap")
- "/e"  '(goto-line :which-key "goto-line")
- "/."  '(imenu :which-key "imenu"))
+ "/."  '(ffap :which-key "act_ffap")
+ "/'"  '(goto-line :which-key "goto-line")
+ "//"  '(imenu :which-key "imenu"))
 
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(perl-mode-map cperl-mode-map)
  :major-modes '(perl-mode cperl-mode)
  :prefix ","
- "//" '(cfg/ffap :which-key "ffap_perl"))
+ "/." '(cfg/ffap :which-key "ffap_perl"))
 
 ;; xref
 (general-define-key

@@ -30,7 +30,7 @@
  ".u"  '(cfg/dos2unix :which-key "dos2unix")
  ".w"  '(delete-trailing-whitespace :which-key "delete-tr-whitespace")
  ".y"  '(untabify :which-key "untabify")
- "./"  '(whitespace-mode :which-key "whitespace-mode")
+ ".i"  '(whitespace-mode :which-key "whitespace-mode")
  ".0"  '(whitespace-newline-mode :which-key "whitespace-newline-mode")
  ".z"  '(cfg/capitalize-region :which-key "capitalize"))
 
