@@ -235,7 +235,7 @@
   '(
     ("qqsta" "#!/usr/bin/env lua\n-- -*- mode: lua -*-\n" nil 0 :system t)
 
-    ;; if condition
+    ;; if conditions
     ("qqifc" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nend" nil 0 :system t)
 
     ;; if ... else
@@ -246,6 +246,38 @@
 
     ;; if ... elseif ... elseif ... else (2 elseif)
     ("qqifce2" "-- Conditions examples:\n-- > >= == ~= <= <\nif condition then\n  -- code here\nelseif condition then\n  -- code here\nelseif condition then\n  -- code here\nelse\n  -- code here\nend" nil 0 :system t)
+
+    ;; FILE HANDLING (qqfih*)
+
+    ;; Write single line to file (overwrite)
+    ("qqfihw1" "-- Write single line to file (overwrite)\nlocal file = io.open('X', 'w')\nfile:write('New Line\\n')\nfile:close()" nil 0 :system t)
+
+    ;; Append single line to file
+    ("qqfihw2" "-- Append single line to file\nlocal file = io.open('X', 'a')\nfile:write('Appended Line\\n')\nfile:close()" nil 0 :system t)
+
+    ;; Write multiple lines to file
+    ("qqfihw3" "-- Write multiple lines to file\nlocal file = io.open('X', 'w')\nfile:write('Line 1\\n')\nfile:write('Line 2\\n')\nfile:close()" nil 0 :system t)
+
+    ;; Write table contents to file
+    ("qqfihw4" "-- Write table contents to file\nlocal file = io.open('X', 'w')\nlocal data = { 'one', 'two', 'three' }\nfor _, v in ipairs(data) do\n  file:write(v .. '\\n')\nend\nfile:close()" nil 0 :system t)
+
+    ;; Read all file content at once
+    ("qqfihr1" "-- Read all file content at once\nlocal file = io.open('X', 'r')\nlocal content = file:read('*all')\nfile:close()\nprint(content)" nil 0 :system t)
+
+    ;; Read file line by line and print
+    ("qqfihr2" "-- Read file line by line and print\nfor line in io.lines('X') do\n  print(line)\nend" nil 0 :system t)
+
+    ;; Read file into table
+    ("qqfihr3" "-- Read file into table\nlocal lines = {}\nfor line in io.lines('X') do\n  table.insert(lines, line)\nend\nprint('Total lines:', #lines)" nil 0 :system t)
+
+    ;; Safe file read with error handling
+    ("qqfihr4" "-- Safe file read with error handling\nlocal file, err = io.open('X', 'r')\nif not file then\n  print('Error opening file:', err)\n  return\nend\nfor line in file:lines() do\n  print(line)\nend\nfile:close()" nil 0 :system t)
+
+    ;; Check if file exists
+    ("qqfihx1" "-- Check if file exists\nlocal f = io.open('X', 'r')\nif f then\n  print('File exists')\n  f:close()\nelse\n  print('File not found')\nend" nil 0 :system t)
+
+    ;; Copy one file to another
+    ("qqfihc1" "-- Copy one file to another\nlocal src = io.open('source.txt', 'r')\nlocal dst = io.open('dest.txt', 'w')\nfor line in src:lines() do\n  dst:write(line .. '\\n')\nend\nsrc:close()\ndst:close()" nil 0 :system t)
     ))
 
 
