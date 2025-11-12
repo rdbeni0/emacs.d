@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'php-mode-map
- :major-modes 'php-mode
+ :keymaps '(php-mode-map php-ts-mode-map)
+ :major-modes '(php-mode php-ts-mode)
  :prefix ","
  "t"  '(:ignore t :which-key "phpunit")
  "tt" '(phpunit-current-test :which-key "phpunit-current-test")

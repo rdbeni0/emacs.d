@@ -62,6 +62,17 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq lsp-bridge-php-lsp-server "phpactor")
 
+  ;; 'phpactor' should use 'phpstan' and probably does so in a more optimized way than flycheck.
+  ;; So in this case, we don't use 'flycheck', but try to use it directly through 'phpactor'.
+  ;; 'phpstan' can also be executed manually: via 'M-x phpstan-analyze-file' - and in this case this is recomended method.
+  (add-hook 'flycheck-mode-hook
+            (lambda ()
+              (flycheck-disable-checker 'php-phpstan)))
+  (setq-default flycheck-disabled-checkers '(php-phpstan))
+
+  ;; Also can be used with PHP Psalm, but in this cale flycheck is probably better:
+  ;; https://phpactor.readthedocs.io/en/master/integrations/psalm.html
+
   ;; (add-hook 'php-mode-hook
   ;;           (lambda ()
   ;; 	      (lsp-bridge-mode)))

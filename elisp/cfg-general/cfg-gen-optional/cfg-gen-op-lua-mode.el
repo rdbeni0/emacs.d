@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'lua-mode-map
- :major-modes 'lua-mode
+ :keymaps '(lua-mode-map lua-ts-mode-map)
+ :major-modes '(lua-mode lua-ts-mode)
  :prefix ","
 )
 

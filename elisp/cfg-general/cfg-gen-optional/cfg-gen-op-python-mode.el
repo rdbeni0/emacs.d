@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'python-mode-map
- :major-modes 'python-mode
+ :keymaps '(python-mode-map python-ts-mode-map)
+ :major-modes '(python-mode python-ts-mode)
  :prefix ","
  "c"  '(sphinx-doc :which-key "sphinx-doc")
  "v"  '(:ignore t :which-key "venv")

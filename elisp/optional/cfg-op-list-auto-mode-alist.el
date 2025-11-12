@@ -17,6 +17,8 @@
 	 ("/known_hosts\\'"       . ssh-known-hosts-mode)
 	 ("/authorized_keys?\\'" . ssh-authorized-keys-mode)
 	 ("\\.yaml?\\'" . yaml-mode)
+	 ("\\.php?\\'" . php-ts-mode)
+	 ("\\.lua?\\'" . lua-ts-mode)
 	 ;; web-mode
 	 ("\\.css?\\'" . web-mode)
 	 ("\\.djhtml\\'" . web-mode)
@@ -30,9 +32,9 @@
          ("\\.[agj]sp\\'" . web-mode)
          ("\\.as[cp]x\\'" . web-mode)
 	 ;; nix mode
-	 ("\\.nix_stable?\\'" . nix-mode)
-	 ("\\.nix_unstable?\\'" . nix-mode)
-	 ("\\.nix\\'" . nix-mode)
+	 ("\\.nix_stable?\\'" . nix-ts-mode)
+	 ("\\.nix_unstable?\\'" . nix-ts-mode)
+	 ("\\.nix\\'" . nix-ts-mode)
 	 ) auto-mode-alist))
 
 (provide 'cfg-op-list-auto-mode-alist)

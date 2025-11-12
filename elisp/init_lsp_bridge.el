@@ -9,7 +9,7 @@
 (require 'cfg-op-core-dark-theme)
 (require 'cfg-op-fonts)
 (require 'cfg-op-doom-mode-line)
-;; (require 'cfg-op-tree-sitter)
+(require 'cfg-op-tree-sitter)
 (require 'cfg-op-perspective)
 (require 'cfg-op-copy-paste)
 (require 'cfg-op-pgtk)

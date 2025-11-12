@@ -29,15 +29,50 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;; https://github.com/renzmann/treesit-auto
+
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+;; (setq treesit-language-source-alist
+;;       '((bash        "https://github.com/tree-sitter/tree-sitter-bash")
+;;         (c           "https://github.com/tree-sitter/tree-sitter-c")
+;;         (cpp         "https://github.com/tree-sitter/tree-sitter-cpp")
+;;         (css         "https://github.com/tree-sitter/tree-sitter-css")
+;;         (dockerfile  "https://github.com/camdencheek/tree-sitter-dockerfile")
+;;         (elisp       "https://github.com/Wilfred/tree-sitter-elisp")
+;;         (go          "https://github.com/tree-sitter/tree-sitter-go")
+;;         (html        "https://github.com/tree-sitter/tree-sitter-html")
+;;         (javascript  "https://github.com/tree-sitter/tree-sitter-javascript" "src")
+;;         (json        "https://github.com/tree-sitter/tree-sitter-json")
+;;         (lua         "https://github.com/tree-sitter-grammars/tree-sitter-lua")
+;;         (make        "https://github.com/alemuller/tree-sitter-make")
+;;         (markdown    "https://github.com/ikatyang/tree-sitter-markdown")
+;;         (python      "https://github.com/tree-sitter/tree-sitter-python")
+;;         (rust        "https://github.com/tree-sitter/tree-sitter-rust")
+;; 	(blade       "https://github.com/amaanq/tree-sitter-blade")
+;;         (twig        "https://github.com/the-mikedavis/tree-sitter-twig")
+;;         (toml        "https://github.com/tree-sitter/tree-sitter-toml")
+;;         (tsx         "https://github.com/tree-sitter/tree-sitter-typescript" "tsx/src")
+;;         (typescript  "https://github.com/tree-sitter/tree-sitter-typescript" "typescript/src")
+;;         (yaml        "https://github.com/ikatyang/tree-sitter-yaml")))
+;; (add-to-list 'treesit-language-source-alist
+;;              '(php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src"))
+
 (setq major-mode-remap-alist
- '((yaml-mode . yaml-ts-mode)
-   (bash-mode . bash-ts-mode)
-   ;; (php-mode . php-ts-mode)
-   (js2-mode . js-ts-mode)
-   (typescript-mode . typescript-ts-mode)
-   (json-mode . json-ts-mode)
-   (css-mode . css-ts-mode)
-   (python-mode . python-ts-mode)))
+      '((yaml-mode . yaml-ts-mode)
+	(bash-mode . bash-ts-mode)
+	(php-mode . php-ts-mode)
+	(js2-mode . js-ts-mode)
+	(typescript-mode . typescript-ts-mode)
+	(json-mode . json-ts-mode)
+	(css-mode . css-ts-mode)
+	(python-mode . python-ts-mode)))
 
 (provide 'cfg-op-tree-sitter)
 ;;; cfg-op-tree-sitter.el ends here

@@ -16,6 +16,21 @@
 
 (setq list-gen-mode-map '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map c++-mode-map nxml-mode-map groovy-mode-map jenkinsfile-mode-map nix-mode-map lisp-interaction-mode-map markdown-mode-map gfm-mode-map gfm-view-mode-map json-mode-map jsonc-mode-map lua-mode-map))
 
+;; Add -ts, if exists
+(dolist (mode list-gen-mode)
+  (let* ((name (symbol-name mode))
+         (ts-mode (intern (concat (string-remove-suffix "-mode" name) "-ts-mode"))))
+    (when (fboundp ts-mode)
+      (add-to-list 'list-gen-mode ts-mode t))))
+
+;; Add -ts-mode-map, if exists
+(dolist (map list-gen-mode-map)
+  (let* ((name (symbol-name map))
+         (ts-map (intern (concat (string-remove-suffix "-mode-map" name) "-ts-mode-map"))))
+    (when (boundp ts-map)
+      (add-to-list 'list-gen-mode-map ts-map t))))
+
+
 ;; remove duplicates (if any)
 (delete-dups list-gen-mode)
 (delete-dups list-gen-mode-map)
@@ -31,13 +46,13 @@
 (setq list-gen-mode-map-flycheck (seq-difference list-gen-mode-map '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map)))
 
 ;; format core
-(setq list-gen-mode-format-core (append (seq-difference list-gen-mode 
-			    '(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
-			    '(yaml-mode)))
-(setq list-gen-mode-map-format-core (append 
-	    (seq-difference list-gen-mode-map 
-			    '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map)) 
-                            '(yaml-mode-map)))
+(setq list-gen-mode-format-core (append (seq-difference list-gen-mode
+							'(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
+					'(yaml-mode)))
+(setq list-gen-mode-map-format-core (append
+				     (seq-difference list-gen-mode-map
+						     '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))
+				     '(yaml-mode-map)))
 
 ;; format optional
 (setq list-gen-mode-format-optional (append
