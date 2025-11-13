@@ -122,6 +122,7 @@
  "ba"  '(auto-revert-mode :which-key "auto-revert")
  "bA"  '(global-auto-revert-mode :which-key "global-auto-revert")
  "bm"  '(:ignore t :which-key "core modes")
+ "bmn" '(normal-mode :which-key "normal-mode")
  "bmp" '(python-mode :which-key "python-mode")
  "bml" '(cperl-mode :which-key "cperl-mode")
  "bmt" '(text-mode :which-key "text-mode")

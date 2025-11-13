@@ -19,58 +19,56 @@
 (use-package tree-sitter-langs
   :ensure t)
 
-;; (setq treesit-language-source-alist
-;;       '((bash        "https://github.com/tree-sitter/tree-sitter-bash")
-;;         (c           "https://github.com/tree-sitter/tree-sitter-c")
-;;         (cpp         "https://github.com/tree-sitter/tree-sitter-cpp")
-;;         (css         "https://github.com/tree-sitter/tree-sitter-css")
-;;         (dockerfile  "https://github.com/camdencheek/tree-sitter-dockerfile")
-;;         (elisp       "https://github.com/Wilfred/tree-sitter-elisp")
-;;         (go          "https://github.com/tree-sitter/tree-sitter-go")
-;;         (html        "https://github.com/tree-sitter/tree-sitter-html")
-;;         (javascript  "https://github.com/tree-sitter/tree-sitter-javascript" "src")
-;;         (json        "https://github.com/tree-sitter/tree-sitter-json")
-;;         (lua         "https://github.com/tree-sitter-grammars/tree-sitter-lua")
-;;         (make        "https://github.com/alemuller/tree-sitter-make")
-;;         (markdown    "https://github.com/ikatyang/tree-sitter-markdown")
-;;         (python      "https://github.com/tree-sitter/tree-sitter-python")
-;;         (rust        "https://github.com/tree-sitter/tree-sitter-rust")
-;; 	(blade       "https://github.com/amaanq/tree-sitter-blade")
-;;         (twig        "https://github.com/the-mikedavis/tree-sitter-twig")
-;;         (toml        "https://github.com/tree-sitter/tree-sitter-toml")
-;;         (tsx         "https://github.com/tree-sitter/tree-sitter-typescript" "tsx/src")
-;;         (typescript  "https://github.com/tree-sitter/tree-sitter-typescript" "typescript/src")
-;;         (yaml        "https://github.com/ikatyang/tree-sitter-yaml")))
-;; (add-to-list 'treesit-language-source-alist
-;;              '(php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src"))
+;;
+(setq treesit-language-source-alist
+      '((perl . ("https://github.com/tree-sitter-perl/tree-sitter-perl" "release"))
+        (pod  . ("https://github.com/tree-sitter-perl/tree-sitter-pod" "release"))
+        (php  . ("https://github.com/tree-sitter/tree-sitter-php" "master" "php/src"))
+        (lua  . ("https://github.com/tree-sitter-grammars/tree-sitter-lua" "main"))))
 
-(add-to-list 'treesit-language-source-alist
-	     '(perl . ("https://github.com/tree-sitter-perl/tree-sitter-perl" "release")))
-(add-to-list 'treesit-language-source-alist
-	     '(pod . ("https://github.com/tree-sitter-perl/tree-sitter-pod" "release")))
-(treesit-install-language-grammar 'perl)
-(treesit-install-language-grammar 'pod)
 
 ;; Workaround for "tree-sitter-langs" in ELPA
-(let* ((ts-elpa-dir (expand-file-name "elpa/" user-emacs-directory))
-       ;; find the tree-sitter-langs directory regardless of version
-       (ts-lang-dir (car (file-expand-wildcards
-                          (expand-file-name "tree-sitter-langs-*/bin" ts-elpa-dir))))
-       (ts-target-dir (expand-file-name "tree-sitter/" user-emacs-directory)))
-  (when ts-lang-dir
-    (unless (file-exists-p ts-target-dir)
-      (make-directory ts-target-dir t))
-    ;; for each *.so file in bin/
-    (dolist (file (directory-files ts-lang-dir t "\\.so$"))
-      (let* ((lang (file-name-base file))
-             (target (expand-file-name
-                      (format "libtree-sitter-%s.so" lang)
-                      ts-target-dir)))
-        ;; create a symlink (or copy if the system does not support symlinks
-        (unless (file-exists-p target)
-          (condition-case nil
-              (make-symbolic-link file target)
-            (error (copy-file file target))))))))
+(defun cfg/treesit-link-ts-langs ()
+  "Create symlinks for tree-sitter-langs shared objects from ELPA into user tree-sitter directory.
+If symlink creation fails, do nothing."
+  (interactive)
+  (let* ((ts-elpa-dir (expand-file-name "elpa/" user-emacs-directory))
+         ;; find the tree-sitter-langs directory regardless of version
+         (ts-lang-dir (car (file-expand-wildcards
+                            (expand-file-name "tree-sitter-langs-*/bin" ts-elpa-dir))))
+         (ts-target-dir (expand-file-name "tree-sitter/" user-emacs-directory)))
+    (when ts-lang-dir
+      (unless (file-exists-p ts-target-dir)
+        (make-directory ts-target-dir t))
+      ;; iterate over each *.so file in bin/
+      (dolist (file (directory-files ts-lang-dir t "\\.so$"))
+        (let* ((lang (file-name-base file))
+               (target (expand-file-name
+                        (format "libtree-sitter-%s.so" lang)
+                        ts-target-dir)))
+          ;; create a symlink only if target does not exist
+          (unless (file-exists-p target)
+            (condition-case nil
+                (make-symbolic-link file target)
+              (error nil))))))))
+
+(defun cfg/treesit-reinstall-grammar ()
+  "Prompt for a language from `treesit-language-source-alist`,
+remove the existing .so file if present, and reinstall the grammar."
+  (interactive)
+  (let* ((langs (mapcar #'car treesit-language-source-alist))
+         ;; Prompt the user to choose a language from the list
+         (choice (intern (completing-read "Choose language: " langs nil t)))
+         ;; Build the path to the corresponding shared object file
+         (libfile (expand-file-name
+                   (format "libtree-sitter-%s.so" choice)
+                   (expand-file-name "tree-sitter" user-emacs-directory))))
+    ;; If the file exists (e.g., as a symlink or regular file), delete it
+    (when (file-exists-p libfile)
+      (delete-file libfile))
+    ;; Reinstall the grammar for the chosen language
+    (treesit-install-language-grammar choice)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; perl-ts-mode
