@@ -107,10 +107,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq list-gen-mode
-      (seq-difference list-gen-mode '(nix-mode))) ;; remove from list
+      (seq-difference list-gen-mode '(perl-mode cperl-mode))) ;; remove from list
 
 (setq list-gen-mode-map
-      (seq-difference list-gen-mode-map '(nix-mode-map))) ;; remove from list
+      (seq-difference list-gen-mode-map '(perl-mode-map cperl-mode-map))) ;; remove from list
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; CONF-MODES
@@ -138,16 +138,19 @@
 ;;;; FORMAT CORE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (setq list-gen-mode-format-core (append (seq-difference list-gen-mode
 							'(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
 					'(yaml-mode yaml-ts-mode)))
+
 (setq list-gen-mode-map-format-core (append
 				     (seq-difference list-gen-mode-map
 						     '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))
 				     '(yaml-mode-map yaml-ts-mode-map)))
 
-;; format optional
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; FORMAT OPTIONAL
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq list-gen-mode-format-optional (append
 				     (seq-difference list-gen-mode '(ssh-config-mode))
 				     '(json-mode yaml-mode yaml-ts-mode)))
@@ -155,21 +158,35 @@
 					 (seq-difference list-gen-mode-map '(ssh-config-mode-map))
 					 '(json-mode-map yaml-mode-map yaml-ts-mode-map)))
 
-;; goto (ffap and imenu)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; GOTO (FFAP AND IMENU)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq list-gen-mode-ffap  (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-ffap  (append list-gen-mode-map list-gen-mode-conf-mode-map))
 (setq list-gen-mode-ffap (append list-gen-mode-ffap '(org-mode text-mode)))
 (setq list-gen-mode-map-ffap (append list-gen-mode-map-ffap '(org-mode-map text-mode-map)))
 
-;; xref
-(setq list-gen-mode-xref (copy-sequence (seq-difference list-gen-mode '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
-(setq list-gen-mode-map-xref (copy-sequence (seq-difference list-gen-mode-map '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; XREF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; comment (dwim)
+(setq list-gen-mode-xref
+      (copy-sequence (seq-difference list-gen-mode '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
+(setq list-gen-mode-map-xref
+      (copy-sequence (seq-difference list-gen-mode-map '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; COMMENTS (DWIM)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq list-gen-mode-comment (append list-gen-mode list-gen-mode-conf-mode))
 (setq list-gen-mode-map-comment (append list-gen-mode-map list-gen-mode-conf-mode-map))
 
-;; text manipulations
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; TEXT MANIPULATIONS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode text-mode)))
 (setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-conf-mode-map) '(org-mode-map text-mode-map)))
 

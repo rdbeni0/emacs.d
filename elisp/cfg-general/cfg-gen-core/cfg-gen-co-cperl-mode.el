@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(perl-mode-map cperl-mode-map)
- :major-modes '(perl-mode cperl-mode)
+ :keymaps '(perl-mode-map cperl-mode-map perl-ts-mode-map)
+ :major-modes '(perl-mode cperl-mode perl-ts-mode)
  :prefix ","
  "!"  '(executable-interpret :which-key "exec-script")
  "o"  '(cperl-perldoc-at-point :which-key "perldoc-at-point")

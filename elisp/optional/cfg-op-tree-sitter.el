@@ -7,7 +7,6 @@
 ;; https://tree-sitter.github.io/tree-sitter/
 ;; https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 ;; "For Emacs 29+, please use the built-in integration instead."
-;; https://lists.gnu.org/archive/html/emacs-devel/2022-11/msg01443.html
 
 ;;; Code:
 
@@ -19,7 +18,10 @@
 (use-package tree-sitter-langs
   :ensure t)
 
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Custom list of defined tree-sitter grammars
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq treesit-language-source-alist
       '((perl . ("https://github.com/tree-sitter-perl/tree-sitter-perl" "release"))
         (pod  . ("https://github.com/tree-sitter-perl/tree-sitter-pod" "release"))
@@ -27,7 +29,10 @@
         (lua  . ("https://github.com/tree-sitter-grammars/tree-sitter-lua" "main"))))
 
 
-;; Workaround for "tree-sitter-langs" in ELPA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Workarounds and defuns for "tree-sitter-langs" in ELPA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun cfg/treesit-link-ts-langs ()
   "Create symlinks for tree-sitter-langs shared objects from ELPA into user tree-sitter directory.
 If symlink creation fails, do nothing."
@@ -69,6 +74,21 @@ remove the existing .so file if present, and reinstall the grammar."
     ;; Reinstall the grammar for the chosen language
     (treesit-install-language-grammar choice)))
 
+(defun cfg/treesit-reinstall-all-grammars ()
+  "Reinstall all grammars from `treesit-language-source-alist`.
+For each language, remove the existing .so file if present, then reinstall."
+  (interactive)
+  (dolist (lang treesit-language-source-alist)
+    (let* ((name (car lang))
+           ;; Build the path to the corresponding shared object file
+           (libfile (expand-file-name
+                     (format "libtree-sitter-%s.so" name)
+                     (expand-file-name "tree-sitter" user-emacs-directory))))
+      ;; If the file exists (regular file or symlink), delete it
+      (when (file-exists-p libfile)
+        (delete-file libfile))
+      ;; Reinstall the grammar for the current language
+      (treesit-install-language-grammar name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; perl-ts-mode
@@ -100,7 +120,6 @@ remove the existing .so file if present, and reinstall the grammar."
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
-
 (setq major-mode-remap-alist
       '((yaml-mode . yaml-ts-mode)
 	(bash-mode . bash-ts-mode)
@@ -111,8 +130,9 @@ remove the existing .so file if present, and reinstall the grammar."
 	(typescript-mode . typescript-ts-mode)
 	(json-mode . json-ts-mode)
 	(css-mode . css-ts-mode)
-	(fish-mode . fish-ts-mode)
 	(python-mode . python-ts-mode)))
+
+(require 'cfg-gen-op-tree-sitter-mode)
 
 (provide 'cfg-op-tree-sitter)
 ;;; cfg-op-tree-sitter.el ends here

@@ -7,7 +7,7 @@
  :keymaps 'override
  :prefix "SPC"
 
- "0"   '(:ignore t :which-key "treemacs")
+ "0"   '(:ignore t :which-key "tree-smacs") ;; tree-sitter + treemacs, please check cfg-gen-op-tree-sitter-mode
  "00"  '(treemacs :which-key "treemacs")
  "0o"  '(treemacs-switch-workspace :which-key "switch-workspace")
  "0w"  '(:ignore t :which-key "treemacs-workspaces")
