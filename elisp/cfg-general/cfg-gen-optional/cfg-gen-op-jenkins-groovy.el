@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(groovy-mode-map jenkinsfile-mode-map)
- :major-modes '(groovy-mode jenkinsfile-mode)
+ :keymaps '(groovy-mode-map jenkinsfile-mode-map groovy-ts-mode-map jenkinsfile-ts-mode-map)
+ :major-modes '(groovy-mode jenkinsfile-mode groovy-ts-mode jenkinsfile-ts-mode)
  :prefix ","
  "r" '(groovy-electric-mode :which-key "g-toggle-electric-mode")
  "="  '(:ignore t :which-key "format")

@@ -32,9 +32,9 @@
          ("\\.[agj]sp\\'" . web-mode)
          ("\\.as[cp]x\\'" . web-mode)
 	 ;; nix mode
-	 ("\\.nix_stable?\\'" . nix-ts-mode)
-	 ("\\.nix_unstable?\\'" . nix-ts-mode)
-	 ("\\.nix\\'" . nix-ts-mode)
+	 ("\\.nix_stable?\\'" . nix-mode)
+	 ("\\.nix_unstable?\\'" . nix-mode)
+	 ("\\.nix\\'" . nix-mode)
 	 ) auto-mode-alist))
 
 (provide 'cfg-op-list-auto-mode-alist)

@@ -12,28 +12,20 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; common prog modes
-(setq list-gen-mode '(sh-mode perl-mode cperl-mode emacs-lisp-mode python-mode php-mode ssh-config-mode fish-mode web-mode mhtml-mode html-mode css-mode js-mode c-mode cc-mode c++-mode nxml-mode groovy-mode jenkinsfile-mode nix-mode lisp-interaction-mode markdown-mode gfm-mode gfm-view-mode json-mode jsonc-mode lua-mode))
-
-(setq list-gen-mode-map '(sh-mode-map perl-mode-map cperl-mode-map emacs-lisp-mode-map python-mode-map php-mode-map ssh-config-mode-map fish-mode-map web-mode-map mhtml-mode-map html-mode-map css-mode-map js-mode-map c-mode-map cc-mode-map c++-mode-map nxml-mode-map groovy-mode-map jenkinsfile-mode-map nix-mode-map lisp-interaction-mode-map markdown-mode-map gfm-mode-map gfm-view-mode-map json-mode-map jsonc-mode-map lua-mode-map))
-
-;; Add -ts, if exists
-(dolist (mode list-gen-mode)
-  (let* ((name (symbol-name mode))
-         (ts-mode (intern (concat (string-remove-suffix "-mode" name) "-ts-mode"))))
-    (when (fboundp ts-mode)
-      (add-to-list 'list-gen-mode ts-mode t))))
-
-;; Add -ts-mode-map, if exists
-(dolist (map list-gen-mode-map)
-  (let* ((name (symbol-name map))
-         (ts-map (intern (concat (string-remove-suffix "-mode-map" name) "-ts-mode-map"))))
-    (when (boundp ts-map)
-      (add-to-list 'list-gen-mode-map ts-map t))))
-
+;; do not use nix-mode below, it will be in conflict with nix-ts-mode
+(setq list-gen-mode '(bash-ts-mode c++-mode c-mode cc-mode cperl-mode css-mode css-ts-mode emacs-lisp-mode fish-mode gfm-mode gfm-view-mode groovy-mode html-mode jenkinsfile-mode js-mode js-ts-mode json-mode json-ts-mode jsonc-mode jsonc-ts-mode lisp-interaction-mode lua-mode lua-ts-mode markdown-mode mhtml-mode nix-mode nix-ts-mode nxml-mode perl-mode perl-ts-mode-map php-mode php-ts-mode python-mode python-ts-mode sh-mode ssh-config-mode web-mode))
+(setq list-gen-mode-map '(bash-ts-mode-map js-ts-mode-map json-ts-mode-map json-ts-mode-map jsonc-ts-mode-map perl-ts-mode-map python-ts-mode-map js-ts-mode-map c++-mode-map c-mode-map cc-mode-map cperl-mode-map css-mode-map css-ts-mode-map emacs-lisp-mode-map fish-mode-map gfm-mode-map gfm-view-mode-map groovy-mode-map html-mode-map jenkinsfile-mode-map js-mode-map json-mode-map jsonc-mode-map lisp-interaction-mode-map lua-mode-map lua-ts-mode-map markdown-mode-map mhtml-mode-map nix-mode-map nix-ts-mode-map nxml-mode-map perl-mode-map php-mode-map php-ts-mode-map python-mode-map sh-mode-map ssh-config-mode-map web-mode-map))
 
 ;; remove duplicates (if any)
 (delete-dups list-gen-mode)
 (delete-dups list-gen-mode-map)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; tree-sitter workarounds:
+(setq list-gen-mode
+      (seq-difference list-gen-mode '(nix-mode)))
+
+(setq list-gen-mode-map
+      (seq-difference list-gen-mode-map '(nix-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; conf-modes

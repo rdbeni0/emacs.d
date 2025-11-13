@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'json-mode-map
- :major-modes 'json-mode
+ :keymaps '(json-mode-map json-ts-mode-map)
+ :major-modes '(json-mode json-ts-mode)
  :prefix ","
  "=i" '(json-mode-beautify :which-key "jm-beautify")
  "p"  '(jsons-print-path :which-key "jsons-print-path")
