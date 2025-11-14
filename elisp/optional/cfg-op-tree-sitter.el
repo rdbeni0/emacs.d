@@ -132,7 +132,8 @@ For each language, remove the existing .so file if present, then reinstall."
 	(typescript-mode . typescript-ts-mode)
 	(json-mode . json-ts-mode)
 	(css-mode . css-ts-mode)
-	(mhtml-mode . html-ts-mode)
+	;; (mhtml-mode . html-ts-mode)
+	(html-mode . html-ts-mode)
 	(python-mode . python-ts-mode)))
 
 (require 'cfg-gen-op-tree-sitter-mode)
