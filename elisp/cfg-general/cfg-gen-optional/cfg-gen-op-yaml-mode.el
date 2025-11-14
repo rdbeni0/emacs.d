@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(yaml-mode-map)
- :major-modes '(yaml-mode)
+ :keymaps '(yaml-mode-map yaml-ts-mode-map)
+ :major-modes '(yaml-mode yaml-ts-mode)
  :prefix ","
  "a" '(yaml-electric-bar-and-angle :which-key "electric-bar-and-angle")
  "b" '(yaml-electric-backspace :which-key "electric-backspace")

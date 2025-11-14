@@ -28,6 +28,7 @@
         gfm-view-mode
         groovy-mode
         html-mode
+        html-ts-mode
         jenkinsfile-mode
         js-mode
         js-ts-mode
@@ -70,12 +71,11 @@
         gfm-view-mode-map
         groovy-mode-map
         html-mode-map
+        html-ts-mode-map
         jenkinsfile-mode-map
         js-mode-map
         js-ts-mode-map
-        js-ts-mode-map
         json-mode-map
-        json-ts-mode-map
         json-ts-mode-map
         jsonc-mode-map
         jsonc-ts-mode-map

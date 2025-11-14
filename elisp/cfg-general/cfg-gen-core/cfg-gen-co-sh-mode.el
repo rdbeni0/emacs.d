@@ -3,8 +3,8 @@
 ;; "shell-script-mode is an alias for ‘sh-mode’ in ‘sh-script.el’."
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'sh-mode-map
- :major-modes 'sh-mode
+ :keymaps '(sh-mode-map bash-ts-mode-map)
+ :major-modes '(sh-mode bash-ts-mode)
  :prefix ","
  "b" '(sh-backslash-region :which-key "backslash-region")
  "#"  '(sh-set-shell :which-key "set-shell")

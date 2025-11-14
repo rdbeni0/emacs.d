@@ -3,8 +3,8 @@
 ;; js-json-mode:
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'js-json-mode-map
- :major-modes 'js-json-mode
+ :keymaps '(js-json-mode-map js-ts-mode-map)
+ :major-modes '(js-json-mode js-ts-mode)
  :prefix ",")
 
 (provide 'cfg-gen-co-js-mode)

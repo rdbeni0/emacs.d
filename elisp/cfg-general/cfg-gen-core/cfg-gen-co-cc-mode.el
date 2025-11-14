@@ -2,8 +2,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(cc-mode-map c-mode-map c++-mode-map)
- :major-modes '(cc-mode c-mode c++-mode)
+ :keymaps '(cc-mode-map c-mode-map c++-mode-map c-ts-mode-map)
+ :major-modes '(cc-mode c-mode c++-mode c-ts-mode)
  :prefix ","
  "c"  '(compile :which-key "compile"))
 

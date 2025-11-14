@@ -101,6 +101,8 @@ For each language, remove the existing .so file if present, then reinstall."
   :ensure t
   )
 
+;; https://github.com/nverno/emacs-lisp-ts-mode
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://github.com/emacs-php/php-ts-mode
 ;; Since php 8.4 is broken
@@ -130,6 +132,7 @@ For each language, remove the existing .so file if present, then reinstall."
 	(typescript-mode . typescript-ts-mode)
 	(json-mode . json-ts-mode)
 	(css-mode . css-ts-mode)
+	(mhtml-mode . html-ts-mode)
 	(python-mode . python-ts-mode)))
 
 (require 'cfg-gen-op-tree-sitter-mode)
