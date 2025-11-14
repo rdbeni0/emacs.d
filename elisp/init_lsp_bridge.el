@@ -1,6 +1,7 @@
 (load (expand-file-name "elisp/init_core.el" user-emacs-directory))
 
 ;; Common packages:
+(require 'cfg-op-quelpa)
 (require 'cfg-op-completion-systems)
 (require 'cfg-op-company) ;; company should be FIRST, because after that some variables will be overwritten via lsp-bridge
 (require 'cfg-op-yasnippets)

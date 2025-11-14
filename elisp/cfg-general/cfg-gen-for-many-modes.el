@@ -16,7 +16,8 @@
 
 (setq list-gen-mode
       '(
-        c++-mode
+  	bash-ts-mode
+	c++-mode
         c-mode
         cc-mode
         cperl-mode
@@ -53,12 +54,11 @@
         sh-mode
         ssh-config-mode
         web-mode
-	bash-ts-mode
         ))
 
 (setq list-gen-mode-map
       '(
-        bash-ts-mode-map
+	bash-ts-mode-map
         c++-mode-map
         c-mode-map
         cc-mode-map
@@ -84,7 +84,7 @@
         lua-ts-mode-map
         markdown-mode-map
         mhtml-mode-map
-	nix-mode-map
+ 	nix-mode-map
         nix-ts-mode-map
         nxml-mode-map
         perl-mode-map

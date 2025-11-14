@@ -3,6 +3,7 @@
 ;;
 ;; Setup for quelpa:
 ;; https://github.com/quelpa/quelpa
+;; Your personal local Emacs Lisp Package Archive (ELPA) with packages built on-the-fly directly from source.
 ;;
 ;;; Code:
 

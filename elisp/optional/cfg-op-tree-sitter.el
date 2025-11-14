@@ -18,6 +18,13 @@
 (use-package tree-sitter-langs
   :ensure t)
 
+;; https://github.com/emacs-tree-sitter/ts-fold
+;; https://github.com/emacs-tree-sitter/treesit-fold
+;; quelpa is required for installation:
+(use-package treesit-fold
+  :quelpa (treesit-fold :fetcher github :repo "emacs-tree-sitter/treesit-fold"))
+(global-treesit-fold-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Custom list of defined tree-sitter grammars
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
