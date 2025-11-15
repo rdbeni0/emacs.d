@@ -186,6 +186,14 @@
  "asx"  '(cfg/C-u-M-x-shell :which-key "C-u-M-x-shell_bash")
  "asX"  '(shell :which-key "M-x-shell_bash")
  "asp"  '(run-python :which-key "python-shell")
+ "ap"   '(:ignore t :which-key "packages")
+ "ap1"  '(package-upgrade :which-key "upgrade")
+ "apu"  '(package-upgrade-all :which-key "upgrade-all")
+ "apl"  '(package-list-packages :which-key "list-packages")
+ "api"  '(package-install :which-key "install")
+ "apd"  '(package-delete :which-key "delete")
+ "apr"  '(package-refresh-contents :which-key "refresh")
+ "apa"  '(package-autoremove :which-key "autoremove")
 
  ;; search
 
