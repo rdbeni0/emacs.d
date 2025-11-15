@@ -10,7 +10,9 @@
 (use-package quelpa-use-package
   :ensure t
   :init (setq quelpa-update-melpa-p nil)
-  :config (quelpa-use-package-activate-advice))
+  :config (quelpa-use-package-activate-advice)
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-quelpa))
 
 (provide 'cfg-op-quelpa)
 ;;; cfg-op-quelpa.el ends here

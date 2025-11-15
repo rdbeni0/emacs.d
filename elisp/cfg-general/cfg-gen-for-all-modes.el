@@ -187,6 +187,7 @@
  "asX"  '(shell :which-key "M-x-shell_bash")
  "asp"  '(run-python :which-key "python-shell")
  "ap"   '(:ignore t :which-key "packages")
+ "apq"  '(:ignore t :which-key "quelpa") ;; reserved
  "ap1"  '(package-upgrade :which-key "upgrade")
  "apu"  '(package-upgrade-all :which-key "upgrade-all")
  "apl"  '(package-list-packages :which-key "list-packages")
