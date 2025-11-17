@@ -14,6 +14,11 @@
  :keymaps '(web-mode-map mhtml-mode-map html-mode-map html-ts-mode-map)
  :major-modes '(web-mode mhtml-mode html-mode html-ts-mode)
  :prefix ","
+ "f"  '(web-mode-fold-or-unfold :which-key "fold")
+ "s"  '(web-mode-snippet-insert :which-key "snippet")
+ "x"  '(web-mode-mark-and-expand :which-key "mark-and-expand")
+ "o"  '(web-mode-comment-or-uncomment :which-key "un/comment")
+ "ko"  '(web-mode-comment-or-uncomment :which-key "un/comment")
 
  "d"  '(:ignore t :which-key "dom")
  "da" '(web-mode-dom-apostrophes-replace :which-key "apostrophes-replace")
@@ -23,6 +28,15 @@
  "dq" '(web-mode-dom-quotes-replace :which-key "quotes-replace")
  "dt" '(web-mode-dom-traverse :which-key "traverse")
  "dx" '(web-mode-dom-xpath :which-key "xpath")
+
+ "b"  '(:ignore t :which-key "block")
+ "bb" '(web-mode-block-beginning :which-key "beginning")
+ "bc" '(web-mode-block-close :which-key "close")
+ "be" '(web-mode-block-end :which-key "end")
+ "bk" '(web-mode-block-kill :which-key "kill")
+ "bn" '(web-mode-block-next :which-key "next")
+ "bp" '(web-mode-block-previous :which-key "previous")
+ "bs" '(web-mode-block-select :which-key "select")
 
  "e"  '(:ignore t :which-key "html-element")
  "e+" '(web-mode-element-extract :which-key "extract")
@@ -66,35 +80,24 @@
  "as" '(web-mode-attribute-select :which-key "select")
  "at" '(web-mode-attribute-transpose :which-key "transpose"))
 
-;; web-mode: html + css + js
+;; web-mode: html + optional other modes
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(web-mode-map mhtml-mode-map html-mode-map html-ts-mode-map css-mode-map css-ts-mode-map js-mode-map)
  :major-modes '(web-mode mhtml-mode html-mode html-ts-mode css-mode css-ts-mode js-mode)
  :prefix ","
- "f"  '(web-mode-fold-or-unfold :which-key "fold")
- "s"  '(web-mode-snippet-insert :which-key "snippet")
  "i"  '(web-mode-whitespaces-show :which-key "toggle-whitespaces")
- "x"  '(web-mode-mark-and-expand :which-key "mark-and-expand")
- "o"  '(web-mode-comment-or-uncomment :which-key "un/comment")
- "ko"  '(web-mode-comment-or-uncomment :which-key "un/comment")
  "c"  '(:ignore t :which-key "css/styles")
  "cs" '(css-lookup-symbol :which-key "css-lookup-symbol")
-
- "b"  '(:ignore t :which-key "block")
- "bb" '(web-mode-block-beginning :which-key "beginning")
- "bc" '(web-mode-block-close :which-key "close")
- "be" '(web-mode-block-end :which-key "end")
- "bk" '(web-mode-block-kill :which-key "kill")
- "bn" '(web-mode-block-next :which-key "next")
- "bp" '(web-mode-block-previous :which-key "previous")
- "bs" '(web-mode-block-select :which-key "select"))
+ "cc" '(css-cycle-color-format :which-key "cycle-color-format")
+ )
 
 ;; folding via "evil-mode" currently is not working in "web-mode"
 ;; no space + which-key + no which-key : normal mode
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'global
+ :keymaps '(web-mode-map)
+ :major-modes '(web-mode)
  "za" '(web-mode-fold-or-unfold :which-key "fold-or-unfold")
  "zo" '(web-mode-fold-or-unfold :which-key "fold-or-unfold")
  "zc" '(web-mode-fold-or-unfold :which-key "fold-or-unfold"))
