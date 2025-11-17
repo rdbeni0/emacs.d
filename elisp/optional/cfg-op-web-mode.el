@@ -47,9 +47,6 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; hooks
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; twig-cs-fixer
 ;; https://github.com/VincentLanglet/Twig-CS-Fixer
 ;; requires twig-cs-fixer to be in $PATH
@@ -84,6 +81,8 @@ if necessary to reflect any changes."
         ;; reload buffer after linting (in case of modifications)
         (revert-buffer t t t))
     (error "No file associated with buffer or twig-cs-fixer not found")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun cfg/webmode-fix-buffer ()
   "Dispatch fixer based on template type."
