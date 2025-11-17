@@ -85,5 +85,27 @@ if necessary to reflect any changes."
         (revert-buffer t t t))
     (error "No file associated with buffer or twig-cs-fixer not found")))
 
+(defun cfg/webmode-fix-buffer ()
+  "Dispatch fixer based on template type."
+  (interactive)
+  (cond
+   ((and buffer-file-name (string-suffix-p ".twig" buffer-file-name))
+    (cfg/twig-cs-fixer-fix-buffer))
+   ;; ((and buffer-file-name (string-suffix-p ".blade.php" buffer-file-name))
+   ;;   (cfg/blade-fixer-fix-buffer))
+   ;; etc
+   (t (error "No fixer defined for this file type"))))
+
+(defun cfg/webmode-lint-buffer ()
+  "Dispatch linter based on template type."
+  (interactive)
+  (cond
+   ((and buffer-file-name (string-suffix-p ".twig" buffer-file-name))
+    (cfg/twig-cs-fixer-lint-buffer))
+   ;; ((and buffer-file-name (string-suffix-p ".blade.php" buffer-file-name))
+   ;;   (cfg/blade-fixer-lint-buffer))
+   ;; etc
+   (t (error "No linter defined for this file type"))))
+
 (provide 'cfg-op-web-mode)
 ;;; cfg-op-web-mode.el ends here
