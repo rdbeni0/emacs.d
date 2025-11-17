@@ -76,6 +76,18 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-format))
 
+;; Sometimes the above list does not work,
+;; especially when there are many formatters to choose from,
+;; and then you need to set it as a hook:
+(defun cfg/-my-html-format-setup ()
+  "Set the default format for HTML to html-tidy.
+   https://www.html-tidy.org/ "
+  (setq-local format-all-formatters
+              '(("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185")))))
+
+(dolist (hook '(html-mode-hook html-ts-mode-hook))
+  (add-hook hook #'cfg/-my-html-format-setup))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; PYTHON - OPTIONAL SETTINGS:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
