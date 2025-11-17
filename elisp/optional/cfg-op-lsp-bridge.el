@@ -51,11 +51,25 @@
   (setq acm-enable-copilot nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;; Exclusion from selected major-modes:
+  ;;;; Manipulations with "lsp-bridge-default-mode-hooks"
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
   (setq lsp-bridge-default-mode-hooks
-        (remove 'cperl-mode-hook lsp-bridge-default-mode-hooks))
+	;;  Exclusion from selected major-modes:
+	(cl-set-difference lsp-bridge-default-mode-hooks
+                           '(cperl-mode-hook
+			     ;; html-mode-hook
+			     ;; html-ts-mode-hook
+			     )))
+
+  (add-to-list 'lsp-bridge-default-mode-hooks 'html-ts-mode-hook)
+  (add-to-list 'lsp-bridge-default-mode-hooks 'html-mode-hook)
+
+  (add-to-list 'lsp-bridge-single-lang-server-extension-list
+               '(("html") . "vscode-html-language-server"))
+
+  (delete-dups lsp-bridge-default-mode-hooks)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; php
@@ -105,7 +119,8 @@
   ;;;; lua-mode
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (setq lsp-bridge-lua-lsp-server "sumneko") ;; https://github.com/LuaLS/lua-language-server - maintainer: sumneko
+  ;; https://github.com/LuaLS/lua-language-server - maintainer: sumneko
+  (setq lsp-bridge-lua-lsp-server "sumneko")
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; envrc-mode (direnv)
@@ -114,6 +129,28 @@
   ;; A little tip, if you use a direnv setup (e.g. with nix-shell), make sure to use a hook like this (this is for the envrc package):
 
   (add-hook 'envrc-mode-hook 'lsp-bridge-restart-process)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;; front-end / web-mode / HTML
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; thanks to this trick, the "web-mode" functionality will be activated, which can be reused e.g. in HTML:
+  (defun cfg/-html-ts-lsp-web-mode-reinit ()
+    (remove-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
+    (web-mode)
+    (html-ts-mode)
+    (add-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
+    (lsp-bridge-mode))
+
+  (defun cfg/-html-lsp-web-mode-reinit ()
+    (remove-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
+    (web-mode)
+    (html-ts-mode)
+    (add-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
+    (lsp-bridge-mode))
+
+  (add-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
+  (add-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Manipulations with company-mode:

@@ -19,7 +19,7 @@
  :keymaps '(web-mode-map mhtml-mode-map html-mode-map html-ts-mode-map)
  :major-modes '(web-mode mhtml-mode html-mode html-ts-mode)
  :prefix ","
- "f"  '(web-mode-fold-or-unfold :which-key "fold")
+ "f"  '(web-mode-fold-or-unfold :which-key "wm-fold")
  "s"  '(web-mode-snippet-insert :which-key "snippet")
  "x"  '(web-mode-mark-and-expand :which-key "mark-and-expand")
  "o"  '(web-mode-comment-or-uncomment :which-key "un/comment")
@@ -94,8 +94,7 @@
  "i"  '(web-mode-whitespaces-show :which-key "toggle-whitespaces")
  "c"  '(:ignore t :which-key "css/styles")
  "cs" '(css-lookup-symbol :which-key "css-lookup-symbol")
- "cc" '(css-cycle-color-format :which-key "cycle-color-format")
- )
+ "cc" '(css-cycle-color-format :which-key "cycle-color-format"))
 
 ;; folding via "evil-mode" currently is not working in "web-mode"
 ;; no space + which-key + no which-key : normal mode

@@ -25,7 +25,7 @@
         web-mode-enable-auto-quoting t
         web-mode-enable-current-column-highlight t
         web-mode-enable-current-element-highlight t)
-)
+  )
 
 ;; load general.el and keybindings:
 ;; (require 'cfg-gen-op-web-mode) ;; for some reason, sometimes its not working
@@ -45,6 +45,9 @@
   ;; :defer t
   ;; :after (company)
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; hooks
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; twig-cs-fixer

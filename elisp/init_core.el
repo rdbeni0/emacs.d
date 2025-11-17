@@ -29,6 +29,7 @@
 (require 'cfg-perl)
 (require 'cfg-cc)
 (require 'cfg-compile)
+(require 'cfg-sgml-html)
 (require 'cfg-nxml)
 (require 'cfg-js-json)
 (require 'cfg-sh-script)
