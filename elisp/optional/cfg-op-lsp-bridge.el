@@ -58,7 +58,8 @@
   (setq lsp-bridge-default-mode-hooks
 	(delq 'web-mode-hook
 	      (delq 'yaml-mode-hook
-                    (delq 'cperl-mode-hook lsp-bridge-default-mode-hooks))))
+	            (delq 'yaml-ts-mode-hook
+                          (delq 'cperl-mode-hook lsp-bridge-default-mode-hooks)))))
 
   ;; Update list for some missing entries:
   (add-to-list 'lsp-bridge-default-mode-hooks 'html-ts-mode-hook)
@@ -158,11 +159,13 @@
   ;;;; yaml
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;; turn off LSP bridge in yaml-mode:
-  (add-hook 'yaml-mode-hook
-            (lambda ()
-              (lsp-bridge-mode -1))
-            t)
+  ;; turn off LSP bridge in yaml-mode and yaml-ts-mode:
+  (dolist (hook '(yaml-mode-hook yaml-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (lsp-bridge-mode -1))
+              t
+              ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Manipulations with company-mode:
