@@ -18,9 +18,11 @@
     (setq yas-snippet-dirs (append yas-snippet-dirs (list (expand-file-name "data/yasnippets" user-emacs-directory)))))
   ;; add yas-minor-mode per MAJOR mode - not global:
   (add-hook 'php-mode-hook #'yas-minor-mode) ;; PHP
+  (add-hook 'php-ts-mode-hook #'yas-minor-mode) ;; PHP ts
   (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
   (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
   (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
+  (add-hook 'bash-ts-mode-hook #'yas-minor-mode) ;; bash ts
   ;;
   (add-hook 'web-mode-hook #'yas-minor-mode) ;; front end
   (add-hook 'css-mode-hook #'yas-minor-mode) ;; front end
@@ -31,9 +33,13 @@
   ;;
   (add-hook 'c-mode-hook #'yas-minor-mode) ;; c files only
   (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
+  (add-hook 'perl-ts-mode-hook #'yas-minor-mode) ;; Perl ts
   (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python
+  (add-hook 'python-ts-mode-hook #'yas-minor-mode) ;; Python ts
   (add-hook 'nix-mode-hook #'yas-minor-mode) ;; Nix
+  (add-hook 'nix-ts-mode-hook #'yas-minor-mode) ;; Nix ts
   (add-hook 'json-mode-hook #'yas-minor-mode) ;; json
+  (add-hook 'json-ts-mode-hook #'yas-minor-mode) ;; json ts
   (add-hook 'snippet-mode-hook #'yas-minor-mode) ;; snippets for yasnippets :-)
   (add-hook 'org-mode-hook #'yas-minor-mode) ;; org-mode
   (add-hook 'notmuch-message-mode-hook #'yas-minor-mode) ;; notmuch-message-mode
