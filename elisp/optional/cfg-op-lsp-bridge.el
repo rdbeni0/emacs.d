@@ -4,7 +4,7 @@
 ;; https://github.com/manateelazycat/lsp-bridge
 ;; Experimental package.
 ;; Installation on emacs:
-;; When using lsp-bridge, please first disable other completion plugins, such as lsp-mode, eglot, company, corfu, etc.
+;; When using 'lsp-bridge', please first disable other completion plugins, such as 'lsp-mode', 'eglot', 'company', 'corfu', etc.
 ;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration.
 ;;
 ;; Installation via NixOS:
@@ -59,9 +59,11 @@
 	(delq 'web-mode-hook
               (delq 'cperl-mode-hook lsp-bridge-default-mode-hooks)))
 
+  ;; Update list for some missing entries:
   (add-to-list 'lsp-bridge-default-mode-hooks 'html-ts-mode-hook)
   (add-to-list 'lsp-bridge-default-mode-hooks 'html-mode-hook)
 
+  ;; Clean:
   (delete-dups lsp-bridge-default-mode-hooks)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -80,10 +82,6 @@
   ;; Also can be used with PHP Psalm, but in this cale flycheck is probably better:
   ;; https://phpactor.readthedocs.io/en/master/integrations/psalm.html
 
-  ;; (add-hook 'php-mode-hook
-  ;;           (lambda ()
-  ;; 	      (lsp-bridge-mode)))
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; python
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -92,7 +90,8 @@
   ;; And as failback - we can try `pylsp'
   ;; pyright/basedpyright - currently "code actions" are broken, so must be executed with `ruff' (so as multiserver)
 
-  (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff") ;; so in summary: this is the best option for now
+  ;; so in summary: this is the best option for now:
+  (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
 
   ;; (add-hook 'python-mode-hook
   ;;           (lambda ()
@@ -112,7 +111,8 @@
   ;;;; lua-mode
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;; https://github.com/LuaLS/lua-language-server - maintainer: sumneko
+  ;; https://github.com/LuaLS/lua-language-server
+  ;; maintainer: sumneko:
   (setq lsp-bridge-lua-lsp-server "sumneko")
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -149,8 +149,8 @@
   (add-hook 'web-mode-hook
             (lambda ()
               (lsp-bridge-mode -1))
-	    ;; it means this will be the last one hook from the list
             ;; append = t
+	    ;; it means this will be the last one hook from the list:
             t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
