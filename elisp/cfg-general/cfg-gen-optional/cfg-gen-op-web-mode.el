@@ -1,6 +1,6 @@
 ;;; cfg-gen-op-web-mode.el --- general for web-mode -*- lexical-binding: t -*-
 
-;; web-mode only
+;; web-mode only and formatting
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(web-mode-map)
@@ -13,7 +13,15 @@
  "w]" '(cfg/twig-cs-fixer-fix-buffer :which-key "twig-cs-fixer-fix-buffer")
  "w[" '(cfg/twig-cs-fixer-lint-buffer :which-key "twig-cs-fixer-lint-buffer"))
 
-;; web-mode: html
+;; formatting
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps '(web-mode-map html-mode-map html-ts-mode-map nxml-mode-map)
+ :major-modes '(web-mode html-mode html-ts-mode nxml-mode)
+ :prefix ","
+ "=0" '(web-mode-buffer-indent :which-key "web-mode-buffer-indent"))
+
+;; web-mode and html
 (general-define-key
  :states '(normal visual emacs)
  :keymaps '(web-mode-map mhtml-mode-map html-mode-map html-ts-mode-map)
@@ -85,11 +93,11 @@
  "as" '(web-mode-attribute-select :which-key "select")
  "at" '(web-mode-attribute-transpose :which-key "transpose"))
 
-;; web-mode: html + optional other modes
+;; web-mode and html + css
 (general-define-key
  :states '(normal visual emacs)
- :keymaps '(web-mode-map mhtml-mode-map html-mode-map html-ts-mode-map css-mode-map css-ts-mode-map js-mode-map)
- :major-modes '(web-mode mhtml-mode html-mode html-ts-mode css-mode css-ts-mode js-mode)
+ :keymaps '(web-mode-map mhtml-mode-map html-mode-map html-ts-mode-map css-mode-map css-ts-mode-map)
+ :major-modes '(web-mode mhtml-mode html-mode html-ts-mode css-mode css-ts-mode)
  :prefix ","
  "i"  '(web-mode-whitespaces-show :which-key "toggle-whitespaces")
  "c"  '(:ignore t :which-key "css/styles")

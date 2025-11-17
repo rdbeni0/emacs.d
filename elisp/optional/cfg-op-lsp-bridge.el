@@ -54,20 +54,13 @@
   ;;;; Manipulations with "lsp-bridge-default-mode-hooks"
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
+  ;;  Exclusion from selected major-modes:
   (setq lsp-bridge-default-mode-hooks
-	;;  Exclusion from selected major-modes:
-	(cl-set-difference lsp-bridge-default-mode-hooks
-                           '(cperl-mode-hook
-			     ;; html-mode-hook
-			     ;; html-ts-mode-hook
-			     )))
+	(delq 'web-mode-hook
+              (delq 'cperl-mode-hook lsp-bridge-default-mode-hooks)))
 
   (add-to-list 'lsp-bridge-default-mode-hooks 'html-ts-mode-hook)
   (add-to-list 'lsp-bridge-default-mode-hooks 'html-mode-hook)
-
-  (add-to-list 'lsp-bridge-single-lang-server-extension-list
-               '(("html") . "vscode-html-language-server"))
 
   (delete-dups lsp-bridge-default-mode-hooks)
 
@@ -131,7 +124,7 @@
   (add-hook 'envrc-mode-hook 'lsp-bridge-restart-process)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;; front-end / web-mode / HTML
+  ;;;; front-end : web-mode / HTML
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; thanks to this trick, the "web-mode" functionality will be activated, which can be reused e.g. in HTML:
@@ -151,6 +144,14 @@
 
   (add-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
   (add-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
+
+  ;; turn off LSP bridge in web-mode:
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (lsp-bridge-mode -1))
+	    ;; it means this will be the last one hook from the list
+            ;; append = t
+            t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Manipulations with company-mode:
