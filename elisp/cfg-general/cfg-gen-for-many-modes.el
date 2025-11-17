@@ -123,11 +123,15 @@
 ;;;; FLYCHECK
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Remove from list
-(setq list-gen-mode-flycheck (seq-difference list-gen-mode '(ssh-config-mode jenkinsfile-mode fish-mode)))
-(setq list-gen-mode-map-flycheck (seq-difference list-gen-mode-map '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map)))
+;; Remove from list:
+(setq list-gen-mode-flycheck
+      (seq-difference list-gen-mode
+		      '(ssh-config-mode jenkinsfile-mode fish-mode web-mode)))
+(setq list-gen-mode-map-flycheck
+      (seq-difference list-gen-mode-map
+		      '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map web-mode-map)))
 
-;; Add to list
+;; Add to list:
 (setq list-gen-mode-flycheck
       (append list-gen-mode-flycheck '(yaml-mode yaml-ts-mode)))
 
@@ -138,13 +142,18 @@
 ;;;; FORMAT CORE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq list-gen-mode-format-core (append (seq-difference list-gen-mode
-							'(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
-					'(yaml-mode yaml-ts-mode)))
+(setq list-gen-mode-format-core (append
+				 ;; Remove from list:
+				 (seq-difference list-gen-mode
+						 '(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
+				 ;; Add to list:
+				 '(yaml-mode yaml-ts-mode)))
 
 (setq list-gen-mode-map-format-core (append
+				     ;; Remove from list:
 				     (seq-difference list-gen-mode-map
 						     '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))
+				     ;; Add to list:
 				     '(yaml-mode-map yaml-ts-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -152,10 +161,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq list-gen-mode-format-optional (append
-				     (seq-difference list-gen-mode '(ssh-config-mode))
+				     ;; Remove from list:
+				     (seq-difference list-gen-mode '(ssh-config-mode web-mode))
+				     ;; Add to list:
 				     '(json-mode yaml-mode yaml-ts-mode)))
 (setq list-gen-mode-map-format-optional (append
-					 (seq-difference list-gen-mode-map '(ssh-config-mode-map))
+					 ;; Remove from list:
+					 (seq-difference list-gen-mode-map '(ssh-config-mode-map web-mode-map))
+					 ;; Add to list:
 					 '(json-mode-map yaml-mode-map yaml-ts-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -172,9 +185,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq list-gen-mode-xref
-      (copy-sequence (seq-difference list-gen-mode '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
+      (copy-sequence
+       (seq-difference list-gen-mode '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
 (setq list-gen-mode-map-xref
-      (copy-sequence (seq-difference list-gen-mode-map '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
+      (copy-sequence
+       (seq-difference list-gen-mode-map '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; COMMENTS (DWIM)

@@ -25,8 +25,12 @@
         web-mode-enable-auto-quoting t
         web-mode-enable-current-column-highlight t
         web-mode-enable-current-element-highlight t)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-op-web-mode))
+)
+
+;; load general.el and keybindings:
+;; (require 'cfg-gen-op-web-mode) ;; for some reason, sometimes its not working
+(load "cfg-gen-op-web-mode.el" nil t) ;; NOMESSAGE = t
+
 
 ;; OPTIONAL: https://github.com/skeeto/skewer-mode - REPL inside the web browser
 
@@ -36,10 +40,11 @@
   :config
   (require 'company-web-html)
   ;;;; Additional company-web- backends should be loaded if required:
-  ;; (require 'company-web-jade) ; load company mode jade backend
+  ;; (require 'company-web-jade)
   ;; (require 'company-web-slim)
-  :defer t
-  :after (company))
+  ;; :defer t
+  ;; :after (company)
+  )
 
 (provide 'cfg-op-web-mode)
 ;;; cfg-op-web-mode.el ends here

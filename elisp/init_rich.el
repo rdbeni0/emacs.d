@@ -39,5 +39,5 @@
 (require 'cfg-op-php-eglot) ;; alternative: (require 'cfg-op-php-ac)
 (require 'cfg-op-org)
 (require 'cfg-op-yaml)
-(require 'cfg-op-web-mode)
 (require 'cfg-op-emmet)
+(require 'cfg-op-web-mode)
