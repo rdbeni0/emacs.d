@@ -2,7 +2,7 @@
 
 ;; Common packages:
 (require 'cfg-op-quelpa)
-(require 'cfg-op-completion-systems)
+(require 'cfg-op-completion-systems) ;; must be loaded before company
 (require 'cfg-op-company) ;; company should be FIRST, because after that some variables will be overwritten via lsp-bridge
 (require 'cfg-op-yasnippets)
 (require 'cfg-op-lsp-bridge)

@@ -13,6 +13,8 @@
   :bind (;; Remaps - emacs native:
          ([remap cfg/expand-abbrev]                 . company-abbrev)
          ([remap dabbrev-expand]                    . company-dabbrev)
+         ;; no working, DO NOT USE! See later in section "Update capf".
+         ;; ([remap completion-at-point]               . company-capf) ;; completion-at-point-functions = CAPF
 	 )
   :config
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -290,6 +292,24 @@
                                               company-files
                                               company-dabbrev)))))
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Update capf function:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ([remap completion-at-point]               . company-capf) ;; completion-at-point-functions = CAPF
+;; ^ unfortunately, this DOESN'T WORK correctly, so we have to use consult and vertico:
+;; https://github.com/minad/vertico?tab=readme-ov-file#completion-at-point-and-completion-in-region
+
+;; If you want to make sure that libraries are actually available (not just available in the load path):
+;;
+;; `featurep' checks if a given package has already been loaded (provided),
+;; but `require' with `noerror' attempts to load the package and doesn't report an error if it's not present.
+;; This avoids Emacs trying to set `completion-in-region-function' to something that doesn't exist:
+
+(when (and (require 'vertico nil 'noerror)
+           (require 'consult nil 'noerror))
+  (setq completion-in-region-function #'consult-completion-in-region))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ADDITIONAL PACKAGES FOR COMPANY (BACKEND):

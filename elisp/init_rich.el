@@ -1,7 +1,7 @@
 (load (expand-file-name "elisp/init_core.el" user-emacs-directory))
 
 ;; Common packages:
-(require 'cfg-op-completion-systems)
+(require 'cfg-op-completion-systems) ;; must be loaded before company
 (require 'cfg-op-corfu)
 (require 'cfg-op-company)
 ;; (require 'cfg-op-yasnippets)

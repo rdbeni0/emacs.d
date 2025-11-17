@@ -6,12 +6,12 @@
  :keymaps 'global
 
  ;; "S-<iso-lefttab>" 'indent-for-tab-command
- "S-<iso-lefttab>" 'company-indent-or-complete-common
+ "S-<iso-lefttab>" 'company-indent-or-complete-common ;; remapped in cfg-op-yasnippets.el
  "C-`" 'yas-insert-snippet
 
  "<f5>`"  '(yas-insert-snippet :which-key "yas-insert-snippet")
  ;; "<f5><f5>"  '(company-complete-common :which-key "company-abbrev")
- "<f5><iso-lefttab>"  '(company-indent-or-complete-common :which-key "company-complete")
+ "<f5><iso-lefttab>"  '(company-indent-or-complete-common :which-key "company-complete") ;; remapped in cfg-op-yasnippets.el
  "<f5><f7>"  '(company-yasnippet :which-key "company-yasnippet")
  "<f5><f8>"  '(company-ispell :which-key "company-ispell")
  "<f5><f9>"  '(company-files :which-key "company-files")
@@ -23,7 +23,7 @@
  :keymaps 'override
  :prefix "SPC"
  ;; "<f5><f5>"  '(company-complete-common :which-key "company-abbrev")
- "<f5><iso-lefttab>"  '(company-indent-or-complete-common :which-key "company-complete")
+ "<f5><iso-lefttab>"  '(company-indent-or-complete-common :which-key "company-complete") ;; remapped in cfg-op-yasnippets.el
  "<f5><f7>"  '(company-yasnippet :which-key "company-yasnippet")
  "<f5><f8>"  '(company-ispell :which-key "company-ispell")
  "<f5><f9>"  '(company-files :which-key "company-files")
