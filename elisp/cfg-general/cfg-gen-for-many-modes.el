@@ -106,18 +106,20 @@
 ;;;; TREE-SITTER WORKAROUNDS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Remove from list:
 (setq list-gen-mode
-      (seq-difference list-gen-mode '(perl-mode cperl-mode))) ;; remove from list
+      (seq-difference list-gen-mode '(perl-mode cperl-mode)))
 
+;; Remove from list:
 (setq list-gen-mode-map
-      (seq-difference list-gen-mode-map '(perl-mode-map cperl-mode-map))) ;; remove from list
+      (seq-difference list-gen-mode-map '(perl-mode-map cperl-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; CONF-MODES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode robots-txt-mode yaml-mode yaml-ts-mode))
-(setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map robots-txt-mode-map yaml-mode-map yaml-ts-mode-map))
+(setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode robots-txt-mode yaml-mode yaml-ts-mode conf-colon-mode conf-neon-mode neon-mode))
+(setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map robots-txt-mode-map yaml-mode-map yaml-ts-mode-map conf-colon-mode-map conf-neon-mode-map neon-mode-map))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; FLYCHECK

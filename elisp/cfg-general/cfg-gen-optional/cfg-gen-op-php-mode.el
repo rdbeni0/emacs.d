@@ -11,7 +11,6 @@
  "tp" '(phpunit-current-project :which-key "phpunit-current-project")
  "tg" '(phpunit-group :which-key "phpunit-group")
  "="  '(:ignore t :which-key "format")
- "=o" '(cfg/php-custom-file-format :which-key "php-custom-format")
  "=c" '(php-cs-fixer-fix :which-key "php-cs-fixer")
  "=f" '(php-cs-fixer-fix :which-key "php-cs-fixer")
  "=s" '(php-set-style :which-key "php-mode-set-style")
@@ -36,6 +35,15 @@
  "sp" '(phpstan-analyze-project :which-key "analyze-project")
  "si" '(phpstan-insert-ignore :which-key "insert-ignore")
  "sd" '(phpstan-insert-dumptype :which-key "insert-dumptype"))
+
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps '(neon-mode-map)
+ :major-modes '(neon-mode)
+ :prefix ","
+ "n" '(neon-mode-find-class-file :which-key "neon-mode-find-class-file")
+ "="  '(:ignore t :which-key "format")
+ "==" '(cfg/neon-format-buffer-with-prettier :which-key "neon-format-prettier"))
 
 (provide 'cfg-gen-op-php-mode)
 ;;; cfg-gen-op-php-mode.el ends here

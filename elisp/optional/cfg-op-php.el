@@ -43,8 +43,7 @@
   (setq php-cs-fixer-rules-fixer-part-options '(
 						"multiline_whitespace_before_semicolons"
 						"concat_space"
-						))
-  )
+						)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO: https://github.com/Junker/flycheck-php-noverify
@@ -77,6 +76,36 @@
 ;; https://github.com/Fuco1/neon-mode
 (use-package neon-mode
   :ensure t
+  :config
+  (defun cfg/neon-format-buffer-with-prettier ()
+    "Format the current buffer as NEON using Prettier's YAML parser."
+    (interactive)
+    (let ((tmpfile (make-temp-file "neon-prettier" nil ".neon"))
+          (errbuf (get-buffer-create "*neon-prettier errors*"))
+          (coding-system-for-read 'utf-8)
+          (coding-system-for-write 'utf-8))
+      (unwind-protect
+          (progn
+            ;; Write buffer contents to temporary file
+            (write-region nil nil tmpfile)
+            ;; Run prettier with yaml parser
+            (if (zerop (call-process "prettier" nil errbuf nil
+                                     "--parser" "yaml"
+                                     "--write" tmpfile))
+                (progn
+                  ;; Replace buffer with formatted result
+                  (erase-buffer)
+                  (insert-file-contents tmpfile)
+                  (message "Formatted with Prettier (yaml parser)"))
+              (progn
+                (message "Prettier failed, see *neon-prettier errors* buffer")
+                (display-buffer errbuf))))
+        ;; Cleanup happens even if an error occurs
+        (when (and tmpfile (file-exists-p tmpfile))
+          (delete-file tmpfile))
+        (when (buffer-live-p errbuf)
+          (kill-buffer errbuf)))))
+
   )
 
 ;;;; php
