@@ -46,5 +46,41 @@
   ;; :after (company)
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; twig-cs-fixer
+;; https://github.com/VincentLanglet/Twig-CS-Fixer
+;; requires twig-cs-fixer to be in $PATH
+
+(defvar twig-cs-fixer-executable "twig-cs-fixer"
+  "Location of twig-cs-fixer executable.")
+
+(defun cfg/twig-cs-fixer-fix-buffer ()
+  "Run `twig-cs-fixer fix` on the current buffer file.
+This saves the buffer, runs the fixer, and reloads the buffer
+to reflect any changes made by twig-cs-fixer."
+  (interactive)
+  (if (and buffer-file-name (executable-find twig-cs-fixer-executable))
+      (progn
+        (save-buffer) ;; ensure the file is saved before running fixer
+        (shell-command
+         (concat twig-cs-fixer-executable " fix " (shell-quote-argument buffer-file-name)))
+        ;; reload buffer to reflect changes
+        (revert-buffer t t t))
+    (error "No file associated with buffer or twig-cs-fixer not found")))
+
+(defun cfg/twig-cs-fixer-lint-buffer ()
+  "Run `twig-cs-fixer lint` on the current buffer file.
+This saves the buffer, runs the linter, and reloads the buffer
+if necessary to reflect any changes."
+  (interactive)
+  (if (and buffer-file-name (executable-find twig-cs-fixer-executable))
+      (progn
+        (save-buffer)
+        (shell-command
+         (concat twig-cs-fixer-executable " lint " (shell-quote-argument buffer-file-name)))
+        ;; reload buffer after linting (in case of modifications)
+        (revert-buffer t t t))
+    (error "No file associated with buffer or twig-cs-fixer not found")))
+
 (provide 'cfg-op-web-mode)
 ;;; cfg-op-web-mode.el ends here

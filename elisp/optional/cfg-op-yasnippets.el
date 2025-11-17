@@ -21,7 +21,14 @@
   (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode) ;; elisp
   (add-hook 'text-mode-hook #'yas-minor-mode) ;; text files
   (add-hook 'sh-mode-hook #'yas-minor-mode) ;; shell scripts, bash
+  ;;
   (add-hook 'web-mode-hook #'yas-minor-mode) ;; front end
+  (add-hook 'css-mode-hook #'yas-minor-mode) ;; front end
+  (add-hook 'css-ts-mode-hook #'yas-minor-mode) ;; front end
+  (add-hook 'html-ts-mode-hook #'yas-minor-mode) ;; front end
+  (add-hook 'html-mode-hook #'yas-minor-mode) ;; front end
+  (add-hook 'mhtml-mode-hook #'yas-minor-mode) ;; front end
+  ;;
   (add-hook 'c-mode-hook #'yas-minor-mode) ;; c files only
   (add-hook 'cperl-mode-hook #'yas-minor-mode) ;; Perl
   (add-hook 'python-mode-hook #'yas-minor-mode) ;; Python

@@ -6,7 +6,12 @@
  :keymaps '(web-mode-map)
  :major-modes '(web-mode)
  :prefix ","
- "==" '(web-mode-buffer-indent :which-key "web-mode-buffer-indent"))
+ "==" '(web-mode-buffer-indent :which-key "web-mode-buffer-indent")
+ "=]" '(cfg/twig-cs-fixer-fix-buffer :which-key "twig-cs-fixer-fix-buffer")
+ "=[" '(cfg/twig-cs-fixer-lint-buffer :which-key "twig-cs-fixer-lint-buffer")
+ "w"  '(:ignore t :which-key "twig-cs-fixer")
+ "w]" '(cfg/twig-cs-fixer-fix-buffer :which-key "twig-cs-fixer-fix-buffer")
+ "w[" '(cfg/twig-cs-fixer-lint-buffer :which-key "twig-cs-fixer-lint-buffer"))
 
 ;; web-mode: html
 (general-define-key
