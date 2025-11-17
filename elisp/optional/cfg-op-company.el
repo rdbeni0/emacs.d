@@ -184,6 +184,8 @@
                   html-mode-hook
                   html-ts-mode-hook
                   mhtml-mode-hook
+                  css-mode-hook
+                  css-ts-mode-hook
                   sgml-mode-hook))
     (add-hook hook
               (lambda ()
