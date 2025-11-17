@@ -14,6 +14,10 @@
   (interactive)
   (indent-region (point-min) (point-max)))
 
+;; do NOT use tabs for indentation:
+;; https://web-mode.org/
+(setq-default indent-tabs-mode nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; XML (nxml) FORMATTING:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
