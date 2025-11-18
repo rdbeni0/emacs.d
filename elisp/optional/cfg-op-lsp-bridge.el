@@ -4,7 +4,7 @@
 ;; https://github.com/manateelazycat/lsp-bridge
 ;; Experimental package.
 ;; Installation on emacs:
-;; When using 'lsp-bridge', please first disable other completion plugins, such as 'lsp-mode', 'eglot', 'company', 'corfu', etc.
+;; When using `lsp-bridge', please first disable other completion plugins, such as `lsp-mode', `eglot', `company', `corfu', etc.
 ;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration.
 ;;
 ;; Installation via NixOS:
@@ -55,12 +55,12 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defvar lsp-bridge-excluded-mode-hooks
-    "Hooks of major modes excluded from `lsp-bridge-default-mode-hooks'"
     '(web-mode-hook
       yaml-mode-hook
       yaml-ts-mode-hook
       perl-mode-hook
-      cperl-mode-hook))
+      cperl-mode-hook)
+    "Hooks of major modes excluded from `lsp-bridge-default-mode-hooks'")
 
   ;; Remove from list:
   (setq lsp-bridge-default-mode-hooks
@@ -80,9 +80,9 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq lsp-bridge-php-lsp-server "phpactor")
 
-  ;; 'phpactor' should use 'phpstan' and probably does so in a more optimized way than flycheck.
-  ;; So in this case, we don't use 'flycheck', but try to use it directly through 'phpactor'.
-  ;; 'phpstan' can also be executed manually: via 'M-x phpstan-analyze-file' - and in this case this is recomended method.
+  ;; `phpactor' should use `phpstan' and probably does so in a more optimized way than flycheck.
+  ;; So in this case, we don't use `flycheck', but try to use it directly through `phpactor'.
+  ;; `phpstan' can also be executed manually: via 'M-x phpstan-analyze-file' - and in this case this is recomended method.
   (add-hook 'flycheck-mode-hook
             (lambda ()
               (flycheck-disable-checker 'php-phpstan)))
@@ -121,7 +121,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; https://github.com/LuaLS/lua-language-server
-  ;; maintainer: sumneko:
+  ;; maintainer: sumneko
   (setq lsp-bridge-lua-lsp-server "sumneko")
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -151,8 +151,9 @@
     (add-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
     (lsp-bridge-mode))
 
+  ;; fix for html modes:
   (add-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
-  (add-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
+  (add-hook 'html-mode-hook #'cfg/-html-lsp-web-mode-reinit)
 
   ;; turn off LSP bridge in web-mode:
   (add-hook 'web-mode-hook

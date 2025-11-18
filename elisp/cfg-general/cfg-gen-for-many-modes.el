@@ -54,6 +54,8 @@
         sh-mode
         ssh-config-mode
         web-mode
+        typescript-ts-mode
+        js-ts-mode
         ))
 
 (setq list-gen-mode-map
@@ -96,6 +98,8 @@
         sh-mode-map
         ssh-config-mode-map
         web-mode-map
+        typescript-ts-mode-map
+        js-ts-mode-map
         ))
 
 ;; remove duplicates (if any)
