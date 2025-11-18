@@ -54,12 +54,19 @@
   ;;;; Manipulations with "lsp-bridge-default-mode-hooks"
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;  Exclusion from selected major-modes:
+  (defvar lsp-bridge-excluded-mode-hooks
+    "Hooks of major modes excluded from `lsp-bridge-default-mode-hooks'"
+    '(web-mode-hook
+      yaml-mode-hook
+      yaml-ts-mode-hook
+      perl-mode-hook
+      cperl-mode-hook))
+
+  ;; Remove from list:
   (setq lsp-bridge-default-mode-hooks
-	(delq 'web-mode-hook
-	      (delq 'yaml-mode-hook
-	            (delq 'yaml-ts-mode-hook
-                          (delq 'cperl-mode-hook lsp-bridge-default-mode-hooks)))))
+        (cl-set-difference lsp-bridge-default-mode-hooks
+                           lsp-bridge-excluded-mode-hooks))
+
 
   ;; Update list for some missing entries:
   (add-to-list 'lsp-bridge-default-mode-hooks 'html-ts-mode-hook)
