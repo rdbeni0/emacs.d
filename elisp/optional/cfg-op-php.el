@@ -24,7 +24,7 @@
     (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
       (call-interactively #'composer)))
   (defun cfg/composer-require-dev ()
-    "Run 'composer require --dev' command"
+    "Run `composer require --dev' command"
     (interactive)
     (let ((current-prefix-arg '(4)))
       (call-interactively #'composer-require)))

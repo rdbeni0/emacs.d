@@ -11,6 +11,7 @@
                   html-ts-mode-hook
                   html-mode-hook
                   mhtml-mode-hook
+                  sgml-mode-hook
                   css-mode-hook
                   css-ts-mode-hook))
     (add-hook hook
@@ -20,7 +21,7 @@
 
 
 ;; load general.el and keybindings:
-(require 'cfg-gen-op-emmet))
+(require 'cfg-gen-op-emmet)
 
 (provide 'cfg-op-emmet)
 ;;; cfg-op-emmet.el ends here

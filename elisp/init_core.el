@@ -44,6 +44,7 @@
 (require 'cfg-tramp-sudo)
 (require 'cfg-org)
 (require 'cfg-irc)
+(require 'cfg-text-fundamental)
 (require 'cfg-man-help)
 (require 'cfg-flyspell)
 (require 'cfg-doc-view-image)
