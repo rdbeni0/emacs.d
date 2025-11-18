@@ -7,12 +7,20 @@
 (use-package emmet-mode
   :ensure t
   :config
-  (add-hook 'web-mode-hook
-            (lambda ()
-	      (emmet-mode)
-	      ))
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-op-emmet))
+  (dolist (hook '(web-mode-hook
+                  html-ts-mode-hook
+                  html-mode-hook
+                  mhtml-mode-hook
+                  css-mode-hook
+                  css-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (emmet-mode))))
+  )
+
+
+;; load general.el and keybindings:
+(require 'cfg-gen-op-emmet))
 
 (provide 'cfg-op-emmet)
 ;;; cfg-op-emmet.el ends here
