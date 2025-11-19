@@ -117,6 +117,8 @@
 ;; https://melpa.org/#/flycheck-psalm
 (use-package flycheck-psalm
   :ensure t
+  :config
+  (flycheck-add-mode 'psalm 'php-ts-mode)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
