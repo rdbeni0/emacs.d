@@ -156,6 +156,7 @@
   (flycheck-select-checker 'php))
 
 (add-hook 'php-mode-hook 'cfg/-my-php-mode-setup)
+(add-hook 'php-ts-mode-hook 'cfg/-my-php-mode-setup)
 
 (provide 'cfg-op-php)
 ;;; cfg-op-php.el ends here
