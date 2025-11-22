@@ -122,8 +122,8 @@
 ;;;; CONF-MODES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode robots-txt-mode yaml-mode yaml-ts-mode conf-colon-mode conf-neon-mode neon-mode text-mode))
-(setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map robots-txt-mode-map yaml-mode-map yaml-ts-mode-map conf-colon-mode-map conf-neon-mode-map neon-mode-map text-mode-map))
+(setq list-gen-mode-conf-mode '(conf-mode conf-unix-mode conf-windows-mode conf-xdefaults-mode conf-space-mode robots-txt-mode yaml-mode yaml-ts-mode conf-colon-mode conf-neon-mode neon-mode text-mode conf-javaprop-mode))
+(setq list-gen-mode-conf-mode-map '(conf-mode-map conf-unix-mode-map conf-windows-mode-map conf-xdefaults-mode-map conf-space-mode-map robots-txt-mode-map yaml-mode-map yaml-ts-mode-map conf-colon-mode-map conf-neon-mode-map neon-mode-map text-mode-map conf-javaprop-mode-map))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; FLYCHECK

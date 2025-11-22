@@ -19,6 +19,7 @@
 	 ("\\.yaml?\\'" . yaml-mode)
 	 ("\\.php?\\'" . php-ts-mode)
 	 ("\\.lua?\\'" . lua-ts-mode)
+	 ("\\.mjs?\\'" . json-ts-mode)
 	 ;; web-mode
 	 ("\\.css?\\'" . web-mode)
 	 ("\\.djhtml\\'" . web-mode)
