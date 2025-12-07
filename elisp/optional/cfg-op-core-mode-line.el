@@ -157,7 +157,7 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
 
   (defface cfg/flycheck-warning-face
     ;; '((t (:foreground "gray" :weight bold)))
-     '((t (:foreground "wheat" :weight bold)))
+    '((t (:foreground "wheat" :weight bold)))
     "Face for Flycheck warnings.")
 
   (defface cfg/flycheck-info-face
@@ -220,10 +220,12 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
                 "[size:%I]" ;; Size in human-friendly format
                 "[%p]" ;; Display the percentage through the buffer
                 " [" (:eval (cfg/-mode-line-buffer-or-path)) "]"
+                " " (:eval (anzu--update-mode-line)) "" ;; Move anzu counter until the very end
                 ))
 
-(setq-default mode-line-buffer-identification
-              '(:eval (abbreviate-file-name (buffer-name))))
+;; https://github.com/emacsorphanage/evil-anzu
+;; https://github.com/emacsorphanage/anzu
+(setq anzu-cons-mode-line-p nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; make mode-line smaller:
