@@ -47,17 +47,17 @@
 ;;
 ;; (setq-default mode-line-format
 ;; 	      '(
-;; 		;; " " ;; Adds a space at the beginning of the mode line
+;; 		" " ;; Adds a space at the beginning of the mode line
 ;; 		"[%b] " ;; Display the buffer name
-;; 		;; " - "
+;; 		" - "
 ;; 		"["
 ;; 		"l%l" ;; Display the current line number
 ;; 		","
 ;; 		"c%c" ;; Display the current column number
 ;; 		"]"
-;; 		"[size:%I]" ;; Display the full file path
+;; 		"[size:%I]"  ;; Size in human-friendly format
 ;; 		"[%p%%]" ;; Display the percentage through the buffer
-;; 		"[modified:%*]" ;; Shows '*' if modified, '-' if not, and '%' if read-only
+;; 		"[modified:%*]" ;; Shows `*' if modified, `-' if not, and `%' if read-only
 ;; 		"["mode-name"]" ;; Displays the major mode
 ;; 		" [%f]" ;; Display the full path
 ;; 		))
@@ -67,6 +67,8 @@
 ;; To display the buffer size in a human-friendly format (e.g., in kilobytes or megabytes),
 ;; you can use the size-indication-mode built-in functionality of Emacs, which provides this behavior:
 (size-indication-mode 1)
+
+;; (setq column-number-mode t)
 
 ;; This information is useless for most:
 (setopt display-time-default-load-average nil)
@@ -183,13 +185,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq-default mode-line-format
-              '("[l%l,c%c]"
-                "[size:%I]"
-                "[%p%%]"
-                "[mod:%*]"
+              '("[l%l,c%c]"  ;; Display the current column + line number
+                "[size:%I]" ;; Size in human-friendly format
+                "[%p%%]" ;; Display the percentage through the buffer
+                "[mod:%*]" ;; Shows `*' if modified, `-' if not, and `%' if read-only
                 "[enc:" (:eval (cfg/-mode-line-encoding)) "]"
                 "[eol:" (:eval (cfg/-mode-line-eol)) "]"
-                "[" mode-name "]"
+                "[" mode-name "]" ;; Displays the major mode
                 "[FlyC:" (:eval (cfg/-mode-line-flycheck)) "]"
                 " [" (:eval (cfg/-mode-line-buffer-or-path)) "]"
                 ))

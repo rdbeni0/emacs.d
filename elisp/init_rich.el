@@ -8,7 +8,6 @@
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-fonts)
 (require 'cfg-op-doom-themes)
-;; (require 'cfg-op-doom-mode-line)
 (require 'cfg-op-core-mode-line)
 (require 'cfg-op-tree-sitter)
 (require 'cfg-op-pgtk)
