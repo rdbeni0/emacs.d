@@ -62,12 +62,12 @@
 (setq default-fill-column 80)
 (set-cursor-color "#ffffff")
 
-(scroll-bar-mode)
-;; (scroll-bar-mode -1)
+;; (scroll-bar-mode)
+(scroll-bar-mode -1)
 ;; (horizontal-scroll-bar-mode)
 (tool-bar-mode   -1)
 ;; (tooltip-mode    -1)
-;; (menu-bar-mode   -1)
+(menu-bar-mode   -1)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (custom-set-variables

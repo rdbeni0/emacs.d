@@ -76,20 +76,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun cfg/-mode-line-buffer-or-path ()
-  "Return buffer file path truncated to 50% of window width, or buffer name if no file."
+  "Return buffer file path truncated to 55% of window width, or buffer name if no file.
+   Expands $HOME to ~ for readability."
   (let* ((win-width (window-total-width))          ;; total width of the current window
-         (max-len (floor (* win-width 0.5)))       ;; maximum allowed length (XX% of current window width)
+         (max-len (floor (* win-width 0.55)))       ;; maximum allowed length (XX% of current window width)
          (fname (buffer-file-name)))               ;; full file path, or nil if buffer is not visiting a file
     (cond
      ;; if no file is associated, show buffer name
      ((not fname)
       (buffer-name))
-     ;; if file path length fits within the limit, show full path
+     ;; if file path length fits within the limit, show full path (with ~)
      ((<= (length fname) max-len)
-      fname)
+      (abbreviate-file-name fname))
      ;; otherwise, show only the file name
      (t
       (file-name-nondirectory fname)))))
+
 
 (defun cfg/-mode-line-encoding ()
   "Return a short string for buffer encoding (e.g. U8 for UTF-8)."
@@ -186,7 +188,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq-default mode-line-format
-              '("[" (:eval (cfg/-mode-line-buffer-or-path)) "]   "
+              '(
+                ;; "[" (:eval (cfg/-mode-line-buffer-or-path)) "]   "
                 "[FlyC:" (:eval (cfg/-mode-line-flycheck)) "]"
                 "[l%l,c%c]"  ;; Display the current column + line number
                 "[mod:%*]" ;; Shows `*' if modified, `-' if not, and `%' if read-only
@@ -196,8 +199,12 @@
                 "[" (:eval (cfg/-mode-line-eol)) "]"
                 "[" mode-name "]" ;; Displays the major mode
                 "[size:%I]" ;; Size in human-friendly format
-                "[%p%%]" ;; Display the percentage through the buffer
+                "[%p]" ;; Display the percentage through the buffer
+                " [" (:eval (cfg/-mode-line-buffer-or-path)) "]"
                 ))
+
+(setq-default mode-line-buffer-identification
+              '(:eval (abbreviate-file-name (buffer-name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; make mode-line smaller:

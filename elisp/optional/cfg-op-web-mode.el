@@ -51,20 +51,26 @@
 ;; https://github.com/VincentLanglet/Twig-CS-Fixer
 ;; requires twig-cs-fixer to be in $PATH
 
-(defvar twig-cs-fixer-executable "twig-cs-fixer"
+(defvar cfg/twig-cs-fixer-executable "twig-cs-fixer"
   "Location of twig-cs-fixer executable.")
+
+(defvar cfg/twig-cs-fixer-options "--no-cache"
+  "Extra options passed to twig-cs-fixer CLI.
+Set to a string of arguments, e.g. \"--no-cache --verbose\".")
 
 (defun cfg/twig-cs-fixer-fix-buffer ()
   "Run `twig-cs-fixer fix` on the current buffer file.
 This saves the buffer, runs the fixer, and reloads the buffer
 to reflect any changes made by twig-cs-fixer."
   (interactive)
-  (if (and buffer-file-name (executable-find twig-cs-fixer-executable))
+  (if (and buffer-file-name (executable-find cfg/twig-cs-fixer-executable))
       (progn
-        (save-buffer) ;; ensure the file is saved before running fixer
+        (save-buffer)
         (shell-command
-         (concat twig-cs-fixer-executable " fix " (shell-quote-argument buffer-file-name)))
-        ;; reload buffer to reflect changes
+         (concat cfg/twig-cs-fixer-executable
+                 " fix "
+                 cfg/twig-cs-fixer-options " "
+                 (shell-quote-argument buffer-file-name)))
         (revert-buffer t t t))
     (error "No file associated with buffer or twig-cs-fixer not found")))
 
@@ -73,14 +79,17 @@ to reflect any changes made by twig-cs-fixer."
 This saves the buffer, runs the linter, and reloads the buffer
 if necessary to reflect any changes."
   (interactive)
-  (if (and buffer-file-name (executable-find twig-cs-fixer-executable))
+  (if (and buffer-file-name (executable-find cfg/twig-cs-fixer-executable))
       (progn
         (save-buffer)
         (shell-command
-         (concat twig-cs-fixer-executable " lint " (shell-quote-argument buffer-file-name)))
-        ;; reload buffer after linting (in case of modifications)
+         (concat cfg/twig-cs-fixer-executable
+                 " lint "
+                 cfg/twig-cs-fixer-options " "
+                 (shell-quote-argument buffer-file-name)))
         (revert-buffer t t t))
     (error "No file associated with buffer or twig-cs-fixer not found")))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
