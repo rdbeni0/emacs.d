@@ -59,9 +59,9 @@
 Set to a string of arguments, e.g. \"--no-cache --verbose\".")
 
 (defun cfg/twig-cs-fixer-fix-buffer ()
-  "Run `twig-cs-fixer fix` on the current buffer file.
+  "Run `twig-cs-fixer fix' on the current buffer file.
 This saves the buffer, runs the fixer, and reloads the buffer
-to reflect any changes made by twig-cs-fixer."
+to reflect any changes made by twig-cs-fixer, without showing 'Mark set'."
   (interactive)
   (if (and buffer-file-name (executable-find cfg/twig-cs-fixer-executable))
       (progn
@@ -71,13 +71,15 @@ to reflect any changes made by twig-cs-fixer."
                  " fix "
                  cfg/twig-cs-fixer-options " "
                  (shell-quote-argument buffer-file-name)))
-        (revert-buffer t t t))
+        (save-excursion
+          (revert-buffer t t t)
+          (setq mark-active nil)))
     (error "No file associated with buffer or twig-cs-fixer not found")))
 
 (defun cfg/twig-cs-fixer-lint-buffer ()
-  "Run `twig-cs-fixer lint` on the current buffer file.
+  "Run `twig-cs-fixer lint' on the current buffer file.
 This saves the buffer, runs the linter, and reloads the buffer
-if necessary to reflect any changes."
+if necessary to reflect any changes, without showing 'Mark set'."
   (interactive)
   (if (and buffer-file-name (executable-find cfg/twig-cs-fixer-executable))
       (progn
@@ -87,9 +89,10 @@ if necessary to reflect any changes."
                  " lint "
                  cfg/twig-cs-fixer-options " "
                  (shell-quote-argument buffer-file-name)))
-        (revert-buffer t t t))
+        (save-excursion
+          (revert-buffer t t t)
+          (setq mark-active nil)))
     (error "No file associated with buffer or twig-cs-fixer not found")))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
