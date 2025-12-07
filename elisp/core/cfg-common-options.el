@@ -49,7 +49,7 @@
         (let ((project (project-current)))
           (if project
               (concat "Emacs - [p] " (project-name project))
-              (concat "Emacs - " (buffer-name))))))
+            (concat "Emacs - " (buffer-name))))))
 
 ;; silent bell when you make a mistake:
 (setq ring-bell-function 'ignore )
@@ -87,8 +87,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Make right-click do something sensible
-(when (display-graphic-p)
-  (context-menu-mode))
+(context-menu-mode)
 
 ;;OPTIONAL - Enable horizontal scrolling
 ;;To Be Checked:
