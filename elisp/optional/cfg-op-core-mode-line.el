@@ -75,23 +75,36 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Define a custom face for displaying buffer path in the mode-line
+(defface cfg/mode-line-path-face
+  ;; '((t :foreground "LightSkyBlue" :weight bold))
+  '((t :foreground "cyan" :weight bold))
+  "Face used to highlight buffer path or name in the mode-line.")
+
+;; Define a custom face for mode-name in the mode-line
+(defface cfg/mode-line-mode-name-face
+  '((t :foreground "white" :weight bold))
+  "Face used to highlight the major mode name in the mode-line.")
+
 (defun cfg/-mode-line-buffer-or-path ()
   "Return buffer file path truncated to 55% of window width, or buffer name if no file.
-   Expands $HOME to ~ for readability."
+Expands $HOME to ~ for readability, and applies a custom face for styling."
   (let* ((win-width (window-total-width))          ;; total width of the current window
-         (max-len (floor (* win-width 0.55)))       ;; maximum allowed length (XX% of current window width)
-         (fname (buffer-file-name)))               ;; full file path, or nil if buffer is not visiting a file
-    (cond
-     ;; if no file is associated, show buffer name
-     ((not fname)
-      (buffer-name))
-     ;; if file path length fits within the limit, show full path (with ~)
-     ((<= (length fname) max-len)
-      (abbreviate-file-name fname))
-     ;; otherwise, show only the file name
-     (t
-      (file-name-nondirectory fname)))))
-
+         (max-len (floor (* win-width 0.55)))      ;; maximum allowed length (55% of current window width)
+         (fname (buffer-file-name))                ;; full file path, or nil if buffer is not visiting a file
+         (text                                    ;; string to display in the mode-line
+          (cond
+           ;; if no file is associated, show buffer name
+           ((not fname)
+            (buffer-name))
+           ;; if file path length fits within the limit, show full path (with ~)
+           ((<= (length fname) max-len)
+            (abbreviate-file-name fname))
+           ;; otherwise, show only the file name (basename)
+           (t
+            (file-name-nondirectory fname)))))
+    ;; Apply the custom face to the resulting string
+    (propertize text 'face 'cfg/mode-line-path-face)))
 
 (defun cfg/-mode-line-encoding ()
   "Return a short string for buffer encoding (e.g. U8 for UTF-8)."
@@ -123,6 +136,10 @@
     (2 "CR")    ;; CR -> Mac
     (_ "?")))
 
+(defun cfg/-mode-line-mode-name ()
+  "Return the current major mode name, styled with a custom face."
+  (propertize mode-name 'face 'cfg/mode-line-mode-name-face))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
 
@@ -139,12 +156,13 @@
     "Face for Flycheck errors.")
 
   (defface cfg/flycheck-warning-face
-    '((t (:foreground "white" :weight bold)))
+    ;; '((t (:foreground "gray" :weight bold)))
+     '((t (:foreground "wheat" :weight bold)))
     "Face for Flycheck warnings.")
 
   (defface cfg/flycheck-info-face
     ;; '((t (:foreground "#8B4513" :weight bold)))
-    '((t (:foreground "black" :weight bold)))
+    '((t (:foreground "magenta" :weight bold)))
     "Face for Flycheck info.")
 
   ;; vars
@@ -197,7 +215,8 @@
                 "[" (:eval (cfg/-mode-line-encoding)) "]"
                 ;; "[eol:" (:eval (cfg/-mode-line-eol)) "]"
                 "[" (:eval (cfg/-mode-line-eol)) "]"
-                "[" mode-name "]" ;; Displays the major mode
+                ;; "[" mode-name "]" ;; Displays the major mode
+                "[" (:eval (cfg/-mode-line-mode-name)) "]" ;; major mode with custom face
                 "[size:%I]" ;; Size in human-friendly format
                 "[%p]" ;; Display the percentage through the buffer
                 " [" (:eval (cfg/-mode-line-buffer-or-path)) "]"
