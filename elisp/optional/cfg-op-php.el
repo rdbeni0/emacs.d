@@ -38,7 +38,6 @@
 ;; https://github.com/OVYA/php-cs-fixer
 (use-package php-cs-fixer
   :ensure t
-  :after php-mode
   :config
   (setq php-cs-fixer-rules-fixer-part-options '(
 						"multiline_whitespace_before_semicolons"
@@ -52,7 +51,6 @@
 ;; https://melpa.org/#/psalm
 (use-package psalm
   :ensure t
-  :after php-mode
   :config
   (setq psalm-level 'max)
   )
@@ -61,7 +59,6 @@
 ;; https://github.com/emacs-php/phpstan.el
 (use-package phpstan
   :ensure t
-  :after php-mode
   :config
   (setq phpstan-level 'max)
   )
@@ -70,7 +67,6 @@
 ;; https://melpa.org/#/phpunit
 (use-package phpunit
   :ensure t
-  :after php-mode
   )
 
 ;; https://github.com/Fuco1/neon-mode

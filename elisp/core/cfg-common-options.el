@@ -41,6 +41,16 @@
 ;;;; MINIMAL UI AND BASIC APPEARANCE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Better Window Management handling
+(setq frame-resize-pixelwise t
+      frame-inhibit-implied-resize t
+      frame-title-format
+      '(:eval
+        (let ((project (project-current)))
+          (if project
+              (concat "Emacs - [p] " (project-name project))
+              (concat "Emacs - " (buffer-name))))))
+
 ;; silent bell when you make a mistake:
 (setq ring-bell-function 'ignore )
 
