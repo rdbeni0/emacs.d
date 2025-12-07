@@ -56,7 +56,7 @@
 
 (defvar cfg/twig-cs-fixer-options "--no-cache"
   "Extra options passed to twig-cs-fixer CLI.
-Set to a string of arguments, e.g. \"--no-cache --verbose\".")
+Set to a string of arguments, e.g. `--no-cache --verbose'.")
 
 (defun cfg/twig-cs-fixer-fix-buffer ()
   "Run `twig-cs-fixer fix' on the current buffer file.
