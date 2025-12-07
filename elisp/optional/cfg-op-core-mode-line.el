@@ -76,9 +76,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun cfg/-mode-line-buffer-or-path ()
-  "Return buffer file path truncated to 40% of window width, or buffer name if no file."
+  "Return buffer file path truncated to 50% of window width, or buffer name if no file."
   (let* ((win-width (window-total-width))          ;; total width of the current window
-         (max-len (floor (* win-width 0.4)))       ;; maximum allowed length (40% of current window width)
+         (max-len (floor (* win-width 0.5)))       ;; maximum allowed length (XX% of current window width)
          (fname (buffer-file-name)))               ;; full file path, or nil if buffer is not visiting a file
     (cond
      ;; if no file is associated, show buffer name
@@ -116,9 +116,9 @@
 (defun cfg/-mode-line-eol ()
   "Return a short string for end-of-line style (Unix, DOS, Mac)."
   (pcase (coding-system-eol-type buffer-file-coding-system)
-    (0 "Unix")   ;; LF -> Unix
-    (1 "DOS")    ;; CRLF -> DOS
-    (2 "Mac")    ;; CR -> Mac
+    (0 "LF")   ;; LF -> Unix
+    (1 "CRLF")    ;; CRLF -> DOS
+    (2 "CR")    ;; CR -> Mac
     (_ "?")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -133,15 +133,16 @@
     "Face for Flycheck OK.")
 
   (defface cfg/flycheck-error-face
-    '((t (:foreground "black" :weight bold)))
+    '((t (:foreground "deep sky blue" :weight bold)))
     "Face for Flycheck errors.")
 
   (defface cfg/flycheck-warning-face
-    '((t (:foreground "deep sky blue" :weight bold)))
+    '((t (:foreground "white" :weight bold)))
     "Face for Flycheck warnings.")
 
   (defface cfg/flycheck-info-face
-    '((t (:foreground "white" :weight bold)))
+    ;; '((t (:foreground "#8B4513" :weight bold)))
+    '((t (:foreground "black" :weight bold)))
     "Face for Flycheck info.")
 
   ;; vars
@@ -185,15 +186,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq-default mode-line-format
-              '("[l%l,c%c]"  ;; Display the current column + line number
+              '("[" (:eval (cfg/-mode-line-buffer-or-path)) "]   "
+                "[FlyC:" (:eval (cfg/-mode-line-flycheck)) "]"
+                "[l%l,c%c]"  ;; Display the current column + line number
+                "[mod:%*]" ;; Shows `*' if modified, `-' if not, and `%' if read-only
+                ;; "[enc:" (:eval (cfg/-mode-line-encoding)) "]"
+                "[" (:eval (cfg/-mode-line-encoding)) "]"
+                ;; "[eol:" (:eval (cfg/-mode-line-eol)) "]"
+                "[" (:eval (cfg/-mode-line-eol)) "]"
+                "[" mode-name "]" ;; Displays the major mode
                 "[size:%I]" ;; Size in human-friendly format
                 "[%p%%]" ;; Display the percentage through the buffer
-                "[mod:%*]" ;; Shows `*' if modified, `-' if not, and `%' if read-only
-                "[enc:" (:eval (cfg/-mode-line-encoding)) "]"
-                "[eol:" (:eval (cfg/-mode-line-eol)) "]"
-                "[" mode-name "]" ;; Displays the major mode
-                "[FlyC:" (:eval (cfg/-mode-line-flycheck)) "]"
-                " [" (:eval (cfg/-mode-line-buffer-or-path)) "]"
                 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
