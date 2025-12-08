@@ -10,8 +10,7 @@
 - nil: Disable custom theme
 - 'catppuccin: Use customizations for Catppuccin
 - 'crafters: Use customizations for the Crafters theme
-- 'modusdisco: A more colorful version of Modus
-"
+- 'modusdisco: A more colorful version of Modus"
   :type '(choice
           (const :tag "Disabled" nil)
           (const :tag "Catppuccin" catppuccin)

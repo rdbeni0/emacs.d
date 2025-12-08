@@ -24,13 +24,18 @@
                     tab-bar-separator))
   :init
   ;;; --- OPTIONAL INTERNAL FN OVERRIDES TO DECORATE NAMES
-  (defun tab-bar-tab-name-format-hints (name _tab i)
-    (if tab-bar-tab-hints (concat (format "»%d«" i) "") name))
+  ;;
+  ;; Below config will produce numeric tabs like:
+  ;; >1< , >2< , >3< ...
+  ;;
 
-  (defun tab-bar-tab-group-format-default (tab _i &optional current-p)
-    (propertize
-     (concat (funcall tab-bar-tab-group-function tab))
-     'face (if current-p 'tab-bar-tab-group-current 'tab-bar-tab-group-inactive)))
+  ;; (defun tab-bar-tab-name-format-hints (name _tab i)
+  ;;   (if tab-bar-tab-hints (concat (format "»%d«" i) "") name))
+
+  ;; (defun tab-bar-tab-group-format-default (tab _i &optional current-p)
+  ;;   (propertize
+  ;;    (concat (funcall tab-bar-tab-group-function tab))
+  ;;    'face (if current-p 'tab-bar-tab-group-current 'tab-bar-tab-group-inactive)))
 
   ;;; --- UTILITIES FUNCTIONS
   (defun cfg/tab-group-from-project ()
