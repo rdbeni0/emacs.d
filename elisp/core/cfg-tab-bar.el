@@ -14,7 +14,8 @@
    ("C-x t g" . #'cfg/tab-switch-to-group))
   :custom
   (tab-bar-new-tab-choice "*scratch*")
-  (tab-bar-close-button-show nil)
+  ;; (tab-bar-close-button-show nil)
+  (tab-bar-close-button-show t)
   (tab-bar-new-button-show nil)
   (tab-bar-tab-hints t)
   (tab-bar-auto-width nil)
@@ -61,10 +62,6 @@ Uses position instead of index field."
   ;;; --- TURNS ON BY DEFAULT
   (tab-bar-mode 1)
   (tab-bar-history-mode 1))
-
-;; '(tab-bar ((t (:background "#21242b" :foreground "#21242b" :box (:line-width (2 . 2) :color "white smoke" :style released-button)))))
-;; '(tab-bar-tab ((t (:inherit tab-bar :background "lawn green" :foreground "black" :box (:line-width 2 :color "magenta" :style released-button)))))
-;; '(tab-bar-tab-inactive ((t (:inherit tab-line-tab :background "#024c61" :foreground "#ff91ff" :box nil))))
 
 (provide 'cfg-tab-bar)
 ;;; cfg-tab-bar.el ends here
