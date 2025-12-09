@@ -34,6 +34,13 @@
 
 ;; defuns:
 
+;; Don't ask for confirmation when refreshing the buffer
+(defun cfg/revert-buffer ()
+  "Revert the current buffer from its file without any confirmation."
+  (interactive)
+  (revert-buffer t t t))
+(define-key global-map [remap revert-buffer] #'cfg/revert-buffer)
+
 ;; Define `cfg/switch-to-buffer' differently depending on whether
 ;; the `consult' package is available at the time this configuration is loaded.
 (cond
