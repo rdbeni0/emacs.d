@@ -38,7 +38,7 @@
 (defun cfg/revert-buffer ()
   "Revert the current buffer from its file without any confirmation."
   (interactive)
-  (revert-buffer t t t))
+  (revert-buffer t t t)) ; ignore-auto, noconfirm, preserve-modes
 (define-key global-map [remap revert-buffer] #'cfg/revert-buffer)
 
 ;; Define `cfg/switch-to-buffer' differently depending on whether
@@ -48,7 +48,7 @@
   ;; consult is installed and loaded (or will be loaded before this file finishes)
   (defun cfg/switch-to-buffer ()
     "Switch to another buffer using `consult-buffer'.
-If invoked from the minibuffer, abort the minibuffer instead."
+    If invoked from the minibuffer, abort the minibuffer instead."
     (interactive)
     (if (minibufferp)
         (abort-minibuffers)
@@ -329,9 +329,8 @@ If invoked from the minibuffer, abort the minibuffer instead."
 ;;;###autoload
 (defun cfg/open-with (arg)
   "Open visited file in default external program.
-When in dired mode, open file under the cursor.
-
-With a prefix ARG always prompt for command to use."
+  When in dired mode, open file under the cursor.
+  With a prefix ARG always prompt for command to use."
   (interactive "P")
   (let* ((current-file-name
           (if (derived-mode-p 'dired-mode)
