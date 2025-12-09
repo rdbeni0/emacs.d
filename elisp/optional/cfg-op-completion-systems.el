@@ -81,6 +81,7 @@
          ([remap org-goto]                        . consult-org-heading)
          ([remap project-switch-to-buffer]        . consult-project-buffer)
          ([remap recentf-open-files]              . consult-recent-file)
+         ;; ([remap cfg/recentf-jump-open]           . consult-recent-file) ;; good, but little too slow
          ([remap repeat-complex-command]          . consult-complex-command)
          ([remap switch-to-buffer-other-frame]    . consult-buffer-other-frame)
          ([remap switch-to-buffer-other-window]   . consult-buffer-other-window)

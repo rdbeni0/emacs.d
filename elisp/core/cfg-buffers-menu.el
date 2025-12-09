@@ -34,6 +34,29 @@
 
 ;; defuns:
 
+;; Define `cfg/switch-to-buffer' differently depending on whether
+;; the `consult' package is available at the time this configuration is loaded.
+(cond
+ ((fboundp 'consult-buffer)
+  ;; consult is installed and loaded (or will be loaded before this file finishes)
+  (defun cfg/switch-to-buffer ()
+    "Switch to another buffer using `consult-buffer'.
+If invoked from the minibuffer, abort the minibuffer instead."
+    (interactive)
+    (if (minibufferp)
+        (abort-minibuffers)
+      (call-interactively #'consult-buffer))))
+
+ (t
+  ;; consult is not available -> fall back to the built-in command
+  (defun cfg/switch-to-buffer ()
+    "Switch to another buffer using the built-in `switch-to-buffer'.
+If invoked from the minibuffer, abort the minibuffer instead."
+    (interactive)
+    (if (minibufferp)
+        (abort-minibuffers)
+      (call-interactively #'switch-to-buffer)))))
+
 ;;;###autoload
 (defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.

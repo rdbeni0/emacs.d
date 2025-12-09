@@ -7,13 +7,19 @@
  :states '(normal visual emacs insert)
  :keymaps 'global
 
- ;; ibuffer
+ ;; switch-to-buffer and ibuffer
  "<f4>"     '(cfg/toggle-ibuffer :which-key "ibuffer")
+ "<f3>"     '(cfg/switch-to-buffer :which-key "switch-to-buffer")
 
  ;; completions
  "<f5><f4>" '(dabbrev-expand :which-key "dabbrev-expand")
  "<f5><f5>" '(cfg/expand-abbrev :which-key "expand-abbrev")
  "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf"))
+
+;; Bind <f3> inside main minibuffer
+(define-key minibuffer-local-map (kbd "<f3>") #'cfg/switch-to-buffer)
+;; And also in completion minibuffers (like M-x, find-file, etc.)
+(define-key minibuffer-local-completion-map (kbd "<f3>") #'cfg/switch-to-buffer)
 
 ;; space as leader-key + which-key
 
@@ -22,8 +28,9 @@
  :keymaps 'override
  :prefix "SPC"
 
- ;; ibuffer
+ ;; switch-to-buffer and ibuffer
  "<f4>"     '(cfg/toggle-ibuffer :which-key "ibuffer")
+ "<f3>"     '(cfg/switch-to-buffer :which-key "switch-to-buffer")
 
  ;; completions
  "<f5>"     '(:ignore t :which-key "completions")

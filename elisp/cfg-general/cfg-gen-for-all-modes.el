@@ -110,7 +110,7 @@
  "bu"  '(cfg/dos2unix :which-key "dos2unix")
  "br"  '(revert-buffer :which-key "revert-refresh-buffer")
  "by"  '(evil-paste-pop :which-key "yank-pop")
- "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
+ "bb"  '(cfg/switch-to-buffer :which-key "switch-to-buffer")
  "bB"  '(switch-to-buffer-other-window :which-key "switch-to-buffer-other-window")
  "bs"  '(sort-lines :which-key "sort-lines")
  "bv"  '(ibuffer :which-key "ibuffer")
