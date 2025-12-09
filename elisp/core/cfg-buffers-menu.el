@@ -1,4 +1,4 @@
-;;; cfg-buffers-menu.el --- configuration for tempbuf and buffer-menu -*- lexical-binding: t -*-
+;;; cfg-buffers-menu.el --- configuration for tempbuf and buffes -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configuration for tempbuf (tempbuf will kill unused buffers after XX seconds) and buffer-menu (M-x Buffer-menu).
@@ -45,7 +45,7 @@
 ;; the `consult' package is available at the time this configuration is loaded.
 (cond
  ((fboundp 'consult-buffer)
-  ;; consult is installed and loaded (or will be loaded before this file finishes)
+  ;; consult is installed and loaded (or will be loaded before this file finishes):
   (defun cfg/switch-to-buffer ()
     "Switch to another buffer using `consult-buffer'.
     If invoked from the minibuffer, abort the minibuffer instead."
@@ -55,14 +55,16 @@
       (call-interactively #'consult-buffer))))
 
  (t
-  ;; consult is not available -> fall back to the built-in command
+  ;; consult is not available -> fall back to the built-in command:
   (defun cfg/switch-to-buffer ()
     "Switch to another buffer using the built-in `switch-to-buffer'.
-If invoked from the minibuffer, abort the minibuffer instead."
+    If invoked from the minibuffer, abort the minibuffer instead."
     (interactive)
     (if (minibufferp)
         (abort-minibuffers)
       (call-interactively #'switch-to-buffer)))))
+
+(define-key global-map [remap switch-to-buffer] #'cfg/switch-to-buffer)
 
 ;;;###autoload
 (defun cfg/kill-other-buffers (&optional arg)
