@@ -53,14 +53,19 @@
   (flycheck-list-errors)
   (if (> (length (window-list)) 2)
       (error "Can't toggle with more than 2 windows!")
-    (let ((func (if (window-full-height-p)
-                    #'split-window-vertically
-                  #'split-window-horizontally)))
+    (progn
       (delete-other-windows)
-      (funcall func)
-      (save-selected-window
-        (other-window 1)
-        (switch-to-buffer "*Flycheck errors*")))))
+      (let* ((total-height (window-total-height))
+             ;; 0.85 will be calculated as 15% window size:
+             (error-height (floor (* 0.85 total-height))))
+        (split-window-below error-height))
+      ;; `save-selected-window' dropped out ->
+      ;; thanks to this exclusion, the lower window becomes the active one.
+      ;; (save-selected-window
+      (other-window 1)
+      (switch-to-buffer "*Flycheck errors*"))))
+      ;; )
+
 
 (defun cfg/flycheck-enable-checker ()
   "Enable disabled checker in flycheck."
