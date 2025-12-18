@@ -170,5 +170,38 @@
 (cl-defmethod project-files ((project (head local)) &optional dirs)
   (project-fd-files project dirs))
 
+;;;; ------------------------------------------------------------------
+;;;; `project-find-dir' improved command
+;;;; ------------------------------------------------------------------
+
+;;;###autoload
+(defun cfg/project-find-dir ()
+  "Start Dired in a directory inside the current project.
+
+The current buffer's `default-directory' is available as part of
+\"future history\"."
+  (interactive)
+  (let* ((project (project-current t))
+         (root    (project-root project))
+         (all-files (project-files project))
+         (all-dirs (delete-dups
+                    (delq nil
+                          (mapcar (lambda (f)
+                                    (let ((d (file-name-directory f)))
+                                      (when (and d (file-directory-p d))
+                                        (expand-file-name d root))))
+                                  all-files))))
+         (default (or (and default-directory
+                           (project--find-default-from default-directory project))
+                      root))
+         (completion-ignore-case read-file-name-completion-ignore-case)
+         (dir (if all-dirs
+                  (project--read-file-name
+                   project "Dired" all-dirs nil 'file-name-history default)
+                root)))
+    (dired dir)))
+
+(defalias 'project-find-dir #'cfg/project-find-dir)
+
 (provide 'cfg-project)
 ;;; cfg-project.el ends here
