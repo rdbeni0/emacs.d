@@ -330,7 +330,7 @@
    '(erc-timestamp-face ((t (:foreground "cyan" :weight bold))))
    '(fg:erc-color-face1 ((t (:background "magenta" :foreground "black"))))
    '(font-lock-comment-face ((t (:background "gray15" :foreground "dark orange"))))
-   '(font-lock-doc-face ((t (:inherit font-lock-comment-face :background "gray15" :foreground "darl salmon"))))
+   '(font-lock-doc-face ((t (:inherit font-lock-comment-face :background "gray15" :foreground "dark salmon"))))
    '(font-lock-keyword-face ((t (:background "gray0" :foreground "medium sea green"))))
    '(font-lock-type-face ((t (:background "black" :foreground "gold"))))
    '(markdown-markup-face ((t (:background "gray15" :foreground "yellow"))))

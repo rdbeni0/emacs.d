@@ -138,7 +138,8 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
 
 (defun cfg/-mode-line-mode-name ()
   "Return the current major mode name, styled with a custom face."
-  (propertize mode-name 'face 'cfg/mode-line-mode-name-face))
+  (propertize (format-mode-line mode-name)
+              'face 'cfg/mode-line-mode-name-face))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
