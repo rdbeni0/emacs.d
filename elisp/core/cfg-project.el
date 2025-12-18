@@ -48,13 +48,20 @@
   :type '(repeat string)
   :group 'project-fd)
 
+(defcustom project-fd-ignore-file ".gitignore"
+  "File name used by fd backend to specify ignore rules.
+If non-nil and exists in project root, fd will be called with
+`--ignore-file` pointing to this file. Default is \".gitignore\"."
+  :type '(choice (const :tag "Disabled" nil)
+                 (string :tag "File name"))
+  :group 'project-fd)
+
 (defvar project-fd-debug nil
   "If non-nil, output project/fd debug logs.")
 
 (defun project-fd--debug (fmt &rest args)
   (when project-fd-debug
     (apply #'message (concat "[project-fd] " fmt) args)))
-
 
 ;;;; ------------------------------------------------------------------
 ;;;; Helpers
@@ -93,21 +100,21 @@
             (project-fd--debug "VC project root found: %s" path)
             (throw 'found (cons 'vc path)))
 
-          ;; --- Local .project ---
-          (when (project-fd--marker-exists-p path ".project")
+          ;; --- Local project markers ---
+          (when (project-fd--dir-has-markers path project-root-markers)
             (project-fd--debug "Local project root found: %s" path)
             (throw 'found (cons 'local path)))
 
-          ;; --- Transient markers ---
-          (when (project-fd--dir-has-markers path project-root-markers)
-            (project-fd--debug "Transient project root found: %s" path)
-            (throw 'found (cons 'transient path))))
+          ;; --- Transient markers (optional implementation) ---
+          ;; (when (project-fd--dir-has-markers path project-transient-root-markers)
+          ;;   (project-fd--debug "Transient project root found: %s" path)
+          ;;   (throw 'found (cons 'transient path))))
 
+          )
         ;; Go up
         (setq path (file-name-directory (directory-file-name path)))))))
 
 (add-hook 'project-find-functions #'project-fd--find-root)
-
 
 ;;;; ------------------------------------------------------------------
 ;;;; project-root methods
@@ -127,9 +134,10 @@
          (ignores (if is-vc project-vc-ignores project-ignores))
          (cmd '("fd" "--type" "f" "--hidden" "--strip-cwd-prefix" ".")))
 
-    ;; .gitignore must be respected ALWAYS (even for non-VC!)
-    (when (project-fd--marker-exists-p root ".gitignore")
-      (setq cmd (append cmd '("--ignore-file" ".gitignore"))))
+    ;; Respect ignore file if enabled
+    (when (and project-fd-ignore-file
+               (project-fd--marker-exists-p root project-fd-ignore-file))
+      (setq cmd (append cmd (list "--ignore-file" project-fd-ignore-file))))
 
     ;; Excludes from VC or non-VC sets
     (setq cmd
