@@ -26,13 +26,6 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-treemacs-mode))
 
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t
-  :after general
-  :config
-  )
-
 (use-package treemacs-evil
   :after (treemacs evil)
   :ensure t

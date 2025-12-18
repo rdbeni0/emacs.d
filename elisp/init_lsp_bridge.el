@@ -15,7 +15,7 @@
 (require 'cfg-op-copy-paste)
 (require 'cfg-op-pgtk)
 (require 'cfg-op-treemacs-speedbar)
-(require 'cfg-op-projectile)
+;; (require 'cfg-op-projectile)
 (require 'cfg-op-dumbjump)
 (require 'cfg-op-epm)
 (require 'cfg-op-evil)

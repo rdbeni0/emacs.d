@@ -80,6 +80,13 @@
   ;; load keybindings from general.el framework:
   (require 'cfg-gen-op-projectile))
 
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t
+  :after general
+  :config
+  )
+
 ;; def advice
 ;; https://stackoverflow.com/questions/70042843/how-to-advice-add-a-function-with-no-arguments-to-a-function-that-takes-argument
 
