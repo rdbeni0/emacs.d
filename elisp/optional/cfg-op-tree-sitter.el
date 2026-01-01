@@ -13,7 +13,8 @@
 (use-package tree-sitter
   :ensure t
   :config
-  (global-tree-sitter-mode))
+  ;; (global-tree-sitter-mode)
+  (require 'cfg-gen-op-tree-sitter-mode))
 
 (use-package tree-sitter-langs
   :ensure t)
@@ -104,10 +105,6 @@ For each language, remove the existing .so file if present, then reinstall."
   :ensure t
   )
 
-(use-package nix-ts-mode
-  :ensure t
-  )
-
 ;; https://github.com/nverno/emacs-lisp-ts-mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -126,15 +123,18 @@ For each language, remove the existing .so file if present, then reinstall."
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
+  (treesit-auto-add-to-auto-mode-alist '(yaml bash php cperl perl typescript json css html python))
+  ;; not required:
+  ;; (delete 'nix treesit-auto-langs)
+  ;; (global-treesit-auto-mode)
+  )
 
 (setq major-mode-remap-alist
       '((yaml-mode . yaml-ts-mode)
 	(bash-mode . bash-ts-mode)
 	(php-mode . php-ts-mode)
 	(js2-mode . js-ts-mode)
-	(nix-mode . nix-ts-mode)
+	;; (nix-mode . nix-ts-mode)
 	(cperl-mode . perl-ts-mode)
 	(typescript-mode . typescript-ts-mode)
 	(json-mode . json-ts-mode)
@@ -143,7 +143,15 @@ For each language, remove the existing .so file if present, then reinstall."
 	(html-mode . html-ts-mode)
 	(python-mode . python-ts-mode)))
 
-(require 'cfg-gen-op-tree-sitter-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Disable treesitter for particular mode:
+
+(setq major-mode-remap-alist
+      (assq-delete-all 'nix-mode major-mode-remap-alist))
+
+;; (use-package nix-ts-mode
+;;   :ensure t
+;;   )
 
 (provide 'cfg-op-tree-sitter)
 ;;; cfg-op-tree-sitter.el ends here
