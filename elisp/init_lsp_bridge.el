@@ -41,10 +41,3 @@
 (require 'cfg-op-yaml)
 (require 'cfg-op-emmet)
 (require 'cfg-op-web-mode)
-
-
-
-(setq use-dialog-box nil)
-(setq use-file-dialog nil)
-(setq tooltip-use-echo-area t)
-(setq frame-resize-pixelwise t)

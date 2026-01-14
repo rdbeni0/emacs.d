@@ -49,6 +49,10 @@
 ;;;; MINIMAL UI AND BASIC APPEARANCE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq use-dialog-box nil)
+(setq use-file-dialog nil)
+;; (setq tooltip-use-echo-area t)
+
 ;; Better Window Management handling
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t
