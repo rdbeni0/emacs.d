@@ -26,7 +26,7 @@
 ;;   ;; (global-tree-sitter-mode)
 ;;   )
 ;;;; Prebuilt grammars distributed via ELPA: should only be used in old Emacs
-;;;; Do NOT use this for newer versions!
+;;;; Do NOT use `tree-sitter-langs' for newer versions of emacs!
 ;;(use-package tree-sitter-langs
 ;;  :defer t
 ;;  :ensure t
