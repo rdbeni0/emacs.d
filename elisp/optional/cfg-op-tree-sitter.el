@@ -13,9 +13,8 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Core packages
+;;;; Legacy packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 ;;;; External tree-sitter package (legacy but still useful for grammar handling):
 ;;;; "For Emacs 29+, please use the built-in integration instead of this package."
@@ -25,12 +24,17 @@
 ;;   :config
 ;;   ;; (global-tree-sitter-mode)
 ;;   )
-;;;; Prebuilt grammars distributed via ELPA: should only be used in old Emacs
-;;;; Do NOT use `tree-sitter-langs' for newer versions of emacs!
+;;
+;;;; Prebuilt grammars distributed via ELPA: should only be used in old Emacs.
+;;;; Do NOT use `tree-sitter-langs' for newer versions of emacs.
 ;;(use-package tree-sitter-langs
 ;;  :defer t
 ;;  :ensure t
 ;;  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Core packages
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://cgit.git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
 (require 'treesit)
@@ -116,7 +120,7 @@ before reinstalling the grammar from its source repository."
       (treesit-install-language-grammar name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Workarounds and defuns for `treesit' grammars in ELPA
+;;;; Workarounds and defuns for `treesit' grammars
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun cfg/treesit-reinstall-full ()
@@ -150,6 +154,7 @@ remove the existing shared object if present, and reinstall the grammar."
 (use-package perl-ts-mode
   :ensure t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://github.com/nverno/emacs-lisp-ts-mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -165,9 +170,9 @@ remove the existing shared object if present, and reinstall the grammar."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;;; https://github.com/renzmann/treesit-auto
 ;; Automatically prefer *-ts-mode variants when grammars are available
+
 (use-package treesit-auto
   :ensure t
   :custom
