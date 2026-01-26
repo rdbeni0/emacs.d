@@ -17,9 +17,9 @@
 	 ("/known_hosts\\'"       . ssh-known-hosts-mode)
 	 ("/authorized_keys?\\'" . ssh-authorized-keys-mode)
 	 ("\\.yaml?\\'" . yaml-mode)
-	 ("\\.php?\\'" . php-ts-mode)
-	 ("\\.lua?\\'" . lua-ts-mode)
-	 ("\\.mjs?\\'" . json-ts-mode)
+	 ("\\.php?\\'" . php-mode)
+	 ("\\.lua?\\'" . lua-mode)
+	 ("\\.mjs?\\'" . json-mode)
 	 ;; web-mode
 	 ("\\.css?\\'" . web-mode)
 	 ("\\.djhtml\\'" . web-mode)
