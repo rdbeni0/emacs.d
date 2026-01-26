@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;
 ;; Tree-sitter configuration for Emacs.
-;;
 ;; This module uses the built-in Emacs 29+ `treesit-*' infrastructure.
 ;;
 ;; References:
@@ -13,7 +12,7 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Legacy packages
+;;;; Legacy packages: should only be used in old Emacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;; External tree-sitter package (legacy but still useful for grammar handling):
@@ -25,8 +24,8 @@
 ;;   ;; (global-tree-sitter-mode)
 ;;   )
 ;;
-;;;; Prebuilt grammars distributed via ELPA: should only be used in old Emacs.
-;;;; Do NOT use `tree-sitter-langs' for newer versions of emacs.
+;;;; Prebuilt grammars distributed via ELPA.
+;;;; Do NOT use `tree-sitter-langs' for newer versions of Emacs.
 ;;(use-package tree-sitter-langs
 ;;  :defer t
 ;;  :ensure t
