@@ -102,6 +102,15 @@
   '((t :foreground "PaleGreen" :weight bold))
   "Face for EOL indicator [LF/CRLF/CR].")
 
+(defface cfg/mode-line-size-face
+  '((t :foreground "wheat" :weight bold))
+  "Face for buffer size indicator [size:%I].")
+
+(defface cfg/mode-line-percent-face
+  '((t :foreground "RosyBrown1" :weight bold))
+  "Face for buffer percentage indicator [%p].")
+
+
 (defun cfg/-mode-line-pos-colored ()
   (propertize (format-mode-line "l%l,c%c")
               'face 'cfg/mode-line-pos-face))
@@ -117,6 +126,14 @@
 (defun cfg/-mode-line-eol-colored ()
   (propertize (cfg/-mode-line-eol)
               'face 'cfg/mode-line-eol-face))
+
+(defun cfg/-mode-line-size-colored ()
+  (propertize (format-mode-line "%I")
+              'face 'cfg/mode-line-size-face))
+
+(defun cfg/-mode-line-percent-colored ()
+  (propertize (format-mode-line "%p")
+              'face 'cfg/mode-line-percent-face))
 
 (defun cfg/-mode-line-buffer-or-path-colored ()
   "Return buffer file path truncated to 55% of window width, or buffer name if no file.
@@ -253,10 +270,13 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
                 ;; "[" mode-name "]" ;; Displays the major mode
                 ;; major mode with custom face
                 "[" (:eval (cfg/-mode-line-mode-name-colored)) "]"
-                "[size:%I]" ;; Size in human-friendly format
-                "[%p]" ;; Display the percentage through the buffer
+                ;; Size in human-friendly format
+                "[size:" (:eval (cfg/-mode-line-size-colored)) "]"
+                ;; Display the percentage through the buffer
+                "["     (:eval (cfg/-mode-line-percent-colored)) "]"
                 " [" (:eval (cfg/-mode-line-buffer-or-path-colored)) "]"
-                " " (:eval (anzu--update-mode-line)) "" ;; Move anzu counter until the very end
+                ;; Move anzu counter until the very end
+                " " (:eval (anzu--update-mode-line)) ""
                 ))
 
 ;; https://github.com/emacsorphanage/evil-anzu
