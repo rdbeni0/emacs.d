@@ -86,7 +86,39 @@
   '((t :foreground "white" :weight bold))
   "Face used to highlight the major mode name in the mode-line.")
 
-(defun cfg/-mode-line-buffer-or-path ()
+(defface cfg/mode-line-pos-face
+  '((t :foreground "light pink" :weight bold))
+  "Face for line/column indicator [l%l,c%c].")
+
+(defface cfg/mode-line-modified-face
+  '((t :foreground "aquamarine" :weight bold))
+  "Face for [mod:%*] indicator.")
+
+(defface cfg/mode-line-encoding-face
+  '((t :foreground "DeepSkyBlue" :weight bold))
+  "Face for encoding indicator [U8].")
+
+(defface cfg/mode-line-eol-face
+  '((t :foreground "PaleGreen" :weight bold))
+  "Face for EOL indicator [LF/CRLF/CR].")
+
+(defun cfg/-mode-line-pos-colored ()
+  (propertize (format-mode-line "l%l,c%c")
+              'face 'cfg/mode-line-pos-face))
+
+(defun cfg/-mode-line-modified-colored ()
+  (propertize (format-mode-line "%*")
+              'face 'cfg/mode-line-modified-face))
+
+(defun cfg/-mode-line-encoding-colored ()
+  (propertize (cfg/-mode-line-encoding)
+              'face 'cfg/mode-line-encoding-face))
+
+(defun cfg/-mode-line-eol-colored ()
+  (propertize (cfg/-mode-line-eol)
+              'face 'cfg/mode-line-eol-face))
+
+(defun cfg/-mode-line-buffer-or-path-colored ()
   "Return buffer file path truncated to 55% of window width, or buffer name if no file.
 Expands $HOME to ~ for readability, and applies a custom face for styling."
   (let* ((win-width (window-total-width))          ;; total width of the current window
@@ -136,7 +168,7 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
     (2 "CR")    ;; CR -> Mac
     (_ "?")))
 
-(defun cfg/-mode-line-mode-name ()
+(defun cfg/-mode-line-mode-name-colored ()
   "Return the current major mode name, styled with a custom face."
   (propertize (format-mode-line mode-name)
               'face 'cfg/mode-line-mode-name-face))
@@ -197,7 +229,7 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
   (add-hook 'flycheck-after-syntax-check-hook  #'cfg/-flycheck-update-cache))
 
 ;;; mode-line function
-(defun cfg/-mode-line-flycheck ()
+(defun cfg/-mode-line-flycheck-colored ()
   "Return cached Flycheck status for mode-line."
   (if (and (bound-and-true-p flycheck-mode)
            (featurep 'flycheck))
@@ -208,19 +240,22 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
 
 (setq-default mode-line-format
               '(
-                ;; "[" (:eval (cfg/-mode-line-buffer-or-path)) "]   "
-                "[FlyC:" (:eval (cfg/-mode-line-flycheck)) "]"
-                "[l%l,c%c]"  ;; Display the current column + line number
-                "[mod:%*]" ;; Shows `*' if modified, `-' if not, and `%' if read-only
+                ;; "[" (:eval (cfg/-mode-line-buffer-or-path-colored)) "]   "
+                "[FlyC:" (:eval (cfg/-mode-line-flycheck-colored)) "]"
+                ;; Display the current column + line number
+                "[" (:eval (cfg/-mode-line-pos-colored)) "]"
+                ;; Shows `*' if modified, `-' if not, and `%' if read-only
+                "[mod:" (:eval (cfg/-mode-line-modified-colored)) "]"
                 ;; "[enc:" (:eval (cfg/-mode-line-encoding)) "]"
-                "[" (:eval (cfg/-mode-line-encoding)) "]"
+                "[" (:eval (cfg/-mode-line-encoding-colored)) "]"
                 ;; "[eol:" (:eval (cfg/-mode-line-eol)) "]"
-                "[" (:eval (cfg/-mode-line-eol)) "]"
+                "[" (:eval (cfg/-mode-line-eol-colored)) "]"
                 ;; "[" mode-name "]" ;; Displays the major mode
-                "[" (:eval (cfg/-mode-line-mode-name)) "]" ;; major mode with custom face
+                ;; major mode with custom face
+                "[" (:eval (cfg/-mode-line-mode-name-colored)) "]"
                 "[size:%I]" ;; Size in human-friendly format
                 "[%p]" ;; Display the percentage through the buffer
-                " [" (:eval (cfg/-mode-line-buffer-or-path)) "]"
+                " [" (:eval (cfg/-mode-line-buffer-or-path-colored)) "]"
                 " " (:eval (anzu--update-mode-line)) "" ;; Move anzu counter until the very end
                 ))
 
