@@ -261,8 +261,6 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
               '(
                 ;; "[" (:eval (cfg/-mode-line-buffer-or-path-colored)) "]   "
                 "[FlyC:" (:eval (cfg/-mode-line-flycheck-colored)) "]"
-                ;; Display the current column + line number
-                "[" (:eval (cfg/-mode-line-pos-colored)) "]"
                 ;; Shows `*' if modified, `-' if not, and `%' if read-only
                 "[mod:" (:eval (cfg/-mode-line-modified-colored)) "]"
                 ;; "[enc:" (:eval (cfg/-mode-line-encoding)) "]"
@@ -274,6 +272,8 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
                 "[" (:eval (cfg/-mode-line-mode-name-colored)) "]"
                 ;; Size in human-friendly format
                 "[size:" (:eval (cfg/-mode-line-size-colored)) "]"
+                ;; Display the current column + line number
+                "[" (:eval (cfg/-mode-line-pos-colored)) "]"
                 ;; Display the percentage through the buffer
                 "["     (:eval (cfg/-mode-line-percent-colored)) "]"
                 " [" (:eval (cfg/-mode-line-buffer-or-path-colored)) "]"
