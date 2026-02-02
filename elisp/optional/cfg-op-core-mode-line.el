@@ -134,7 +134,7 @@
               'face 'cfg/mode-line-size-face))
 
 (defun cfg/-mode-line-percent-colored ()
-  (propertize (format-mode-line "%p")
+  (propertize (concat (format-mode-line "%p") "%")
               'face 'cfg/mode-line-percent-face))
 
 (defun cfg/-mode-line-buffer-or-path-colored ()
