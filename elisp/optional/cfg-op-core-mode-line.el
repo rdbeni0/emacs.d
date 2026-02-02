@@ -75,7 +75,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Define a custom face for displaying buffer path in the mode-line
+;; defface
+
 (defface cfg/mode-line-path-face
   ;; '((t :foreground "LightSkyBlue" :weight bold))
   '((t :foreground "cyan" :weight bold))
@@ -110,6 +111,7 @@
   '((t :foreground "RosyBrown1" :weight bold))
   "Face for buffer percentage indicator [%p].")
 
+;; defuns
 
 (defun cfg/-mode-line-pos-colored ()
   (propertize (format-mode-line "l%l,c%c")
