@@ -149,14 +149,26 @@
                                                                      orderless-style-dispatchers)))
                               (apply orig args)))))
 
-            ;; Disable consult-buffer project-related capabilities as
-            ;; they are very slow in TRAMP.
+            ;; Disable consult-buffer project-related capabilities as they are very slow in TRAMP.
             (setq consult-buffer-sources
                   (delq 'consult--source-project-buffer
-			(delq 'consult--source-project-file consult-buffer-sources)))
+                        (delq 'consult--source-project-file consult-buffer-sources)))
 
-            (setq consult--source-hidden-buffer
-                  (plist-put consult--source-hidden-buffer :narrow ?h))))
+            ;; ;; Hidden buffers – change the narrow key to ?h
+            ;; (consult-customize consult-buffer
+            ;;                    :narrow-key ?h    ; <- this changes the key for all sources at once (if you want globally)
+            ;;                    ;; or more precisely – only for the hidden source:
+            ;;                    ;; consult-source-hidden-buffer (narrow . ?h)
+            ;;                    )
+
+            (consult-customize consult-buffer
+                               ;; ?h instead of the default space for hidden buffers
+                               :narrow '(?b "Buffers"
+                                            ?h "Hidden"
+                                            ?* "Modified"
+                                            ;; ... the rest is default
+                                            ))
+            ))
 
 
 
