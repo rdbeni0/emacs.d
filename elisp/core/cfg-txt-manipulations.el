@@ -99,6 +99,43 @@ Toggles between: 'all lower', 'Init Caps', 'ALL CAPS'."
     (while (search-forward (string ?\C-j) nil t)
       (replace-match (string ?\C-m ?\C-j) nil t))))
 
+(defun cfg/eol-analyze ()
+  "Analyze the end-of-line style in the current buffer or active region.
+If a region is active, analyze only that region; otherwise analyze the whole buffer.
+Display one of: \"unix LF\", \"dos (windows) CRLF\", \"mac CR\", or \"mixed\"."
+  (interactive)
+  (let* ((use-region (use-region-p))
+         (start (if use-region (region-beginning) (point-min)))
+         (end   (if use-region (region-end)       (point-max)))
+         (crlf 0)
+         (lf   0)
+         (cr   0))
+    (save-excursion
+      (goto-char start)
+      (while (re-search-forward "\\(\r\n\\|\n\\|\r\\)" end t)
+        (let ((match (match-string 0)))
+          (cond
+           ((string= match "\r\n") (setq crlf (1+ crlf)))
+           ((string= match "\n")   (setq lf   (1+ lf)))
+           ((string= match "\r")   (setq cr   (1+ cr)))))))
+
+    (let* ((type
+            (cond
+             ;; pure DOS/Windows
+             ((and (> crlf 0) (= lf 0) (= cr 0)) "dos (winndows) EOL: CRLF")
+             ;; pure Unix
+             ((and (> lf 0) (= crlf 0) (= cr 0)) "unix EOL: LF")
+             ;; pure old Mac
+             ((and (> cr 0) (= lf 0) (= crlf 0)) "mac EOL: CR")
+             ;; nothing found (empty buffer or region)
+             ((and (= crlf 0) (= lf 0) (= cr 0)) "no EOL found")
+             ;; mixed
+             (t "mixed EOL types")))
+           (scope (if use-region
+                      "EOL for selected region -> "
+                    "EOL for entire buffer -> ")))
+      (message "%s%s" scope type))))
+
 (defun cfg/-get-positions-of-line-or-region ()
   "Return positions (beg . end) of the current line or region."
   (let (beg end)

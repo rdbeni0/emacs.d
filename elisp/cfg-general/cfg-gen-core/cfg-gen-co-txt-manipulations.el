@@ -23,6 +23,7 @@
  ".j"  '(cfg/join-lines-in-region-add-spc :which-key "join-lines-spc")
  ".l"  '(kill-whole-line :which-key "kill-line")
  ".n"  '(transpose-lines :which-key "swap-lines")
+ ".o"  '(cfg/eol-analyze :which-key "eol-analyze")
  ".p"  '(delete-duplicate-lines :which-key "del-dup-lines")
  ".r"  '(reverse-region :which-key "reverse-lines")
  ".s"  '(sort-lines :which-key "sort-lines")
