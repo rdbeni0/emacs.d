@@ -3,6 +3,7 @@
 ;;
 ;;; Code:
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; NATIVE COMPILATION AND PERFORMANCE OPTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -108,8 +109,8 @@
 (add-to-list 'load-path (expand-file-name "data/local" user-emacs-directory))
 
 (add-to-list 'load-path (expand-file-name "elisp/cfg-general" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "elisp/cfg-general/cfg-gen-core" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "elisp/cfg-general/cfg-gen-optional" user-emacs-directory))
+
 
 ;; TODO: add also subdirs
 ;;
@@ -223,10 +224,14 @@
 ;; Everything what is related to evil-mode for Emacs.
 ;;
 
+;; These variables must be in this place (and not inside `use-package'),
+;; it is related to a configuration for `evil-collection':
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
+
 (use-package evil
+  :ensure t
   :init
-  (setq evil-want-keybinding nil)
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-C-i-jump nil)  ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
   :config
   (evil-mode 1)
@@ -271,6 +276,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package evil-collection
   :after evil
   :config
+  ;; remove `term' integration from evil-collection:
+  (setq evil-collection-mode-list
+        (cl-remove-if
+         (lambda (mode)
+           (and (listp mode)
+                (eq (car mode) 'term)))
+         evil-collection-mode-list))
+  ;;
   (evil-collection-init))
 
 ;; https://github.com/Somelauw/evil-org-mode
@@ -292,6 +305,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :after evil
   :config
 
+  ;; Split whole general.el mapping into small pieces
+  (require 'cfg-gen-for-all-modes)
+  (require 'cfg-gen-for-all-modes-fkeys)
+  (require 'cfg-gen-for-many-modes)
+  (require 'cfg-gen-core)
+  
+
   ;; https://github.com/noctuid/general.el/issues/99
   ;; general-override-mode
   ;; :keymaps 'override
@@ -300,13 +320,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   ;; https://github.com/noctuid/general.el#automatic-key-unbinding
   ;; "To automatically prevent Key sequence starts with a non-prefix key errors without the need to explicitly unbind non-prefix keys, you can add (general-auto-unbind-keys) to your configuration file. This will advise define-key to unbind any bound subsequence of the KEY."
-  (general-auto-unbind-keys)
-
-  ;; Split whole general.el mapping into small pieces
-  (require 'cfg-gen-core)
-  (require 'cfg-gen-for-all-modes)
-  (require 'cfg-gen-for-all-modes-fkeys)
-  (require 'cfg-gen-for-many-modes))
+  (general-auto-unbind-keys))
 
 ;; Load general.el for all modes (global scope) and for many modes (but not all; local scope)...
 ;; (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general" user-emacs-directory))
