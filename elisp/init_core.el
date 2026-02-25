@@ -3,7 +3,6 @@
 ;;
 ;;; Code:
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; NATIVE COMPILATION AND PERFORMANCE OPTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -770,6 +769,14 @@ Uses position instead of index field."
   :config
   ;; turn off prompts "yes" or "no":
   (setq ibuffer-expert t)
+
+  (defun cfg/ibuffer-disable-mouse-tooltips ()
+    "Disable mouse tooltips (help-echo) in `ibuffer-mode`."
+    (setq-local help-at-pt-display-when-idle nil)
+    (setq-local tooltip-mode nil)
+    (with-silent-modifications
+      (remove-text-properties (point-min) (point-max) '(help-echo nil))))
+  (add-hook 'ibuffer-mode-hook #'cfg/ibuffer-disable-mouse-tooltips)
 
   (defun cfg/toggle-ibuffer ()
     "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer'. Otherwise, open `ibuffer'."
