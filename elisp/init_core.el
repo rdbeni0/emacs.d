@@ -1,32 +1,18 @@
-;;; cfg-init.el --- Emacs configuration -*- lexical-binding: t -*-
+;;; init_core.el --- Emacs configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; PERFORMANCE OPTIONS AND NATIVE COMPILATION
+;;;; NATIVE COMPILATION AND PERFORMANCE OPTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Basic setup for performance tweaks and options.
-;; And also native compilation (emacs ver >= 28.5)
+;; And also native compilation (Emacs ver >= 28.5)
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Native-Compilation.html
-;;
-
-;; >>>>>>>>>>>>>>>>>> BYTE COMPILATION ...
-;; https://stackoverflow.com/questions/1217180/how-do-i-byte-compile-everything-in-my-emacs-d-directory
-;; 'Surprisingly, it doesn't add much to my startup time (unless something needs to be compiled).'
-;; (byte-recompile-directory (expand-file-name "site-elisp" user-emacs-directory) 0)
-;; (byte-recompile-directory (expand-file-name "elisp" user-emacs-directory) 0)
-;; ^ BUT warning, it should not be used with native-comp (errors)!
-;;
-;; for native-comp sometimes old *elc need to be removed:
-;; https://www.reddit.com/r/emacs/comments/myej3z/the_nativecompilation_branch_was_just_merged_into/
-;; "One snag I hit after trying to recompile native compilation after using it for a while
-;; was needing to delete the old .elc files in the source directory"
-;;
-;; >>>>>>>>>>>>>>>>>> ... or NATIVE COMPILATION
 ;; https://news.ycombinator.com/item?id=24117853
 ;;
+
 ;; Optimization level for native compilation, a number between -1 and 3.
 ;; -1 functions are kept in bytecode form and no native compilation is performed.
 ;;  0 native compilation is performed with no optimizations.
@@ -61,7 +47,7 @@
 (setq jit-lock-chunk-size 4096)
 (setq jit-lock-defer-time 0)
 
-;;  >>>>>>>>>>>>>>>>>> DEFUNS FOR COMPILATION OF PARTICULAR DIRECTORIES:
+;; DEFUNS FOR COMPILATION OF PARTICULAR DIRECTORIES:
 ;; All below defuns should me executed manually via M-x or via CLI scripts:
 
 (defun cfg/eln-compile-elisp ()
@@ -75,27 +61,7 @@
   (interactive)
   (native-compile-async (expand-file-name "elisp/site-elisp/" user-emacs-directory) 2 t))
 
-;; if "M-x version" < 30.0:
-(if (version< emacs-version "30.0")
-    ;; BUG with native compilation - will be fixed in 30++:
-    ;; https://emacs.stackexchange.com/questions/82010/why-is-emacs-recompiling-some-packages-on-every-startup
-    (progn
-      (defun fixed-native-compile-async-skip-p
-          (native-compile-async-skip-p file load selector)
-	(let* ((naive-elc-file (file-name-with-extension file "elc"))
-               (elc-file       (replace-regexp-in-string
-				"\\.el\\.elc$" ".elc" naive-elc-file)))
-          (or (gethash elc-file comp--no-native-compile)
-              (funcall native-compile-async-skip-p file load selector))))
-
-      (advice-add 'native-compile-async-skip-p
-		  :around 'fixed-native-compile-async-skip-p)
-      )
-  ;; optional else:
-  ;; ()
-  )
-
-;; >>>>>>>>>>>>>>>>>> OVERALL PERFORMANCE OPTIONS
+;; overall performance options:
 ;; see Doom Emacs for inspiration:
 ;; https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
 ;; Other examples:
@@ -134,6 +100,7 @@
 ;; https://jwiegley.github.io/use-package/
 ;;
 
+(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 ;; files/packages from "optional" namespace should be loaded manually, via (require '):
 (add-to-list 'load-path (expand-file-name "elisp/optional" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "elisp/abbrevs-tempo" user-emacs-directory))
@@ -150,9 +117,10 @@
 ;; This piece of code doesn't work:
 ;; (let ((default-directory (expand-file-name "site-elisp/" user-emacs-directory))) (normal-top-level-add-subdirs-to-load-path))
 
-(require 'package)
 ;; https://www.reddit.com/r/emacs/comments/1rdstn/set_packageenableatstartup_to_nil_for_slightly/
+(require 'package)
 (setq package-enable-at-startup nil)
+(require 'use-package)
 
 ;; The following lines tell emacs where on the internet to look up for new packages (elisp repositories):
 ;; WARNING! The same settings could be used separately for epm (.epm.el) package - so please also look at .epm.el file
@@ -164,19 +132,11 @@
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ))
 
-;; use-package
-;; Unless it is already installed - update packages archive and install the most recent version of use-package:
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(require 'use-package)
-
 ;; defuns
 
 (defun cfg/load-all-el-in-directory (dir)
   "`load' all elisp libraries in directory DIR which are not already loaded.
-  This function is (...) to avoid re-loading a library when both .el and .elc versions are present.
+  This function is to avoid re-loading a library when both .el and .elc versions are present.
   More info and solutions:
   https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
   https://www.emacswiki.org/emacs/LoadingLispFiles"
@@ -260,7 +220,7 @@
 ;;;; EVIL MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Everything what is connected with evil-mode for emacs.
+;; Everything what is related to evil-mode for Emacs.
 ;;
 
 (use-package evil
@@ -369,7 +329,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; https://web-mode.org/
 (setq-default indent-tabs-mode nil)
 
-;;;;;;;;;;;;;;;; XML (nxml) FORMATTING:
+;; XML (nxml) FORMATTING:
 
 (defvar nxml-xmllint-executable "xmllint"
   "Location of xmllint executable.")
@@ -389,7 +349,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       (cfg/xmllint-format-buffer)
     (cfg/built-in-format-via-indent)))
 
-;;;;;;;;;;;;;;;; PERL FORMATTING:
+;; PERL FORMATTING:
 
 (defvar perl5-perltidy-executable "perltidy"
   "Location of perltidy executable.")
@@ -812,7 +772,7 @@ Uses position instead of index field."
   (setq ibuffer-expert t)
 
   (defun cfg/toggle-ibuffer ()
-    "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer`. Otherwise, open ibuffer."
+    "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer'. Otherwise, open `ibuffer'."
     (interactive)
     (if (eq major-mode 'ibuffer-mode)
 	(cfg/alternate-buffer)
@@ -1916,25 +1876,9 @@ The current buffer's `default-directory' is available as part of
 
 (use-package dired
   :config
-
-  ;; for dired-jump
-  (when (< emacs-major-version 28) (require 'dired-x))
-
   ;; "Make dired use the same buffer for viewing directory":
-  ;; Dired - reuse buffer
-  ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
-  (when (>= emacs-major-version 28)
-    (progn
-      (setq dired-kill-when-opening-new-dired-buffer t)
-      (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
-		  'dired-find-file)))
-
-  (when (< emacs-major-version 28)
-    (progn
-      (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
-      (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))) ; was dired-up-directory
-      (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-find-alternate-file)
-      ))
+  (setq dired-kill-when-opening-new-dired-buffer t)
+  (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-find-file)
 
   ;; When you do copy files, emacs prompts for a target dir.
   ;; You can make emacs automatically suggest the target dir on the split pane.
@@ -2206,5 +2150,5 @@ The current buffer's `default-directory' is available as part of
 	      (insert expansion)))
 	(message "No abbrev found.")))))
 
-(provide 'cfg-init)
-;;; cfg-init.el ends here
+(provide 'init_core)
+;;; init_core.el ends here
