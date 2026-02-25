@@ -62,7 +62,7 @@
 ;;;; Custom list of defined treesit grammars
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Grammars that should be buildable via `treesit-install-language-grammar`.
+;; Grammars that should be buildable via `treesit-install-language-grammar'.
 ;;
 ;; Useful references for grammar sources:
 ;; https://github.com/renzmann/treesit-auto/blob/main/treesit-auto.el
@@ -141,8 +141,7 @@ But ff it is a normal directory, delete it recursively."
       (error nil))))
 
 (defun cfg/-treesit-reinstall-all-grammars ()
-  "Reinstall all grammars from `treesit-language-source-alist`.
-
+  "Reinstall all grammars from `treesit-language-source-alist'.
 For each language, the existing shared object (or symlink) is removed
 before reinstalling the grammar from its source repository."
   (dolist (lang treesit-language-source-alist)
@@ -171,7 +170,7 @@ reinstalls grammars using multiple mechanisms:
   (php-ts-mode-install-parsers))
 
 (defun cfg/treesit-reinstall-grammar ()
-  "Prompt for a language from `treesit-language-source-alist`,
+  "Prompt for a language from `treesit-language-source-alist';
 remove the existing shared object if present, and reinstall the grammar."
   (interactive)
   (let* ((langs (mapcar #'car treesit-language-source-alist))
