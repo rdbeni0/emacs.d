@@ -103,6 +103,28 @@
 ;; public configuration API. They exist solely to reduce duplication and
 ;; centralize filesystem-related logic for grammar management.
 
+(defun cfg/-treesit-clean-target-dir ()
+  "If the tree-sitter directory is a symlink, delete all files inside it.
+But ff it is a normal directory, delete it recursively."
+  (let ((ts-dir (cfg/-treesit-user-ts-dir)))
+    (cond
+     ;; If it is a symlink -> we clear its content, but we do not remove the link itself
+     ((file-symlink-p ts-dir)
+      (let ((real (file-truename ts-dir)))
+        (when (file-directory-p real)
+          (dolist (f (directory-files real t "^[^.].*"))
+            (condition-case nil
+                (if (file-directory-p f)
+                    (delete-directory f t)
+                  (delete-file f))
+              (error nil))))))
+     ;; If it's a regular directory -> we delete the whole thing
+     ((file-directory-p ts-dir)
+      (condition-case nil
+          (delete-directory ts-dir t)
+        (error nil))))))
+
+
 (defun cfg/-treesit-user-ts-dir ()
   "Return the user tree-sitter directory used by Emacs."
   (expand-file-name "tree-sitter/" user-emacs-directory))
@@ -130,7 +152,7 @@ before reinstalling the grammar from its source repository."
       (treesit-install-language-grammar name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Grammar maintenance commands
+;;;; Grammar maintenance commands (interactive)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun cfg/treesit-reinstall-full ()
@@ -142,16 +164,12 @@ reinstalls grammars using multiple mechanisms:
 - `treesit-auto-install-all` for automatically managed grammars
 - additional parser installation for PHP via `php-ts-mode`"
   (interactive)
-  (let ((ts-target-dir (cfg/-treesit-user-ts-dir)))
-    (when (file-directory-p ts-target-dir)
-      (condition-case nil
-          (delete-directory ts-target-dir t)
-        (error nil)))
-    (cfg/-treesit-reinstall-all-grammars)
-    (treesit-auto-install-all)
-    ;; PHP parsers are managed separately by php-ts-mode
-    (require 'php-ts-mode)
-    (php-ts-mode-install-parsers)))
+  (cfg/-treesit-clean-target-dir)
+  (cfg/-treesit-reinstall-all-grammars)
+  (treesit-auto-install-all)
+  ;; PHP parsers are managed separately by php-ts-mode
+  (require 'php-ts-mode)
+  (php-ts-mode-install-parsers))
 
 (defun cfg/treesit-reinstall-grammar ()
   "Prompt for a language from `treesit-language-source-alist`,
