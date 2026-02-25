@@ -303,13 +303,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (general-auto-unbind-keys)
 
   ;; Split whole general.el mapping into small pieces
+  (require 'cfg-gen-core)
   (require 'cfg-gen-for-all-modes)
   (require 'cfg-gen-for-all-modes-fkeys)
   (require 'cfg-gen-for-many-modes))
 
 ;; Load general.el for all modes (global scope) and for many modes (but not all; local scope)...
 ;; (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general" user-emacs-directory))
-;; (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general/cfg-gen-core" user-emacs-directory))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; CONFIGURATION FOR CODE FORMATTING
@@ -406,11 +406,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;    (save-excursion
 ;;      (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
 
-;;;;;;;;;;;;;;;; GENERAL:
-
-;; load general.el and keybindings:
-(require 'cfg-gen-co-format)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; CONFIGFURATION FOR COMMENTING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -418,8 +413,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package newcomment
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-comment-mark))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; XREF AND FFAP
@@ -432,10 +426,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (defun cfg/ffap ()
     "Standard verion of `ffatp' command (without embark)."
     (interactive)
-    (ffap))
-
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-xref-ffap-imenu))
+    (ffap)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; VARIOUS TEXT MANIPULATIONS
@@ -443,9 +434,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;
 ;; https://github.com/bbatsov/crux/blob/master/crux.el
 ;;
-
-(require 'cfg-gen-co-txt-manipulations)
-(require 'cfg-gen-co-text-fundamental)
 
 (defun cfg/capitalize-region (beg end)
   "`capitalize-region' when `transient-mark-mode' is on and region is active."
@@ -754,9 +742,7 @@ Uses position instead of index field."
   (setq-default ediff-forward-word-function 'forward-char)
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-merge-split-window-function 'split-window-horizontally)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-ediff-mode))
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; IBUFFER
@@ -779,10 +765,7 @@ Uses position instead of index field."
       (ibuffer)
       ;; (when (minibufferp)
       ;; 	(abort-recursive-edit))
-      (deactivate-mark)))
-
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-ibuffer-mode))
+      (deactivate-mark))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; CONFIGURATION FOR TEMPBUF AND BUFFERS
@@ -1374,8 +1357,7 @@ Uses position instead of index field."
 
 (use-package elisp-mode
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-emacs-lisp-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; PYTHON
@@ -1386,8 +1368,7 @@ Uses position instead of index field."
 
 (use-package python
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-python-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; PERL
@@ -1409,9 +1390,7 @@ Uses position instead of index field."
   :config
   (setq cperl-electric-keywords nil)
   (clear-abbrev-table cperl-mode-abbrev-table)
-  (setq cperl-indent-level 4)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-cperl-mode))
+  (setq cperl-indent-level 4))
 
 ;; perl find modules
 ;; https://www.emacswiki.org/emacs/CPerlMode#h5o-9
@@ -1452,8 +1431,7 @@ Uses position instead of index field."
 
 (use-package cc-mode
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-cc-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; COMPILATION-MODE
@@ -1465,16 +1443,12 @@ Uses position instead of index field."
 
 (use-package compile
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-compilation-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; SGML/HTML/MHTML/XML
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-
-;; load general.el and keybindings:
-(require 'cfg-gen-co-sgml-html)
 
 ;; XML files (nxml)
 (use-package nxml-mode
@@ -1496,10 +1470,7 @@ Uses position instead of index field."
         (shell-command xml-valid-cmd "*XSD Validator*")
         (setq buffer-read-only t)
         (bury-buffer)))
-    (message "XSD validation finished. Please check result buffer."))
-
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-nxml-mode))
+    (message "XSD validation finished. Please check result buffer.")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; JS AND JSON
@@ -1510,8 +1481,7 @@ Uses position instead of index field."
 
 (use-package js
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-js-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; SH-MODE
@@ -1523,8 +1493,7 @@ Uses position instead of index field."
 
 (use-package sh-script
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-sh-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; SHELL-MODE
@@ -1544,9 +1513,7 @@ Uses position instead of index field."
       (call-interactively 'shell)))
   ;; dirtrack-mode:
   (shell-dirtrack-mode t)
-  (setq explicit-shell-file-name "bash")
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-shell-mode))
+  (setq explicit-shell-file-name "bash"))
 
 ;; comint
 (setq comint-prompt-read-only t)
@@ -1565,9 +1532,7 @@ Uses position instead of index field."
   ;; The maximum size in lines for term buffers.
   ;; Term buffers are truncated from the top to be no greater than this number.
   ;; Notice that a setting of "0" means "don’t truncate anything".
-  (setq term-buffer-maximum-size 0)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-term))
+  (setq term-buffer-maximum-size 0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; GREP
@@ -1579,8 +1544,7 @@ Uses position instead of index field."
 
 (use-package wgrep
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-grep-mode))
+  )
 
 (defun cfg/grep-recentf (filepattern pattern)
   (interactive "sFiles regexp: \nsSearch regexp: ")
@@ -1644,8 +1608,7 @@ Uses position instead of index field."
   ;; https://stackoverflow.com/questions/8023670/change-number-of-files-recentf-in-emacs-stores-using-ido-completion-method
   (run-at-time nil (* 10 60) 'recentf-save-list)
   ;; Currently working on "pure" recentf-mode ("recentf-open-files").
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-recentf))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; PRE CONFIGFURATION FOR CUSTOM.EL FILE
@@ -1882,10 +1845,7 @@ The current buffer's `default-directory' is available as part of
 
   ;; When you do copy files, emacs prompts for a target dir.
   ;; You can make emacs automatically suggest the target dir on the split pane.
-  (setq dired-dwim-target t)
-
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-dired-mode))
+  (setq dired-dwim-target t))
 
 (defcustom list-of-dired-switches
   '("-l" "-la" "-lA" "-lA --group-directories-first")
@@ -1988,9 +1948,7 @@ The current buffer's `default-directory' is available as part of
   (setq org-babel-default-header-args
         (assq-delete-all :tangle org-babel-default-header-args))
 
-  (require 'org-compat)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-org-mode))
+  (require 'org-compat))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; IRC and rcirc
@@ -2061,12 +2019,11 @@ The current buffer's `default-directory' is available as part of
 
 (use-package help-mode
   :config
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-help-mode))
+  )
 
 (use-package man
   :config
-  (require 'cfg-gen-co-man-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; FLYSPELL
@@ -2091,12 +2048,11 @@ The current buffer's `default-directory' is available as part of
   :config
   (setq doc-view-resolution 150)
   (setq doc-view-scale-internally nil)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-co-doc-view-mode))
+  )
 
 (use-package image-mode
   :config
-  (require 'cfg-gen-co-image-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; HYPERLINKS AND WEB BROWSERS

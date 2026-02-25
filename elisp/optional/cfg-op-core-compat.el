@@ -1,4 +1,4 @@
-;;; init_core_compat.el --- Emacs configuration -*- lexical-binding: t -*-
+;;; cfg-op-core-compat.el --- Emacs configuration -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Compatibility layer for older versions of Emacs.
@@ -61,5 +61,5 @@
   (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))) ; was dired-up-directory
   (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-find-alternate-file))
 
-(provide 'init_core_compat)
-;;; init_core_compat.el ends here
+(provide 'cfg-op-core-compat)
+;;; cfg-op-core-compat.el ends here
