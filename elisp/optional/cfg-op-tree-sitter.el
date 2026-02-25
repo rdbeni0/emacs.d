@@ -165,11 +165,12 @@ reinstalls grammars using multiple mechanisms:
 - additional parser installation for PHP via `php-ts-mode`"
   (interactive)
   (cfg/-treesit-clean-target-dir)
-  (cfg/-treesit-reinstall-all-grammars)
-  (treesit-auto-install-all)
+  ;; (cfg/-treesit-reinstall-all-grammars)
+  ;; (treesit-auto-install-all)
   ;; PHP parsers are managed separately by php-ts-mode
   (require 'php-ts-mode)
-  (php-ts-mode-install-parsers))
+  ;; (php-ts-mode-install-parsers)
+)
 
 (defun cfg/treesit-reinstall-grammar ()
   "Prompt for a language from `treesit-language-source-alist`,
