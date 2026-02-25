@@ -192,8 +192,7 @@ remove the existing shared object if present, and reinstall the grammar."
 ;; https://github.com/emacs-php/php-ts-mode
 (if (require 'php-ts-mode nil 'noerror)
     (defun cfg/php-ts-mode-install-parsers ()
-      "Install all tree-sitter parsers required by `php-ts-mode`.
-
+      "Install all tree-sitter parsers required by `php-ts-mode'.
 The list of parsers is defined in `php-ts-mode--language-source-alist`."
       (interactive)
       (require 'php-ts-mode)
