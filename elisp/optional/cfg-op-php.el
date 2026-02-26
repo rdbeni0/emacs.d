@@ -39,10 +39,12 @@
 (use-package php-cs-fixer
   :ensure t
   :config
-  (setq php-cs-fixer-rules-fixer-part-options '(
-						"multiline_whitespace_before_semicolons"
-						"concat_space"
-						)))
+  (setq php-cs-fixer-rules-fixer-part-options 
+        '(
+	  "multiline_whitespace_before_semicolons"
+	  "concat_space"
+	  ))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO: https://github.com/Junker/flycheck-php-noverify
@@ -101,7 +103,6 @@
           (delete-file tmpfile))
         (when (buffer-live-p errbuf)
           (kill-buffer errbuf)))))
-
   )
 
 ;;;; php
