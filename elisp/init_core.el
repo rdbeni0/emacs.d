@@ -1958,12 +1958,13 @@ The current buffer's `default-directory' is available as part of
   :config
 
   ;; Please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
-  ;; Please add below variables inside this file:
+  ;; And add below variables inside this file:
   ;; (setq org-agenda-files ...
 
+  ;; if true, load additional variables for org-mode
+  ;; if false, then message with "WARNING" will appear during initialization of org-mode:
   (if (file-readable-p (expand-file-name "data/local/lo-org.el" user-emacs-directory))
-      (require 'lo-org) ; if true, load additional variables for org-mode
-					; if false, then message with "WARNING" will appear during initialization of org-mode:
+      (require 'lo-org)
     (message "WARNING! File data/local/lo-org.el inside your emacs.d is not readable (or not exist)! Please create it and add correct org-mode options!"))
 
   (setq org-babel-default-header-args
@@ -2008,15 +2009,16 @@ The current buffer's `default-directory' is available as part of
   :defer t
   :config
 
-  ;; Please create correct "lo-rcirc.el" file inside ~/.emacs.d/data/local/lo-rcirc.el (or other emacs dir)
-  ;; Please add below variables inside this file:
+  ;; Please create correct "lo-irc.el" file inside ~/.emacs.d/data/local/lo-irc.el
+  ;; And add below variables inside this file:
   ;; (setq rcirc-server-alist ...
   ;; (setq rcirc-authinfo ...
 
-  (if (file-readable-p (expand-file-name "data/local/lo-rcirc.el" user-emacs-directory))
-      (require 'lo-rcirc) ; if true, load additional variables for rcirc
-					; if false, then message with "WARNING" will appear during initialization of rcirc:
-    (message "WARNING! File data/local/lo-rcirc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct rcirc options!"))
+  ;; if true, load additional variables for rcirc
+  ;; if false, then message with "WARNING" will appear during initialization of rcirc:
+  (if (file-readable-p (expand-file-name "data/local/lo-irc.el" user-emacs-directory))
+      (require 'lo-irc)
+    (message "WARNING! File data/local/lo-irc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct rcirc options!"))
 
   (add-to-list 'window-size-change-functions 'cfg/rcirc-dynamic-fill-column)
   (setq rcirc-prompt "»» ")

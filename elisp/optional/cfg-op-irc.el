@@ -220,8 +220,8 @@
 							 (inhibit-same-window . t)
 							 (inhibit-switch-frame . t)
 							 (mode . erc-mode))))
-  ;; Please create correct "lo-erc.el" file inside ~/.emacs.d/data/local/lo-erc.el (or other emacs dir)
-  ;; Please add below variables and data inside this file:
+  ;; Please create correct "lo-irc.el" file inside ~/.emacs.d/data/local/lo-irc.el (or other emacs dir)
+  ;; And add below variables and data inside this file:
   ;; (setq erc-server-list ...
   ;; (setq erc-autojoin-channels-alist ...
   ;; (setq erc-nickserv-passwords ...
@@ -229,10 +229,11 @@
   ;; (setq erc-track-exclude ...
   ;; (setq-default erc-ignore-list ...
 
-  (if (file-readable-p (expand-file-name "data/local/lo-erc.el" user-emacs-directory))
-      (require 'lo-erc) ; if true, load additional variables for erc
-					; if false, then message with "WARNING" will appear during initialization of erc:
-    (message "WARNING! File data/local/lo-erc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct erc options!"))
+  ;; if true, load additional variables for erc
+  ;; if false, then message with "WARNING" will appear during initialization of erc:
+  (if (file-readable-p (expand-file-name "data/local/lo-irc.el" user-emacs-directory))
+      (require 'lo-irc)
+    (message "WARNING! File data/local/lo-irc.el inside your emacs.d is not readable (or not exist)! Please create it and add correct erc options!"))
 
   ;; load keybindings from general.el framework:
   (require 'cfg-gen-op-irc)
