@@ -5,7 +5,6 @@
 (require 'cfg-op-completion-systems) ;; must be loaded before company
 (require 'cfg-op-company) ;; company should be FIRST, because after that some variables will be overwritten via lsp-bridge
 (require 'cfg-op-yasnippets)
-(require 'cfg-op-lsp-bridge)
 (require 'cfg-op-list-auto-mode-alist)
 (require 'cfg-op-core-dark-theme)
 (require 'cfg-op-fonts)
@@ -41,3 +40,6 @@
 (require 'cfg-op-yaml)
 (require 'cfg-op-emmet)
 (require 'cfg-op-web-mode)
+
+;; lsp
+(require 'cfg-op-lsp-bridge)
