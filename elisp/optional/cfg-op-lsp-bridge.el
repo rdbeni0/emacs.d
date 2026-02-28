@@ -104,7 +104,7 @@
 
   ;; Currently, for python, the best and recommended option is to use a multiserver...
   ;; (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
-  ;; ...but unfortunately it is broken since some short time.
+
   ;; turn OFF multiserver and use only default langserver:
   (setq lsp-bridge-multi-lang-server-mode-list
         (assoc-delete-all
@@ -115,7 +115,8 @@
     (add-hook py-hook
               (lambda ()
 	        ;; (setq-local lsp-bridge-enable-inlay-hint t)
-	        (setq-local lsp-bridge-enable-inlay-hint nil)
+	        ;; (setq-local lsp-bridge-enable-inlay-hint nil)
+                (lsp-bridge-restart-process)
 	        )))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

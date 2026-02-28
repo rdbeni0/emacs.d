@@ -12,6 +12,5 @@
  "v"  '(:ignore t :which-key "venv")
  "=y" '(yapfify-buffer :which-key "yapfify-buffer"))
 
-
 (provide 'cfg-gen-op-python-mode)
 ;;; cfg-gen-op-python-mode.el ends here
