@@ -24,6 +24,9 @@
   ;; use in global-mode, but disable per particular mode:
   (global-lsp-bridge-mode)
 
+  ;; OPTIONAL: debug if something is wrong:
+  ;; (setq lsp-bridge-enable-log t)
+
   ;; popup menu seems to be broken and unstable,
   ;; better to use standard completion at the bottom:
   (setq lsp-bridge-code-action-enable-popup-menu nil)
@@ -41,15 +44,13 @@
   (setq lsp-bridge-find-ref-fallback-function #'xref-find-references)
   (setq lsp-bridge-find-def-return-fallback-function #'xref-go-back)
 
-  ;; OPTIONAL: debug if something is wrong:
-  ;; (setq lsp-bridge-enable-log t)
-
   ;; (setq lsp-bridge-enable-completion-in-minibuffer t) ;; default is `nil'
   ;; (setq lsp-bridge-enable-inlay-hint t) ;; good, but better to use this via setq-local
   ;; (setq lsp-bridge-enable-hover-diagnostic t)
   ;; (setq lsp-bridge-enable-org-babel t)
 
-  (setq lsp-bridge-diagnostic-fetch-idle 0.9) ;; default is 0.5
+  ;; default is 0.5
+  (setq lsp-bridge-diagnostic-fetch-idle 0.9)
 
   (setq acm-enable-tabnine nil)
   (setq acm-enable-codeium nil)
