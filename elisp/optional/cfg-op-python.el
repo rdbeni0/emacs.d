@@ -59,7 +59,7 @@
 
                 ;; OPTIONAL: turn OFF flycheck,
                 ;; as linters and checkes can be used only via LSP:
-                ;; so in this approach, flycheck is OPTIONAL and can be used in some edge situations:
+                ;; so in this approach, flycheck is OPTIONAL and will be used only in some edge situations:
                 (flycheck-mode -1)
                 )))
 
