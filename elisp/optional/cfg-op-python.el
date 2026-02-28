@@ -7,40 +7,74 @@
 ;;; Code:
 
 ;;;; https://github.com/pythonic-emacs/anaconda-mode#pythonpath
-;; probably something like this should be used in dir-locals.el:
+;; probably something like this can be used in .dir-locals.el:
 ;; (add-to-list 'python-shell-extra-pythonpaths "/path/to/the/project")
 
-;; load general.el and keybindings:
-(require 'cfg-gen-op-python-mode)
 
-;;;; pyimport
 ;; https://melpa.org/#/pyimport
 (use-package pyimport
   :ensure t
   )
 
 ;;;; sphinx-doc - docstring generation
+;; https://github.com/naiquevin/sphinx-doc.el
+;; https://www.sphinx-doc.org/
 (use-package sphinx-doc
   :ensure t
   :config
   (add-hook 'python-mode-hook
 	    (lambda ()
+              (require 'sphinx-doc)
 	      (sphinx-doc-mode t))))
 
-;;;; integration with flycheck
-;; python-mode - linters, checkers...
-;; we need to know that flycheck has excellent support for python-mode in emacs, but it needs some executables to be installed
+;;;; flycheck: https://www.flycheck.org/en/latest/languages.html#python
+;; we need to know that flycheck has excellent support for python-mode in emacs,
+;; but it needs some executables to be installed
 (when (require 'flycheck nil 'noerror)
-  (progn
-    (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
-    (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
-    (setq flycheck-python-mypy-cache-dir (expand-file-name ".cache/mypy" user-emacs-directory)) ;; https://github.com/python/mypy
-    (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
-    ;; https://www.reddit.com/r/emacs/comments/gqymvz/how_to_force_flycheck_to_select_a_specific_syntax/
-    ;; https://www.flycheck.org/en/latest/languages.html#python
-    (flycheck-add-next-checker 'python-flake8 'python-pylint 'python-mypy)
-    ;; (flycheck-add-next-checker 'python-flake8)
+
+  ;; Additional flycheck-* variables:
+  ;;
+  ;; (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
+  ;; (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
+  ;; (setq flycheck-python-ruff-executable "/run/current-system/sw/bin/ruff")
+  ;; (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
+
+  ;; https://github.com/python/mypy
+  (setq flycheck-python-mypy-cache-dir 
+        (expand-file-name ".cache/mypy" user-emacs-directory))
+
+  ;; Ruff additional arguments: turn off line length
+  (setq flycheck-python-ruff-args '("--ignore=E501"))
+
+  (dolist (py-hook '(python-mode-hook python-ts-mode-hook))
+    (add-hook py-hook
+              (lambda ()
+                ;; Do NOT use ruff, as we have it in LSP.
+                ;; but sometimes implementation in LSP can be broken:
+                (flycheck-select-checker 'python-ruff)
+                ;;
+                ;; https://github.com/pylint-dev/pylint
+                ;; (flycheck-select-checker 'python-pylint)
+                ;;
+
+                ;; OPTIONAL: turn OFF flycheck,
+                ;; as linters and checkes can be used only via LSP:
+                ;; so in this approach, flycheck is OPTIONAL
+                ;; (flycheck-mode -1)
+                )))
+
+  ;; Setting the checker order
+  (with-eval-after-load 'flycheck
+    ;; Do NOT use ruff and pyright: this is good, but it duplicates with LSP:
+    ;; (flycheck-add-next-checker 'python-ruff 'python-pyright)
+    (flycheck-add-next-checker 'python-ruff 'python-pylint)
+    ;; So in this case we will use other engines and linters:
+    (flycheck-add-next-checker 'python-pylint 'python-flake8)
+    (flycheck-add-next-checker 'python-flake8 'python-pycompile 'python-mypy)
     ))
+
+;; load general.el and keybindings:
+(require 'cfg-gen-op-python-mode)
 
 (provide 'cfg-op-python)
 ;;; cfg-op-python.el ends here

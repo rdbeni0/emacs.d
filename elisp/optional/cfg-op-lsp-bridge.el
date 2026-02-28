@@ -28,15 +28,19 @@
   (setq lsp-bridge-code-action-enable-popup-menu nil)
 
   ;; langserver and multiserver - custom user config and json files:
-  (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge/multiserver" user-emacs-directory))
-  (setq lsp-bridge-user-langserver-dir (expand-file-name "data/lsp-bridge/langserver" user-emacs-directory))
+  ;; https://github.com/manateelazycat/lsp-bridge/tree/master/multiserver
+  ;; (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge/multiserver" user-emacs-directory))
+  (setq lsp-bridge-user-multiserver-dir (expand-file-name "data/lsp-bridge" user-emacs-directory))
+  ;; https://github.com/manateelazycat/lsp-bridge/tree/master/langserver
+  ;; (setq lsp-bridge-user-langserver-dir (expand-file-name "data/lsp-bridge/langserver" user-emacs-directory))
+  (setq lsp-bridge-user-langserver-dir (expand-file-name "data/lsp-bridge" user-emacs-directory))
 
   ;; fallbacks
   (setq lsp-bridge-find-def-fallback-function #'xref-find-definitions)
   (setq lsp-bridge-find-ref-fallback-function #'xref-find-references)
   (setq lsp-bridge-find-def-return-fallback-function #'xref-go-back)
 
-  ;; optional debug if something is wrong:
+  ;; OPTIONAL: debug if something is wrong:
   ;; (setq lsp-bridge-enable-log t)
 
   ;; (setq lsp-bridge-enable-completion-in-minibuffer t) ;; default is `nil'
@@ -51,7 +55,7 @@
   (setq acm-enable-copilot nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;; Manipulations with "lsp-bridge-default-mode-hooks"
+  ;;;; Manipulations with `lsp-bridge-default-mode-hooks'
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defvar lsp-bridge-excluded-mode-hooks
@@ -96,16 +100,23 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; `basedpyright' is a fork of pyright with various type checking improvements, improved vscode support and pylance features built into the language server.
   ;; `basedpyright' seems to be better than `pyright', but also very similar
-  ;; And as failback - we can try `pylsp'
-  ;; pyright/basedpyright - currently "code actions" are broken, so must be executed with `ruff' (so as multiserver)
+  ;; And as failback: `pylsp' can be used.
 
-  ;; so in summary: this is the best option for now:
-  (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
+  ;; Currently, for python, the best and recommended option is to use a multiserver...
+  ;; (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
+  ;; ...but unfortunately it is broken since some short time.
+  ;; turn OFF multiserver and use only default singleserver:
+  (setq lsp-bridge-multi-lang-server-mode-list
+        (assoc-delete-all
+         '(python-mode python-ts-mode)
+         lsp-bridge-multi-lang-server-mode-list))
 
-  ;; (add-hook 'python-mode-hook
-  ;;           (lambda ()
-  ;; 	      (setq-local lsp-bridge-enable-inlay-hint t)
-  ;; 	      ))
+  (dolist (py-hook '(python-mode-hook python-ts-mode-hook))
+    (add-hook py-hook
+              (lambda ()
+	        ;; (setq-local lsp-bridge-enable-inlay-hint t)
+	        (setq-local lsp-bridge-enable-inlay-hint nil)
+	        )))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; nix-mode
