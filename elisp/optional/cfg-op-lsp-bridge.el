@@ -105,7 +105,7 @@
   ;; Currently, for python, the best and recommended option is to use a multiserver...
   ;; (setq lsp-bridge-python-multi-lsp-server "basedpyright_ruff")
   ;; ...but unfortunately it is broken since some short time.
-  ;; turn OFF multiserver and use only default singleserver:
+  ;; turn OFF multiserver and use only default langserver:
   (setq lsp-bridge-multi-lang-server-mode-list
         (assoc-delete-all
          '(python-mode python-ts-mode)
