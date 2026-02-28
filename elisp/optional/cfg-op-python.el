@@ -49,18 +49,13 @@
   (dolist (py-hook '(python-mode-hook python-ts-mode-hook))
     (add-hook py-hook
               (lambda ()
-                ;; Do NOT use ruff, as we have it in LSP.
-                ;; but sometimes implementation in LSP can be broken:
+                ;; We usually do NOT use ruff like we do in LSP.
+                ;; But sometimes implementation in LSP can be broken:
                 (flycheck-select-checker 'python-ruff)
                 ;;
                 ;; https://github.com/pylint-dev/pylint
                 ;; (flycheck-select-checker 'python-pylint)
                 ;;
-
-                ;; OPTIONAL: turn OFF flycheck,
-                ;; as linters and checkes can be used only via LSP:
-                ;; so in this approach, flycheck is OPTIONAL and will be used only in some edge situations:
-                (flycheck-mode -1)
                 )))
 
   ;; Setting the checker order

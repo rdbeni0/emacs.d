@@ -112,6 +112,15 @@
          '(python-mode python-ts-mode)
          lsp-bridge-multi-lang-server-mode-list))
 
+  (dolist (py-hook '(python-mode-hook python-ts-mode-hook))
+    (add-hook py-hook
+              (lambda ()
+                ;; OPTIONAL: turn OFF flycheck,
+                ;; as linters and checkes can be used only via LSP:
+                ;; so in this approach, flycheck is OPTIONAL and will be used only in some edge situations:
+                (flycheck-mode -1)
+                )))
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; nix-mode
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
