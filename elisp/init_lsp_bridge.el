@@ -41,5 +41,5 @@
 (require 'cfg-op-emmet)
 (require 'cfg-op-web-mode)
 
-;; lsp
+;; LSP -> must be defined in languages and tree-sitter
 (require 'cfg-op-lsp-bridge)
