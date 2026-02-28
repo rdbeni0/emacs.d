@@ -32,7 +32,7 @@
 ;; but it needs some executables to be installed
 (when (require 'flycheck nil 'noerror)
 
-  ;; Additional flycheck-* variables:
+  ;; Additional `flycheck-*' variables:
   ;;
   ;; (setq flycheck-python-pylint-executable "~/.local/bin/pylint")
   ;; (setq flycheck-python-mypy-executable "~/.local/bin/mypy")
