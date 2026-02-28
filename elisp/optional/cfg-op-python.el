@@ -40,7 +40,7 @@
   ;; (setq flycheck-pylintrc (expand-file-name ".pylintrc" user-emacs-directory))
 
   ;; https://github.com/python/mypy
-  (setq flycheck-python-mypy-cache-dir 
+  (setq flycheck-python-mypy-cache-dir
         (expand-file-name ".cache/mypy" user-emacs-directory))
 
   ;; Ruff additional arguments: turn off line length
@@ -59,14 +59,15 @@
 
                 ;; OPTIONAL: turn OFF flycheck,
                 ;; as linters and checkes can be used only via LSP:
-                ;; so in this approach, flycheck is OPTIONAL
-                ;; (flycheck-mode -1)
+                ;; so in this approach, flycheck is OPTIONAL and can be used in some edge situations:
+                (flycheck-mode -1)
                 )))
 
   ;; Setting the checker order
   (with-eval-after-load 'flycheck
     ;; Do NOT use ruff and pyright: this is good, but it duplicates with LSP:
     ;; (flycheck-add-next-checker 'python-ruff 'python-pyright)
+    ;;
     (flycheck-add-next-checker 'python-ruff 'python-pylint)
     ;; So in this case we will use other engines and linters:
     (flycheck-add-next-checker 'python-pylint 'python-flake8)
