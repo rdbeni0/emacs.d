@@ -776,6 +776,7 @@ Uses position instead of index field."
     (setq-local tooltip-mode nil)
     (with-silent-modifications
       (remove-text-properties (point-min) (point-max) '(help-echo nil))))
+
   (add-hook 'ibuffer-mode-hook #'cfg/ibuffer-disable-mouse-tooltips)
 
   (defun cfg/toggle-ibuffer ()
