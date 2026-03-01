@@ -798,7 +798,6 @@ Uses position instead of index field."
 
 ;; tempbuf
 ;; (WARNING - this action could be aggressive!)
-;;
 ;; More examples of configuration:
 ;; https://www.emacswiki.org/emacs/TempbufMode
 ;; https://www.emacswiki.org/emacs/tempbuf.el < source
@@ -807,17 +806,17 @@ Uses position instead of index field."
 (use-package tempbuf
   :config
 
-  ;; clean native-compile buffer
-  (when (get-buffer "*Async-native-compile-log*")
-    (setq tempbuf-minimum-timeout 5) ;; 5 seconds
-    (switch-to-buffer "*Async-native-compile-log*")
-    (turn-on-tempbuf-mode)
-    (switch-to-buffer "*scratch*"))
-
-  ;; tempbuf is working well and it will clean junk buffers:
+  ;; after XX seconds of inactivity, buffer will be closed
   (setq tempbuf-minimum-timeout 30)
 
-  ;; example of usage:
+  (add-hook 'emacs-lisp-compilation-mode-hook
+            (lambda ()
+              (when (get-buffer "*Async-native-compile-log*")
+                (with-current-buffer "*Async-native-compile-log*"
+                  (setq-local tempbuf-minimum-timeout 20)
+                  (turn-on-tempbuf-mode)))))
+
+  ;; another example of usage:
   ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
   )
 
