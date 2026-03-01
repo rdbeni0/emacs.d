@@ -808,17 +808,17 @@ Uses position instead of index field."
 
   ;; after XX seconds of inactivity, buffer will be closed
   (setq tempbuf-minimum-timeout 30)
+  
+  ;; example:
+  ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
 
+  ;; another example of usage:
   (add-hook 'emacs-lisp-compilation-mode-hook
             (lambda ()
               (when (get-buffer "*Async-native-compile-log*")
                 (with-current-buffer "*Async-native-compile-log*"
                   (setq-local tempbuf-minimum-timeout 20)
-                  (turn-on-tempbuf-mode)))))
-
-  ;; another example of usage:
-  ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
-  )
+                  (turn-on-tempbuf-mode))))))
 
 ;; defuns:
 
