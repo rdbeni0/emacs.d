@@ -116,6 +116,7 @@
   (dolist (py-hook '(python-mode-hook python-ts-mode-hook))
     (add-hook py-hook
               (lambda ()
+                (lsp-bridge-mode 1)
                 ;; OPTIONAL: turn OFF flycheck,
                 ;; as linters and checkes can be used only via LSP:
                 ;; so in this approach, flycheck is OPTIONAL and will be used only in some edge situations:
