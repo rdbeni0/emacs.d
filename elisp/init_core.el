@@ -309,7 +309,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (require 'cfg-gen-for-all-modes-fkeys)
   (require 'cfg-gen-for-many-modes)
   (require 'cfg-gen-core)
-  
+
 
   ;; https://github.com/noctuid/general.el/issues/99
   ;; general-override-mode
@@ -515,7 +515,7 @@ Toggles between: 'all lower', 'Init Caps', 'ALL CAPS'."
 
 (defun cfg/join-lines-in-region-add-spc (start end)
   "Join all lines in the selected region into one line, handling both Unix and Windows EOLs.
-  Add space instead of EOL."
+Add space instead of EOL."
   (interactive "r")
   (save-excursion
     (goto-char start)
@@ -736,7 +736,7 @@ Uses position instead of index field."
   (setq eglot-report-progress nil)
   (setq eglot-events-buffer-size 0)
   (setq eglot-autoshutdown t)
-  ;; Experiments with different servers:
+  ;; Additional configuration:
   ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
   ;; (add-hook 'python-mode-hook 'eglot-ensure)
   )
@@ -797,30 +797,29 @@ Uses position instead of index field."
 ;;
 
 ;; tempbuf
-
-;; (WARNING - this option could be aggresive!)
+;; (WARNING - this action could be aggressive!)
 ;;
 ;; More examples of configuration:
 ;; https://www.emacswiki.org/emacs/TempbufMode
 ;; https://www.emacswiki.org/emacs/tempbuf.el < source
 ;; https://github.com/DarwinAwardWinner/dotemacs-old/blob/master/site-lisp/settings/tempbuf-settings.el
 ;; https://github.com/biern/.emacs.d/blob/master/conf/tempbuf.el
-;;
+(use-package tempbuf
+  :config
 
-(require 'tempbuf)
+  ;; clean native-compile buffer
+  (when (get-buffer "*Async-native-compile-log*")
+    (setq tempbuf-minimum-timeout 5) ;; 5 seconds
+    (switch-to-buffer "*Async-native-compile-log*")
+    (turn-on-tempbuf-mode)
+    (switch-to-buffer "*scratch*"))
 
-;; clean native-compile buffer
-(when (get-buffer "*Async-native-compile-log*")
-  (setq tempbuf-minimum-timeout 5) ;; 5 seconds
-  (switch-to-buffer "*Async-native-compile-log*")
-  (turn-on-tempbuf-mode)
-  (switch-to-buffer "*scratch*"))
+  ;; tempbuf is working well and it will clean junk buffers:
+  (setq tempbuf-minimum-timeout 30)
 
-;; tempbuf is working well and it will clean junk buffers:
-(setq tempbuf-minimum-timeout 30)
-
-;; example of usage:
-;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
+  ;; example of usage:
+  ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
+  )
 
 ;; defuns:
 
@@ -1163,21 +1162,21 @@ Uses position instead of index field."
                          (if (executable-find "find") (insert "find : FOUND\n") (insert "find : NOT FOUND\n"))
                          (if (executable-find "fd") (insert "fd : FOUND\n") (insert "fd : NOT FOUND. Project filtering will be corrupted!\n"))
                          (if (executable-find "clang-format") (insert "clang-format : FOUND\n") (insert "clang-format : NOT FOUND : c/c++ formatting will not work!\n"))
-                         (if (executable-find "make") 
-                             (insert "make : FOUND\n") 
+                         (if (executable-find "make")
+                             (insert "make : FOUND\n")
                            (insert "make : NOT FOUND : makefile will not be used!\n"))
-                         (if (executable-find "xmllint") 
-                             (insert "xmllint : FOUND\n") 
+                         (if (executable-find "xmllint")
+                             (insert "xmllint : FOUND\n")
                            (insert "xmllint : NOT FOUND : formatting and nxml-mode will not work correctly!\n"))
-                         (if (executable-find "perltidy") 
-                             (insert "perltidy : FOUND\n") 
+                         (if (executable-find "perltidy")
+                             (insert "perltidy : FOUND\n")
                            (insert "perltidy : NOT FOUND : formatting and cperl-mode will not work correctly!\n"))
-                         (if (file-exists-p "~/.local/share/fonts/NFM.ttf") 
-                             (insert "file/font NFM.ttf : FOUND\n") 
+                         (if (file-exists-p "~/.local/share/fonts/NFM.ttf")
+                             (insert "file/font NFM.ttf : FOUND\n")
                            (insert "font NFM.ttf : NOT FOUND : doom-modeline will not work correctly: https://github.com/seagle0128/doom-modeline ! \n"))
                          ;; lsp:
-                         (if (executable-find "pyright") 
-                             (insert "pyright : FOUND\n") 
+                         (if (executable-find "pyright")
+                             (insert "pyright : FOUND\n")
                            (insert "pyright : NOT FOUND : lsp for python will not work!\n"))
                          (if (executable-find "ccls") (insert "ccls : FOUND\n") (insert "ccls : NOT FOUND : lsp for c/c++ will not work!\n"))
                          (if (executable-find "clangd") (insert "clangd : FOUND\n") (insert "clangd : NOT FOUND : lsp for c/c++ will not work!\n"))
@@ -1332,7 +1331,7 @@ Uses position instead of index field."
 ;; Don't litter file system with *~ backup files; put them all inside "~/.emacs.d/backups"
 (defun cfg/-backup-file-name (fpath)
   "Return a new file path of a given file path.
-  If the new path's directories does not exist, create them."
+If the new path's directories does not exist, create them."
   (let* ((backupRootDir (concat user-emacs-directory "backups/"))
          (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
          (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
@@ -1354,8 +1353,8 @@ Uses position instead of index field."
 (require 'display-line-numbers)
 
 (defcustom display-line-numbers-exempt-modes '(eshell-mode shell-mode ansi-term-mode erc-mode)
-  "Major modes on which to disable the linum mode, exempts them from global requirement.  
-  If you want customize (add new elements), then try to use push or add-to-list: 
+  "Major modes on which to disable the linum mode, exempts them from global requirement.
+  If you want customize (add new elements), then try to use push or add-to-list:
   https://www.gnu.org/software/emacs/manual/html_node/elisp/List-Variables.html "
   :group 'display-line-numbers
   :type 'list
