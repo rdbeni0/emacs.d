@@ -24,6 +24,7 @@
         css-mode
         css-ts-mode
         emacs-lisp-mode
+        esql-mode
         fish-mode
         gfm-mode
         gfm-view-mode
@@ -68,6 +69,7 @@
         css-mode-map
         css-ts-mode-map
         emacs-lisp-mode-map
+        esql-mode-map
         fish-mode-map
         gfm-mode-map
         gfm-view-mode-map
@@ -168,12 +170,15 @@
 
 (setq list-gen-mode-format-optional (append
 				     ;; Remove from list:
-				     (seq-difference list-gen-mode '(ssh-config-mode web-mode))
+				     (seq-difference list-gen-mode 
+                                                     '(ssh-config-mode web-mode esql-mode))
 				     ;; Add to list:
 				     '(json-mode yaml-mode yaml-ts-mode)))
+
 (setq list-gen-mode-map-format-optional (append
 					 ;; Remove from list:
-					 (seq-difference list-gen-mode-map '(ssh-config-mode-map web-mode-map))
+					 (seq-difference list-gen-mode-map 
+                                                         '(ssh-config-mode-map web-mode-map esql-mode-map))
 					 ;; Add to list:
 					 '(json-mode-map yaml-mode-map yaml-ts-mode-map)))
 
@@ -192,10 +197,12 @@
 
 (setq list-gen-mode-xref
       (copy-sequence
-       (seq-difference list-gen-mode '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
+       (seq-difference list-gen-mode 
+                       '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
 (setq list-gen-mode-map-xref
       (copy-sequence
-       (seq-difference list-gen-mode-map '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
+       (seq-difference list-gen-mode-map 
+                       '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; COMMENTS (DWIM)

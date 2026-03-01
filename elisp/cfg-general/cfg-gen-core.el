@@ -47,6 +47,15 @@
  "=-" '(cfg/built-in-format-nxml :which-key "built-in-format")
  "=p" '(cfg/xmllint-format-buffer :which-key "xmllint-format-buffer"))
 
+;; esql-mode
+(general-define-key
+ :states '(normal visual emacs)
+ :keymaps 'esql-mode-map
+ :major-modes 'esql-mode
+ :prefix ","
+ "="  '(:ignore t :which-key "format")
+ "==" '(cfg/built-in-format-via-indent :which-key "built-in-format-via-indent"))
+
 ;; general.el for comments and marks
 (general-define-key
  :states '(normal visual emacs)
