@@ -112,82 +112,89 @@
 ;; Indentation
 ;; =============================
 
-;; (defun esql--indent-line ()
-;;   "Indent current line according to ESQL block structure."
-;;   (let* ((save-excursion-point (point))
-;;          (this-line-start (progn (beginning-of-line) (point)))
-;;          (this-line-text (buffer-substring-no-properties
-;;                           this-line-start (line-end-position)))
-;;          (indent 0)
-;;          found-anchor)
-;;     (save-excursion
-;;       ;; We go up looking for checkpoints
-;;       (while (and (not found-anchor) (not (bobp)))
-;;         (forward-line -1)
-;;         (beginning-of-line)
-;;         (let ((line (buffer-substring-no-properties
-;;                      (point) (line-end-position))))
-;;           (cond
-;;            ;; Comment or empty line -> omitted
-;;            ((string-match-p "^[ \t]*\\(?:--.*\\)?$" line)
-;;             nil)
-;;            ;; END ... (END, END IF, END WHILE, END CASE, END FOR, END TRY etc.)
-;;            ((string-match-p
-;;              "^[ \t]*END\\(?:[ \t]+\\(?:IF\\|WHILE\\|FOR\\|CASE\\|TRY\\|CATCH\\|FUNCTION\\|PROCEDURE\\|COMPUTE\\|MODULE\\)\\)?\\(?:[ \t]*;.*\\)?$"
-;;              line)
-;;             (setq indent (current-indentation))
-;;             (setq found-anchor t))
-;;            ;; BEGIN / THEN / ELSE / DO / TRY / CATCH / WHEN ... THEN / EXCEPTION
-;;            ((string-match-p
-;;              "\\(?:^\\|[^[:alnum:]_]\\)\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|EXCEPTION\\)\\(?:[ \t]*\\|$\\|--\\)"
-;;              line)
-;;             (setq indent (+ (current-indentation) tab-width))
-;;             (setq found-anchor t))
-;;            ;; ELSE / ELSEIF (at the same level as IF/CASE)
-;;            ((string-match-p "^[ \t]*\\(ELSE\\|ELSEIF\\)\\b" line)
-;;             (setq indent (+ (current-indentation) tab-width))
-;;             (setq found-anchor t))
-;;            ;; CASE / WHEN / OTHERWISE (WHEN and OTHERWISE are at CASE+tab level)
-;;            ((string-match-p "\\<\\(CASE\\)\\b" line)
-;;             (setq indent (+ (current-indentation) tab-width))
-;;             (setq found-anchor t))
-;;            ;; CREATE COMPUTE MODULE / FUNCTION / PROCEDURE
-;;            ((string-match-p "^[ \t]*CREATE\\s-+\\(COMPUTE\\s-+\\(?:MODULE\\|FUNCTION\\)\\|FUNCTION\\|PROCEDURE\\)\\b" line)
-;;             (setq indent (+ (current-indentation) tab-width))
-;;             (setq found-anchor t))
-;;            ;; WHEN / OTHERWISE after CASE (indent + tab)
-;;            ((and (string-match-p "\\<\\(WHEN\\|OTHERWISE\\)\\b" line)
-;;                  (save-excursion
-;;                    (while (and (not (looking-at-p "\\<CASE\\b"))
-;;                                (not (bobp)))
-;;                      (forward-line -1))
-;;                    (looking-at-p "\\<CASE\\b")))
-;;             (setq indent (+ (current-indentation) tab-width))
-;;             (setq found-anchor t))
-;;            ;; Default case: we take the indentation of the current line
-;;            (t
-;;             (setq indent (current-indentation))
-;;             (setq found-anchor t))))))
-;;     ;; Now we modify the indentation of the current line
-;;     (when (string-match-p
-;;            "^[ \t]*\\(END\\|ELSE\\|ELSEIF\\|WHEN\\|OTHERWISE\\|BEGIN\\)\\b"
-;;            this-line-text)
-;;       (setq indent (max 0 (- indent tab-width))))
-;;     ;; We never go below zero
-;;     (setq indent (max 0 indent))
-;;     ;; Proper indentation
-;;     (goto-char this-line-start)
-;;     (when (not (looking-at-p "^[ \t]*$"))
-;;       (let ((current (current-indentation)))
-;;         (if (/= indent current)
-;;             (progn
-;;               (delete-region (point) (+ (point) current))
-;;               (indent-to indent)))))
-;;     ;; We restore the cursor position
-;;     (goto-char save-excursion-point)))
+(require 'cl-lib)
+
+(defun esql--indent-line ()
+  "Indent current line according to ESQL block structure."
+  (interactive)
+  (let* ((savep (point))
+         (bol (progn (beginning-of-line) (point)))
+         (text (buffer-substring-no-properties bol (line-end-position)))
+         (tab tab-width)
+         indent)
+
+    (cl-labels
+        ((skip-line-p (s)
+           ;; Pusta linia lub sama linia komentarza
+           (string-match-p "^[ \t]*\\(--.*\\)?$" s))
+
+         ;; BEGIN / THEN / DO / TRY / CATCH / EXCEPTION / CASE
+         (opens-block-p (s)
+           (string-match-p
+            "\\_<\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|EXCEPTION\\|CASE\\)\\_>"
+            s))
+
+         ;; Każde END ... traktujemy jako zamknięcie bloku
+         (closes-block-p (s)
+           (string-match-p "^[ \t]*END\\b" s))
+
+         ;; ELSE / ELSEIF / WHEN / OTHERWISE
+         (middle-block-p (s)
+           (string-match-p "^[ \t]*\\(ELSE\\|ELSEIF\\|WHEN\\|OTHERWISE\\)\\b" s)))
+
+      ;; Znajdź poprzednią istotną linię jako kotwicę
+      (save-excursion
+        (setq indent nil)
+        (while (and (not (bobp)) (null indent))
+          (forward-line -1)
+          (let ((l (string-trim-right
+                    (buffer-substring-no-properties
+                     (line-beginning-position)
+                     (line-end-position)))))
+            (unless (skip-line-p l)
+              (cond
+               ;; BEGIN / THEN / DO / TRY / CATCH / EXCEPTION / CASE
+               ((opens-block-p l)
+                (setq indent (+ (current-indentation) tab)))
+
+               ;; ELSE / WHEN / OTHERWISE
+               ((middle-block-p l)
+                (setq indent (+ (current-indentation) tab)))
+
+               ;; END ...
+               ((closes-block-p l)
+                (setq indent (current-indentation)))
+
+               ;; Tylko MODULE jest blokiem CREATE
+               ((string-match-p "^[ \t]*CREATE\\s-+COMPUTE\\s-+MODULE\\b" l)
+                (setq indent (+ (current-indentation) tab)))
+
+               ;; Normalna linia – przejmujemy jej wcięcie
+               (t
+                (setq indent (current-indentation))))))))
+
+      ;; Jeśli nic nie znaleźliśmy – poziom 0
+      (unless indent
+        (setq indent 0))
+
+      ;; Bieżąca linia zamyka blok lub jest ELSE/WHEN – cofamy poziom
+      (when (or (closes-block-p text)
+                (middle-block-p text))
+        (setq indent (max 0 (- indent tab))))
+
+      ;; Ustaw wcięcie
+      (goto-char bol)
+      (unless (looking-at "^[ \t]*$")
+        (let ((cur (current-indentation)))
+          (unless (= cur indent)
+            (delete-horizontal-space)
+            (indent-to indent))))
+
+      ;; Przywróć pozycję kursora
+      (goto-char savep))))
 
 (defun esql-mode-setup-indent ()
-  ;; (setq indent-line-function 'esql--indent-line) ;; TODO! Not working correctly
+  (setq indent-line-function 'esql--indent-line) ;; TODO! Not working correctly
   (setq tab-width 4)
   (setq indent-tabs-mode t))
 
