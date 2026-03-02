@@ -2,7 +2,7 @@
 
 ;; Author: rdbeni0
 ;; Keywords: esql
-;; Version: 0.0.3
+;; Version: 0.0.4
 ;; Package-Requires: ((emacs "28.5"))
 
 ;; This file is not part of GNU Emacs
@@ -60,25 +60,25 @@
 ;; =============================
 (defconst esql--keywords
   '("ALL" "AND" "ANY" "AS" "ATTACH" "BEGIN" "BETWEEN" "BY" "CALL" "CASE"
-    "CAST" "CATALOG" "CREATE" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
+    "CAST" "CATALOG" "CREATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
     "DO" "ELSE" "ELSEIF" "END" "EVALUATE" "EXTERNAL" "FALSE" "FINALIZE"
-    "FROM" "FOR" "FUNCTION" "IF" "IN" "INPUT" "INSERT" "INTO" "ITEM" "LANGUAGE"
+    "FROM" "FOR" "FORMAT" "FUNCTION" "IF" "IN" "INOUT" "INPUT" "INSERT" "INTO" "ITEM" "LANGUAGE"
     "LIKE" "MODULE" "NOT" "NULL" "OR" "OUTPUT" "PASSTHROUGH" "PROPAGATE"
-    "REFERENCE" "REPEAT" "RESIGNAL" "RETURN" "RETURNS" "ROW" "SELECT"
+    "REPEAT" "RESIGNAL" "RETURN" "RETURNS" "ROW" "SELECT"
     "SET" "SIGNAL" "THEN" "THROW" "TO" "TRUE" "UPDATE" "VALUES" "WHEN"
-    "WHILE"))
+    "WHILE" "BROKER" "SCHEMA" "PATH" "AFTER" "BEFORE" ))
 
 (defconst esql--types
-  '("BOOLEAN" "BYTE" "CHARACTER" "CHAR" "VARCHAR" "INTEGER" "INT"
+  '("BOOLEAN" "BYTE" "CHARACTER" "CCSID" "CHAR" "VARCHAR" "INTEGER" "INT"
     "DECIMAL" "FLOAT" "REAL" "DOUBLE" "TIMESTAMP" "DATE" "TIME"
-    "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE" "LIST" "SHARED"))
+    "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE TO" "LIST" "SHARED" "NAMESPACE" "GMTTIME" "GMTTIMESTAMP"))
 
 (defconst esql--constants
   '("TRUE" "FALSE" "NULL" "UNKNOWN"))
 
 (defconst esql--special-vars
-  '("InputRoot" "OutputRoot" "LocalEnvironment" "Environment"
-    "ExceptionList" "ExceptionData" "Message" "Tree" "Properties"))
+  '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "OutputLocalEnvironment" "Environment" "InputExceptionList" "OutputExceptionList"
+    "ExceptionList" "ExceptionData" "Message" "Tree" "Properties" "DFDL" "XMLNSC"))
 
 (defconst esql-font-lock-keywords
   `(
@@ -112,85 +112,84 @@
 ;; Indentation
 ;; =============================
 
-(defun esql--indent-line ()
-  "Indent current line according to ESQL block structure."
-  (let* ((save-excursion-point (point))
-         (this-line-start (progn (beginning-of-line) (point)))
-         (this-line-text (buffer-substring-no-properties
-                          this-line-start (line-end-position)))
-         (indent 0)
-         found-anchor)
-    (save-excursion
-      ;; We go up looking for checkpoints
-      (while (and (not found-anchor) (not (bobp)))
-        (forward-line -1)
-        (beginning-of-line)
-        (let ((line (buffer-substring-no-properties
-                     (point) (line-end-position))))
-          (cond
-           ;; Comment or empty line -> omitted
-           ((string-match-p "^[ \t]*\\(?:--.*\\)?$" line)
-            nil)
-           ;; END ... (END, END IF, END WHILE, END CASE, END FOR, END TRY etc.)
-           ((string-match-p
-             "^[ \t]*END\\(?:[ \t]+\\(?:IF\\|WHILE\\|FOR\\|CASE\\|TRY\\|CATCH\\|FUNCTION\\|PROCEDURE\\|COMPUTE\\|MODULE\\)\\)?\\(?:[ \t]*;.*\\)?$"
-             line)
-            (setq indent (current-indentation))
-            (setq found-anchor t))
-           ;; BEGIN / THEN / ELSE / DO / TRY / CATCH / WHEN ... THEN / EXCEPTION
-           ((string-match-p
-             "\\(?:^\\|[^[:alnum:]_]\\)\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|EXCEPTION\\)\\(?:[ \t]*\\|$\\|--\\)"
-             line)
-            (setq indent (+ (current-indentation) tab-width))
-            (setq found-anchor t))
-           ;; ELSE / ELSEIF (at the same level as IF/CASE)
-           ((string-match-p "^[ \t]*\\(ELSE\\|ELSEIF\\)\\b" line)
-            (setq indent (+ (current-indentation) tab-width))
-            (setq found-anchor t))
-           ;; CASE / WHEN / OTHERWISE (WHEN and OTHERWISE are at CASE+tab level)
-           ((string-match-p "\\<\\(CASE\\)\\b" line)
-            (setq indent (+ (current-indentation) tab-width))
-            (setq found-anchor t))
-           ;; CREATE COMPUTE MODULE / FUNCTION / PROCEDURE
-           ((string-match-p "^[ \t]*CREATE\\s-+\\(COMPUTE\\s-+\\(?:MODULE\\|FUNCTION\\)\\|FUNCTION\\|PROCEDURE\\)\\b" line)
-            (setq indent (+ (current-indentation) tab-width))
-            (setq found-anchor t))
-           ;; WHEN / OTHERWISE after CASE (indent + tab)
-           ((and (string-match-p "\\<\\(WHEN\\|OTHERWISE\\)\\b" line)
-                 (save-excursion
-                   (while (and (not (looking-at-p "\\<CASE\\b"))
-                               (not (bobp)))
-                     (forward-line -1))
-                   (looking-at-p "\\<CASE\\b")))
-            (setq indent (+ (current-indentation) tab-width))
-            (setq found-anchor t))
-           ;; Default case: we take the indentation of the current line
-           (t
-            (setq indent (current-indentation))
-            (setq found-anchor t))))))
-    ;; Now we modify the indentation of the current line
-    (when (string-match-p
-           "^[ \t]*\\(END\\|ELSE\\|ELSEIF\\|WHEN\\|OTHERWISE\\|BEGIN\\)\\b"
-           this-line-text)
-      (setq indent (max 0 (- indent tab-width))))
-    ;; We never go below zero
-    (setq indent (max 0 indent))
-    ;; Proper indentation
-    (goto-char this-line-start)
-    (when (not (looking-at-p "^[ \t]*$"))
-      (let ((current (current-indentation)))
-        (if (/= indent current)
-            (progn
-              (delete-region (point) (+ (point) current))
-              (indent-to indent)))))
-    ;; We restore the cursor position
-    (goto-char save-excursion-point)))
+;; (defun esql--indent-line ()
+;;   "Indent current line according to ESQL block structure."
+;;   (let* ((save-excursion-point (point))
+;;          (this-line-start (progn (beginning-of-line) (point)))
+;;          (this-line-text (buffer-substring-no-properties
+;;                           this-line-start (line-end-position)))
+;;          (indent 0)
+;;          found-anchor)
+;;     (save-excursion
+;;       ;; We go up looking for checkpoints
+;;       (while (and (not found-anchor) (not (bobp)))
+;;         (forward-line -1)
+;;         (beginning-of-line)
+;;         (let ((line (buffer-substring-no-properties
+;;                      (point) (line-end-position))))
+;;           (cond
+;;            ;; Comment or empty line -> omitted
+;;            ((string-match-p "^[ \t]*\\(?:--.*\\)?$" line)
+;;             nil)
+;;            ;; END ... (END, END IF, END WHILE, END CASE, END FOR, END TRY etc.)
+;;            ((string-match-p
+;;              "^[ \t]*END\\(?:[ \t]+\\(?:IF\\|WHILE\\|FOR\\|CASE\\|TRY\\|CATCH\\|FUNCTION\\|PROCEDURE\\|COMPUTE\\|MODULE\\)\\)?\\(?:[ \t]*;.*\\)?$"
+;;              line)
+;;             (setq indent (current-indentation))
+;;             (setq found-anchor t))
+;;            ;; BEGIN / THEN / ELSE / DO / TRY / CATCH / WHEN ... THEN / EXCEPTION
+;;            ((string-match-p
+;;              "\\(?:^\\|[^[:alnum:]_]\\)\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|EXCEPTION\\)\\(?:[ \t]*\\|$\\|--\\)"
+;;              line)
+;;             (setq indent (+ (current-indentation) tab-width))
+;;             (setq found-anchor t))
+;;            ;; ELSE / ELSEIF (at the same level as IF/CASE)
+;;            ((string-match-p "^[ \t]*\\(ELSE\\|ELSEIF\\)\\b" line)
+;;             (setq indent (+ (current-indentation) tab-width))
+;;             (setq found-anchor t))
+;;            ;; CASE / WHEN / OTHERWISE (WHEN and OTHERWISE are at CASE+tab level)
+;;            ((string-match-p "\\<\\(CASE\\)\\b" line)
+;;             (setq indent (+ (current-indentation) tab-width))
+;;             (setq found-anchor t))
+;;            ;; CREATE COMPUTE MODULE / FUNCTION / PROCEDURE
+;;            ((string-match-p "^[ \t]*CREATE\\s-+\\(COMPUTE\\s-+\\(?:MODULE\\|FUNCTION\\)\\|FUNCTION\\|PROCEDURE\\)\\b" line)
+;;             (setq indent (+ (current-indentation) tab-width))
+;;             (setq found-anchor t))
+;;            ;; WHEN / OTHERWISE after CASE (indent + tab)
+;;            ((and (string-match-p "\\<\\(WHEN\\|OTHERWISE\\)\\b" line)
+;;                  (save-excursion
+;;                    (while (and (not (looking-at-p "\\<CASE\\b"))
+;;                                (not (bobp)))
+;;                      (forward-line -1))
+;;                    (looking-at-p "\\<CASE\\b")))
+;;             (setq indent (+ (current-indentation) tab-width))
+;;             (setq found-anchor t))
+;;            ;; Default case: we take the indentation of the current line
+;;            (t
+;;             (setq indent (current-indentation))
+;;             (setq found-anchor t))))))
+;;     ;; Now we modify the indentation of the current line
+;;     (when (string-match-p
+;;            "^[ \t]*\\(END\\|ELSE\\|ELSEIF\\|WHEN\\|OTHERWISE\\|BEGIN\\)\\b"
+;;            this-line-text)
+;;       (setq indent (max 0 (- indent tab-width))))
+;;     ;; We never go below zero
+;;     (setq indent (max 0 indent))
+;;     ;; Proper indentation
+;;     (goto-char this-line-start)
+;;     (when (not (looking-at-p "^[ \t]*$"))
+;;       (let ((current (current-indentation)))
+;;         (if (/= indent current)
+;;             (progn
+;;               (delete-region (point) (+ (point) current))
+;;               (indent-to indent)))))
+;;     ;; We restore the cursor position
+;;     (goto-char save-excursion-point)))
 
-;; Add to mode
 (defun esql-mode-setup-indent ()
-  (setq indent-line-function 'esql--indent-line)
-  (setq tab-width 2)               ; <- 2 spaces
-  (setq indent-tabs-mode nil))     ; <- spaces instead of tabs
+  ;; (setq indent-line-function 'esql--indent-line) ;; TODO! Not working correctly
+  (setq tab-width 4)
+  (setq indent-tabs-mode t))
 
 (add-hook 'esql-mode-hook #'esql-mode-setup-indent)
 
