@@ -78,7 +78,7 @@
 
 (defconst esql--special-vars
   '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "OutputLocalEnvironment" "Environment" "InputExceptionList" "OutputExceptionList"
-    "ExceptionList" "ExceptionData" "Message" "Tree" "Properties" "DFDL" "XMLNSC"))
+    "ExceptionList" "ExceptionData" "Message" "Tree" "Properties" "DFDL" "XMLNSC" "JSON"))
 
 (defconst esql-font-lock-keywords
   `(
