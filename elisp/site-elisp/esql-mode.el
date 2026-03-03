@@ -63,8 +63,8 @@
     "CAST" "CATALOG" "CREATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
     "DO" "ELSE" "ELSEIF" "END" "EVALUATE" "EXTERNAL" "FALSE" "FINALIZE"
     "FROM" "FOR" "FORMAT" "FUNCTION" "IF" "IN" "INOUT" "INPUT" "INSERT" "INTO" "ITEM" "LANGUAGE"
-    "LIKE" "MODULE" "NOT" "NULL" "OR" "OUTPUT" "PASSTHROUGH" "PROPAGATE"
-    "REPEAT" "RESIGNAL" "RETURN" "RETURNS" "ROW" "SELECT"
+    "LIKE" "MODULE" "MOVE" "NOT" "NULL" "OR" "OUTPUT" "PASSTHROUGH" "PROPAGATE"
+    "REPEAT" "RESIGNAL" "RETURN" "RETURNS" "ROW" "SELECT" "LOG"
     "SET" "SIGNAL" "THEN" "THROW" "TO" "TRUE" "UPDATE" "VALUES" "WHEN"
     "WHILE" "BROKER" "SCHEMA" "PATH" "AFTER" "BEFORE" ))
 
@@ -128,10 +128,10 @@
            ;; Pusta linia lub sama linia komentarza
            (string-match-p "^[ \t]*\\(--.*\\)?$" s))
 
-         ;; BEGIN / THEN / DO / TRY / CATCH / EXCEPTION / CASE
+         ;; BEGIN / THEN / DO / TRY / CATCH / CASE
          (opens-block-p (s)
            (string-match-p
-            "\\_<\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|EXCEPTION\\|CASE\\)\\_>"
+            "\\_<\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|CASE\\)\\_>"
             s))
 
          ;; Każde END ... traktujemy jako zamknięcie bloku
