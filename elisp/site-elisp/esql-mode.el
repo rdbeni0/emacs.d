@@ -71,7 +71,7 @@
 (defconst esql--types
   '("BOOLEAN" "BYTE" "CHARACTER" "CCSID" "CHAR" "VARCHAR" "INTEGER" "INT"
     "DECIMAL" "FLOAT" "REAL" "DOUBLE" "TIMESTAMP" "DATE" "TIME"
-    "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE TO" "LIST" "SHARED" "NAMESPACE" "GMTTIME" "GMTTIMESTAMP"))
+    "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE" "LIST" "SHARED" "NAMESPACE" "GMTTIME" "GMTTIMESTAMP"))
 
 (defconst esql--constants
   '("TRUE" "FALSE" "NULL" "UNKNOWN"))
@@ -153,17 +153,17 @@
                      (line-end-position)))))
             (unless (skip-line-p l)
               (cond
-               ;; BEGIN / THEN / DO / TRY / CATCH / EXCEPTION / CASE
-               ((opens-block-p l)
-                (setq indent (+ (current-indentation) tab)))
+               ;; END ...
+               ((closes-block-p l)
+                (setq indent (current-indentation)))
 
                ;; ELSE / WHEN / OTHERWISE
                ((middle-block-p l)
                 (setq indent (+ (current-indentation) tab)))
 
-               ;; END ...
-               ((closes-block-p l)
-                (setq indent (current-indentation)))
+               ;; BEGIN / THEN / DO / TRY / CATCH / EXCEPTION / CASE
+               ((opens-block-p l)
+                (setq indent (+ (current-indentation) tab)))
 
                ;; Tylko MODULE jest blokiem CREATE
                ((string-match-p "^[ \t]*CREATE\\s-+COMPUTE\\s-+MODULE\\b" l)
