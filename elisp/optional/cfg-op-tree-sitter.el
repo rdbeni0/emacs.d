@@ -198,6 +198,12 @@ The list of parsers is defined in `php-ts-mode--language-source-alist`."
       (require 'php-ts-mode)
       (php-ts-mode-install-parsers)))
 
+(dolist (go-ts-hook '(go-ts-mode-hook go-mod-ts-mode-hook))
+  (add-hook go-ts-hook
+            (lambda ()
+              ;; go uses tabs as indentation, so to change the visual display we have to manipulate the width
+              (setq tab-width 4))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; treesit-auto integration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
