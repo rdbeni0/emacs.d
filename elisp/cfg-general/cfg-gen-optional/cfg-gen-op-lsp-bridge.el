@@ -62,12 +62,12 @@
  "e3" '(lsp-bridge-peek-tree-next-node :which-key "next-node")
 
  "\\" '(:ignore t :which-key "server")
- "\\r" '(lsp-bridge-restart-process :which-key "reconnect")
+ "\\r" '(lsp-bridge-restart-process :which-key "restart-process")
  "\\d" '(cfg/lsp-bridge-toggle-debug :which-key "toggle-debug")
  "\\p" '(lsp-bridge-profile-dump :which-key "profile-dump")
  "\\q" '(lsp-bridge-kill-process :which-key "kill-process")
  "\\Q" '(lsp-bridge-stop-process :which-key "kill-process") ;; "stop" is alias for lsp-bridge-kill-process
- "\\m" '(lsp-bridge-mode :which-key "lsp-bridge-mode"))
+ "\\m" '(lsp-bridge-mode :which-key "lsp-bridge-mode (toggle)"))
 
 ;; diagnostic, ref-mode
 (general-define-key
