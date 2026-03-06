@@ -232,6 +232,19 @@ The list of parsers is defined in `php-ts-mode--language-source-alist`."
         (python-mode     . python-ts-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; AUTO-MODE-ALIST
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Exceptions for `auto-mode-alist' related to tree-sitter.
+;; File name (within directory) starts with a dot.
+(setq auto-mode-alist
+      (append
+       ;; go-ts-mode is an exception, built on top of pure prog-mode. For other functionalities for `go', LSP should be used.
+       '(("\\.go\\'" . go-ts-mode)
+         ("/go\\.mod\\'" . go-mod-ts-mode)
+	 ) auto-mode-alist ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Optional mode exclusions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

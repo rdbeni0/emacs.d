@@ -39,6 +39,7 @@
        ("Elixir" mix-format)
        ("Emacs Lisp" emacs-lisp)
        ("Fish" fish-indent)
+       ("Go" gofmt)
        ("Fortran Free Form" fprettify)
        ("HTML" (html-tidy "-wrap" "185"))
        ("HTML+ERB" erb-format)

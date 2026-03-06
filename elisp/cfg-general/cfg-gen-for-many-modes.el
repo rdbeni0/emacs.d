@@ -28,6 +28,8 @@
         fish-mode
         gfm-mode
         gfm-view-mode
+        go-ts-mode
+        go-mod-ts-mode
         groovy-mode
         html-mode
         html-ts-mode
@@ -73,6 +75,8 @@
         fish-mode-map
         gfm-mode-map
         gfm-view-mode-map
+        go-ts-mode-map
+        go-mod-ts-mode-map
         groovy-mode-map
         html-mode-map
         html-ts-mode-map
