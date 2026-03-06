@@ -24,8 +24,6 @@
   ;; use in global-mode, but disable per particular mode:
   (global-lsp-bridge-mode)
 
-  ;; OPTIONAL: debug if something is wrong:
-  ;; (setq lsp-bridge-enable-log t)
 
   ;; popup menu seems to be broken and unstable,
   ;; better to use standard completion at the bottom:
@@ -55,6 +53,42 @@
   (setq acm-enable-tabnine nil)
   (setq acm-enable-codeium nil)
   (setq acm-enable-copilot nil)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;; defuns
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; Use `cfg/lsp-bridge-toggle-debug' to turn OFF/ON dynamic debugger.
+  ;;
+  ;; OPTIONAL -> debug if something is wrong:
+  ;; (setq lsp-bridge-enable-debug t)
+  ;; log levels, the same convention as for python:
+  ;; https://docs.python.org/3/library/logging.html#levels
+  ;; (setq lsp-bridge-log-level "debug")
+
+  (defun cfg/lsp-bridge-toggle-debug ()
+    "Toggle (ON/OFF) debug mode for `lsp-bridge' and restart its process.
+  Requires gdb in $PATH"
+    (interactive)
+    (if lsp-bridge-enable-debug
+        ;; Debug ON -> OFF
+        (progn
+          (lsp-bridge-mode -1)
+          (setq lsp-bridge-enable-debug nil)
+          (setq lsp-bridge-log-level "info")
+          (lsp-bridge-restart-process)
+          (lsp-bridge-mode 1)
+          (message "lsp-bridge: debug OFF -> Restarting processes..."))
+      ;; Debug OFF -> ON
+      (progn
+        (lsp-bridge-mode -1)
+        (setq lsp-bridge-enable-debug t)
+        (setq lsp-bridge-log-level "debug")
+        (lsp-bridge-restart-process)
+        (lsp-bridge-mode 1)
+        (message "lsp-bridge: debug ON -> Restarting processes...")))
+    (sleep-for 1)
+    (lsp-bridge-restart-process))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Manipulations with `lsp-bridge-default-mode-hooks'

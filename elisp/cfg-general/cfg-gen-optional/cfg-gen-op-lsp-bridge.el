@@ -63,6 +63,7 @@
 
  "\\" '(:ignore t :which-key "server")
  "\\r" '(lsp-bridge-restart-process :which-key "reconnect")
+ "\\d" '(cfg/lsp-bridge-toggle-debug :which-key "toggle-debug")
  "\\p" '(lsp-bridge-profile-dump :which-key "profile-dump")
  "\\q" '(lsp-bridge-kill-process :which-key "kill-process")
  "\\Q" '(lsp-bridge-stop-process :which-key "kill-process") ;; "stop" is alias for lsp-bridge-kill-process
