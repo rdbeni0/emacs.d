@@ -1901,7 +1901,6 @@ The current buffer's `default-directory' is available as part of
 
 (defun cfg/chmod+x ()
   "Add executable permission (+x) to file(s) depending on context.
-
 Cases:
 1. Normal buffer visiting a file -> chmod +x that file.
 2. Dired with marked files -> chmod +x all marked files.
@@ -1943,8 +1942,6 @@ Cases:
    ;; Fallback
    (t
     (message "No file to chmod +x."))))
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; TRAMP AND SUDO
