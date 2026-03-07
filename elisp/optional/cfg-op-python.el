@@ -26,7 +26,7 @@
     (add-hook py-hook
 	      (lambda ()
                 (require 'sphinx-doc)
-	        (sphinx-doc-mode t))))
+	        (sphinx-doc-mode 1))))
 
 ;;;; flycheck: https://www.flycheck.org/en/latest/languages.html#python
   ;; we need to know that flycheck has excellent support for python-mode in emacs,
