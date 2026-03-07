@@ -619,6 +619,8 @@ there's a region, all lines that region covers will be duplicated."
       (setq end (point)))
     (goto-char (+ origin (* (length region) arg) arg))))
 
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; HIDESHOW
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -809,7 +811,7 @@ Uses position instead of index field."
 
   ;; after XX seconds of inactivity, buffer will be closed
   (setq tempbuf-minimum-timeout 30)
-  
+
   ;; example:
   ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
 
@@ -1161,7 +1163,9 @@ Uses position instead of index field."
                          (if (executable-find "git") (insert "git : FOUND\n") (insert "git : NOT FOUND\n"))
                          (if (executable-find "find") (insert "find : FOUND\n") (insert "find : NOT FOUND\n"))
                          (if (executable-find "fd") (insert "fd : FOUND\n") (insert "fd : NOT FOUND. Project filtering will be corrupted!\n"))
-                         (if (executable-find "clang-format") (insert "clang-format : FOUND\n") (insert "clang-format : NOT FOUND : c/c++ formatting will not work!\n"))
+                         (if (executable-find "clang-format")
+                             (insert "clang-format : FOUND\n")
+                           (insert "clang-format : NOT FOUND : c/c++ formatting will not work!\n"))
                          (if (executable-find "make")
                              (insert "make : FOUND\n")
                            (insert "make : NOT FOUND : makefile will not be used!\n"))
@@ -1171,13 +1175,23 @@ Uses position instead of index field."
                          (if (executable-find "perltidy")
                              (insert "perltidy : FOUND\n")
                            (insert "perltidy : NOT FOUND : formatting and cperl-mode will not work correctly!\n"))
+                         (if (executable-find "gofmt")
+                             (insert "gofmt : FOUND\n")
+                           (insert "gofmt : NOT FOUND : formatting for go (golang) will not work!\n"))
                          (if (file-exists-p "~/.local/share/fonts/NFM.ttf")
                              (insert "file/font NFM.ttf : FOUND\n")
                            (insert "font NFM.ttf : NOT FOUND : doom-modeline will not work correctly: https://github.com/seagle0128/doom-modeline ! \n"))
                          ;; lsp:
+                         (if (executable-find "gopls")
+                             (insert "gopls : FOUND\n")
+                           (insert "gopls : NOT FOUND : lsp for go (golang) will not work! https://go.dev/gopls/ \n"))
+
                          (if (executable-find "pyright")
                              (insert "pyright : FOUND\n")
                            (insert "pyright : NOT FOUND : lsp for python will not work!\n"))
+                         (if (executable-find "basedpyright")
+                             (insert "basedpyright : FOUND\n")
+                           (insert "basedpyright : NOT FOUND : lsp for python will not work!\n"))
                          (if (executable-find "ccls") (insert "ccls : FOUND\n") (insert "ccls : NOT FOUND : lsp for c/c++ will not work!\n"))
                          (if (executable-find "clangd") (insert "clangd : FOUND\n") (insert "clangd : NOT FOUND : lsp for c/c++ will not work!\n"))
                          ;;
@@ -1884,6 +1898,21 @@ The current buffer's `default-directory' is available as part of
         (append (cdr list-of-dired-switches)
                 (list (car list-of-dired-switches))))
   (dired-sort-other (car list-of-dired-switches)))
+
+(defun cfg/chmod+x ()
+  "Make current buffer's file executable, if it is visiting a file."
+  (interactive)
+  ;; Check if current buffer is visiting a file
+  (if (not buffer-file-name)
+      (message "chmod+x : no file associated with this buffer.")
+    ;; Try to add executable bit using chmod +x
+    (let ((file buffer-file-name))
+      (if (file-exists-p file)
+          (progn
+            ;; Call external chmod command
+            (call-process "chmod" nil nil nil "+x" file)
+            (message "chmod+x : DONE : %s" file))
+        (message "chmod+x : file does not exist on disk: %s" file)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; TRAMP AND SUDO

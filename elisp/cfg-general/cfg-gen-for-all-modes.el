@@ -70,6 +70,7 @@
 
  "f"   '(:ignore t :which-key "files")
  "ff"  '(find-file :which-key "find-file")
+ "fx"  '(cfg/chmod+x :which-key "chmod+x")
  "fa"  '(cfg/ffap :which-key "ffap")
  "fR"  '(cfg/rename-current-buffer-file :which-key "rename-current-buffer-file")
  "fE"  '(cfg/sudo-edit :which-key "sudo-edit")
