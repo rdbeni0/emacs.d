@@ -6,6 +6,12 @@
 (use-package lua-mode
   :ensure t
   :config
+  (add-hook 'lua-mode-hook
+            (lambda ()
+              (setq lua-indent-level 4)
+              (setq indent-tabs-mode nil)   ;; use spaces
+              (setq tab-width 4)))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-lua-mode))
 

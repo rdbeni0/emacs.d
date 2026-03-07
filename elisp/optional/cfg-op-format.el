@@ -52,7 +52,7 @@
        ("Kotlin" ktlint)
        ("LaTeX" latexindent)
        ("Less" (prettier "--print-width" "185"))
-       ("Lua" (stylua "--column-width" "185"))
+       ("Lua" (stylua "--indent-type" "Spaces" "--indent-width" "4" "--column-width" "185"))
        ("Markdown" (prettier "--print-width" "185"))
        ("Nix" nixfmt)
        ("Objective-C" clang-format)
