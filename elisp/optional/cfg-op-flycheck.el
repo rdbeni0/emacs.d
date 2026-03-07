@@ -9,6 +9,7 @@
   :ensure t
   :hook
   (makefile-gmake-mode . (lambda () (flycheck-mode -1)))
+  (makefile-mode . (lambda () (flycheck-mode -1)))
   :config
   (global-flycheck-mode)
 
