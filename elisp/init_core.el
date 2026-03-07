@@ -1900,19 +1900,51 @@ The current buffer's `default-directory' is available as part of
   (dired-sort-other (car list-of-dired-switches)))
 
 (defun cfg/chmod+x ()
-  "Make current buffer's file executable, if it is visiting a file."
+  "Add executable permission (+x) to file(s) depending on context.
+
+Cases:
+1. Normal buffer visiting a file -> chmod +x that file.
+2. Dired with marked files -> chmod +x all marked files.
+3. Dired with no marked files -> chmod +x file at point."
   (interactive)
-  ;; Check if current buffer is visiting a file
-  (if (not buffer-file-name)
-      (message "chmod+x : no file associated with this buffer.")
-    ;; Try to add executable bit using chmod +x
-    (let ((file buffer-file-name))
-      (if (file-exists-p file)
-          (progn
-            ;; Call external chmod command
-            (call-process "chmod" nil nil nil "+x" file)
-            (message "chmod+x : DONE : %s" file))
-        (message "chmod+x : file does not exist on disk: %s" file)))))
+  (cond
+   ;; Case 1: Normal buffer visiting a file
+   ((and buffer-file-name (not (derived-mode-p 'dired-mode)))
+    ;; Ensure file exists
+    (if (file-exists-p buffer-file-name)
+        (progn
+          ;; Add executable bit
+          (call-process "chmod" nil nil nil "+x" buffer-file-name)
+          (message "Made file executable: %s" buffer-file-name))
+      (message "File does not exist: %s" buffer-file-name)))
+
+   ;; Case 2 & 3: Dired mode
+   ((derived-mode-p 'dired-mode)
+    ;; Get marked files, or fallback to file at point
+    (let* ((files (dired-get-marked-files))
+           (count (length files)))
+      ;; If nothing marked, use file at point
+      (when (= count 1)
+        (let ((file-at-point (dired-get-filename nil t)))
+          (when file-at-point
+            (setq files (list file-at-point)))))
+
+      ;; Apply chmod +x to all collected files
+      (dolist (f files)
+        (when (file-exists-p f)
+          (call-process "chmod" nil nil nil "+x" f)))
+
+      ;; Refresh dired buffer to show updated permissions
+      (revert-buffer)
+
+      (message "Made executable: %s"
+               (mapconcat #'identity files ", "))))
+
+   ;; Fallback
+   (t
+    (message "No file to chmod +x."))))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; TRAMP AND SUDO
