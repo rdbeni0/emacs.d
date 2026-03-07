@@ -196,6 +196,7 @@
 	 ("\\pkgs_arch.txt\\'" . conf-mode)
 	 ("\\.tmux.conf_x11\\'" . conf-mode)
 	 ("\\.Xresources\\'" . conf-xdefaults-mode)
+	 ("\\Makefile\\'" . makefile-mode)
 	 ("\\abbrev_defs\\'" . emacs-lisp-mode)
 	 ("\\.gcs\\'" . text-mode)
 	 ("\\.zsh\\'" . sh-mode)
@@ -341,6 +342,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; do NOT use tabs for indentation:
 ;; https://web-mode.org/
 (setq-default indent-tabs-mode nil)
+
+;; show width of tabs as 4 spaces
+(setq-default tab-width 4)
 
 ;; XML (nxml) FORMATTING:
 

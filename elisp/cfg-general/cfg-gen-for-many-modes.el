@@ -45,6 +45,8 @@
         lua-ts-mode
         markdown-mode
         mhtml-mode
+        makefile-gmake-mode
+        makefile-mode
         nix-mode
         nix-ts-mode
         nxml-mode
@@ -92,6 +94,8 @@
         lua-ts-mode-map
         markdown-mode-map
         mhtml-mode-map
+        makefile-gmake-mode-map
+        makefile-mode-map
  	nix-mode-map
         nix-ts-mode-map
         nxml-mode-map
@@ -138,10 +142,20 @@
 ;; Remove from list:
 (setq list-gen-mode-flycheck
       (seq-difference list-gen-mode
-		      '(ssh-config-mode jenkinsfile-mode fish-mode web-mode)))
+		      '(ssh-config-mode
+                        jenkinsfile-mode
+                        fish-mode
+                        web-mode
+                        makefile-mode
+                        makefile-gmake-mode)))
 (setq list-gen-mode-map-flycheck
       (seq-difference list-gen-mode-map
-		      '(ssh-config-mode-map jenkinsfile-mode-map fish-mode-map web-mode-map)))
+		      '(ssh-config-mode-map
+                        jenkinsfile-mode-map
+                        fish-mode-map
+                        web-mode-map
+                        makefile-mode-map
+                        makefile-gmake-mode-map)))
 
 ;; Add to list:
 (setq list-gen-mode-flycheck
@@ -157,14 +171,30 @@
 (setq list-gen-mode-format-core (append
 				 ;; Remove from list:
 				 (seq-difference list-gen-mode
-						 '(ssh-config-mode perl-mode cperl-mode js-json-mode nxml-mode markdown-mode gfm-mode))
+						 '(ssh-config-mode
+                                                   perl-mode
+                                                   cperl-mode
+                                                   js-json-mode
+                                                   nxml-mode
+                                                   markdown-mode
+                                                   makefile-mode
+                                                   makefile-gmake-mode
+                                                   gfm-mode))
 				 ;; Add to list:
 				 '(yaml-mode yaml-ts-mode)))
 
 (setq list-gen-mode-map-format-core (append
 				     ;; Remove from list:
 				     (seq-difference list-gen-mode-map
-						     '(ssh-config-mode-map perl-mode-map cperl-mode-map js-json-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))
+						     '(ssh-config-mode-map
+                                                       perl-mode-map
+                                                       cperl-mode-map
+                                                       js-json-mode-map
+                                                       nxml-mode-map
+                                                       markdown-mode-map
+                                                       makefile-mode-map
+                                                       makefile-gmake-mode-map
+                                                       gfm-mode-map))
 				     ;; Add to list:
 				     '(yaml-mode-map yaml-ts-mode-map)))
 
@@ -174,15 +204,23 @@
 
 (setq list-gen-mode-format-optional (append
 				     ;; Remove from list:
-				     (seq-difference list-gen-mode 
-                                                     '(ssh-config-mode web-mode esql-mode))
+				     (seq-difference list-gen-mode
+                                                     '(ssh-config-mode
+                                                       web-mode
+                                                       makefile-mode
+                                                       makefile-gmake-mode
+                                                       esql-mode))
 				     ;; Add to list:
 				     '(json-mode yaml-mode yaml-ts-mode)))
 
 (setq list-gen-mode-map-format-optional (append
 					 ;; Remove from list:
-					 (seq-difference list-gen-mode-map 
-                                                         '(ssh-config-mode-map web-mode-map esql-mode-map))
+					 (seq-difference list-gen-mode-map
+                                                         '(ssh-config-mode-map
+                                                           web-mode-map
+                                                           makefile-mode-map
+                                                           makefile-gmake-mode-map
+                                                           esql-mode-map))
 					 ;; Add to list:
 					 '(json-mode-map yaml-mode-map yaml-ts-mode-map)))
 
@@ -201,12 +239,24 @@
 
 (setq list-gen-mode-xref
       (copy-sequence
-       (seq-difference list-gen-mode 
-                       '(ssh-config-mode nxml-mode markdown-mode gfm-mode))))
+       ;; Remove from list:
+       (seq-difference list-gen-mode
+                       '(ssh-config-mode
+                         nxml-mode
+                         markdown-mode
+                         makefile-mode
+                         makefile-gmake-mode
+                         gfm-mode))))
 (setq list-gen-mode-map-xref
       (copy-sequence
-       (seq-difference list-gen-mode-map 
-                       '(ssh-config-mode-map nxml-mode-map markdown-mode-map gfm-mode-map))))
+       ;; Remove from list:
+       (seq-difference list-gen-mode-map
+                       '(ssh-config-mode-map
+                         nxml-mode-map
+                         markdown-mode-map
+                         makefile-mode-map
+                         makefile-gmake-mode-map
+                         gfm-mode-map))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; COMMENTS (DWIM)

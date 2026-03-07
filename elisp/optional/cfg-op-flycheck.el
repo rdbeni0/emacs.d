@@ -7,6 +7,8 @@
 
 (use-package flycheck
   :ensure t
+  :hook
+  (makefile-gmake-mode . (lambda () (flycheck-mode -1)))
   :config
   (global-flycheck-mode)
 
@@ -64,7 +66,7 @@
       ;; (save-selected-window
       (other-window 1)
       (switch-to-buffer "*Flycheck errors*"))))
-      ;; )
+;; )
 
 
 (defun cfg/flycheck-enable-checker ()

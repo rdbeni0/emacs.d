@@ -202,7 +202,7 @@ The list of parsers is defined in `php-ts-mode--language-source-alist`."
   (add-hook go-ts-hook
             (lambda ()
               ;; go uses tabs as indentation, so to change the visual display we have to manipulate the width
-              (setq tab-width 4))))
+              (setq-local tab-width 4))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; treesit-auto integration
