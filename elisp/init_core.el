@@ -129,8 +129,8 @@
 (setq package-archives '(
                          ("gnu"    . "http://elpa.gnu.org/packages/")
                          ("melpa"  . "https://melpa.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ))
+			             ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			             ))
 
 ;; defuns
 
@@ -152,7 +152,7 @@
 (defun cfg/load-all-el-in-directory-alt (dir)
   "`load' all elisp libraries in directory DIR - alternative version."
   (let ((load-it (lambda (f)
-		   (load-file (concat (file-name-as-directory dir) f)))))
+		           (load-file (concat (file-name-as-directory dir) f)))))
     (mapc load-it (directory-files dir nil "\\.el$"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -165,15 +165,15 @@
 ;;
 
 (dolist (core-packages
-	 '(
-	   which-key
-	   evil
-	   annalist ;; required for "evil-collection"
-	   evil-collection
-	   evil-org
-	   general
-	   wgrep
-	   ))
+	     '(
+	       which-key
+	       evil
+	       annalist ;; required for "evil-collection"
+	       evil-collection
+	       evil-org
+	       general
+	       wgrep
+	       ))
   (unless (package-installed-p core-packages) (package-install core-packages)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -189,22 +189,22 @@
       (append
        ;; File name (within directory) starts with a dot:
        '(("\\.*_conf_file\\'" . conf-mode)
-	 ("\\.npmrc\\'" . conf-mode)
-	 ("\\.bash_aliases\\'" . conf-mode)
-	 ("\\.muttrc\\'" . conf-mode)
-	 ("fish_variables\\'" . conf-mode)
-	 ("\\pkgs_arch.txt\\'" . conf-mode)
-	 ("\\.tmux.conf_x11\\'" . conf-mode)
-	 ("\\.Xresources\\'" . conf-xdefaults-mode)
-	 ("\\Makefile\\'" . makefile-gmake-mode)
-	 ("\\abbrev_defs\\'" . emacs-lisp-mode)
-	 ("\\.gcs\\'" . text-mode)
-	 ("\\.zsh\\'" . sh-mode)
-	 ("\\.bashrc\\'" . sh-mode)
-	 ("\\.bash_profile\\'" . sh-mode)
-	 ("zlogin\\'" . sh-mode)
-	 ("zshenv\\'" . sh-mode)
-	 ("zshrc\\'" . sh-mode))
+	     ("\\.npmrc\\'" . conf-mode)
+	     ("\\.bash_aliases\\'" . conf-mode)
+	     ("\\.muttrc\\'" . conf-mode)
+	     ("fish_variables\\'" . conf-mode)
+	     ("\\pkgs_arch.txt\\'" . conf-mode)
+	     ("\\.tmux.conf_x11\\'" . conf-mode)
+	     ("\\.Xresources\\'" . conf-xdefaults-mode)
+	     ("\\Makefile\\'" . makefile-gmake-mode)
+	     ("\\abbrev_defs\\'" . emacs-lisp-mode)
+	     ("\\.gcs\\'" . text-mode)
+	     ("\\.zsh\\'" . sh-mode)
+	     ("\\.bashrc\\'" . sh-mode)
+	     ("\\.bash_profile\\'" . sh-mode)
+	     ("zlogin\\'" . sh-mode)
+	     ("zshenv\\'" . sh-mode)
+	     ("zshrc\\'" . sh-mode))
        auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -372,9 +372,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "Location of perltidy executable.")
 
 (defvar perl5-perltidy-options '("--quiet"
-				 "--standard-error-output"
-				 "--perl-best-practices"
-				 "-l=185")
+				                 "--standard-error-output"
+				                 "--perl-best-practices"
+				                 "-l=185")
   "Command line options to pass to perltidy")
 
 (defun cfg/perltidy-format ()
@@ -469,16 +469,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (when (region-active-p)
     (let ((i 0)
-	  (return-string "")
-	  (input (buffer-substring-no-properties (region-beginning) (region-end))))
+	      (return-string "")
+	      (input (buffer-substring-no-properties (region-beginning) (region-end))))
       (while (< i (- (region-end) (region-beginning)))
-	(let ((current-char (substring input i (+ i 1))))
-	  (if (string= (substring input i (+ i 1)) (downcase (substring input i (+ i 1))))
+	    (let ((current-char (substring input i (+ i 1))))
+	      (if (string= (substring input i (+ i 1)) (downcase (substring input i (+ i 1))))
               (setq return-string
-		    (concat return-string (upcase (substring input i (+ i 1)))))
+		            (concat return-string (upcase (substring input i (+ i 1)))))
             (setq return-string
-		  (concat return-string (downcase (substring input i (+ i 1)))))))
-	(setq i (+ i 1)))
+		          (concat return-string (downcase (substring input i (+ i 1)))))))
+	    (setq i (+ i 1)))
       (delete-region (region-beginning) (region-end))
       (insert return-string))))
 
@@ -789,7 +789,7 @@ Uses position instead of index field."
     "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer'. Otherwise, open `ibuffer'."
     (interactive)
     (if (eq major-mode 'ibuffer-mode)
-	(cfg/alternate-buffer)
+	    (cfg/alternate-buffer)
       (ibuffer)
       ;; (when (minibufferp)
       ;; 	(abort-recursive-edit))
@@ -1438,25 +1438,25 @@ If the new path's directories does not exist, create them."
 
 (defun cfg/-perl-module-path (module-name)
   (let* ((file-name
-	  (concat (replace-regexp-in-string "::" "/" module-name)
-		  ".pm"))
-	 (command-line
-	  (concat "perl -M'"
-		  module-name
-		  "' -e'print $INC{q{"
-		  file-name
-		  "}}'"))
-	 (path (shell-command-to-string command-line))
-	 (cant-locate (string-match "^Can't locate " path)))
+	      (concat (replace-regexp-in-string "::" "/" module-name)
+		          ".pm"))
+	     (command-line
+	      (concat "perl -M'"
+		          module-name
+		          "' -e'print $INC{q{"
+		          file-name
+		          "}}'"))
+	     (path (shell-command-to-string command-line))
+	     (cant-locate (string-match "^Can't locate " path)))
     (if cant-locate
-	nil
+	    nil
       path)))
 
 (defun cfg/find-perl-module (module-name)
   (interactive "sPerl module name: ")
   (let ((path (cfg/-perl-module-path module-name)))
     (if path
-	(find-file path)
+	    (find-file path)
       (error "Module '%s' not found" module-name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1963,12 +1963,12 @@ Cases:
 (use-package tramp
   :config
   (setq my-tramp-ssh-completions
-	'((tramp-parse-sconfig "~/.ssh/ssh_config")
+	    '((tramp-parse-sconfig "~/.ssh/ssh_config")
           (tramp-parse-shosts "~/.ssh/known_hosts")))
 
   (mapc (lambda (method)
           (tramp-set-completion-function method my-tramp-ssh-completions))
-	'("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh")))
+	    '("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh")))
 
 ;; sudo via tramp
 
@@ -2055,7 +2055,7 @@ Cases:
     (when (and (rcirc-buffer-process)
                (eq (process-status (rcirc-buffer-process)) 'open))
       (if (rcirc-channel-p rcirc-target)
-	  (rename-buffer rcirc-target)))))
+	      (rename-buffer rcirc-target)))))
 
 ;; Dynamically set fill-column at redisplay time:
 ;; Source: https://www.emacswiki.org/emacs/rcircAutoFillColumn
@@ -2068,8 +2068,8 @@ Cases:
   (with-current-buffer (window-buffer window)
     (when (eq major-mode 'rcirc-mode)
       (setq fill-column
-	    (- (window-width window)
-	       (or margin rcirc-dynamic-fill-column-margin))))))
+	        (- (window-width window)
+	           (or margin rcirc-dynamic-fill-column-margin))))))
 
 (defun cfg/rcirc-dynamic-fill-column (frame)
   "Dynamically tune fill-column for a frame's windows at redisplay time"
@@ -2175,8 +2175,8 @@ Cases:
 
 ;; If the user has a file of abbrevs, read it (unless -batch):
 (when (and (not noninteractive)
-	   (file-exists-p abbrev-file-name)
-	   (file-readable-p abbrev-file-name))
+	       (file-exists-p abbrev-file-name)
+	       (file-readable-p abbrev-file-name))
   (progn
     (require 'at-abbrev_defs) ;; main file with abbrev defs
     (require 'at-long-lines) ;; defs with long lines
@@ -2189,15 +2189,15 @@ Cases:
   (if (expand-abbrev)
       (message "Abbrev expanded.")
     (let* ((abbrev-table-symbol (intern (concat (symbol-name major-mode) "-abbrev-table")))
-	   (abbrev-table (and (boundp abbrev-table-symbol) (symbol-value abbrev-table-symbol))))
+	       (abbrev-table (and (boundp abbrev-table-symbol) (symbol-value abbrev-table-symbol))))
       (if abbrev-table
-	  (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
-		 (expansion (abbrev-expansion abbrev abbrev-table)))
-	    (when expansion
-	      ;; Slightly dangerous, but should work - delete from beginning of line to point and insert abbrev:
-	      (delete-region (line-beginning-position) (point))
-	      (insert expansion)))
-	(message "No abbrev found.")))))
+	      (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
+		         (expansion (abbrev-expansion abbrev abbrev-table)))
+	        (when expansion
+	          ;; Slightly dangerous, but should work - delete from beginning of line to point and insert abbrev:
+	          (delete-region (line-beginning-position) (point))
+	          (insert expansion)))
+	    (message "No abbrev found.")))))
 
 (provide 'init_core)
 ;;; init_core.el ends here

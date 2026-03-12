@@ -1,5 +1,6 @@
-;;; cfg-op-ts-js.el --- configfuration for ssh via tramp and sudo -*- lexical-binding: t -*-
+;;; cfg-op-ts-js.el --- configfuration for ts and js -*- lexical-binding: t -*-
 ;;; Commentary:
+;; https://www.ovistoica.com/blog/2024-7-05-modern-emacs-typescript-web-tsx-config
 ;;; Code:
 
 ;; load general.el and keybindings:
