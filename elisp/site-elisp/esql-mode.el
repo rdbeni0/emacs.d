@@ -213,7 +213,7 @@
   (setq-local font-lock-defaults
               '(esql-font-lock-keywords
                 nil        ;; keywords-only
-                t          ;; case-fold (IMPORTANT)
+                nil        ;; t = case-fold (IMPORTANT for esql)
                 nil
                 nil))
   (setq-local indent-line-function #'esql--indent-line)
