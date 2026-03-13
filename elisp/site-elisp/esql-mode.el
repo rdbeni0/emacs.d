@@ -65,7 +65,7 @@
 ;; Non-reserved keywords
 ;; =============================
 (defconst esql--non-reserved-keywords
-  '("ANY" "AS" "ATOMIC" "ATTACH" "BETWEEN" "BIT"  "BY" "IN" "IS" "TO"
+  '("ANY" "AS" "ATOMIC" "ATTACH" "BETWEEN" "BIT" "BROKER"  "BY" "IN" "IS" "TO"
     "CALL" "CATALOG"   "COMPUTE" "CONDITION" "CAST" "SUBSTRING"
     "CONTINUE" "COORDINATED" "COUNT" "CREATE" "CURRENT_DATE" "CURRENT_GMTDATE"
     "CURRENT_GMTTIME" "CURRENT_GMTTIMESTAMP" "CURRENT_TIME" "CURRENT_TIMESTAMP"
@@ -87,7 +87,7 @@
     "SQLEXCEPTION" "SQLNATIVEERROR" "SQLSTATE" "SQLWARNING" "SUM" "TERMINAL"
     "THE"  "THROW" "TIME" "TRACE" "TYPE"
     "UNCOORDINATED" "UPDATE" "USER" "UUIDASBLOB" "UUIDASCHAR" "TRIM"
-    "VALUE" "VALUES" "WEEKOFMONTH" "WEEKOFYEAR" "WEEKS"  "YEAR" "LASTMOVE" "CARDINALITY"))
+    "VALUE" "VALUES" "WEEKOFMONTH" "WEEKOFYEAR" "WEEKS"  "YEAR" "LASTMOVE" "CARDINALITY" "ASBITSTREAM" "LENGHT" "LEFT" "RIGHT"))
 
 ;; =============================
 ;; Types / constants / special vars
@@ -102,8 +102,8 @@
   '("TRUE" "FALSE" "NULL" "UNKNOWN"))
 
 (defconst esql--special-vars
-  '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment"
-    "OutputLocalEnvironment" "Environment" "InputExceptionList"
+  '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "InputLocalEnv"
+    "OutputLocalEnvironment" "OutputLocalEnv" "Environment" "InputExceptionList"
     "OutputExceptionList" "ExceptionList" "ExceptionData" "Message" "MQMD" "HTTP"
     "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
 
