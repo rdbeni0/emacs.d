@@ -60,7 +60,7 @@
 ;; =============================
 (defconst esql--keywords
   '("ALL" "AND" "ANY" "AS" "ATTACH" "BEGIN" "BETWEEN" "BY" "CALL" "CASE"
-    "CAST" "CATALOG" "CARDINALITY" "CREATE" "CURENT_GMTDATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
+    "CAST" "CATALOG" "CARDINALITY" "CREATE" "CURRENT_TIMESTAMP" "CURENT_GMTDATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
     "DO" "DOMAIN" "ELSE" "ELSEIF" "END" "EVALUATE" "EXTERNAL" "FALSE" "FINALIZE"
     "FROM" "FOR" "FORMAT" "FUNCTION" "IF" "IN" "IS" "INOUT" "INPUT" "INSERT" "INTO" "ITEM" "LASTCHILD" "FIRSTCHILD"
     "PREVIOUSSIBLING" "NEXTSIBLING" "LANGUAGE"
@@ -79,7 +79,7 @@
 
 (defconst esql--special-vars
   '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "OutputLocalEnvironment" "Environment" "InputExceptionList" "OutputExceptionList"
-    "ExceptionList" "ExceptionData" "Message" "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
+    "ExceptionList" "ExceptionData" "Message" "MQMD" "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
 
 (defconst esql-font-lock-keywords
   `(

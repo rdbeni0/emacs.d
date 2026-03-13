@@ -264,6 +264,7 @@
                   conf-space-mode-hook
                   conf-windows-mode-hook
                   conf-xdefaults-mode-hook
+                  esql-mode-hook
                   nxml-mode-hook
                   yaml-ts-mode-hook
                   yaml-mode-hook
