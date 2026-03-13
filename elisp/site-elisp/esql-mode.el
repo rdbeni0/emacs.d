@@ -18,7 +18,7 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this program. If not, see <http://www.gnu.markdown/licenses/>.
+;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 (require 'prog-mode)
 
@@ -56,58 +56,96 @@
   "Syntax table for `esql-mode'.")
 
 ;; =============================
-;; Keywords / types / constants
+;; Reserved keywords
 ;; =============================
-(defconst esql--keywords
-  '("ALL" "AND" "ANY" "AS" "ATTACH" "BEGIN" "BETWEEN" "BY" "CALL" "CASE"
-    "CAST" "CATALOG" "CARDINALITY" "CREATE" "CURRENT_TIMESTAMP" "CURENT_GMTDATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
-    "DO" "DOMAIN" "ELSE" "ELSEIF" "END" "EVALUATE" "EXTERNAL" "FALSE" "FINALIZE"
-    "FROM" "FOR" "FORMAT" "FUNCTION" "IF" "IN" "IS" "INOUT" "INPUT" "INSERT" "INTO" "ITEM" "LASTCHILD" "FIRSTCHILD"
-    "PREVIOUSSIBLING" "NEXTSIBLING" "LANGUAGE"
-    "LIKE" "MODULE" "MOVE" "NAME" "NOT" "NULL" "OR" "OF" "OUTPUT" "PASSTHROUGH" "PROPAGATE"
-    "REPEAT" "RESIGNAL" "RETURN" "RETURNS" "ROW" "SELECT" "LOG"
-    "SET" "SIGNAL" "THEN" "THROW" "TO" "TRUE" "UPDATE" "VALUES" "WHEN"
-    "WHILE" "BROKER" "SCHEMA" "PATH" "AFTER" "BEFORE" ))
+(defconst esql--reserved-keywords
+  '("BEGIN" "IF" "ALL" "ASYMMETRIC" "BOTH" "CASE" "DISTINCT" "ELSE" "ELSEIF" "END" "FROM" "ITEM" "LEADING" "NOT" "SYMMETRIC" "THEN" "TRAILING" "WHEN" "FOR" "DO" "OR" "AND" "WHERE" "WHILE" "UNTIL"))
 
+;; =============================
+;; Non-reserved keywords
+;; =============================
+(defconst esql--non-reserved-keywords
+  '("ANY" "AS" "ATOMIC" "ATTACH" "BETWEEN" "BIT"  "BY" "IN" "IS" "TO"
+    "CALL" "CATALOG"   "COMPUTE" "CONDITION"
+    "CONTINUE" "COORDINATED" "COUNT" "CREATE" "CURRENT_DATE" "CURRENT_GMTDATE"
+    "CURRENT_GMTTIME" "CURRENT_GMTTIMESTAMP" "CURRENT_TIME" "CURRENT_TIMESTAMP"
+    "DATA" "DATABASE" "DATE" "DAY" "DAYOFWEEK" "DAYOFYEAR" "DAYS"
+    "DECLARE" "DEFAULT" "DELETE" "DETACH"  "DOMAIN" "DYNAMIC"
+    "ENCODING" "ENVIRONMENT" "ESCAPE" "ESQL" "EVAL" "EVENT" "EXCEPTION"
+    "EXISTS" "EXIT" "EXTERNAL" "FALSE" "FIELD" "FILTER" "FINALIZE" "FIRSTCHILD"
+    "FORMAT" "FOUND" "FULL" "FUNCTION" "GMTTIME" "GMTTIMESTAMP"
+    "GROUP" "HANDLER" "HAVING" "HOUR" "IDENTITY" "INF" "INFINITY"
+    "INOUT" "INSERT"  "INTERVAL" "INTO" "ISLEAPYEAR" "ITERATE"
+    "JAVA" "LABEL" "LANGUAGE" "LAST" "LASTCHILD" "LEAVE" "LIKE" "LIST"
+    "LOCALTIMEZONE" "LOG" "LOOP" "MAX" "MESSAGE" "MIN" "MINUTE" "MODIFIES"
+    "MODULE" "MONTH" "MONTHS" "MOVE" "NAME" "NAMESPACE" "NAN" "NEXTSIBLING"
+    "NONE"  "NUM" "NUMBER" "OF" "OPTIONS" "ORDER" "OUT" "PARSE"
+    "PASSTHRU" "PATH" "PLACING" "PREVIOUSSIBLING" "PROCEDURE" "PROPAGATE"
+    "QUARTEROFYEAR" "QUARTERS" "READS"  "REPEAT" "RESIGNAL" "RESULT"
+    "RETURN" "RETURNS" "ROW" "SAMEFIELD" "SCHEMA" "SECOND" "SELECT" "SET" "SETS"
+    "SEVERITY" "SHARED" "SHORT" "SOME" "SQL" "SQLCODE" "SQLERRORTEXT"
+    "SQLEXCEPTION" "SQLNATIVEERROR" "SQLSTATE" "SQLWARNING" "SUM" "TERMINAL"
+    "THE"  "THROW" "TIME" "TIMESTAMP" "TRACE" "TRUE" "TYPE"
+    "UNCOORDINATED" "UNKNOWN"  "UPDATE" "USER" "UUIDASBLOB" "UUIDASCHAR"
+    "VALUE" "VALUES" "WEEKOFMONTH" "WEEKOFYEAR" "WEEKS"  "YEAR" "LASTMOVE"))
+
+;; =============================
+;; Types / constants / special vars
+;; =============================
 (defconst esql--types
   '("BOOLEAN" "BYTE" "CHARACTER" "CCSID" "CHAR" "VARCHAR" "INTEGER" "INT"
     "DECIMAL" "FLOAT" "REAL" "DOUBLE" "TIMESTAMP" "DATE" "TIME"
-    "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE" "LIST" "SHARED" "NAMESPACE" "GMTTIME" "GMTTIMESTAMP"))
+    "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE" "LIST" "SHARED" "NAMESPACE"
+    "GMTTIME" "GMTTIMESTAMP" "CHARACTER" "DECIMAL" "INT" "INTEGER" "REFERENCE" "BLOB" "BOOLEAN" "NULL" "CCSID" "CHAR" "FLOAT" "CONSTANT"))
 
 (defconst esql--constants
   '("TRUE" "FALSE" "NULL" "UNKNOWN"))
 
 (defconst esql--special-vars
-  '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "OutputLocalEnvironment" "Environment" "InputExceptionList" "OutputExceptionList"
-    "ExceptionList" "ExceptionData" "Message" "MQMD" "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
+  '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment"
+    "OutputLocalEnvironment" "Environment" "InputExceptionList"
+    "OutputExceptionList" "ExceptionList" "ExceptionData" "Message" "MQMD"
+    "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
 
+;; =============================
+;; Font-lock keywords
+;; =============================
+
+;; M-x list-faces-display
 (defconst esql-font-lock-keywords
-  `(
-    (,(regexp-opt esql--keywords 'words)
+  (list
+   ;; 1. Reserved keywords
+   `(,(regexp-opt esql--reserved-keywords 'words)
+     . font-lock-builtin-face)
+
+   ;; 2. Non-reserved keywords
+   `(,(regexp-opt esql--non-reserved-keywords 'words)
      . font-lock-keyword-face)
 
-    (,(regexp-opt esql--types 'words)
+   ;; 3. Types
+   `(,(regexp-opt esql--types 'words)
      . font-lock-type-face)
 
-    (,(regexp-opt esql--constants 'words)
+   ;; 4. Constants
+   `(,(regexp-opt esql--constants 'words)
      . font-lock-constant-face)
 
-    (,(regexp-opt esql--special-vars 'words)
+   ;; 5. Special variables
+   `(,(regexp-opt esql--special-vars 'words)
      . font-lock-variable-name-face)
 
-    ;; CREATE FUNCTION / PROCEDURE
-    ("\\<\\(CREATE\\)\\s-+\\(FUNCTION\\|PROCEDURE\\)\\s-+\\([[:alnum:]_]+\\)"
+   ;; CREATE FUNCTION / PROCEDURE
+   '("\\<\\(CREATE\\)\\s-+\\(FUNCTION\\|PROCEDURE\\)\\s-+\\([[:alnum:]_]+\\)"
      (1 font-lock-keyword-face)
      (2 font-lock-keyword-face)
      (3 font-lock-function-name-face))
 
-    ;; CREATE COMPUTE MODULE
-    ("\\<\\(CREATE\\)\\s-+\\(COMPUTE\\)\\s-+\\(MODULE\\)\\s-+\\([[:alnum:]_\\.]+\\)"
+   ;; CREATE COMPUTE MODULE
+   '("\\<\\(CREATE\\)\\s-+\\(COMPUTE\\)\\s-+\\(MODULE\\)\\s-+\\([[:alnum:]_\\.]+\\)"
      (1 font-lock-keyword-face)
      (2 font-lock-keyword-face)
      (3 font-lock-keyword-face)
-     (4 font-lock-function-name-face))
-    ))
+     (4 font-lock-function-name-face))))
 
 ;; =============================
 ;; Indentation
@@ -235,7 +273,7 @@
               '(("Functions/Procedures" "^\\s-*CREATE\\s-+\\(FUNCTION\\|PROCEDURE\\)\\s-+\\([[:alnum:]_]+\\)" 2)
                 ("Modules" "^\\s-*CREATE\\s-+COMPUTE\\s-+MODULE\\s-+\\([[:alnum:]_\\.]+\\)" 1)))
 
-  (run-hooks 'esql-mode-hook))
+  )
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.esql\\'" . esql-mode))
