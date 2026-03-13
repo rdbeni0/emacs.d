@@ -60,10 +60,11 @@
 ;; =============================
 (defconst esql--keywords
   '("ALL" "AND" "ANY" "AS" "ATTACH" "BEGIN" "BETWEEN" "BY" "CALL" "CASE"
-    "CAST" "CATALOG" "CREATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
-    "DO" "ELSE" "ELSEIF" "END" "EVALUATE" "EXTERNAL" "FALSE" "FINALIZE"
-    "FROM" "FOR" "FORMAT" "FUNCTION" "IF" "IN" "INOUT" "INPUT" "INSERT" "INTO" "ITEM" "LANGUAGE"
-    "LIKE" "MODULE" "MOVE" "NOT" "NULL" "OR" "OUTPUT" "PASSTHROUGH" "PROPAGATE"
+    "CAST" "CATALOG" "CARDINALITY" "CREATE" "CURENT_GMTDATE" "FIELD" "DATABASE" "DECLARE" "DELETE" "DISTINCT"
+    "DO" "DOMAIN" "ELSE" "ELSEIF" "END" "EVALUATE" "EXTERNAL" "FALSE" "FINALIZE"
+    "FROM" "FOR" "FORMAT" "FUNCTION" "IF" "IN" "IS" "INOUT" "INPUT" "INSERT" "INTO" "ITEM" "LASTCHILD" "FIRSTCHILD"
+    "PREVIOUSSIBLING" "NEXTSIBLING" "LANGUAGE"
+    "LIKE" "MODULE" "MOVE" "NAME" "NOT" "NULL" "OR" "OF" "OUTPUT" "PASSTHROUGH" "PROPAGATE"
     "REPEAT" "RESIGNAL" "RETURN" "RETURNS" "ROW" "SELECT" "LOG"
     "SET" "SIGNAL" "THEN" "THROW" "TO" "TRUE" "UPDATE" "VALUES" "WHEN"
     "WHILE" "BROKER" "SCHEMA" "PATH" "AFTER" "BEFORE" ))
@@ -78,7 +79,7 @@
 
 (defconst esql--special-vars
   '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "OutputLocalEnvironment" "Environment" "InputExceptionList" "OutputExceptionList"
-    "ExceptionList" "ExceptionData" "Message" "Tree" "Properties" "DFDL" "XMLNSC" "JSON"))
+    "ExceptionList" "ExceptionData" "Message" "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
 
 (defconst esql-font-lock-keywords
   `(
@@ -125,7 +126,7 @@
 
     (cl-labels
         ((skip-line-p (s)
-           ;; Pusta linia lub sama linia komentarza
+           ;; Blank line or just a comment line
            (string-match-p "^[ \t]*\\(--.*\\)?$" s))
 
          ;; BEGIN / THEN / DO / TRY / CATCH / CASE
@@ -134,7 +135,7 @@
             "\\_<\\(BEGIN\\|THEN\\|DO\\|TRY\\|CATCH\\|CASE\\)\\_>"
             s))
 
-         ;; Każde END ... traktujemy jako zamknięcie bloku
+         ;; We treat each END ... as the closure of the block
          (closes-block-p (s)
            (string-match-p "^[ \t]*END\\b" s))
 
@@ -142,7 +143,7 @@
          (middle-block-p (s)
            (string-match-p "^[ \t]*\\(ELSE\\|ELSEIF\\|WHEN\\|OTHERWISE\\)\\b" s)))
 
-      ;; Znajdź poprzednią istotną linię jako kotwicę
+      ;; Find the previous significant line as an anchor
       (save-excursion
         (setq indent nil)
         (while (and (not (bobp)) (null indent))
@@ -165,24 +166,24 @@
                ((opens-block-p l)
                 (setq indent (+ (current-indentation) tab)))
 
-               ;; Tylko MODULE jest blokiem CREATE
+               ;; Only MODULE is a CREATE block
                ((string-match-p "^[ \t]*CREATE\\s-+COMPUTE\\s-+MODULE\\b" l)
                 (setq indent (+ (current-indentation) tab)))
 
-               ;; Normalna linia – przejmujemy jej wcięcie
+               ;; Normal line – we take over its indentation
                (t
                 (setq indent (current-indentation))))))))
 
-      ;; Jeśli nic nie znaleźliśmy – poziom 0
+      ;; If we didn't find anything – level 0
       (unless indent
         (setq indent 0))
 
-      ;; Bieżąca linia zamyka blok lub jest ELSE/WHEN – cofamy poziom
+      ;; The current line closes the block or is ELSE/WHEN – we go back a level
       (when (or (closes-block-p text)
                 (middle-block-p text))
         (setq indent (max 0 (- indent tab))))
 
-      ;; Ustaw wcięcie
+      ;; Set the indent
       (goto-char bol)
       (unless (looking-at "^[ \t]*$")
         (let ((cur (current-indentation)))
@@ -190,11 +191,11 @@
             (delete-horizontal-space)
             (indent-to indent))))
 
-      ;; Przywróć pozycję kursora
+      ;; Restore cursor position
       (goto-char savep))))
 
 (defun esql-mode-setup-indent ()
-  (setq indent-line-function 'esql--indent-line) ;; TODO! Not working correctly
+  (setq indent-line-function 'esql--indent-line)
   (setq tab-width 4)
   (setq indent-tabs-mode t))
 
