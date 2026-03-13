@@ -72,7 +72,7 @@
     "DATA" "DATABASE" "DAY" "DAYOFWEEK" "DAYOFYEAR" "DAYS"
     "DECLARE" "DEFAULT" "DELETE" "DETACH"  "DOMAIN" "DYNAMIC"
     "ENCODING" "ENVIRONMENT" "ESCAPE" "ESQL" "EVAL" "EVENT" "EXCEPTION"
-    "EXISTS" "EXIT" "EXTERNAL" "FIELD" "FILTER" "FINALIZE" "FIRSTCHILD"
+    "EXISTS" "EXIT" "EXTERNAL" "FIELD" "FIELDVALUE" "FILTER" "FINALIZE" "FIRSTCHILD"
     "FORMAT" "FOUND" "FULL" "FUNCTION" "GMTTIME" "GMTTIMESTAMP"
     "GROUP" "HANDLER" "HAVING" "HOUR" "IDENTITY" "INF" "INFINITY"
     "INOUT" "INSERT"  "INTO" "ISLEAPYEAR" "ITERATE"
@@ -104,7 +104,7 @@
 (defconst esql--special-vars
   '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "InputLocalEnv"
     "OutputLocalEnvironment" "OutputLocalEnv" "Environment" "InputExceptionList"
-    "OutputExceptionList" "ExceptionList" "ExceptionData" "Message" "MQMD" "HTTP"
+    "OutputExceptionList" "ExceptionList" "ExceptionData" "Message" "MQMD" "MQ" "HTTP"
     "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
 
 ;; =============================
