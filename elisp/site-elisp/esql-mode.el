@@ -2,7 +2,7 @@
 
 ;; Author: rdbeni0
 ;; Keywords: esql
-;; Version: 0.0.4
+;; Version: 0.0.5
 ;; Package-Requires: ((emacs "28.5"))
 
 ;; This file is not part of GNU Emacs
@@ -217,6 +217,9 @@
                 nil
                 nil))
   (setq-local indent-line-function #'esql--indent-line)
+
+  ;; The search should have a case-sensitive context:
+  (setq-local case-fold-search nil)
 
   (setq-local comment-start "-- ")
   (setq-local comment-end "")
