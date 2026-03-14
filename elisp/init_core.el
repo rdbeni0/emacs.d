@@ -4,7 +4,7 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; NATIVE COMPILATION AND PERFORMANCE OPTIONS
+;;;; -> NATIVE COMPILATION AND PERFORMANCE OPTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Basic setup for performance tweaks and options.
@@ -93,7 +93,7 @@
                                   (k-time (garbage-collect))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; CONFIGURATION FOR PACKAGES AND REPOSITORIES
+;;;; -> CONFIGURATION FOR PACKAGES AND REPOSITORIES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Basic setup for use-package and additional repositories.
@@ -110,7 +110,6 @@
 (add-to-list 'load-path (expand-file-name "elisp/cfg-general" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "elisp/cfg-general/cfg-gen-optional" user-emacs-directory))
 
-
 ;; TODO: add also subdirs
 ;;
 ;; found here: https://stackoverflow.com/questions/56799992/how-can-i-register-a-recursive-load-path
@@ -126,20 +125,21 @@
 ;; WARNING! The same settings could be used separately for epm (.epm.el) package - so please also look at .epm.el file
 ;; WARNING! Do not use marmalade - is an obsolete repository : https://marmalade-repo.org/#download
 
-(setq package-archives '(
-                         ("gnu"    . "http://elpa.gnu.org/packages/")
-                         ("melpa"  . "https://melpa.org/packages/")
-			             ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			             ))
+(setq package-archives
+      '(
+        ("gnu"    . "http://elpa.gnu.org/packages/")
+        ("melpa"  . "https://melpa.org/packages/")
+		("nongnu" . "https://elpa.nongnu.org/nongnu/")
+		))
 
 ;; defuns
 
 (defun cfg/load-all-el-in-directory (dir)
   "`load' all elisp libraries in directory DIR which are not already loaded.
-  This function is to avoid re-loading a library when both .el and .elc versions are present.
-  More info and solutions:
-  https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
-  https://www.emacswiki.org/emacs/LoadingLispFiles"
+This function is to avoid re-loading a library when both .el and .elc versions are present.
+More info and solutions:
+https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
+https://www.emacswiki.org/emacs/LoadingLispFiles"
   (interactive "D")
   (let ((libraries-loaded (mapcar #'file-name-sans-extension
                                   (delq nil (mapcar #'car load-history)))))
@@ -156,12 +156,12 @@
     (mapc load-it (directory-files dir nil "\\.el$"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; DECLARATIVE LIST OF CORE PACKAGES
+;;;; -> DECLARATIVE LIST OF CORE PACKAGES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Additional core packages: packages which are required for core config.
 ;; Just make sure that all pkgs in the list are installed and nothing more.
-;; For additional config - "use-package" should be used.
+;; For additional config - `use-package' should be used.
 ;;
 
 (dolist (core-packages
@@ -177,10 +177,9 @@
   (unless (package-installed-p core-packages) (package-install core-packages)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; FULL LIST FOR AUTO-MODE-ALIST
+;;;; -> AUTO-MODE-ALIST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Full list with major modes and files:
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Auto-Major-Mode.html
 ;; https://www.emacswiki.org/emacs/AutoModeAlist
 ;;
@@ -208,31 +207,32 @@
        auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; CONFIGURATION FOR ENVIRONMENT VARIABLES
+;;;; -> LOCAL ENVIRONMENT VARIABLES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; if true and dedicated file exists, load additional, local env variables
 ;;
 
-(if (file-readable-p (expand-file-name "data/local/lo-env.el" user-emacs-directory))
+(if (file-readable-p
+     (expand-file-name "data/local/lo-env.el" user-emacs-directory))
     (require 'lo-env))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; EVIL MODE
+;;;; -> EVIL-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is related to evil-mode for Emacs.
-;;
 
 ;; These variables must be in this place (and not inside `use-package'),
 ;; it is related to a configuration for `evil-collection':
+;; https://github.com/emacs-evil/evil-collection?tab=readme-ov-file#installation
 (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
 (setq evil-want-keybinding nil)
 
+;; https://github.com/emacs-evil/evil
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-C-i-jump nil)  ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
+  ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
+  (setq evil-want-C-i-jump nil)
   :config
   (evil-mode 1)
   (setq evil-auto-indent nil)
@@ -244,6 +244,7 @@
 
   ;; standard undo emacs system
   (evil-set-undo-system 'undo-redo)
+
   ;; evil search module
   (evil-select-search-module 'evil-search-module 'evil-search)
   ;; https://github.com/proofgeneral/pg/issues/174
@@ -255,8 +256,8 @@
 
   ;; woarkarounds to add ESC as "quit" button everywhere :
   (defun cfg/minibuffer-keyboard-quit ()
-    "Abort recursive edit. In Delete Selection mode, if the mark is active, just deactivate it;
-then it takes a second \\[keyboard-quit] to abort the minibuffer."
+    "Abort recursive edit. In Delete Selection mode, if the mark is active,
+just deactivate it; then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (interactive)
     (if (and delete-selection-mode transient-mark-mode mark-active)
         (setq deactivate-mark  t)
@@ -283,7 +284,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
            (and (listp mode)
                 (eq (car mode) 'term)))
          evil-collection-mode-list))
-  ;;
+
   (evil-collection-init))
 
 ;; https://github.com/Somelauw/evil-org-mode
@@ -295,52 +296,47 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (evil-org-agenda-set-keys))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; GENERAL.EL AND ALL KEYBINDINGS
+;;;; -> GENERAL.EL AND KEYBINDINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Setup for general.el
-;;
 
+;; https://github.com/noctuid/general.el
 (use-package general
   :after evil
   :config
 
-  ;; Split whole general.el mapping into small pieces
+  ;; split whole general.el mapping into small pieces
   (require 'cfg-gen-for-all-modes)
   (require 'cfg-gen-for-all-modes-fkeys)
   (require 'cfg-gen-for-many-modes)
   (require 'cfg-gen-core)
 
-
   ;; https://github.com/noctuid/general.el/issues/99
-  ;; general-override-mode
+  ;; `general-override-mode' -> override evil keybindings
   ;; :keymaps 'override
-  ;; ^override evil keybindings
   (general-override-mode 1)
 
   ;; https://github.com/noctuid/general.el#automatic-key-unbinding
-  ;; "To automatically prevent Key sequence starts with a non-prefix key errors without the need to explicitly unbind non-prefix keys, you can add (general-auto-unbind-keys) to your configuration file. This will advise define-key to unbind any bound subsequence of the KEY."
+  ;; "To automatically prevent
+  ;; Key sequence starts with a non-prefix key errors without the need to explicitly unbind non-prefix keys,
+  ;; you can add (`general-auto-unbind-keys') to your configuration file.
+  ;; This will advise define-key to unbind any bound subsequence of the KEY."
   (general-auto-unbind-keys))
 
-;; Load general.el for all modes (global scope) and for many modes (but not all; local scope)...
-;; (cfg/load-all-el-in-directory (expand-file-name "elisp/cfg-general" user-emacs-directory))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; CONFIGURATION FOR CODE FORMATTING
+;;;; -> CODE FORMATTING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
-;;;;;;;;;;;;;;;; BUILT-IN FORMATTING via INDENTATION:
+;; Built-in formatting via indentation: C-x h C-M-\
 ;; https://www.reddit.com/r/emacs/comments/q3rwes/anyone_using_code_formatter_for_elisp/
 
-;; formatting - built in function - the same as C-x h C-M-\:
 (defun cfg/built-in-format-via-indent ()
-  "Format code using built in processing and default indentation."
+  "Format code using built-in indentation.
+Same as `C-x h C-M-\\`."
   (interactive)
   (indent-region (point-min) (point-max)))
 
 ;; do NOT use tabs for indentation:
-;; https://web-mode.org/
+;; particularly recommended by https://web-mode.org/
 (setq-default indent-tabs-mode nil)
 
 ;; show width of tabs as 4 spaces
@@ -352,21 +348,22 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "Location of xmllint executable.")
 
 (defun cfg/xmllint-format-buffer ()
-  "Run `xmllint --nonet --format -` on the current buffer."
+  "Run `xmllint --nonet --format -' on the current buffer."
   (interactive)
   (mark-whole-buffer)
   (save-excursion
-    (shell-command-on-region (point) (mark) (concat nxml-xmllint-executable " --nonet --format -") nil t)))
+    (shell-command-on-region
+     (point) (mark)
+     (concat nxml-xmllint-executable " --nonet --format -") nil t)))
 
-;; formatting - built in function for nxml:
 (defun cfg/built-in-format-nxml ()
-  "Format xml code (nxml-mode) using built in processing."
+  "Format xml code (`nxml-mode') using xmllint or built-in processing."
   (interactive)
   (if (executable-find nxml-xmllint-executable)
       (cfg/xmllint-format-buffer)
     (cfg/built-in-format-via-indent)))
 
-;; PERL FORMATTING:
+;; PERL5 FORMATTING:
 
 (defvar perl5-perltidy-executable "perltidy"
   "Location of perltidy executable.")
@@ -375,10 +372,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 				                 "--standard-error-output"
 				                 "--perl-best-practices"
 				                 "-l=185")
-  "Command line options to pass to perltidy")
+  "Command line options to pass to perltidy.")
 
 (defun cfg/perltidy-format ()
-  "Format Perl5 code with perltidy: if region is active, operate on it, else operate on line."
+  "Format perl5 code with perltidy;
+if region is active, operate on it, else operate on line."
   (interactive)
   (let ((old-point (point))
         (pos
@@ -407,35 +405,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (mark-defun)
   (cfg/perltidy-format))
 
-;; formatting - built in function for cperl:
 (defun cfg/built-in-format-perl ()
-  "Format perl code using built in processing."
+  "Format perl code using perltidy or built-in processing."
   (interactive)
   (if (executable-find perl5-perltidy-executable)
       (cfg/perltidy-format)
     (cfg/built-in-format-via-indent)))
 
-;; other and alternative option:
-;;
-;; (defun cfg/perltidy-format ()
-;;     "Run perltidy on the current region."
-;;    (interactive)
-;;    (save-excursion
-;;      (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; CONFIGFURATION FOR COMMENTING
+;;;; -> COMMENTING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (use-package newcomment
   :config
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; XREF AND FFAP
+;;;; -> XREF AND FFAP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (use-package xref
   :config
@@ -622,8 +609,6 @@ there's a region, all lines that region covers will be duplicated."
       (insert region)
       (setq end (point)))
     (goto-char (+ origin (* (length region) arg) arg))))
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; HIDESHOW

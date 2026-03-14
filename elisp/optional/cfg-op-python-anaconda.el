@@ -1,9 +1,13 @@
 ;;; cfg-op-python-anaconda.el --- configfuration for anaconda-mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Anaconda-mode is a light alternative to lsp servers
-;; ggtags solution seems to be better and faster for "jump to definitions", but anaconda-mode is great for code completion.
+;; Anaconda-mode is a light alternative to LSP servers
+;; `ggtags' solution seems to be better and faster for "jump to definitions", but anaconda-mode is great for code completion.
 ;;
+;; https://www.reddit.com/r/emacs/comments/5slhkb/what_is_your_preferred_setup_for_python/
+;; https://realpython.com/emacs-the-best-python-editor/
+;; https://github.com/pythonic-emacs/anaconda-mode
+
 ;;; Code:
 
 ;;;; https://github.com/pythonic-emacs/anaconda-mode#pythonpath

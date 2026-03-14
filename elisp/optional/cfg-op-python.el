@@ -4,6 +4,9 @@
 ;; Everything what is connected with python programming (but without lsp and code completion).
 ;; Additional and useful packages.
 ;;
+;; https://www.emacswiki.org/emacs/PythonProgrammingInEmacs
+;; https://gitlab.com/nathanfurnal/dotemacs/-/snippets/2060535
+;;
 ;;; Code:
 
 ;;;; https://github.com/pythonic-emacs/anaconda-mode#pythonpath

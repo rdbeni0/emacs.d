@@ -59,7 +59,8 @@
 ;; Reserved keywords
 ;; =============================
 (defconst esql--reserved-keywords
-  '("BEGIN" "IF" "ALL" "ASYMMETRIC" "BOTH" "CASE" "DISTINCT" "ELSE" "ELSEIF" "END" "FROM" "ITEM" "LEADING" "NOT" "SYMMETRIC" "THEN" "TRAILING" "WHEN" "FOR" "DO" "OR" "AND" "WHERE" "WHILE" "UNTIL"))
+  '("BEGIN" "IF" "ALL" "ASYMMETRIC" "BOTH" "CASE" "DISTINCT" "ELSE" "ELSEIF" "END" "FROM" "ITEM"
+    "LEADING" "NOT" "SYMMETRIC" "THEN" "TRAILING" "WHEN" "FOR" "DO" "OR" "AND" "WHERE" "WHILE" "UNTIL"))
 
 ;; =============================
 ;; Non-reserved keywords
@@ -87,7 +88,8 @@
     "SQLEXCEPTION" "SQLNATIVEERROR" "SQLSTATE" "SQLWARNING" "SUM" "TERMINAL"
     "THE"  "THROW" "TIME" "TRACE" "TYPE"
     "UNCOORDINATED" "UPDATE" "USER" "UUIDASBLOB" "UUIDASCHAR" "TRIM"
-    "VALUE" "VALUES" "WEEKOFMONTH" "WEEKOFYEAR" "WEEKS"  "YEAR" "LASTMOVE" "CARDINALITY" "ASBITSTREAM" "LENGTH" "LEFT" "RIGHT" "UPPER"))
+    "VALUE" "VALUES" "WEEKOFMONTH" "WEEKOFYEAR" "WEEKS"  "YEAR" "LASTMOVE" "CARDINALITY" "ASBITSTREAM"
+    "LENGTH" "LEFT" "RIGHT" "UPPER"))
 
 ;; =============================
 ;; Types / constants / special vars
@@ -96,7 +98,8 @@
   '("BOOLEAN" "BYTE" "CHARACTER" "CCSID" "CHAR" "VARCHAR" "INTEGER" "INT"
     "DECIMAL" "FLOAT" "REAL" "DOUBLE" "TIMESTAMP" "DATE" "TIME"
     "INTERVAL" "BLOB" "BIT" "ROW" "REFERENCE" "LIST" "SHARED" "NAMESPACE"
-    "GMTTIME" "GMTTIMESTAMP" "CHARACTER" "DECIMAL" "INT" "INTEGER" "REFERENCE" "BLOB" "BOOLEAN" "CHAR" "FLOAT" "CONSTANT" "DATE" "NAMESPACE"))
+    "GMTTIME" "GMTTIMESTAMP" "CHARACTER" "DECIMAL" "INT" "INTEGER" "REFERENCE" "BLOB" "BOOLEAN"
+    "CHAR" "FLOAT" "CONSTANT" "DATE" "NAMESPACE"))
 
 (defconst esql--constants
   '("TRUE" "FALSE" "NULL" "UNKNOWN"))
@@ -104,8 +107,8 @@
 (defconst esql--special-vars
   '("InputRoot" "OutputRoot" "LocalEnvironment" "InputLocalEnvironment" "InputLocalEnv"
     "OutputLocalEnvironment" "OutputLocalEnv" "Environment" "InputExceptionList"
-    "OutputExceptionList" "ExceptionList" "ExceptionData" "Message" "MQMD" "MQ" "HTTP"
-    "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "JSON"))
+    "OutputExceptionList" "ExceptionList" "ExceptionData" "Message" "MQMD" "MQ"
+    "Tree" "Variables" "Destination" "Properties" "DFDL" "XMLNSC" "XMLNS" "JSON"))
 
 ;; =============================
 ;; Font-lock keywords
