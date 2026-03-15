@@ -240,7 +240,7 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
   (evil-want-abbrev-expand-on-insert-exit nil)
   (evil-auto-indent nil)
   ;; visual-line-mode
-  https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
+  ;; https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
   (evil-respect-visual-line-mode t)
   :functions
   (cfg/minibuffer-keyboard-quit
@@ -264,7 +264,7 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
   ;; search
   (evil-select-search-module 'evil-search-module 'evil-search)
 
-  ;; ESC workaround
+  ;; Use `ESC' everywhere
   (evil-define-key '(normal visual) 'global
     (kbd "<escape>") #'keyboard-escape-quit)
   (global-set-key (kbd "<escape>") #'keyboard-escape-quit))
