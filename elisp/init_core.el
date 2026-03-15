@@ -441,7 +441,7 @@ if region is active, operate on it, else operate on line."
 ;;
 
 (defun cfg/capitalize-region (beg end)
-  "`capitalize-region' when `transient-mark-mode' is on and region is active."
+  "Call `capitalize-region' on the region between BEG and END when active."
   (interactive "*r")
   (when (use-region-p)
     (capitalize-region beg end)))
@@ -583,7 +583,7 @@ Display one of: \"unix LF\", \"dos (windows) CRLF\", \"mac CR\", or \"mixed\"."
 
 (defun cfg/duplicate-current-line-or-region (arg)
   "Duplicates the current line or region ARG times.
-If there's no region, the current line will be duplicated.  However, if
+If there's no region, the current line will be duplicated. However, if
 there's a region, all lines that region covers will be duplicated."
   (interactive "p")
   (pcase-let* ((origin (point))
@@ -614,28 +614,8 @@ there's a region, all lines that region covers will be duplicated."
     (goto-char (+ origin (* (length region) arg) arg))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; HIDESHOW
+;;;; -> WHICH-KEY
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Setup for hideshow minor mode:
-;; https://www.emacswiki.org/emacs/HideShow
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Hideshow.html
-;; Please note that this package is useful and required for evil-mode.
-;;
-
-;; hideshow can be enabled/disabled for particular mode - for example:
-;; (add-hook 'perl-mode-hook 'hs-minor-mode)
-(use-package hideshow
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook #'hs-minor-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; WHICH-KEY
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Setup for which-key mode
-;;
 
 (use-package which-key
   :init
@@ -646,9 +626,8 @@ there's a region, all lines that region covers will be duplicated."
   (which-key-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; TAB-BAR-MODE
+;;;; -> TAB-BAR-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (use-package tab-bar
   :defer t
@@ -714,10 +693,9 @@ Uses position instead of index field."
   (tab-bar-history-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; EGLOT
+;;;; -> EGLOT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Everything what is connected with eglot for emacs.
 ;; https://www.gnu.org/software/emacs/manual/html_node/eglot/Customizing-Eglot.html
 ;; https://github.com/joaotavora/eglot
 ;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
@@ -734,10 +712,10 @@ Uses position instead of index field."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; EDIFF, DIFF AND VDIFF
+;;;; -> EDIFF, DIFF AND VDIFF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Customization for ediff:
+;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
 ;;
 
@@ -750,10 +728,9 @@ Uses position instead of index field."
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; IBUFFER
+;;;; -> IBUFFER
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Configuration for ibuffer.
 ;; https://olddeuteronomy.github.io/post/emacs-ibuffer-config/
 ;;
 
@@ -1349,7 +1326,7 @@ If the new path's directories does not exist, create them."
 (setopt make-backup-file-name-function 'cfg/-backup-file-name)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; LINE NUMBERS AND HIGHLIGHTING
+;;;; LINE NUMBERS AND HIGHLIGHTING, HIDESHOW
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; More options:
@@ -1377,6 +1354,17 @@ If the new path's directories does not exist, create them."
 
 (global-display-line-numbers-mode)
 (global-hl-line-mode 1) ; highlight current line
+
+;; Setup for hideshow minor mode:
+;; https://www.emacswiki.org/emacs/HideShow
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Hideshow.html
+;; Please note that this package is useful and required for evil-mode.
+;; hideshow can be enabled/disabled for particular mode - for example:
+;; (add-hook 'perl-mode-hook 'hs-minor-mode)
+(use-package hideshow
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook #'hs-minor-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; EMACS-LISP MODE
