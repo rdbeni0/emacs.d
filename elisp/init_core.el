@@ -426,14 +426,15 @@ if region is active, operate on it, else operate on line."
 
 (use-package xref
   :config
+  )
 
-  (defun cfg/ffap ()
-    "Standard verion of `ffatp' command (without embark)."
-    (interactive)
-    (ffap)))
+(defun cfg/ffap ()
+  "Standard verion of `ffatp' command (without embark)."
+  (interactive)
+  (ffap))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; VARIOUS TEXT MANIPULATIONS
+;;;; -> VARIOUS TEXT MANIPULATIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; https://github.com/bbatsov/crux/blob/master/crux.el
@@ -446,7 +447,8 @@ if region is active, operate on it, else operate on line."
     (capitalize-region beg end)))
 
 (defun cfg/downcase-region (beg end)
-  "`downcase-region' when `transient-mark-mode' is on and region is active."
+  "Downcase the region between BEG and END when the region is active.
+Intended as a safer wrapper around `downcase-region'."
   (interactive "*r")
   (when (use-region-p)
     (downcase-region beg end)))
@@ -514,13 +516,13 @@ Add space instead of EOL."
       (replace-match " "))))
 
 ;; https://www.emacswiki.org/emacs/DosToUnix
-(defun cfg/dos2unix (buffer)
-  "Automate M-% C-q C-m RET C-q C-j RET"
-  (interactive "*b")
+(defun cfg/dos2unix ()
+  "Convert DOS CRLF line endings to Unix LF."
+  (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while (search-forward (string ?\C-m) nil t)
-      (replace-match (string ?\C-j) nil t))))
+    (while (search-forward "\r" nil t)
+      (replace-match "\n" nil t))))
 
 (defun cfg/unix2dos (buffer)
   "Automate replacing C-q C-j (\\n) with C-q C-m C-j (\\r\\n)."
