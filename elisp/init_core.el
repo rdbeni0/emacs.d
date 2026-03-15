@@ -772,7 +772,8 @@ Uses position instead of index field."
   (add-hook 'ibuffer-mode-hook #'cfg/ibuffer-disable-mouse-tooltips)
 
   (defun cfg/toggle-ibuffer ()
-    "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer'. Otherwise, open `ibuffer'."
+    "If the current buffer is *Ibuffer*, use `cfg/alternate-buffer'.
+Otherwise, open `ibuffer'."
     (interactive)
     (if (eq major-mode 'ibuffer-mode)
 	    (cfg/alternate-buffer)
@@ -850,7 +851,7 @@ Uses position instead of index field."
 ;;;###autoload
 (defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.
-  If the universal prefix argument is used then will the windows too."
+If the universal prefix argument is used then will the windows too."
   (interactive "P")
   (when (yes-or-no-p (format "Killing all buffers except \"%s\"? "
                              (buffer-name)))
@@ -860,11 +861,11 @@ Uses position instead of index field."
 
 ;;;###autoload
 (defun cfg/alternate-buffer (&optional window)
-  "Switch back and forth between current and last buffer in the current window."
+  "Switch back and forth between the current buffer and the last buffer in WINDOW."
   (interactive)
   (let ((current-buffer (window-buffer window)))
-    ;; if no window is found in the windows history, `switch-to-buffer' will
-    ;; default to calling `other-buffer'.
+    ;; If no window is found in the window history, `switch-to-buffer'
+    ;; will fall back to `other-buffer'.
     (switch-to-buffer
      (cl-find-if (lambda (buffer)
                    (not (eq buffer current-buffer)))
@@ -891,11 +892,11 @@ Uses position instead of index field."
 ;;;###autoload
 (defun cfg/rename-current-buffer-file (&optional arg)
   "Rename the current buffer and the file it is visiting.
-  If the buffer isn't visiting a file, ask if it should
-  be saved to a file, or just renamed.
+If the buffer isn't visiting a file, ask if it should
+be saved to a file, or just renamed.
 
-  If called without a prefix argument, the prompt is
-  initialized with the current directory instead of filename."
+If called without a prefix argument, the prompt is
+initialized with the current directory instead of filename."
   (interactive "P")
   (let* ((name (buffer-name))
          (filename (buffer-file-name)))
@@ -952,10 +953,9 @@ Uses position instead of index field."
 ;;;###autoload
 (defun cfg/new-empty-buffer ()
   "Create a new empty buffer.
-  New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
-  It returns the buffer (for elisp programing).
-  URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
-  Version 2017-11-01"
+New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+It returns the buffer (for elisp programing).
+URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
   (interactive)
   (let (($buf (generate-new-buffer "untitled")))
     (switch-to-buffer $buf)
@@ -965,7 +965,7 @@ Uses position instead of index field."
 
 ;;;###autoload
 (defun cfg/toggle-maximize-buffer ()
-  "Maximize buffer"
+  "Maximize buffer."
   (interactive)
   (save-excursion
     (if (and (= 1 (length (window-list)))
@@ -1100,14 +1100,15 @@ Uses position instead of index field."
 
 ;;;###autoload
 (defun cfg/copy-file-path-with-line-column ()
-  "Copy and show the file path of the current buffer, including line and column number.
-  This function respects the value of the `column-number-indicator-zero-based' variable."
+  "Copy and display the file path of the current buffer with line and column.
+This respects the variable `column-number-indicator-zero-based'."
   (interactive)
   (if-let (file-path (cfg/-file-path-with-line-column))
       (progn
         (kill-new file-path)
         (message "%s" file-path))
     (message "WARNING: Current buffer is not attached to a file!")))
+
 
 ;;;###autoload
 (defun cfg/open-with (arg)
