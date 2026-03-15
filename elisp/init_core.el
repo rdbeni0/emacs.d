@@ -702,7 +702,8 @@ Uses position instead of index field."
 (use-package eglot
   :config
   (setq eglot-report-progress nil)
-  (setq eglot-events-buffer-size 0)
+  ;; disabling the event buffer (setting the size to 0):
+  (setq eglot-events-buffer-config '(:size 0 :format full))
   (setq eglot-autoshutdown t)
   ;; Additional configuration:
   ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
@@ -733,6 +734,8 @@ Uses position instead of index field."
 ;;
 
 (use-package ibuffer
+  :functions
+  (cfg/ibuffer-disable-mouse-tooltips)
   :config
   ;; turn off prompts "yes" or "no":
   (setq ibuffer-expert t)
@@ -773,10 +776,10 @@ Otherwise, open `ibuffer'."
 ;; https://github.com/DarwinAwardWinner/dotemacs-old/blob/master/site-lisp/settings/tempbuf-settings.el
 ;; https://github.com/biern/.emacs.d/blob/master/conf/tempbuf.el
 (use-package tempbuf
-  :config
-
+  :custom
   ;; after XX seconds of inactivity, buffer will be closed
-  (setq tempbuf-minimum-timeout 30)
+  (tempbuf-minimum-timeout 30)
+  :config
 
   ;; example:
   ;; (add-hook 'foo-mode-hook 'turn-on-tempbuf-mode)
@@ -1225,7 +1228,8 @@ With a prefix ARG always prompt for command to use."
 (setq sentence-end-double-space nil)
 
 ;; toggle wrapping text at the 80th character
-(setq default-fill-column 80)
+(setq-default fill-column 80) ;; default is 70
+
 (set-cursor-color "#ffffff")
 
 ;; (scroll-bar-mode)
