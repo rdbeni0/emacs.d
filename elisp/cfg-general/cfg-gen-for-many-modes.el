@@ -159,10 +159,16 @@
 
 ;; Add to list:
 (setq list-gen-mode-flycheck
-      (append list-gen-mode-flycheck '(yaml-mode yaml-ts-mode)))
+      (append list-gen-mode-flycheck
+              '(yaml-mode 
+                yaml-ts-mode
+                org-mode)))
 
 (setq list-gen-mode-map-flycheck
-      (append list-gen-mode-map-flycheck '(yaml-mode-map yaml-ts-mode-map)))
+      (append list-gen-mode-map-flycheck
+              '(yaml-mode-map 
+                yaml-ts-mode-map
+                org-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; FORMAT CORE

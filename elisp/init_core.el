@@ -298,7 +298,6 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;; https://github.com/noctuid/general.el
 (use-package general
   :after evil
-  :demand t
   :functions (general-override-mode general-auto-unbind-keys)
   :config
 
