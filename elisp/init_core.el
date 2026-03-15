@@ -455,25 +455,25 @@ Intended as a safer wrapper around `downcase-region'."
 
 ;; https://stackoverflow.com/questions/18257573/how-to-toggle-letter-cases-in-a-region-in-emacs
 (defun cfg/toggle-case ()
+  "Toggle the case of each character in the active region."
   (interactive)
-  (when (region-active-p)
-    (let ((i 0)
-	      (return-string "")
-	      (input (buffer-substring-no-properties (region-beginning) (region-end))))
-      (while (< i (- (region-end) (region-beginning)))
-	    (let ((current-char (substring input i (+ i 1))))
-	      (if (string= (substring input i (+ i 1)) (downcase (substring input i (+ i 1))))
-              (setq return-string
-		            (concat return-string (upcase (substring input i (+ i 1)))))
-            (setq return-string
-		          (concat return-string (downcase (substring input i (+ i 1)))))))
-	    (setq i (+ i 1)))
-      (delete-region (region-beginning) (region-end))
-      (insert return-string))))
+  (when (use-region-p)
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (text (buffer-substring-no-properties beg end))
+           (toggled (mapconcat
+                     (lambda (c)
+                       (let ((s (char-to-string c)))
+                         (if (string= s (downcase s))
+                             (upcase s)
+                           (downcase s))))
+                     text "")))
+      (delete-region beg end)
+      (insert toggled))))
 
 (defun cfg/toggle-case-active ()
-  "Toggle the letter case of current word or text selection (active region).
-Toggles between: 'all lower', 'Init Caps', 'ALL CAPS'."
+  "Toggle the letter case of current word or active region.
+Toggles between: `all lower', `Init Caps', and `ALL CAPS'."
   (interactive)
   (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
     (if (region-active-p)
@@ -499,7 +499,8 @@ Toggles between: 'all lower', 'Init Caps', 'ALL CAPS'."
       (downcase-region p1 p2) (put this-command 'state "all lower")))))
 
 (defun cfg/join-lines-in-region (start end)
-  "Join all lines in the selected region into one line, handling both Unix and Windows EOLs."
+  "Join all lines in the region between START and END into one line.
+Handles both Unix and Windows end-of-line conventions."
   (interactive "r")
   (save-excursion
     (goto-char start)
@@ -637,7 +638,6 @@ there's a region, all lines that region covers will be duplicated."
 ;;
 
 (use-package which-key
-  :ensure t
   :init
   (setq which-key-separator " ")
   (setq which-key-prefix-prefix "+")
@@ -651,7 +651,6 @@ there's a region, all lines that region covers will be duplicated."
 ;;
 
 (use-package tab-bar
-  :ensure nil
   :defer t
   :bind
   (("C-x t <left>" . tab-bar-history-back)
@@ -1883,7 +1882,7 @@ The current buffer's `default-directory' is available as part of
 
 (defcustom list-of-dired-switches
   '("-l" "-la" "-lA" "-lA --group-directories-first")
-  "List of ls switches for dired to cycle among.")
+  "List of ls switches for Dired to cycle among.")
 
 (defun cfg/cycle-dired-switches ()
   "Cycle through the list `list-of-dired-switches' of switches for ls"
@@ -2011,7 +2010,6 @@ Cases:
 ;; New options since Emacs 29+++
 (use-package org
   :pin gnu ;; gnu must be there, other versions are buggy!
-  :ensure t
   :config
 
   ;; Please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
