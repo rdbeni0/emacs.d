@@ -231,47 +231,43 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 (use-package evil
   :ensure t
   :init
+  ;; variables that must be set before evil loads
+  :custom
   ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
-  (setq evil-want-C-i-jump nil)
-  :config
-  (evil-mode 1)
-  (setq evil-auto-indent nil)
-
-  ;; implementation of evil commands:
-  (evil-ex-define-cmd "e[dit]" 'find-file)
-  (evil-ex-define-cmd "b[uffers]" 'ibuffer)
-  (evil-ex-define-cmd "E[x]" 'dired-jump)
-
-  ;; standard undo emacs system
-  (evil-set-undo-system 'undo-redo)
-
-  ;; evil search module
-  (evil-select-search-module 'evil-search-module 'evil-search)
+  (evil-want-C-i-jump nil)
   ;; https://github.com/proofgeneral/pg/issues/174
   ;; https://github.com/syl20bnr/spacemacs/issues/8853
-  (setq evil-want-abbrev-expand-on-insert-exit nil)
+  (evil-want-abbrev-expand-on-insert-exit nil)
+  (evil-auto-indent nil)
   ;; visual-line-mode
-  ;; https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
-  (setq evil-respect-visual-line-mode t)
+  https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
+  (evil-respect-visual-line-mode t)
+  :functions
+  (cfg/minibuffer-keyboard-quit
+   evil-mode
+   evil-exit-emacs-state
+   evil-ex-define-cmd
+   evil-set-undo-system
+   evil-select-search-module
+   evil-define-key)
+  :config
+  (evil-mode 1)
 
-  ;; woarkarounds to add ESC as "quit" button everywhere :
-  (defun cfg/minibuffer-keyboard-quit ()
-    "Abort recursive edit. In Delete Selection mode, if the mark is active,
-just deactivate it; then it takes a second \\[keyboard-quit] to abort the minibuffer."
-    (interactive)
-    (if (and delete-selection-mode transient-mark-mode mark-active)
-        (setq deactivate-mark  t)
-      (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-      (abort-recursive-edit)))
+  ;; ex commands
+  (evil-ex-define-cmd "e[dit]" #'find-file)
+  (evil-ex-define-cmd "b[uffers]" #'ibuffer)
+  (evil-ex-define-cmd "E[x]" #'dired-jump)
 
-  (define-key evil-normal-state-map [escape] 'keyboard-quit)
-  (define-key evil-visual-state-map [escape] 'keyboard-quit)
-  (define-key minibuffer-local-map [escape] 'cfg/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-ns-map [escape] 'cfg/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-completion-map [escape] 'cfg/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-must-match-map [escape] 'cfg/minibuffer-keyboard-quit)
-  (define-key minibuffer-local-isearch-map [escape] 'cfg/minibuffer-keyboard-quit)
-  (global-set-key [escape] 'evil-exit-emacs-state))
+  ;; undo
+  (evil-set-undo-system 'undo-redo)
+
+  ;; search
+  (evil-select-search-module 'evil-search-module 'evil-search)
+
+  ;; ESC workaround
+  (evil-define-key '(normal visual) 'global
+    (kbd "<escape>") #'keyboard-escape-quit)
+  (global-set-key (kbd "<escape>") #'keyboard-escape-quit))
 
 ;; https://github.com/emacs-evil/evil-collection
 (use-package evil-collection
@@ -302,6 +298,8 @@ just deactivate it; then it takes a second \\[keyboard-quit] to abort the minibu
 ;; https://github.com/noctuid/general.el
 (use-package general
   :after evil
+  :demand t
+  :functions (general-override-mode general-auto-unbind-keys)
   :config
 
   ;; split whole general.el mapping into small pieces
@@ -1106,7 +1104,7 @@ This respects the variable `column-number-indicator-zero-based'."
     (call-process program nil 0 nil current-file-name)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; DIAGNOSE EMACS CONFFIGURATION
+;;;; -> DIAGNOSTICS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Various tools for diagnosing Emacs config.
@@ -1124,9 +1122,7 @@ This respects the variable `column-number-indicator-zero-based'."
   (let ((buffer (get-buffer-create "*exec-find*")))
     (setq buffer-read-only nil)
     (goto-char (point-max))
-    ;; (set-buffer buffer)
     (with-current-buffer "*exec-find*" (insert "executable-find raport:\n\n")
-                         ;; (unless (executable-find "foo") (insert "foo : NOT FOUND\n"))
                          (if (executable-find "rg") (insert "rg : FOUND\n") (insert "rg (ripgrep) : NOT FOUND\n"))
                          (if (executable-find "git") (insert "git : FOUND\n") (insert "git : NOT FOUND\n"))
                          (if (executable-find "find") (insert "find : FOUND\n") (insert "find : NOT FOUND\n"))
@@ -1168,11 +1164,10 @@ This respects the variable `column-number-indicator-zero-based'."
                          ;;
                          )
     (switch-to-buffer buffer)
-    ;; (pop-to-buffer buffer)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; COMMON OPTIONS FOR EMACS
+;;;; -> COMMON OPTIONS FOR EMACS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Example:
@@ -1271,19 +1266,16 @@ This respects the variable `column-number-indicator-zero-based'."
 ;; (setopt mouse-wheel-flip-direction t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; CODING SYSTEMS
+;;;; -> CODING SYSTEMS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;  UTF-8 and various coding systems
-;;
 
-;; use utf-8 by default:
+;; use UTF-8 by default:
 (setq coding-system-for-read 'utf-8 )
 (setq coding-system-for-write 'utf-8 )
 (setq default-process-coding-system '(utf-8 . utf-8))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; BACKUPS AND SAVEHIST
+;;;; -> BACKUPS AND SAVEHIST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Basic setup for backups, savehist, and lockfiles.
@@ -1326,7 +1318,7 @@ If the new path's directories does not exist, create them."
 (setopt make-backup-file-name-function 'cfg/-backup-file-name)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; LINE NUMBERS AND HIGHLIGHTING, HIDESHOW
+;;;; -> LINE NUMBERS AND HIGHLIGHTING, HIDESHOW
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; More options:
@@ -1367,16 +1359,15 @@ If the new path's directories does not exist, create them."
   (add-hook 'prog-mode-hook #'hs-minor-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; EMACS-LISP MODE
+;;;; -> EMACS-LISP MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (use-package elisp-mode
   :config
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; PYTHON
+;;;; -> PYTHON
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with built-in python programming.
@@ -1387,7 +1378,7 @@ If the new path's directories does not exist, create them."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; PERL
+;;;; -> PERL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with perl programming.
@@ -1435,7 +1426,7 @@ If the new path's directories does not exist, create them."
       (error "Module '%s' not found" module-name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; CC-MODE
+;;;; -> CC-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; "CC Mode is a GNU Emacs mode for editing files containing C, C++, Objective-C, Java, CORBA IDL (and the variants PSDL and CIDL), Pike and AWK code."
@@ -1450,7 +1441,7 @@ If the new path's directories does not exist, create them."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; COMPILATION-MODE
+;;;; -> COMPILATION-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Configuration for "compilation-mode" and various building's under emacs.
@@ -1462,9 +1453,8 @@ If the new path's directories does not exist, create them."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; SGML/HTML/MHTML/XML
+;;;; -> SGML/HTML/MHTML/XML
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 ;; XML files (nxml)
 (use-package nxml-mode
@@ -1489,7 +1479,7 @@ If the new path's directories does not exist, create them."
     (message "XSD validation finished. Please check result buffer.")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; JS AND JSON
+;;;; -> JS AND JSON
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; js-mode is for js and json
@@ -1500,13 +1490,13 @@ If the new path's directories does not exist, create them."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; ESQL
+;;;; -> ESQL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package esql-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; SH-MODE
+;;;; -> SH-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; shell-script-mode (shell, bash - for editing files):
@@ -1518,10 +1508,10 @@ If the new path's directories does not exist, create them."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; SHELL-MODE
+;;;; -> SHELL-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; "shell-mode" is major mode for interacting with an inferior shell.
+;; `shell-mode' is major mode for interacting with an inferior shell.
 ;;
 
 ;; M-x shell default shell:
@@ -1542,7 +1532,7 @@ If the new path's directories does not exist, create them."
 (setq comint-process-echoes t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; TERM-MODE
+;;;; -> TERM-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Customization for term-mode:
@@ -1557,7 +1547,7 @@ If the new path's directories does not exist, create them."
   (setq term-buffer-maximum-size 0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; GREP
+;;;; -> GREP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with grep.
@@ -1592,7 +1582,7 @@ If the new path's directories does not exist, create them."
                      nil tempfile)
       (grep (format "%s %s | xargs -0 grep -n -i \"%s\" " pattern)))))
 
-;;;; handle symlinks via grep and find:
+;; handle symlinks via grep and find:
 ;; grep command - add "-R" to follow symlinks:
 (setq grep-command "grep --color=auto -nH --null -R -e ")
 
@@ -1602,7 +1592,7 @@ If the new path's directories does not exist, create them."
       "find <D> <X> \\( -type f -o -type l \\) <F> -exec grep <C> -r -nH -e <R> \\{\\} +")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; RECENTF
+;;;; -> RECENTF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with "recentf" and similar filtering.
@@ -1633,15 +1623,14 @@ If the new path's directories does not exist, create them."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; PRE CONFIGFURATION FOR CUSTOM.EL FILE
+;;;; -> PRE CONFIGFURATION FOR CUSTOM.EL FILE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 
 (setq custom-file (expand-file-name "data/custom.el" user-emacs-directory))
-;; (when (file-exists-p custom-file) (load custom-file))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; PROJECT.EL WITH FD BACKEND
+;;;; -> PROJECT.EL WITH FD BACKEND
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Fast and idiomatic fd backend for project.el.
@@ -1652,7 +1641,7 @@ If the new path's directories does not exist, create them."
 (require 'cl-lib)
 (require 'seq)
 
-;;;; User options
+;; User options
 
 (defgroup project-fd nil
   "Improved project.el backend powered by fd."
@@ -1703,7 +1692,7 @@ If non-nil and exists in project root, fd will be called with
   (when project-fd-debug
     (apply #'message (concat "[project-fd] " fmt) args)))
 
-;;;; Helpers
+;; Helpers
 
 (defun project-fd--marker-exists-p (dir marker)
   "Return t if MARKER exists inside DIR (follow symlinks)."
@@ -1714,7 +1703,7 @@ If non-nil and exists in project root, fd will be called with
   (seq-some (lambda (m) (project-fd--marker-exists-p dir m))
             markers))
 
-;;;; Project root finder
+;; Project root finder
 
 (defun project-fd--find-root (path)
   "Find project root starting from PATH. Return (TYPE . ROOT)."
@@ -1752,13 +1741,13 @@ If non-nil and exists in project root, fd will be called with
 
 (add-hook 'project-find-functions #'project-fd--find-root)
 
-;;;; project-root methods
+;; project-root methods
 
 (cl-defmethod project-root ((project (head vc)))       (cdr project))
 (cl-defmethod project-root ((project (head local)))    (cdr project))
 (cl-defmethod project-root ((project (head transient))) (cdr project))
 
-;;;; fd command builder — simplified and unified
+;; fd command builder — simplified and unified
 
 (defun project-fd--make-fd-command (project root)
   "Return list of arguments for fd search in ROOT."
@@ -1785,7 +1774,7 @@ If non-nil and exists in project root, fd will be called with
     (project-fd--debug "FD(%s) → %S" (car project) cmd)
     cmd))
 
-;;;; fd-based project-files implementation
+;; fd-based project-files implementation
 
 (defun project-fd-files (project &optional _dirs)
   "Return list of files in PROJECT using fd."
@@ -1808,7 +1797,7 @@ If non-nil and exists in project root, fd will be called with
 (cl-defmethod project-files ((project (head local)) &optional dirs)
   (project-fd-files project dirs))
 
-;;;; `project-find-dir' improved command
+;; `project-find-dir' improved command
 
 ;;;###autoload
 (defun cfg/project-find-dir ()
@@ -1840,7 +1829,7 @@ The current buffer's `default-directory' is available as part of
 (defalias 'project-find-dir #'cfg/project-find-dir)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; VCS/GIT
+;;;; -> VCS/GIT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with Version Control Systems (core version).
@@ -1852,7 +1841,7 @@ The current buffer's `default-directory' is available as part of
 (setq vc-follow-symlinks t )		; don't ask for confirmation when opening symlinked file
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; DIRED
+;;;; -> DIRED
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with "dired".
@@ -1926,7 +1915,7 @@ Cases:
     (message "No file to chmod +x."))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; TRAMP AND SUDO
+;;;; -> TRAMP AND SUDO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Configuration for TRAMP and sudo.
@@ -1984,7 +1973,7 @@ Cases:
       (dired (concat "/sudo::" dir)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; ORG-MODE
+;;;; -> ORG-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with `org-mode'.
@@ -2017,7 +2006,7 @@ Cases:
   (require 'org-compat))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; IRC and rcirc
+;;;; -> IRC and rcirc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Everything what is connected with IRC inside Emacs (via rcirc).
@@ -2075,9 +2064,8 @@ Cases:
   (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "MODE"))) ;; you can add "AWAY"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; MAN AND HELP-MODE
+;;;; -> MAN AND HELP-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (defun cfg/show-major-mode ()
   "Display the current major mode in the minibuffer."
@@ -2093,11 +2081,8 @@ Cases:
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; FLYSPELL
+;;;; -> FLYSPELL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Setup for flyspell mode.
-;;
 
 ;; Dependencies for flyspell: *aspell* dictionaries
 ;; For example - Arch Linux packages: aspell-en aspell-pl
@@ -2107,9 +2092,8 @@ Cases:
   (setq flyspell-default-dictionary "english"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; DOC-VIEW AND IMAGE MODE
+;;;; -> DOC-VIEW AND IMAGE MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (use-package doc-view
   :config
@@ -2122,9 +2106,8 @@ Cases:
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; HYPERLINKS AND WEB BROWSERS
+;;;; -> HYPERLINKS AND WEB BROWSERS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (setq browse-url-browser-function 'browse-url-generic)
 (setq browse-url-generic-program "brave") ;; default browser: firefox or brave
@@ -2133,7 +2116,7 @@ Cases:
 (global-goto-address-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; ABBREVS AND TEMPO
+;;;; -> ABBREVS AND TEMPO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Abbrevs should be loaded AFTER any prog- mode (bcz will overwrite existing abbrev table)
@@ -2158,7 +2141,8 @@ Cases:
     (quietly-read-abbrev-file abbrev-file-name)))
 
 (defun cfg/expand-abbrev ()
-  "Try to expand abbrev at point. If no expansion, prompt to select from the current mode's abbrev table."
+  "Try to expand abbrev at point.
+If no expansion, prompt to select from the current mode's abbrev table."
   (interactive)
   (if (expand-abbrev)
       (message "Abbrev expanded.")

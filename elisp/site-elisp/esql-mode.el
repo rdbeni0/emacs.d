@@ -271,6 +271,9 @@
   ;; Helps with assembling blocks BEGIN...END
   (setq-local outline-regexp "^[ \t]*\\(CREATE\\|BEGIN\\|END\\)\\_>")
 
+  ;; electric
+  (electric-indent-local-mode 1)
+
   ;; Imenu
   (setq-local imenu-generic-expression
               '(("Functions/Procedures" "^\\s-*CREATE\\s-+\\(FUNCTION\\|PROCEDURE\\)\\s-+\\([[:alnum:]_]+\\)" 2)

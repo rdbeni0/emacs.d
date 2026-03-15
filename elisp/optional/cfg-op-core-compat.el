@@ -5,6 +5,16 @@
 ;;
 ;;; Code:
 
+(when (< emacs-major-version 28)
+  ;; DIRED - reuse buffer:
+  ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
+
+  ;; required for dired-jump
+  (require 'dired-x)
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
+  (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))) ; was dired-up-directory
+  (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-find-alternate-file))
+
 (if (version< emacs-version "28.5")
     (progn
       ;; BYTE COMPILATION:
@@ -51,15 +61,30 @@
     (package-refresh-contents)
     (package-install 'use-package)))
 
-(when (< emacs-major-version 28)
-  ;; DIRED - reuse buffer:
-  ;; https://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
-  
-  ;; required for dired-jump
-  (require 'dired-x)
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
-  (define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file ".."))) ; was dired-up-directory
-  (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-find-alternate-file))
+(when (version< emacs-version "30.0")
+
+  ;; ESC workaround for evil: use "ESC" everywhere
+  ;; This workaround is old, but it worked for many years (around 2016-2026).
+  ;; While it doesn't look "pretty", it has been thoroughly tested throughout that time.
+  (require 'evil)
+
+  (defun cfg/minibuffer-keyboard-quit ()
+    "Abort recursive edit. In Delete Selection mode, if the mark is active,
+just deactivate it; then it takes a second \\[keyboard-quit] to abort the minibuffer."
+    (interactive)
+    (if (and delete-selection-mode transient-mark-mode mark-active)
+        (setq deactivate-mark  t)
+      (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+      (abort-recursive-edit)))
+
+  (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'cfg/minibuffer-keyboard-quit)
+  (global-set-key [escape] 'evil-exit-emacs-state))
 
 (provide 'cfg-op-core-compat)
 ;;; cfg-op-core-compat.el ends here
