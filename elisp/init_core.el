@@ -52,7 +52,7 @@
 
 (defun cfg/eln-compile-elisp ()
   "Compile ALL files inside \"~/.emacs.d/elisp\" (and subfolders) into eln.
-  WARNING! Could cause errors and hang emacs."
+WARNING! Could cause errors and hang emacs."
   (interactive)
   (native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t))
 
@@ -849,7 +849,7 @@ If the universal prefix argument is used then will the windows too."
 
 ;;;###autoload
 (defun cfg/delete-current-buffer-file ()
-  "Removes file connected to current buffer and kills buffer."
+  "Remove file connected to current buffer and kill buffer."
   (interactive)
   (let ((filename (buffer-file-name))
         (buffer (current-buffer))
@@ -963,14 +963,12 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
 
 (defun cfg/-directory-path ()
   "Retrieve the directory path of the current buffer.
-
-  If the buffer is not visiting a file, use the `list-buffers-directory' variable
-  as a fallback to display the directory, useful in buffers like the ones created
-  by `magit' and `dired'.
-
-  Returns:
-  - A string containing the directory path in case of success.
-  - `nil' in case the current buffer does not have a directory."
+If the buffer is not visiting a file, use the `list-buffers-directory' variable
+as a fallback to display the directory, useful in buffers like the ones created
+by `magit' and `dired'.
+Returns:
+- A string containing the directory path in case of success.
+- nil in case the current buffer does not have a directory."
   (when-let (directory-name (if-let (file-name (buffer-file-name))
                                 (file-name-directory file-name)
                               list-buffers-directory))
@@ -978,28 +976,25 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
 
 (defun cfg/-file-path ()
   "Retrieve the file path of the current buffer.
-
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not have a directory."
   (when-let (file-path (buffer-file-name))
     (file-truename file-path)))
 
 (defun cfg/-file-path-with-line ()
   "Retrieve the file path of the current buffer, including line number.
-
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not have a directory."
   (when-let (file-path (cfg/-file-path))
     (concat file-path ":" (number-to-string (line-number-at-pos)))))
 
 (defun cfg/-file-path-with-line-column ()
   "Retrieve the file path of the current buffer, including line and column number.
-
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not have a directory."
   (when-let (file-path (cfg/-file-path-with-line))
     (concat
      file-path
@@ -1015,10 +1010,9 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
 ;;;###autoload
 (defun cfg/copy-directory-path ()
   "Copy and show the directory path of the current buffer.
-
-  If the buffer is not visiting a file, use the `list-buffers-directory'
-  variable as a fallback to display the directory, useful in buffers like the
-  ones created by `magit' and `dired'."
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'."
   (interactive)
   (if-let (directory-path (cfg/-directory-path))
       (progn
@@ -1088,8 +1082,8 @@ This respects the variable `column-number-indicator-zero-based'."
 ;;;###autoload
 (defun cfg/open-with (arg)
   "Open visited file in default external program.
-  When in dired mode, open file under the cursor.
-  With a prefix ARG always prompt for command to use."
+When in Dired mode, open file under the cursor.
+With a prefix ARG always prompt for command to use."
   (interactive "P")
   (let* ((current-file-name
           (if (derived-mode-p 'dired-mode)
@@ -1549,10 +1543,6 @@ If the new path's directories does not exist, create them."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> GREP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with grep.
-;; https://www.emacswiki.org/emacs/RecentFiles
-;;
 
 (use-package wgrep
   :config
