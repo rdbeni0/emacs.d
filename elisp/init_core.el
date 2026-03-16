@@ -221,18 +221,17 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;;;; -> EVIL-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; These variables must be in this place (and not inside `use-package'),
-;; it is related to a configuration for `evil-collection':
-;; https://github.com/emacs-evil/evil-collection?tab=readme-ov-file#installation
-(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-(setq evil-want-keybinding nil)
-
 ;; https://github.com/emacs-evil/evil
 (use-package evil
   :ensure t
   :init
   ;; variables that must be set before evil loads
   :custom
+  ;; This is related to a configuration for `evil-collection':
+  ;; https://github.com/emacs-evil/evil-collection?tab=readme-ov-file#installation
+  (evil-want-keybinding nil)
+  ;; This is optional since it's already set to t by default
+  (evil-want-integration t)
   ;; https://jeffkreeftmeijer.com/emacs-evil-org-tab/
   (evil-want-C-i-jump nil)
   ;; https://github.com/proofgeneral/pg/issues/174
