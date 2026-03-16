@@ -181,9 +181,9 @@
  :keymaps '(notmuch-show-mode-map)
  :major-modes '(notmuch-show-mode)
  "}" 'notmuch-show-next-message
- "]" 'notmuch-show-next-open-message
+ ;; "]" 'notmuch-show-next-open-message ;; conflicting with `evil-collection'
  "{" 'notmuch-show-previous-message
- "[" 'notmuch-show-previous-open-message
+ ;; "[" 'notmuch-show-previous-open-message ;; conflicting with `evil-collection'
  "o" 'cfg/notmuch-show-close-all
  "O" 'notmuch-show-open-or-close-all
  "J" 'notmuch-jump-search
