@@ -223,9 +223,9 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 
 ;; https://github.com/emacs-evil/evil
 (use-package evil
-  :ensure t
   :init
-  ;; variables that must be set before evil loads
+  ;; variables that must be set before `evil' loads: only declaration, but no value:
+  ;; (defvar some-var-which-will-be-later-overwritten-by-package)
   :custom
   ;; This is related to a configuration for `evil-collection':
   ;; https://github.com/emacs-evil/evil-collection?tab=readme-ov-file#installation
@@ -271,14 +271,23 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;; https://github.com/emacs-evil/evil-collection
 (use-package evil-collection
   :after evil
+  :init
+  ;; variables that must be set before `evil-collection' loads: only declaration, but no value:
+  ;; (defvar evil-collection-mode-list)
+  :functions
+  (evil-collection-init)
   :config
-  ;; remove `term' integration from evil-collection:
-  (setq evil-collection-mode-list
-        (cl-remove-if
-         (lambda (mode)
-           (and (listp mode)
-                (eq (car mode) 'term)))
-         evil-collection-mode-list))
+
+  ;; If it is necessary to disable evil-collection for some particular mode,
+  ;; the variable `evil-collection-mode-list' should be investigated and changed.
+  ;; Example:
+  ;;
+  ;; (setq evil-collection-mode-list
+  ;;       (cl-remove-if
+  ;;        (lambda (mode)
+  ;;          (and (listp mode)
+  ;;               (eq (car mode) 'term)))
+  ;;        evil-collection-mode-list))
 
   (evil-collection-init))
 
