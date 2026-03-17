@@ -1313,13 +1313,14 @@ With a prefix ARG always prompt for command to use."
 
 ;; Don't litter file system with *~ backup files; put them all inside "~/.emacs.d/backups"
 (defun cfg/-backup-file-name (fpath)
-  "Return a new file path of a given file path.
-If the new path's directories does not exist, create them."
+  "Return a backup file path based on FPATH.
+If the directory for the backup does not exist, create it."
   (let* ((backupRootDir (concat user-emacs-directory "backups/"))
-         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
-         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
+         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath))
+         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~"))))
     (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
     backupFilePath))
+
 
 (setopt make-backup-file-name-function 'cfg/-backup-file-name)
 
@@ -1407,27 +1408,39 @@ If the new path's directories does not exist, create them."
 ;; https://www.emacswiki.org/emacs/CPerlMode#h5o-9
 
 (defun cfg/-perl-module-path (module-name)
+  "Return the filesystem path of the Perl module MODULE-NAME.
+Transforms MODULE-NAME from Perl's \\='Foo::Bar\\=' notation into a
+relative file path, invokes Perl to query \\=`%INC\\=', and returns the
+resolved path as a string.  Returns nil if the module cannot be
+located."
   (let* ((file-name
-	      (concat (replace-regexp-in-string "::" "/" module-name)
-		          ".pm"))
-	     (command-line
-	      (concat "perl -M'"
-		          module-name
-		          "' -e'print $INC{q{"
-		          file-name
-		          "}}'"))
-	     (path (shell-command-to-string command-line))
-	     (cant-locate (string-match "^Can't locate " path)))
+          (concat (replace-regexp-in-string "::" "/" module-name)
+                  ".pm"))
+         (command-line
+          (concat "perl -M'"
+                  module-name
+                  "' -e'print $INC{q{"
+                  file-name
+                  "}}'"))
+         (path (shell-command-to-string command-line))
+         (cant-locate (string-match "^Can't locate " path)))
     (if cant-locate
-	    nil
+        nil
       path)))
 
+
+
 (defun cfg/find-perl-module (module-name)
+  "Find and open the Perl module named MODULE-NAME.
+Prompts for a module name, resolves its file path using
+`cfg/-perl-module-path', and opens the file if found.  Signals an
+error if the module cannot be located."
   (interactive "sPerl module name: ")
   (let ((path (cfg/-perl-module-path module-name)))
     (if path
-	    (find-file path)
+        (find-file path)
       (error "Module '%s' not found" module-name))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> CC-MODE
@@ -1522,6 +1535,8 @@ If the new path's directories does not exist, create them."
 
 ;; M-x shell default shell:
 (use-package shell
+  :commands
+  (shell-dirtrack-mode)
   :config
   ;; https://stackoverflow.com/questions/9514495/how-to-define-a-function-to-run-multiple-shells-on-emacs
   (defun cfg/C-u-M-x-shell ()
@@ -1863,7 +1878,7 @@ The current buffer's `default-directory' is available as part of
   "List of ls switches for Dired to cycle among.")
 
 (defun cfg/cycle-dired-switches ()
-  "Cycle through the list `list-of-dired-switches' of switches for ls"
+  "Cycle through the list `list-of-dired-switches' of switches for ls."
   (interactive)
   (setq list-of-dired-switches
         (append (cdr list-of-dired-switches)
