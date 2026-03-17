@@ -632,11 +632,14 @@ there's a region, all lines that region covers will be duplicated."
 
 (use-package tab-bar
   :defer t
+  :functions
+  (cfg/tab-group-from-project
+   cfg/tab-switch-to-group)
   :bind
   (("C-x t <left>" . tab-bar-history-back)
    ("C-x t <right>" . tab-bar-history-forward)
-   ("C-x t P" . #'cfg/tab-group-from-project)
-   ("C-x t g" . #'cfg/tab-switch-to-group))
+   ("C-x t P" . cfg/tab-group-from-project)
+   ("C-x t g" . cfg/tab-switch-to-group))
   :custom
   (tab-bar-new-tab-choice "*scratch*")
   ;; (tab-bar-close-button-show nil)
@@ -779,6 +782,8 @@ Otherwise, open `ibuffer'."
 ;; https://github.com/DarwinAwardWinner/dotemacs-old/blob/master/site-lisp/settings/tempbuf-settings.el
 ;; https://github.com/biern/.emacs.d/blob/master/conf/tempbuf.el
 (use-package tempbuf
+  :functions
+  (turn-on-tempbuf-mode)
   :custom
   ;; after XX seconds of inactivity, buffer will be closed
   (tempbuf-minimum-timeout 30)
@@ -1321,38 +1326,36 @@ If the new path's directories does not exist, create them."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> LINE NUMBERS AND HIGHLIGHTING, HIDESHOW
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; More options:
-;; https://www.emacswiki.org/emacs/LineNumbers
-;; Disable line numbers in some major modes - via emacswiki:
-;; "To disable this in certain major modes you can redefine display-line-numbers--turn-on:"
-;;
 
-(require 'display-line-numbers)
-
-(defcustom display-line-numbers-exempt-modes '(eshell-mode shell-mode ansi-term-mode erc-mode)
-  "Major modes on which to disable the linum mode, exempts them from global requirement.
-  If you want customize (add new elements), then try to use push or add-to-list:
-  https://www.gnu.org/software/emacs/manual/html_node/elisp/List-Variables.html "
+(defcustom display-line-numbers-exempt-modes
+  '(eshell-mode shell-mode ansi-term-mode erc-mode)
+  "Major modes on which to disable line numbers."
   :group 'display-line-numbers
-  :type 'list
-  :version "green")
+  :type '(repeat symbol))
 
-(defun display-line-numbers--turn-on () ;; no cfg/  here
-  "turn on line numbers but excempting certain majore modes defined in `display-line-numbers-exempt-modes'"
-  (if (and
-       (not (member major-mode display-line-numbers-exempt-modes))
-       (not (minibufferp)))
+;; https://www.emacswiki.org/emacs/LineNumbers
+(use-package display-line-numbers
+  :commands
+  (display-line-numbers-mode)
+  :functions
+  (display-line-numbers--turn-on)
+  :init
+  ;; Disable line numbers in some major modes -> via emacswiki:
+  ;; "To disable this in certain major modes you can redefine `display-line-numbers--turn-on:'"
+  (defun display-line-numbers--turn-on ()
+    "Turn on line numbers except for modes in `display-line-numbers-exempt-modes'."
+    (unless (or (member major-mode display-line-numbers-exempt-modes)
+                (minibufferp))
       (display-line-numbers-mode)))
+  :config
+  (global-display-line-numbers-mode)
+  ;; highlight current line:
+  (global-hl-line-mode 1))
 
-(global-display-line-numbers-mode)
-(global-hl-line-mode 1) ; highlight current line
-
-;; Setup for hideshow minor mode:
 ;; https://www.emacswiki.org/emacs/HideShow
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Hideshow.html
-;; Please note that this package is useful and required for evil-mode.
-;; hideshow can be enabled/disabled for particular mode - for example:
+;; Please note that this package is useful and required for `evil-mode'.
+;; `hideshow' can be enabled/disabled for particular mode - for example:
 ;; (add-hook 'perl-mode-hook 'hs-minor-mode)
 (use-package hideshow
   :defer t
@@ -1800,7 +1803,6 @@ If non-nil and exists in project root, fd will be called with
 ;;;###autoload
 (defun cfg/project-find-dir ()
   "Start Dired in a directory inside the current project.
-
 The current buffer's `default-directory' is available as part of
 \"future history\"."
   (interactive)
