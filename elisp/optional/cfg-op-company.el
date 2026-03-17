@@ -15,22 +15,22 @@
          ([remap dabbrev-expand]                    . company-dabbrev)
          ;; no working, DO NOT USE! See later in section "Update capf".
          ;; ([remap completion-at-point]               . company-capf) ;; completion-at-point-functions = CAPF
-	 )
+	     )
   :config
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; common options:
   (global-company-mode 1)
   (setq company-idle-delay              0.5 ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
-	;; if (setq company-idle-delay nil), then autocompletion will be turned off
-	;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
-	company-minimum-prefix-length   2   ;; show completion after 2 characters (default is 3!)
-	company-show-numbers            t
-	company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
-	;; transformers - could be changed "per mode":
-	;; https://github.com/company-mode/company-mode/issues/818
-	;; https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
-	;; https://company-mode.github.io/manual/Backends.html
-	company-transformers '(company-sort-by-statistics company-sort-by-backend-importance delete-dups)) ;; or  / company-sort-by-occurrence
+	    ;; if (setq company-idle-delay nil), then autocompletion will be turned off
+	    ;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
+	    company-minimum-prefix-length   2   ;; show completion after 2 characters (default is 3!)
+	    company-show-numbers            t
+	    company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
+	    ;; transformers - could be changed "per mode":
+	    ;; https://github.com/company-mode/company-mode/issues/818
+	    ;; https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
+	    ;; https://company-mode.github.io/manual/Backends.html
+	    company-transformers '(company-sort-by-statistics company-sort-by-backend-importance delete-dups)) ;; or  / company-sort-by-occurrence
   ;; Press SPACE will accept the highlighted candidate and insert a space
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
@@ -47,7 +47,7 @@
           erc-mode
           gud-mode
           rcirc-mode
-	  vterm-mode
+	      vterm-mode
           minibuffer-inactive-mode))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -224,23 +224,23 @@
 
   ;; snippets
   (add-hook 'snippet-mode-hook (lambda ()
-				 (set (make-local-variable 'company-backends) '())
-				 ;; company-capf, company-gtags
-				 (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))))
+				                 (set (make-local-variable 'company-backends) '())
+				                 ;; company-capf, company-gtags
+				                 (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))))
 
   ;; org-mode
   (add-hook 'org-mode-hook (lambda ()
-			     (set (make-local-variable 'company-backends) '())
-			     ;; company-capf, company-gtags
-			     (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))))
+			                 (set (make-local-variable 'company-backends) '())
+			                 ;; company-capf, company-gtags
+			                 (add-to-list 'company-backends '(company-abbrev :separate company-dabbrev-code company-files company-keywords company-dabbrev))))
 
   ;; Notmuch
   ;; optional manipulations: https://github.com/doomemacs/doomemacs/issues/3908
   (add-hook 'notmuch-message-mode-hook (lambda ()
-					 (set (make-local-variable 'company-backends) '())
-					 ;; company-gtags
-					 (add-to-list 'company-backends '(company-abbrev :separate company-capf notmuch-company company-files company-dabbrev company-dabbrev-code))
-					 (setq require-final-newline nil))) ;; no new lines after inserting snippet
+					                     (set (make-local-variable 'company-backends) '())
+					                     ;; company-gtags
+					                     (add-to-list 'company-backends '(company-abbrev :separate company-capf notmuch-company company-files company-dabbrev company-dabbrev-code))
+					                     (setq require-final-newline nil))) ;; no new lines after inserting snippet
 
   ;; C/C++
   (dolist (hook '(c-mode-hook c++-mode-hook))
@@ -331,10 +331,10 @@
     "Temporarily show the documentation buffer for the selection."
     (interactive)
     (let* ((selected (nth company-selection company-candidates))
-	   (doc-buffer (or (company-call-backend 'doc-buffer selected)
-			   (error "No documentation available"))))
+	       (doc-buffer (or (company-call-backend 'doc-buffer selected)
+			               (error "No documentation available"))))
       (with-current-buffer doc-buffer
-	(goto-char (point-min)))
+	    (goto-char (point-min)))
       (display-buffer doc-buffer t))
     )
   (add-hook 'global-company-mode-hook #'company-quickhelp-mode)

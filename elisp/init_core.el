@@ -224,7 +224,7 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;; https://github.com/emacs-evil/evil
 (use-package evil
   :init
-  ;; variables that must be set before `evil' loads: only declaration, but no value:
+  ;; variables that must be set before `evil' loads: only declaration, but no value
   ;; (defvar some-var-which-will-be-later-overwritten-by-package)
   :custom
   ;; This is related to a configuration for `evil-collection':
@@ -272,22 +272,21 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 (use-package evil-collection
   :after evil
   :init
-  ;; variables that must be set before `evil-collection' loads: only declaration, but no value:
-  ;; (defvar evil-collection-mode-list)
+  ;; variables that must be set before `evil-collection' loads: only declaration, but no value
+  (defvar evil-collection-mode-list)
   :functions
   (evil-collection-init)
   :config
 
   ;; If it is necessary to disable evil-collection for some particular mode,
   ;; the variable `evil-collection-mode-list' should be investigated and changed.
-  ;; Example:
   ;;
-  ;; (setq evil-collection-mode-list
-  ;;       (cl-remove-if
-  ;;        (lambda (mode)
-  ;;          (and (listp mode)
-  ;;               (eq (car mode) 'term)))
-  ;;        evil-collection-mode-list))
+  (setq evil-collection-mode-list
+        (cl-remove-if
+         (lambda (mode)
+           (and (listp mode)
+                (eq (car mode) 'term)))
+         evil-collection-mode-list))
 
   (evil-collection-init))
 
@@ -1466,22 +1465,24 @@ If the new path's directories does not exist, create them."
   :config
 
   (defun cfg/xml-xsd-validate (xsd-schema)
-    "Validate the xml file with schema and xmllint."
+    "Validate the current XML buffer using XSD-SCHEMA and xmllint."
     (interactive (list (read-file-name "Select XSD Schema: ")))
-    (setq validate-file (buffer-file-name))
-    (save-window-excursion
-      (let ((buffer (get-buffer-create "*XSD Validator*")))
-        (set-buffer buffer)
-        (nxml-mode)
-        (setq-local rng-validate-mode nil)
-        (setq buffer-read-only nil)
-        (goto-char (point-max))
-        (pop-to-buffer buffer)
-        (setq xml-valid-cmd (format "xmllint --schema %s --noout %s" xsd-schema validate-file))
-        (shell-command xml-valid-cmd "*XSD Validator*")
-        (setq buffer-read-only t)
-        (bury-buffer)))
-    (message "XSD validation finished. Please check result buffer.")))
+    (let* ((validate-file (buffer-file-name))
+           (xml-valid-cmd (format "xmllint --schema %s --noout %s"
+                                  xsd-schema validate-file)))
+      (save-window-excursion
+        (let ((buffer (get-buffer-create "*XSD Validator*")))
+          (with-current-buffer buffer
+            (nxml-mode)
+            (setq-local rng-validate-mode nil)
+            (setq buffer-read-only nil)
+            (erase-buffer)
+            (insert (format "Running: %s\n\n" xml-valid-cmd))
+            (shell-command xml-valid-cmd buffer)
+            (setq buffer-read-only t))
+          (pop-to-buffer buffer)
+          (bury-buffer)))
+      (message "XSD validation finished. Please check result buffer."))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> JS AND JSON
@@ -1552,47 +1553,6 @@ If the new path's directories does not exist, create them."
   (setq term-buffer-maximum-size 0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; -> GREP
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package wgrep
-  :config
-  )
-
-(defun cfg/grep-recentf (filepattern pattern)
-  (interactive "sFiles regexp: \nsSearch regexp: ")
-  (let ((files (if filepattern
-                   (cl-remove-if-not (lambda (item) (string-match filepattern item))
-                                     recentf-list)
-                 recentf-list))
-        (limit 50)
-        (grep-use-null-device nil))
-    (if (> (length files) limit)
-        (subseq files 0 limit))
-
-    (let* ((tempfile (make-temp-file "emacs"))
-           (orig compilation-finish-functions))
-      (add-to-list 'compilation-finish-functions
-                   (lambda (buf result)
-                     (setq font-lock-keywords-case-fold-search t)
-                     (highlight-regexp pattern 'hi-yellow)
-                     (delete-file tempfile)
-                     (setq compilation-finish-functions orig)))
-
-      (write-region  (mapconcat 'identity files (char-to-string 0))
-                     nil tempfile)
-      (grep (format "%s %s | xargs -0 grep -n -i \"%s\" " pattern)))))
-
-;; handle symlinks via grep and find:
-;; grep command - add "-R" to follow symlinks:
-(setq grep-command "grep --color=auto -nH --null -R -e ")
-
-;; https://stackoverflow.com/questions/28915372/change-the-default-find-grep-command-in-emacs
-;; change find command to check also for symlinks - it will be used via 'M-x rgrep':
-(setq grep-find-template
-      "find <D> <X> \\( -type f -o -type l \\) <F> -exec grep <C> -r -nH -e <R> \\{\\} +")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> RECENTF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -1621,6 +1581,46 @@ If the new path's directories does not exist, create them."
   ;; https://stackoverflow.com/questions/8023670/change-number-of-files-recentf-in-emacs-stores-using-ido-completion-method
   (run-at-time nil (* 10 60) 'recentf-save-list)
   ;; Currently working on "pure" recentf-mode ("recentf-open-files").
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; -> GREP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package grep
+  :config
+  (defun cfg/grep-recentf (pattern)
+    "Search for PATTERN in recently opened files using grep."
+    (interactive "sSearch regexp: ")
+
+    (let* ((files (seq-take recentf-list 50))
+           (selected
+            (completing-read-multiple
+             "Select files: "
+             files nil t)))
+
+      (unless selected
+        (user-error "No files selected"))
+
+      (let* ((expanded (mapcar #'expand-file-name selected))
+             (cmd (concat
+                   "grep -nH -i -e "
+                   (shell-quote-argument pattern)
+                   " "
+                   (mapconcat #'shell-quote-argument expanded " "))))
+        (grep cmd))))
+
+  ;; Handle symlinks via grep and find:
+  ;; grep command -> add "-R" to follow symlinks:
+  (setq grep-command "grep --color=auto -nH --null -R -e ")
+
+  ;; https://stackoverflow.com/questions/28915372/change-the-default-find-grep-command-in-emacs
+  ;; Change find command to check also for symlinks - it will be used via 'M-x rgrep':
+  (setq grep-find-template
+        "find <D> <X> \\( -type f -o -type l \\) <F> -exec grep <C> -r -nH -e <R> \\{\\} +"))
+
+(use-package wgrep
+  :config
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
