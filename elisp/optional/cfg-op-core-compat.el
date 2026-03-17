@@ -59,7 +59,12 @@
   ;; Unless it is already installed - update packages archive and install the most recent version of use-package:
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
-    (package-install 'use-package)))
+    (package-install 'use-package))
+
+  ;; tramp complection settings
+  (mapc (lambda (method)
+          (tramp-set-completion-function method my-tramp-ssh-completions))
+	    '("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh")))
 
 (when (version< emacs-version "30.0")
 

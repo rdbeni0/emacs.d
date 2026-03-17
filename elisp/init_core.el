@@ -209,10 +209,8 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> LOCAL ENVIRONMENT VARIABLES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; if true and dedicated file exists, load additional, local env variables
-;;
 
+;; if true and dedicated file exists, load additional, local env variables
 (if (file-readable-p
      (expand-file-name "data/local/lo-env.el" user-emacs-directory))
     (require 'lo-env))
@@ -280,7 +278,6 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 
   ;; If it is necessary to disable evil-collection for some particular mode,
   ;; the variable `evil-collection-mode-list' should be investigated and changed.
-  ;;
   (setq evil-collection-mode-list
         (cl-remove-if
          (lambda (mode)
@@ -529,9 +526,9 @@ Add space instead of EOL."
     (while (search-forward "\r" nil t)
       (replace-match "\n" nil t))))
 
-(defun cfg/unix2dos (buffer)
-  "Automate replacing C-q C-j (\\n) with C-q C-m C-j (\\r\\n)."
-  (interactive "*b")
+(defun cfg/unix2dos ()
+  "Replace LF (\\n) with CRLF (\\r\\n) in the current buffer."
+  (interactive "*")
   (save-excursion
     (goto-char (point-min))
     (while (search-forward (string ?\C-j) nil t)
@@ -1918,60 +1915,47 @@ Cases:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> TRAMP AND SUDO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Configuration for TRAMP and sudo.
-;;
 
-;; tramp
-;; more examples for tramp-parse : https://github.com/abo-abo/swiper/issues/59
-
+;; https://www.gnu.org/software/tramp/tramp-emacs.html
 (use-package tramp
+  :init
+  ;; more examples for tramp-parse : https://github.com/abo-abo/swiper/issues/59
+  (defvar my-tramp-ssh-completions
+    '((tramp-parse-sconfig "~/.ssh/ssh_config")
+      (tramp-parse-shosts "~/.ssh/known_hosts"))
+    "Completion sources for TRAMP SSH methods.")
   :config
-  (setq my-tramp-ssh-completions
-	    '((tramp-parse-sconfig "~/.ssh/ssh_config")
-          (tramp-parse-shosts "~/.ssh/known_hosts")))
 
-  (mapc (lambda (method)
-          (tramp-set-completion-function method my-tramp-ssh-completions))
-	    '("fcp" "rsync" "scp" "scpc" "scpx" "sftp" "ssh")))
+  (dolist (method '("ssh" "sshx" "scp" "scpx" "scpc" "rsync" "sftp"))
+    (tramp-set-completion-function method my-tramp-ssh-completions))
 
-;; sudo via tramp
+  ;; sudo via tramp
 
-(defun cfg/sudo-edit (&optional arg)
-  "Edit buffer / file as sudo user"
-  (interactive "P")
-  (require 'tramp)
-  (let ((fname (if (or arg (not buffer-file-name))
-                   (read-file-name "File: ")
-                 buffer-file-name)))
-    (find-file
-     (if (not (tramp-tramp-file-p fname))
-         (concat "/sudo:root@localhost:" fname)
-       (with-parsed-tramp-file-name fname parsed
-         (when (equal parsed-user "root")
-           (error "Already root!"))
-         (let* ((new-hop (tramp-make-tramp-file-name parsed-method
-                                                     parsed-user
-                                                     parsed-host
-                                                     nil
-                                                     parsed-hop))
-                (new-hop (substring new-hop 1 -1))
-                (new-hop (concat new-hop "|"))
-                (new-fname (tramp-make-tramp-file-name "sudo"
-                                                       "root"
-                                                       parsed-host
-                                                       parsed-localname
-                                                       new-hop)))
-           new-fname))))))
+  (defun cfg/sudo-edit (&optional arg)
+    "Edit buffer or file as sudo user.
+With prefix ARG, prompt for file to visit."
+    (interactive "P")
+    (let ((fname (if (or arg (not buffer-file-name))
+                     (read-file-name "File: ")
+                   buffer-file-name)))
+      (find-file
+       (if (tramp-tramp-file-p fname)
+           ;; remote:
+           (concat fname "|sudo:root@"
+                   (tramp-file-name-host
+                    (tramp-dissect-file-name fname))
+                   ":")
+         ;; local:
+         (concat "/sudo:root@localhost:" fname)))))
 
-(defun cfg/sudired ()
-  "Open current directory via sudo and dired."
-  (interactive)
-  (require 'tramp)
-  (let ((dir (expand-file-name default-directory)))
-    (if (string-match "^/sudo:" dir)
-        (user-error "Already in sudo")
-      (dired (concat "/sudo::" dir)))))
+  (defun cfg/sudired ()
+    "Open current directory via sudo and dired."
+    (interactive)
+    (require 'tramp)
+    (let ((dir (expand-file-name default-directory)))
+      (if (string-match "^/sudo:" dir)
+          (user-error "Already in sudo")
+        (dired (concat "/sudo::" dir))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> ORG-MODE
