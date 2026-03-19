@@ -13,63 +13,67 @@
 ;; https://news.ycombinator.com/item?id=24117853
 (use-package comp
   :init
+  (defvar native-comp-speed)
+  (defvar native-comp-jit-compilation)
+  (defvar native-comp-async-query-on-exit)
+  (defvar native-comp-async-report-warnings-errors)
 
   ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Native_002dCompilation-Variables.html
+  (setq
 
-  ;; Optimization level for native compilation, a number between -1 and 3.
-  ;; -1 functions are kept in bytecode form and no native compilation is performed.
-  ;;  0 native compilation is performed with no optimizations.
-  ;;  1 light optimizations.
-  ;;  2 max optimization level fully adherent to the language semantic.
-  ;;  3 max optimization level, to be used only when necessary.
-  ;;    Warning: with 3, the compiler is free to perform dangerous optimizations.
-  (setq native-comp-speed 2)
+   ;; Optimization level for native compilation, a number between -1 and 3.
+   ;; -1 functions are kept in bytecode form and no native compilation is performed.
+   ;;  0 native compilation is performed with no optimizations.
+   ;;  1 light optimizations.
+   ;;  2 max optimization level fully adherent to the language semantic.
+   ;;  3 max optimization level, to be used only when necessary.
+   ;;    Warning: with 3, the compiler is free to perform dangerous optimizations.
+   native-comp-speed 2
 
-  ;; If non-nil, compile loaded .elc files asynchronously.
-  ;; After compilation, each function definition is updated to use the
-  ;; natively-compiled one.
-  (setq native-comp-jit-compilation t) ; should be t, default is t
+   ;; If non-nil, compile loaded .elc files asynchronously.
+   ;; After compilation, each function definition is updated to use the
+   ;; natively-compiled one.
+   native-comp-jit-compilation t ; should be t, default is t
 
-  ;; Whether to query the user about killing async compilations when exiting.
-  ;; If this is non-nil, Emacs will ask for confirmation to exit and kill the
-  ;; asynchronous native compilations if any are running.  If nil, when you
-  ;; exit Emacs, it will silently kill those asynchronous compilations even
-  ;; if ‘confirm-kill-processes’ is non-nil.
-  (setq native-comp-async-query-on-exit t) ; no risky, defailt is nil
+   ;; Whether to query the user about killing async compilations when exiting.
+   ;; If this is non-nil, Emacs will ask for confirmation to exit and kill the
+   ;; asynchronous native compilations if any are running.  If nil, when you
+   ;; exit Emacs, it will silently kill those asynchronous compilations even
+   ;; if ‘confirm-kill-processes’ is non-nil.
+   native-comp-async-query-on-exit t ; no risky, defailt is nil
 
-  ;; aggressive performance experiment:
-  ;; default is 0, but this value could be risky (the best option is default value)
-  ;; (setq native-comp-async-jobs-number 4) ; very risky, but possibility of better performance during startup
+   ;; aggressive performance experiment:
+   ;; default is 0, but this value could be risky (the best option is default value)
+   ;; (setq native-comp-async-jobs-number 4) ; very risky, but possibility of better performance during startup
 
-  ;; no warnings when compilation is ongoing:
-  (setq native-comp-async-report-warnings-errors nil)
-  (setq comp-async-report-warnings-errors nil)
+   ;; no warnings when compilation is ongoing:
+   native-comp-async-report-warnings-errors nil
 
-  ;; kill unnecessary compilation buffer:
-  ;; please check cfg- file with tempbuf configuration or try to experiment with (kill-buffer ) ...
+   ;; kill unnecessary compilation buffer:
+   ;; please check cfg- file with tempbuf configuration or try to experiment with (kill-buffer ) ...
 
-  ;; manipulations with font rendering:
-  ;; https://www.reddit.com/r/emacs/comments/14c4l8j/way_to_make_emacs_feel_smoother/
-  (setq jit-lock-stealth-time 1.25)
-  ;; Seconds between font locking:
-  (setq jit-lock-stealth-nice 0.5)
-  (setq jit-lock-chunk-size 4096)
-  (setq jit-lock-defer-time 0)
+   ;; Manipulations with smooth font rendering:
+   ;; https://old.reddit.com/r/emacs/comments/14c4l8j/way_to_make_emacs_feel_smoother/
+   jit-lock-stealth-time 1.25
+   ;; Seconds between font locking:
+   jit-lock-stealth-nice 0.5
+   jit-lock-chunk-size 4096
+   jit-lock-defer-time 0
 
-  ;; Overall performance options.
-  ;; see Doom Emacs for inspiration:
-  ;; https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
-  ;; Other examples:
-  ;; https://news.ycombinator.com/item?id=39190110
-  ;; https://www.reddit.com/r/emacs/comments/r7qah6/emacs_is_bloat_and_memory_intensive/
+   ;; Overall performance options.
+   ;; see Doom Emacs for inspiration:
+   ;; https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
+   ;; Other examples:
+   ;; https://news.ycombinator.com/item?id=39190110
+   ;; https://www.old.reddit.com/r/emacs/comments/r7qah6/emacs_is_bloat_and_memory_intensive/
 
-  ;; Set garbage collection threshold to 8GB:
-  (setq gc-cons-threshold #x200000000)
-  ;;(setq gc-cons-threshold most-positive-fixnum)
+   ;; Set garbage collection threshold to 8GB:
+   gc-cons-threshold #x200000000
+   ;;(setq gc-cons-threshold most-positive-fixnum)
 
-  (setq read-process-output-max (* 1024 1024))
-
+   read-process-output-max (* 1024 1024))
   :config
+  ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Native_002dCompilation-Functions.html
   ;; Additional defuns for compilation management.
   ;; All below defuns can be executed manually via M-x or via CLI scripts:
 
@@ -110,7 +114,7 @@ WARNING! Sometimes could cause errors and hang emacs."
 ;; This piece of code doesn't work:
 ;; (let ((default-directory (expand-file-name "site-elisp/" user-emacs-directory))) (normal-top-level-add-subdirs-to-load-path))
 
-;; https://www.reddit.com/r/emacs/comments/1rdstn/set_packageenableatstartup_to_nil_for_slightly/
+;; https://www.old.reddit.com/r/emacs/comments/1rdstn/set_packageenableatstartup_to_nil_for_slightly/
 (require 'package)
 (setq package-enable-at-startup nil)
 (require 'use-package)
@@ -150,12 +154,10 @@ WARNING! Sometimes could cause errors and hang emacs."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> DECLARATIVE LIST OF CORE PACKAGES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;; Additional core packages: packages which are required for core config.
 ;; Just make sure that all pkgs in the list are installed and nothing more.
 ;; For additional config - `use-package' should be used.
-;;
-
 (dolist (core-packages
 	     '(
 	       which-key
@@ -171,11 +173,9 @@ WARNING! Sometimes could cause errors and hang emacs."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> AUTO-MODE-ALIST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Auto-Major-Mode.html
 ;; https://www.emacswiki.org/emacs/AutoModeAlist
-;;
-
 (setq auto-mode-alist
       (append
        ;; File name (within directory) starts with a dot:
@@ -1095,7 +1095,7 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
 ;; don't ask about .dir-locals.el variables:
 (setq-default enable-local-variables :all)
 
-;; https://www.reddit.com/r/emacs/comments/2mu7yi/disable_electric_indent_mode/
+;; https://www.old.reddit.com/r/emacs/comments/2mu7yi/disable_electric_indent_mode/
 (electric-indent-mode -1)
 
 ;; STARTUP

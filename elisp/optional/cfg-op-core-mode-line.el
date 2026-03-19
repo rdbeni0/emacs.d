@@ -214,7 +214,7 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
 
   (defface cfg/flycheck-info-face
     ;; '((t (:foreground "#8B4513" :weight bold)))
-    '((t (:foreground "magenta" :weight bold)))
+    '((t (:foreground "green yellow" :weight bold)))
     "Face for Flycheck info.")
 
   ;; vars
