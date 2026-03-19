@@ -712,12 +712,10 @@ Uses position instead of index field."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> EGLOT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;; https://www.gnu.org/software/emacs/manual/html_node/eglot/Customizing-Eglot.html
 ;; https://github.com/joaotavora/eglot
 ;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
-;;
-
 (use-package eglot
   :config
   (setq eglot-report-progress nil)
@@ -732,11 +730,9 @@ Uses position instead of index field."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> EDIFF, DIFF AND VDIFF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
-;;
-
 (use-package ediff
   :config
   ;; https://emacs.stackexchange.com/questions/7362/how-to-show-a-diff-between-two-buffers-with-character-level-diffs
@@ -748,11 +744,9 @@ Uses position instead of index field."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> RECENTF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with "recentf" and similar filtering.
-;; https://www.emacswiki.org/emacs/RecentFiles
-;;
 
+;; https://www.emacswiki.org/emacs/RecentFiles
+;; https://www.masteringemacs.org/article/find-files-faster-recent-files-package
 (use-package recentf
   :functions
   (recentf-remove-if-non-kept)
@@ -1517,7 +1511,6 @@ error if the module cannot be located."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> PRE CONFIGFURATION FOR CUSTOM.EL FILE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 (setq custom-file (expand-file-name "data/custom.el" user-emacs-directory))
 
@@ -1638,9 +1631,17 @@ Prepends \"[project-fd] \" to the formatted message and sends it to
 
 ;; project-root methods
 
-(cl-defmethod project-root ((project (head vc)))       (cdr project))
-(cl-defmethod project-root ((project (head local)))    (cdr project))
-(cl-defmethod project-root ((project (head transient))) (cdr project))
+(cl-defmethod project-root ((project (head vc)))
+  "Return root directory of VC PROJECT."
+  (cdr project))
+
+(cl-defmethod project-root ((project (head local)))
+  "Return root directory of local PROJECT."
+  (cdr project))
+
+(cl-defmethod project-root ((project (head transient)))
+  "Return root directory of transient PROJECT."
+  (cdr project))
 
 ;; fd command builder — simplified and unified
 
@@ -1684,14 +1685,19 @@ ROOT is the directory in which the fd search should be performed."
       (project-fd--debug "Running fd in %s" root)
       (apply #'process-lines cmd))))
 
-
 (cl-defmethod project-files ((project (head vc)) &optional dirs)
+  "Return list of files in VC PROJECT using fd.
+DIRS is ignored."
   (project-fd-files project dirs))
 
 (cl-defmethod project-files ((project (head transient)) &optional dirs)
+  "Return list of files in transient PROJECT using fd.
+DIRS is ignored."
   (project-fd-files project dirs))
 
 (cl-defmethod project-files ((project (head local)) &optional dirs)
+  "Return list of files in local PROJECT using fd.
+DIRS is ignored."
   (project-fd-files project dirs))
 
 ;; `project-find-dir' improved command
@@ -2014,7 +2020,6 @@ With prefix ARG, prompt for file to visit."
 ;; https://github.com/jwiegley/use-package/issues/955
 ;; ^^ Remember to put it high in your config file so Emacs doesn't load the built-in org-mode first, otherwise you might get weird stuff like (void-function org-assert-version).
 
-;;
 ;; New options since Emacs 29+++
 (use-package org
   :pin gnu ;; gnu must be there, other versions are buggy!
@@ -2149,44 +2154,45 @@ current target is a channel, rename the buffer to match that channel."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> ABBREVS AND TEMPO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;; Abbrevs should be loaded AFTER any prog- mode (bcz will overwrite existing abbrev table)
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html
 ;; http://xahlee.info/emacs/emacs/elisp_abbrev_hook.html
-;;
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Abbrevs.html
+(use-package abbrev
+  :config
 
-;; This file should be used for private abbrevs:
-(setq abbrev-file-name (expand-file-name "data/abbrev_defs" user-emacs-directory))
-(setq save-abbrevs t)
-(setq-default abbrev-mode t)
-(setq save-abbrevs 'silently)
+  ;; This file should be used for private abbrevs:
+  (setq abbrev-file-name (expand-file-name "data/abbrev_defs" user-emacs-directory))
+  (setq save-abbrevs t)
+  (setq-default abbrev-mode t)
+  (setq save-abbrevs 'silently)
 
-;; If the user has a file of abbrevs, read it (unless -batch):
-(when (and (not noninteractive)
-	       (file-exists-p abbrev-file-name)
-	       (file-readable-p abbrev-file-name))
-  (progn
-    (require 'at-abbrev_defs) ;; main file with abbrev defs
-    (require 'at-long-lines) ;; defs with long lines
-    ;; This file should be used for private abbrevs:
-    (quietly-read-abbrev-file abbrev-file-name)))
+  ;; If the user has a file of abbrevs, read it (unless -batch):
+  (when (and (not noninteractive)
+	         (file-exists-p abbrev-file-name)
+	         (file-readable-p abbrev-file-name))
+    (progn
+      (require 'at-abbrev_defs) ;; main file with abbrev defs
+      (require 'at-long-lines) ;; defs with long lines
+      ;; This file should be used for private abbrevs:
+      (quietly-read-abbrev-file abbrev-file-name)))
 
-(defun cfg/expand-abbrev ()
-  "Try to expand abbrev at point.
+  (defun cfg/expand-abbrev ()
+    "Try to expand abbrev at point.
 If no expansion, prompt to select from the current mode's abbrev table."
-  (interactive)
-  (if (expand-abbrev)
-      (message "Abbrev expanded.")
-    (let* ((abbrev-table-symbol (intern (concat (symbol-name major-mode) "-abbrev-table")))
-	       (abbrev-table (and (boundp abbrev-table-symbol) (symbol-value abbrev-table-symbol))))
-      (if abbrev-table
-	      (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
-		         (expansion (abbrev-expansion abbrev abbrev-table)))
-	        (when expansion
-	          ;; Slightly dangerous, but should work - delete from beginning of line to point and insert abbrev:
-	          (delete-region (line-beginning-position) (point))
-	          (insert expansion)))
-	    (message "No abbrev found.")))))
+    (interactive)
+    (if (expand-abbrev)
+        (message "Abbrev expanded.")
+      (let* ((abbrev-table-symbol (intern (concat (symbol-name major-mode) "-abbrev-table")))
+	         (abbrev-table (and (boundp abbrev-table-symbol) (symbol-value abbrev-table-symbol))))
+        (if abbrev-table
+	        (let* ((abbrev (completing-read "Select abbrev: " abbrev-table))
+		           (expansion (abbrev-expansion abbrev abbrev-table)))
+	          (when expansion
+	            ;; Slightly dangerous, but should work - delete from beginning of line to point and insert abbrev:
+	            (delete-region (line-beginning-position) (point))
+	            (insert expansion)))
+	      (message "No abbrev found."))))))
 
 (provide 'init_core)
 ;;; init_core.el ends here
