@@ -289,6 +289,8 @@ WARNING! Could cause errors and hang emacs."
 ;; https://github.com/Somelauw/evil-org-mode
 (use-package evil-org
   :after org
+  :functions
+  (evil-org-agenda-set-keys)
   :hook (org-mode . (lambda () evil-org-mode))
   :config
   (require 'evil-org-agenda)
@@ -879,11 +881,12 @@ If the universal prefix argument is used then will the windows too."
 ;;;###autoload
 (defun cfg/rename-current-buffer-file (&optional arg)
   "Rename the current buffer and the file it is visiting.
-If the buffer isn't visiting a file, ask if it should
-be saved to a file, or just renamed.
-
-If called without a prefix argument, the prompt is
-initialized with the current directory instead of filename."
+If the buffer isn't visiting a file, ask whether it should be saved
+to a file or just renamed.
+If called without a prefix argument, the prompt is initialized with
+the current directory instead of the filename.  When called with a
+prefix argument ARG, the prompt is initialized with the full
+filename."
   (interactive "P")
   (let* ((name (buffer-name))
          (filename (buffer-file-name)))
@@ -961,155 +964,6 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
       (progn
         (window-configuration-to-register ?_)
         (delete-other-windows)))))
-
-;; https://stackoverflow.com/questions/12715376/emacs-copy-pwd-of-the-current-buffer-to-clipboard
-
-;;;###autoload
-(defun cfg/show-file-name ()
-  "Show the full path file name in the minibuffer."
-  (interactive)
-  (kill-new (buffer-file-name))
-  (message (buffer-file-name)))
-
-;; Copy file path
-
-(defun cfg/-directory-path ()
-  "Retrieve the directory path of the current buffer.
-If the buffer is not visiting a file, use the `list-buffers-directory' variable
-as a fallback to display the directory, useful in buffers like the ones created
-by `magit' and `dired'.
-Returns:
-- A string containing the directory path in case of success.
-- nil in case the current buffer does not have a directory."
-  (when-let (directory-name (if-let (file-name (buffer-file-name))
-                                (file-name-directory file-name)
-                              list-buffers-directory))
-    (file-truename directory-name)))
-
-(defun cfg/-file-path ()
-  "Retrieve the file path of the current buffer.
-Returns:
-- A string containing the file path in case of success.
-- nil in case the current buffer does not have a directory."
-  (when-let (file-path (buffer-file-name))
-    (file-truename file-path)))
-
-(defun cfg/-file-path-with-line ()
-  "Retrieve the file path of the current buffer, including line number.
-Returns:
-- A string containing the file path in case of success.
-- nil in case the current buffer does not have a directory."
-  (when-let (file-path (cfg/-file-path))
-    (concat file-path ":" (number-to-string (line-number-at-pos)))))
-
-(defun cfg/-file-path-with-line-column ()
-  "Retrieve the file path of the current buffer, including line and column number.
-Returns:
-- A string containing the file path in case of success.
-- nil in case the current buffer does not have a directory."
-  (when-let (file-path (cfg/-file-path-with-line))
-    (concat
-     file-path
-     ":"
-     (number-to-string
-      (if (and (boundp 'mode-line-position-column-format)
-               (string-match-p "%C"
-                               (format-mode-line
-                                mode-line-position-column-format)))
-          ;; one-based
-          (1+ (current-column))
-        ;; zero-based (default)
-        (current-column))))))
-
-;;;###autoload
-(defun cfg/copy-directory-path ()
-  "Copy and show the directory path of the current buffer.
-If the buffer is not visiting a file, use the `list-buffers-directory'
-variable as a fallback to display the directory, useful in buffers like the
-ones created by `magit' and `dired'."
-  (interactive)
-  (if-let (directory-path (cfg/-directory-path))
-      (progn
-        (kill-new directory-path)
-        (message "%s" directory-path))
-    (message "WARNING: Current buffer does not have a directory!")))
-
-;;;###autoload
-(defun cfg/copy-file-path ()
-  "Copy and show the file path of the current buffer."
-  (interactive)
-  (if-let (file-path (cfg/-file-path))
-      (progn
-        (kill-new file-path)
-        (message "%s" file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-;;;###autoload
-(defun cfg/copy-file-name ()
-  "Copy and show the file name of the current buffer."
-  (interactive)
-  (if-let (file-name (file-name-nondirectory (cfg/-file-path)))
-      (progn
-        (kill-new file-name)
-        (message "%s" file-name))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-;;;###autoload
-(defun cfg/copy-buffer-name ()
-  "Copy and show the name of the current buffer."
-  (interactive)
-  (kill-new (buffer-name))
-  (message "%s" (buffer-name)))
-
-;;;###autoload
-(defun cfg/copy-file-name-base ()
-  "Copy and show the file name without its final extension of the current buffer."
-  (interactive)
-  (if-let (file-name (file-name-base (cfg/-file-path)))
-      (progn
-        (kill-new file-name)
-        (message "%s" file-name))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-;;;###autoload
-(defun cfg/copy-file-path-with-line ()
-  "Copy and show the file path of the current buffer, including line number."
-  (interactive)
-  (if-let (file-path (cfg/-file-path-with-line))
-      (progn
-        (kill-new file-path)
-        (message "%s" file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-;;;###autoload
-(defun cfg/copy-file-path-with-line-column ()
-  "Copy and display the file path of the current buffer with line and column.
-This respects the variable `column-number-indicator-zero-based'."
-  (interactive)
-  (if-let (file-path (cfg/-file-path-with-line-column))
-      (progn
-        (kill-new file-path)
-        (message "%s" file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-
-;;;###autoload
-(defun cfg/open-with (arg)
-  "Open visited file in default external program.
-When in Dired mode, open file under the cursor.
-With a prefix ARG always prompt for command to use."
-  (interactive "P")
-  (let* ((current-file-name
-          (if (derived-mode-p 'dired-mode)
-              (dired-get-file-for-visit)
-            buffer-file-name))
-         (open (pcase system-type
-                 (`darwin "open")
-                 ((or `gnu `gnu/linux `gnu/kfreebsd) "xdg-open")))
-         (program (if (or arg (not open))
-                      (read-shell-command "Open current file with: ")
-                    open)))
-    (call-process program nil 0 nil current-file-name)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> DIAGNOSTICS
@@ -1430,8 +1284,6 @@ located."
     (if cant-locate
         nil
       path)))
-
-
 
 (defun cfg/find-perl-module (module-name)
   "Find and open the Perl module named MODULE-NAME.
@@ -1861,12 +1713,19 @@ The current buffer's `default-directory' is available as part of
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> DIRED
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with "dired".
-;; http://xahlee.info/emacs/emacs/emacs_dired_tips.html
-;;
 
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html
+;; http://xahlee.info/emacs/emacs/emacs_dired_tips.html
 (use-package dired
+  :functions
+  (dired-sort-other
+   dired-get-marked-files
+   dired-get-filename
+   dired-get-file-for-visit
+   cfg/-file-path
+   cfg/-directory-path
+   cfg/-file-path-with-line
+   cfg/-file-path-with-line-column)
   :config
   ;; "Make dired use the same buffer for viewing directory":
   (setq dired-kill-when-opening-new-dired-buffer t)
@@ -1874,63 +1733,198 @@ The current buffer's `default-directory' is available as part of
 
   ;; When you do copy files, emacs prompts for a target dir.
   ;; You can make emacs automatically suggest the target dir on the split pane.
-  (setq dired-dwim-target t))
+  (setq dired-dwim-target t)
 
-(defcustom list-of-dired-switches
-  '("-l" "-la" "-lA" "-lA --group-directories-first")
-  "List of ls switches for Dired to cycle among.")
+  (defcustom list-of-dired-switches
+    '("-l" "-la" "-lA" "-lA --group-directories-first")
+    "List of ls switches for Dired to cycle among.")
 
-(defun cfg/cycle-dired-switches ()
-  "Cycle through the list `list-of-dired-switches' of switches for ls."
-  (interactive)
-  (setq list-of-dired-switches
-        (append (cdr list-of-dired-switches)
-                (list (car list-of-dired-switches))))
-  (dired-sort-other (car list-of-dired-switches)))
+  (defun cfg/cycle-dired-switches ()
+    "Cycle through the list `list-of-dired-switches' of switches for ls."
+    (interactive)
+    (setq list-of-dired-switches
+          (append (cdr list-of-dired-switches)
+                  (list (car list-of-dired-switches))))
+    (dired-sort-other (car list-of-dired-switches)))
 
-(defun cfg/chmod+x ()
-  "Add executable permission (+x) to file(s) depending on context.
+  (defun cfg/chmod+x ()
+    "Add executable permission (+x) to file(s) depending on context.
 Cases:
 1. Normal buffer visiting a file -> chmod +x that file.
 2. Dired with marked files -> chmod +x all marked files.
 3. Dired with no marked files -> chmod +x file at point."
-  (interactive)
-  (cond
-   ;; Case 1: Normal buffer visiting a file
-   ((and buffer-file-name (not (derived-mode-p 'dired-mode)))
-    ;; Ensure file exists
-    (if (file-exists-p buffer-file-name)
+    (interactive)
+    (cond
+     ;; Case 1: Normal buffer visiting a file
+     ((and buffer-file-name (not (derived-mode-p 'dired-mode)))
+      ;; Ensure file exists
+      (if (file-exists-p buffer-file-name)
+          (progn
+            ;; Add executable bit
+            (call-process "chmod" nil nil nil "+x" buffer-file-name)
+            (message "Made file executable: %s" buffer-file-name))
+        (message "File does not exist: %s" buffer-file-name)))
+
+     ;; Case 2 & 3: Dired mode
+     ((derived-mode-p 'dired-mode)
+      ;; Get marked files, or fallback to file at point
+      (let* ((files (dired-get-marked-files))
+             (count (length files)))
+        ;; If nothing marked, use file at point
+        (when (= count 1)
+          (let ((file-at-point (dired-get-filename nil t)))
+            (when file-at-point
+              (setq files (list file-at-point)))))
+
+        ;; Apply chmod +x to all collected files
+        (dolist (f files)
+          (when (file-exists-p f)
+            (call-process "chmod" nil nil nil "+x" f)))
+
+        ;; Refresh dired buffer to show updated permissions
+        (revert-buffer)
+
+        (message "Made executable: %s"
+                 (mapconcat #'identity files ", "))))
+
+     ;; Fallback
+     (t
+      (message "No file to chmod +x."))))
+
+  (defun cfg/show-file-name ()
+    "Show the full path file name in the minibuffer."
+    (interactive)
+    (kill-new (buffer-file-name))
+    (message (buffer-file-name)))
+
+  (defun cfg/-directory-path ()
+    "Retrieve the directory path of the current buffer.
+If the buffer is not visiting a file, use the `list-buffers-directory' variable
+as a fallback to display the directory, useful in buffers like the ones created
+by `magit' and `dired'.
+Returns:
+- A string containing the directory path in case of success.
+- nil in case the current buffer does not have a directory."
+    (when-let (directory-name (if-let (file-name (buffer-file-name))
+                                  (file-name-directory file-name)
+                                list-buffers-directory))
+      (file-truename directory-name)))
+
+  (defun cfg/-file-path ()
+    "Retrieve the file path of the current buffer.
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not have a directory."
+    (when-let (file-path (buffer-file-name))
+      (file-truename file-path)))
+
+  (defun cfg/-file-path-with-line ()
+    "Retrieve the file path of the current buffer, including line number.
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not have a directory."
+    (when-let (file-path (cfg/-file-path))
+      (concat file-path ":" (number-to-string (line-number-at-pos)))))
+
+  (defun cfg/-file-path-with-line-column ()
+    "Retrieve the file path of the current buffer, including line and column number.
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not have a directory."
+    (when-let (file-path (cfg/-file-path-with-line))
+      (concat
+       file-path
+       ":"
+       (number-to-string
+        (if (and (boundp 'mode-line-position-column-format)
+                 (string-match-p "%C"
+                                 (format-mode-line
+                                  mode-line-position-column-format)))
+            ;; one-based
+            (1+ (current-column))
+          ;; zero-based (default)
+          (current-column))))))
+
+  (defun cfg/copy-directory-path ()
+    "Copy and show the directory path of the current buffer.
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'."
+    (interactive)
+    (if-let (directory-path (cfg/-directory-path))
         (progn
-          ;; Add executable bit
-          (call-process "chmod" nil nil nil "+x" buffer-file-name)
-          (message "Made file executable: %s" buffer-file-name))
-      (message "File does not exist: %s" buffer-file-name)))
+          (kill-new directory-path)
+          (message "%s" directory-path))
+      (message "WARNING: Current buffer does not have a directory!")))
 
-   ;; Case 2 & 3: Dired mode
-   ((derived-mode-p 'dired-mode)
-    ;; Get marked files, or fallback to file at point
-    (let* ((files (dired-get-marked-files))
-           (count (length files)))
-      ;; If nothing marked, use file at point
-      (when (= count 1)
-        (let ((file-at-point (dired-get-filename nil t)))
-          (when file-at-point
-            (setq files (list file-at-point)))))
+  (defun cfg/copy-file-path ()
+    "Copy and show the file path of the current buffer."
+    (interactive)
+    (if-let (file-path (cfg/-file-path))
+        (progn
+          (kill-new file-path)
+          (message "%s" file-path))
+      (message "WARNING: Current buffer is not attached to a file!")))
 
-      ;; Apply chmod +x to all collected files
-      (dolist (f files)
-        (when (file-exists-p f)
-          (call-process "chmod" nil nil nil "+x" f)))
+  (defun cfg/copy-file-name ()
+    "Copy and show the file name of the current buffer."
+    (interactive)
+    (if-let (file-name (file-name-nondirectory (cfg/-file-path)))
+        (progn
+          (kill-new file-name)
+          (message "%s" file-name))
+      (message "WARNING: Current buffer is not attached to a file!")))
 
-      ;; Refresh dired buffer to show updated permissions
-      (revert-buffer)
+  (defun cfg/copy-buffer-name ()
+    "Copy and show the name of the current buffer."
+    (interactive)
+    (kill-new (buffer-name))
+    (message "%s" (buffer-name)))
 
-      (message "Made executable: %s"
-               (mapconcat #'identity files ", "))))
+  (defun cfg/copy-file-name-base ()
+    "Copy and show the file name without its final extension of the current buffer."
+    (interactive)
+    (if-let (file-name (file-name-base (cfg/-file-path)))
+        (progn
+          (kill-new file-name)
+          (message "%s" file-name))
+      (message "WARNING: Current buffer is not attached to a file!")))
 
-   ;; Fallback
-   (t
-    (message "No file to chmod +x."))))
+  (defun cfg/copy-file-path-with-line ()
+    "Copy and show the file path of the current buffer, including line number."
+    (interactive)
+    (if-let (file-path (cfg/-file-path-with-line))
+        (progn
+          (kill-new file-path)
+          (message "%s" file-path))
+      (message "WARNING: Current buffer is not attached to a file!")))
+
+  (defun cfg/copy-file-path-with-line-column ()
+    "Copy and display the file path of the current buffer with line and column.
+This respects the variable `column-number-indicator-zero-based'."
+    (interactive)
+    (if-let (file-path (cfg/-file-path-with-line-column))
+        (progn
+          (kill-new file-path)
+          (message "%s" file-path))
+      (message "WARNING: Current buffer is not attached to a file!")))
+
+  (defun cfg/open-with (arg)
+    "Open visited file in default external program.
+When in Dired mode, open file under the cursor.
+With a prefix ARG always prompt for command to use."
+    (interactive "P")
+    (let* ((current-file-name
+            (if (derived-mode-p 'dired-mode)
+                (dired-get-file-for-visit)
+              buffer-file-name))
+           (open (pcase system-type
+                   (`darwin "open")
+                   ((or `gnu `gnu/linux `gnu/kfreebsd) "xdg-open")))
+           (program (if (or arg (not open))
+                        (read-shell-command "Open current file with: ")
+                      open)))
+      (call-process program nil 0 nil current-file-name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> TRAMP AND SUDO
@@ -1949,7 +1943,7 @@ Cases:
   (dolist (method '("ssh" "sshx" "scp" "scpx" "scpc" "rsync" "sftp"))
     (tramp-set-completion-function method my-tramp-ssh-completions))
 
-  ;; sudo via tramp
+  ;; sudo via tramp:
 
   (defun cfg/sudo-edit (&optional arg)
     "Edit buffer or file as sudo user.
