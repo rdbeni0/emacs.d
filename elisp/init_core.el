@@ -1581,6 +1581,9 @@ If non-nil and exists in project root, fd will be called with
   "If non-nil, output project/fd debug logs.")
 
 (defun project-fd--debug (fmt &rest args)
+  "Log a debug message using FMT and ARGS when `project-fd-debug' is non-nil.
+Prepends \"[project-fd] \" to the formatted message and sends it to
+`message'.  Intended for internal debugging output."
   (when project-fd-debug
     (apply #'message (concat "[project-fd] " fmt) args)))
 
