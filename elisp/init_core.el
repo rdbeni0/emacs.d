@@ -239,10 +239,12 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
   ;; visual-line-mode
   ;; https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
   (evil-respect-visual-line-mode t)
+  :commands
+  (evil-mode
+   evil-exit-emacs-state)
   :functions
   (cfg/minibuffer-keyboard-quit
-   evil-mode
-   evil-exit-emacs-state
+   evil-set-initial-state
    evil-ex-define-cmd
    evil-set-undo-system
    evil-select-search-module
@@ -509,8 +511,9 @@ Handles both Unix and Windows end-of-line conventions."
       (replace-match ""))))
 
 (defun cfg/join-lines-in-region-add-spc (start end)
-  "Join all lines in the selected region into one line, handling both Unix and Windows EOLs.
-Add space instead of EOL."
+  "Join all lines between START and END into one line.
+Handles both Unix and Windows EOLs and inserts a space instead of
+the original newline(s)."
   (interactive "r")
   (save-excursion
     (goto-char start)
@@ -536,8 +539,9 @@ Add space instead of EOL."
 
 (defun cfg/eol-analyze ()
   "Analyze the end-of-line style in the current buffer or active region.
-If a region is active, analyze only that region; otherwise analyze the whole buffer.
-Display one of: \"unix LF\", \"dos (windows) CRLF\", \"mac CR\", or \"mixed\"."
+If a region is active, analyze only that region; otherwise analyze
+the whole buffer.  Display one of: \"unix LF\", \"dos (windows)
+CRLF\", \"mac CR\", or \"mixed\"."
   (interactive)
   (let* ((use-region (use-region-p))
          (start (if use-region (region-beginning) (point-min)))
@@ -1715,7 +1719,7 @@ If non-nil and exists in project root, fd will be called with
   (file-exists-p (expand-file-name marker (file-truename dir))))
 
 (defun project-fd--dir-has-markers (dir markers)
-  "Return non-nil if DIR contains one of MARKERS."
+  "Return non-nil if DIR contain one of MARKERS."
   (seq-some (lambda (m) (project-fd--marker-exists-p dir m))
             markers))
 
@@ -2010,39 +2014,41 @@ With prefix ARG, prompt for file to visit."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> IRC and rcirc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with IRC inside Emacs (via rcirc).
+
 ;; EmacsWiki: https://www.emacswiki.org/emacs/rcirc
-;;
-
-(defun cfg/rcirc-rename-buffer-as-chan ()
-  (let ((buffer (current-buffer)))
-    (when (and (rcirc-buffer-process)
-               (eq (process-status (rcirc-buffer-process)) 'open))
-      (if (rcirc-channel-p rcirc-target)
-	      (rename-buffer rcirc-target)))))
-
-;; Dynamically set fill-column at redisplay time:
-;; Source: https://www.emacswiki.org/emacs/rcircAutoFillColumn
-
-(defvar rcirc-dynamic-fill-column-margin 3
-  "Safety margin used to calculate fill-column depending on window-width")
-
-(defun cfg/rcirc-dynamic-fill-column-window (window &optional margin)
-  "Dynamically get window's width and adjust fill-column accordingly"
-  (with-current-buffer (window-buffer window)
-    (when (eq major-mode 'rcirc-mode)
-      (setq fill-column
-	        (- (window-width window)
-	           (or margin rcirc-dynamic-fill-column-margin))))))
-
-(defun cfg/rcirc-dynamic-fill-column (frame)
-  "Dynamically tune fill-column for a frame's windows at redisplay time"
-  (walk-windows 'cfg/rcirc-dynamic-fill-column-window 'no-minibuf frame))
-
+;; https://www.gnu.org/software/emacs/manual/html_mono/rcirc.html
 (use-package rcirc
+  :functions
+  (rcirc-buffer-process
+   rcirc-channel-p)
   :defer t
   :config
+
+  (defun cfg/rcirc-rename-buffer-as-chan ()
+    "Rename the current rcirc buffer to the channel name when connected.
+If the buffer is associated with an active rcirc process and the
+current target is a channel, rename the buffer to match that channel."
+    (when (and (rcirc-buffer-process)
+               (eq (process-status (rcirc-buffer-process)) 'open))
+      (when (rcirc-channel-p rcirc-target)
+        (rename-buffer rcirc-target))))
+
+  ;; Dynamically set fill-column at redisplay time:
+  ;; Source: https://www.emacswiki.org/emacs/rcircAutoFillColumn
+  (defvar rcirc-dynamic-fill-column-margin 3
+    "Safety margin used to calculate fill-column depending on window-width")
+
+  (defun cfg/rcirc-dynamic-fill-column-window (window &optional margin)
+    "Dynamically get window's width and adjust fill-column accordingly"
+    (with-current-buffer (window-buffer window)
+      (when (eq major-mode 'rcirc-mode)
+        (setq fill-column
+	          (- (window-width window)
+	             (or margin rcirc-dynamic-fill-column-margin))))))
+
+  (defun cfg/rcirc-dynamic-fill-column (frame)
+    "Dynamically tune fill-column for a frame's windows at redisplay time"
+    (walk-windows 'cfg/rcirc-dynamic-fill-column-window 'no-minibuf frame))
 
   ;; Please create correct "lo-irc.el" file inside ~/.emacs.d/data/local/lo-irc.el
   ;; And add below variables inside this file:
@@ -2100,8 +2106,7 @@ With prefix ARG, prompt for file to visit."
 (use-package doc-view
   :config
   (setq doc-view-resolution 150)
-  (setq doc-view-scale-internally nil)
-  )
+  (setq doc-view-scale-internally nil))
 
 (use-package image-mode
   :config
