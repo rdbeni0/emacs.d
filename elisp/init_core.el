@@ -752,6 +752,38 @@ Uses position instead of index field."
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; -> RECENTF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Everything what is connected with "recentf" and similar filtering.
+;; https://www.emacswiki.org/emacs/RecentFiles
+;;
+
+(use-package recentf
+  :functions
+  (recentf-remove-if-non-kept)
+  :config
+
+  (defun cfg/recentf-jump-open ()
+    "Use `completing-read' to \\[find-file] a recent file
+   https://www.masteringemacs.org/article/find-files-faster-recent-files-package "
+    (interactive)
+    (if (find-file (completing-read "Find recent file: " recentf-list))
+        (message "Opening file...")
+      (message "Aborting")))
+
+  (recentf-mode 1)
+  ;; Save 10000 files for recentf mode:
+  (setq recentf-max-saved-items 10000)
+  (setq recentf-max-menu-items 10000)
+  ;; "By default, Recentf saves the list of recent files on exiting Emacs (specifically, `recentf-save-list` is called on `kill-emacs-hook`).
+  ;; If Emacs exits abruptly for some reason the recent file list will be lost - therefore you may wish to call `recentf-save-list` periodically, e.g. every 5 minutes:"
+  ;; https://stackoverflow.com/questions/8023670/change-number-of-files-recentf-in-emacs-stores-using-ido-completion-method
+  (run-at-time nil (* 10 60) 'recentf-save-list)
+  ;; Currently working on "pure" recentf-mode ("recentf-open-files").
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> IBUFFER AND BUFFERS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1430,36 +1462,6 @@ error if the module cannot be located."
   ;; Term buffers are truncated from the top to be no greater than this number.
   ;; Notice that a setting of "0" means "don’t truncate anything".
   (setq term-buffer-maximum-size 0))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; -> RECENTF
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with "recentf" and similar filtering.
-;; https://www.emacswiki.org/emacs/RecentFiles
-;;
-
-(use-package recentf
-  :config
-
-  (defun cfg/recentf-jump-open ()
-    "Use `completing-read' to \\[find-file] a recent file
-   https://www.masteringemacs.org/article/find-files-faster-recent-files-package "
-    (interactive)
-    (if (find-file (completing-read "Find recent file: " recentf-list))
-        (message "Opening file...")
-      (message "Aborting")))
-
-  (recentf-mode 1)
-  ;; Save 10000 files for recentf mode:
-  (setq recentf-max-saved-items 10000)
-  (setq recentf-max-menu-items 10000)
-  ;; "By default, Recentf saves the list of recent files on exiting Emacs (specifically, `recentf-save-list` is called on `kill-emacs-hook`).
-  ;; If Emacs exits abruptly for some reason the recent file list will be lost - therefore you may wish to call `recentf-save-list` periodically, e.g. every 5 minutes:"
-  ;; https://stackoverflow.com/questions/8023670/change-number-of-files-recentf-in-emacs-stores-using-ido-completion-method
-  (run-at-time nil (* 10 60) 'recentf-save-list)
-  ;; Currently working on "pure" recentf-mode ("recentf-open-files").
-  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> GREP
