@@ -2004,9 +2004,6 @@ With prefix ARG, prompt for file to visit."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> ORG-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with `org-mode'.
-;;
 
 ;;
 ;; old ISSUE - force install GNU ELPA version (and ignore built-in pkg):
