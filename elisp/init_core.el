@@ -219,6 +219,8 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;;;; -> EVIL-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq evil-want-keybinding nil)
+
 ;; https://github.com/emacs-evil/evil
 (use-package evil
   :init
@@ -239,16 +241,15 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
   ;; visual-line-mode
   ;; https://www.reddit.com/r/spacemacs/comments/f9w7r1/move_to_end_of_line_with_in_visuallinemode/
   (evil-respect-visual-line-mode t)
-  :commands
-  (evil-mode
-   evil-exit-emacs-state)
   :functions
   (cfg/minibuffer-keyboard-quit
    evil-set-initial-state
    evil-ex-define-cmd
    evil-set-undo-system
    evil-select-search-module
-   evil-define-key)
+   evil-define-key
+   evil-mode
+   evil-exit-emacs-state)
   :config
   (evil-mode 1)
 
