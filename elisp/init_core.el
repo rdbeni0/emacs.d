@@ -1292,9 +1292,6 @@ If the directory for the backup does not exist, create it."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> PERL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Everything what is connected with perl programming.
-;;
 
 ;; perl-quote
 ;; https://user42.tuxfamily.org/perl-quote/index.html
@@ -1349,14 +1346,12 @@ error if the module cannot be located."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> CC-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
+
 ;; "CC Mode is a GNU Emacs mode for editing files containing C, C++, Objective-C, Java, CORBA IDL (and the variants PSDL and CIDL), Pike and AWK code."
-;; cc-mode:
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ccmode.html
 ;; https://wikemacs.org/wiki/CC-mode
 ;; https://cc-mode.sourceforge.net/html-manual/index.html
-;;
-
 (use-package cc-mode
   :config
   )
@@ -1364,11 +1359,9 @@ error if the module cannot be located."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> COMPILATION-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;; Configuration for "compilation-mode" and various building's under emacs.
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Building.html
-;;
-
 (use-package compile
   :config
   )
