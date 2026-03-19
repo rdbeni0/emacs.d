@@ -290,9 +290,13 @@ WARNING! Could cause errors and hang emacs."
 (use-package evil-org
   :after org
   :functions
-  (evil-org-agenda-set-keys)
-  :hook (org-mode . (lambda () evil-org-mode))
+  (evil-org-agenda-set-keys
+   evil-org-mode)
   :config
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (evil-org-mode)))
+
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
@@ -328,14 +332,25 @@ WARNING! Could cause errors and hang emacs."
 ;;;; -> CODE FORMATTING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; helper: return whole-buffer region without using mark-whole-buffer
+(defun cfg/-whole-buffer-region ()
+  "Return cons of (beg . end) for the whole buffer."
+  (cons (point-min) (point-max)))
+
 ;; Built-in formatting via indentation: C-x h C-M-\
 ;; https://www.reddit.com/r/emacs/comments/q3rwes/anyone_using_code_formatter_for_elisp/
 
 (defun cfg/built-in-format-via-indent ()
   "Format code using built-in indentation.
-Same as `C-x h C-M-\\`."
+If region is active, format the region; otherwise format the whole buffer.
+Equivalent to `C-M-\\` on region or `C-x h C-M-\\` on buffer."
   (interactive)
-  (indent-region (point-min) (point-max)))
+  (let* ((region (if (use-region-p)
+                     (cons (region-beginning) (region-end))
+                   (cfg/-whole-buffer-region)))
+         (beg (car region))
+         (end (cdr region)))
+    (indent-region beg end)))
 
 ;; do NOT use tabs for indentation:
 ;; particularly recommended by https://web-mode.org/
@@ -352,11 +367,14 @@ Same as `C-x h C-M-\\`."
 (defun cfg/xmllint-format-buffer ()
   "Run `xmllint --nonet --format -' on the current buffer."
   (interactive)
-  (mark-whole-buffer)
-  (save-excursion
-    (shell-command-on-region
-     (point) (mark)
-     (concat nxml-xmllint-executable " --nonet --format -") nil t)))
+  (let* ((region (cfg/-whole-buffer-region))
+         (beg (car region))
+         (end (cdr region)))
+    (save-excursion
+      (shell-command-on-region
+       beg end
+       (concat nxml-xmllint-executable " --nonet --format -")
+       nil t))))
 
 (defun cfg/built-in-format-nxml ()
   "Format xml code (`nxml-mode') using xmllint or built-in processing."
@@ -371,41 +389,39 @@ Same as `C-x h C-M-\\`."
   "Location of perltidy executable.")
 
 (defvar perl5-perltidy-options '("--quiet"
-				                 "--standard-error-output"
-				                 "--perl-best-practices"
-				                 "-l=185")
+                                 "--standard-error-output"
+                                 "--perl-best-practices"
+                                 "-l=185")
   "Command line options to pass to perltidy.")
 
 (defun cfg/perltidy-format ()
-  "Format perl5 code with perltidy;
-if region is active, operate on it, else operate on line."
+  "Format perl5 code with perltidy.
+If region is active, operate on it, otherwise operate on the whole buffer."
   (interactive)
-  (let ((old-point (point))
-        (pos
-         (if (use-region-p)
-             (cons (region-beginning)
-                   (if (char-equal ?\n (char-before (region-end)))
-                       (region-end)
-                     (save-excursion ;; must including terminating newline
-                       (goto-char (region-end))
-                       (1+ (line-end-position)))))
-           (cons (line-beginning-position)
-                 (1+ (line-end-position))))))
-    (apply #'call-process-region (car pos) (cdr pos) perl5-perltidy-executable t '(t nil)
+  (let* ((old-point (point))
+         (region (if (use-region-p)
+                     (cons (region-beginning)
+                           (if (char-equal ?\n (char-before (region-end)))
+                               (region-end)
+                             (save-excursion ;; must including terminating newline
+                               (goto-char (region-end))
+                               (1+ (line-end-position)))))
+                   (cfg/-whole-buffer-region)))
+         (beg (car region))
+         (end (cdr region)))
+    (apply #'call-process-region
+           beg end
+           perl5-perltidy-executable
+           t '(t nil)
            perl5-perltidy-options)
     (goto-char old-point)))
-
-(defun cfg/perltidy-format-buffer ()
-  "Format current buffer with perltidy."
-  (interactive)
-  (mark-whole-buffer)
-  (cfg/perltidy-format))
 
 (defun cfg/perltidy-format-function ()
   "Format current function (sub) with perltidy."
   (interactive)
-  (mark-defun)
-  (cfg/perltidy-format))
+  (save-excursion
+    (mark-defun)
+    (cfg/perltidy-format)))
 
 (defun cfg/built-in-format-perl ()
   "Format perl code using perltidy or built-in processing."
@@ -840,12 +856,13 @@ Otherwise, open `ibuffer'."
 ;;;###autoload
 (defun cfg/kill-other-buffers (&optional arg)
   "Kill all other buffers.
-If the universal prefix argument is used then will the windows too."
+If the universal prefix argument ARG is used, then kill the windows too."
   (interactive "P")
   (when (yes-or-no-p (format "Killing all buffers except \"%s\"? "
                              (buffer-name)))
-    (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))
-    (when (equal '(4) arg) (delete-other-windows))
+    (mapc #'kill-buffer (delq (current-buffer) (buffer-list)))
+    (when (equal '(4) arg)
+      (delete-other-windows))
     (message "Buffers deleted!")))
 
 ;;;###autoload
@@ -1409,11 +1426,8 @@ error if the module cannot be located."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> TERM-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Customization for term-mode:
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Term-Mode.html
-;;
 
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Term-Mode.html
 (use-package term
   :config
   ;; The maximum size in lines for term buffers.
@@ -1446,7 +1460,6 @@ error if the module cannot be located."
   (setq recentf-max-menu-items 10000)
   ;; "By default, Recentf saves the list of recent files on exiting Emacs (specifically, `recentf-save-list` is called on `kill-emacs-hook`).
   ;; If Emacs exits abruptly for some reason the recent file list will be lost - therefore you may wish to call `recentf-save-list` periodically, e.g. every 5 minutes:"
-  ;;
   ;; https://stackoverflow.com/questions/8023670/change-number-of-files-recentf-in-emacs-stores-using-ido-completion-method
   (run-at-time nil (* 10 60) 'recentf-save-list)
   ;; Currently working on "pure" recentf-mode ("recentf-open-files").
@@ -1620,7 +1633,9 @@ If non-nil and exists in project root, fd will be called with
 ;; fd command builder — simplified and unified
 
 (defun project-fd--make-fd-command (project root)
-  "Return list of arguments for fd search in ROOT."
+  "Return list of arguments for fd search in ROOT for PROJECT.
+PROJECT is a project instance as returned by `project-current'.
+ROOT is the directory in which the fd search should be performed."
   (let* ((is-vc (eq (car project) 'vc))
          (ignores (if is-vc project-vc-ignores project-ignores))
          (cmd '("fd" "--type" "f" "--hidden" "--strip-cwd-prefix" ".")))
@@ -1735,9 +1750,13 @@ The current buffer's `default-directory' is available as part of
   ;; You can make emacs automatically suggest the target dir on the split pane.
   (setq dired-dwim-target t)
 
+  (defvar list-of-dired-switches nil
+    "List of ls switches for Dired to cycle among.")
+
   (defcustom list-of-dired-switches
     '("-l" "-la" "-lA" "-lA --group-directories-first")
-    "List of ls switches for Dired to cycle among.")
+    "List of ls switches for Dired to cycle among."
+    :type '(repeat string))
 
   (defun cfg/cycle-dired-switches ()
     "Cycle through the list `list-of-dired-switches' of switches for ls."

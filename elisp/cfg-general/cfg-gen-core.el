@@ -20,8 +20,7 @@
  :prefix ","
  "="  '(:ignore t :which-key "format")
  "=-" '(cfg/built-in-format-perl :which-key "built-in-format")
- "=p" '(cfg/perltidy-format-buffer :which-key "perltidy-format-buffer")
- "=o" '(cfg/perltidy-format :which-key "perltidy-format")
+ "=p" '(cfg/perltidy-format :which-key "perltidy-format")
  "=f" '(cfg/perltidy-format-function :which-key "perltidy-format-function"))
 
 ;; js-json-mode
