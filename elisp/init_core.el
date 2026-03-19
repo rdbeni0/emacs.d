@@ -219,8 +219,6 @@ https://www.emacswiki.org/emacs/LoadingLispFiles"
 ;;;; -> EVIL-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq evil-want-keybinding nil)
-
 ;; https://github.com/emacs-evil/evil
 (use-package evil
   :init
