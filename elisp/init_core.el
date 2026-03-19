@@ -132,22 +132,20 @@ WARNING! Could cause errors and hang emacs."
 		("nongnu" . "https://elpa.nongnu.org/nongnu/")
 		))
 
-;; defuns
-
 (defun cfg/load-all-el-in-directory (dir)
-  "`load' all elisp libraries in directory DIR which are not already loaded.
-This function is to avoid re-loading a library when both .el and .elc versions are present.
-More info and solutions:
-https://stackoverflow.com/questions/18706250/emacs-require-all-files-in-a-directory
-https://www.emacswiki.org/emacs/LoadingLispFiles"
+  "Load all elisp libraries in DIR that are not already loaded."
   (interactive "D")
-  (let ((libraries-loaded (mapcar #'file-name-sans-extension
-                                  (delq nil (mapcar #'car load-history)))))
-    (dolist (file (directory-files dir t ".+\\.elc?$"))
-      (let ((library (file-name-sans-extension file)))
-        (unless (member library libraries-loaded)
-          (load library nil t)
-          (push library libraries-loaded))))))
+  (let* ((loaded
+          (seq-map #'file-name-sans-extension
+                   (seq-filter #'car load-history)))
+         (files
+          (directory-files dir t ".+\\.elc?$")))
+    (seq-do
+     (lambda (file)
+       (let ((lib (file-name-sans-extension file)))
+         (unless (member lib loaded)
+           (load lib nil t))))
+     files)))
 
 (defun cfg/load-all-el-in-directory-alt (dir)
   "`load' all elisp libraries in directory DIR - alternative version."
@@ -1013,13 +1011,15 @@ Returns:
     (concat
      file-path
      ":"
-     (number-to-string (if (and
-                            ;; Emacs 26 introduced this variable. Remove this
-                            ;; check once 26 becomes the minimum version.
-                            (boundp column-number-indicator-zero-based)
-                            (not column-number-indicator-zero-based))
-                           (1+ (current-column))
-                         (current-column))))))
+     (number-to-string
+      (if (and (boundp 'mode-line-position-column-format)
+               (string-match-p "%C"
+                               (format-mode-line
+                                mode-line-position-column-format)))
+          ;; one-based
+          (1+ (current-column))
+        ;; zero-based (default)
+        (current-column))))))
 
 ;;;###autoload
 (defun cfg/copy-directory-path ()
