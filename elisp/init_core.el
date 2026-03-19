@@ -1296,7 +1296,6 @@ error if the module cannot be located."
         (find-file path)
       (error "Module '%s' not found" module-name))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> CC-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1715,6 +1714,7 @@ The current buffer's `default-directory' is available as part of
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html
+;; https://www.gnu.org/software/emacs/manual/html_node/dired-x/index.html
 ;; http://xahlee.info/emacs/emacs/emacs_dired_tips.html
 (use-package dired
   :functions
