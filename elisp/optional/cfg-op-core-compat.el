@@ -55,6 +55,9 @@
               :around #'fixed-native-compile-async-skip-p))
 
 (when (version< emacs-version "29.0")
+  ;; native-comp:
+  (setq native-comp-deferred-compilation t)
+
   ;; USE-PACKAGE:
   ;; Unless it is already installed - update packages archive and install the most recent version of use-package:
   (unless (package-installed-p 'use-package)

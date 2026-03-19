@@ -6,91 +6,85 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> NATIVE COMPILATION AND PERFORMANCE OPTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Basic setup for performance tweaks and options.
-;; And also native compilation (Emacs ver >= 28.5)
+
+;; Setup for native compilation (Emacs ver >= 28.5)
+;; And also for performance tweaks and options.
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Native-Compilation.html
 ;; https://news.ycombinator.com/item?id=24117853
-;;
+(use-package comp
+  :init
 
-;; Optimization level for native compilation, a number between -1 and 3.
-;; -1 functions are kept in bytecode form and no native compilation is performed.
-;;  0 native compilation is performed with no optimizations.
-;;  1 light optimizations.
-;;  2 max optimization level fully adherent to the language semantic.
-;;  3 max optimization level, to be used only when necessary.
-;;    Warning: with 3, the compiler is free to perform dangerous optimizations.
+  ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Native_002dCompilation-Variables.html
 
-(setq comp-speed 2)
-(setq native-comp-speed 2)
+  ;; Optimization level for native compilation, a number between -1 and 3.
+  ;; -1 functions are kept in bytecode form and no native compilation is performed.
+  ;;  0 native compilation is performed with no optimizations.
+  ;;  1 light optimizations.
+  ;;  2 max optimization level fully adherent to the language semantic.
+  ;;  3 max optimization level, to be used only when necessary.
+  ;;    Warning: with 3, the compiler is free to perform dangerous optimizations.
+  (setq native-comp-speed 2)
 
-;; additional options:
+  ;; If non-nil, compile loaded .elc files asynchronously.
+  ;; After compilation, each function definition is updated to use the
+  ;; natively-compiled one.
+  (setq native-comp-jit-compilation t) ; should be t, default is t
 
-(setq native-comp-deferred-compilation t) ; should be t, and default is t
-(setq native-comp-async-query-on-exit t) ; no risky
+  ;; Whether to query the user about killing async compilations when exiting.
+  ;; If this is non-nil, Emacs will ask for confirmation to exit and kill the
+  ;; asynchronous native compilations if any are running.  If nil, when you
+  ;; exit Emacs, it will silently kill those asynchronous compilations even
+  ;; if ‘confirm-kill-processes’ is non-nil.
+  (setq native-comp-async-query-on-exit t) ; no risky, defailt is nil
 
-;; aggressive performance experiment:
-;; default is 0, but this value could be risky (the best option is default value)
-;; (setq native-comp-async-jobs-number 4) ; very risky, but possibility of better performance during startup
+  ;; aggressive performance experiment:
+  ;; default is 0, but this value could be risky (the best option is default value)
+  ;; (setq native-comp-async-jobs-number 4) ; very risky, but possibility of better performance during startup
 
-;; no warnings when compilation is ongoing:
-(setq native-comp-async-report-warnings-errors nil)
-(setq comp-async-report-warnings-errors nil)
+  ;; no warnings when compilation is ongoing:
+  (setq native-comp-async-report-warnings-errors nil)
+  (setq comp-async-report-warnings-errors nil)
 
-;; kill unnecessary compilation buffer:
-;; please check cfg- file with tempbuf configuration or try to experiment with (kill-buffer ) ...
+  ;; kill unnecessary compilation buffer:
+  ;; please check cfg- file with tempbuf configuration or try to experiment with (kill-buffer ) ...
 
-;; manipulations with font rendering:
-;; https://www.reddit.com/r/emacs/comments/14c4l8j/way_to_make_emacs_feel_smoother/
-(setq jit-lock-stealth-time 1.25)
-(setq jit-lock-stealth-nice 0.5) ;; Seconds between font locking.
-(setq jit-lock-chunk-size 4096)
-(setq jit-lock-defer-time 0)
+  ;; manipulations with font rendering:
+  ;; https://www.reddit.com/r/emacs/comments/14c4l8j/way_to_make_emacs_feel_smoother/
+  (setq jit-lock-stealth-time 1.25)
+  ;; Seconds between font locking:
+  (setq jit-lock-stealth-nice 0.5)
+  (setq jit-lock-chunk-size 4096)
+  (setq jit-lock-defer-time 0)
 
-;; DEFUNS FOR COMPILATION OF PARTICULAR DIRECTORIES:
-;; All below defuns should me executed manually via M-x or via CLI scripts:
+  ;; Overall performance options.
+  ;; see Doom Emacs for inspiration:
+  ;; https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
+  ;; Other examples:
+  ;; https://news.ycombinator.com/item?id=39190110
+  ;; https://www.reddit.com/r/emacs/comments/r7qah6/emacs_is_bloat_and_memory_intensive/
 
-(defun cfg/eln-compile-elisp ()
-  "Compile ALL files inside \"~/.emacs.d/elisp\" (and subfolders) into eln.
-WARNING! Could cause errors and hang emacs."
-  (interactive)
-  (native-compile-async (expand-file-name "elisp/" user-emacs-directory) 2 t))
+  ;; Set garbage collection threshold to 8GB:
+  (setq gc-cons-threshold #x200000000)
+  ;;(setq gc-cons-threshold most-positive-fixnum)
 
-(defun cfg/eln-compile-site-elisp ()
-  "Compile all files inside \"~/.emacs.d/site-elisp\" into eln."
-  (interactive)
-  (native-compile-async (expand-file-name "elisp/site-elisp/" user-emacs-directory) 2 t))
+  (setq read-process-output-max (* 1024 1024))
 
-;; overall performance options:
-;; see Doom Emacs for inspiration:
-;; https://github.com/hlissner/doom-emacs/blob/develop/early-init.el
-;; Other examples:
-;; https://news.ycombinator.com/item?id=39190110
-;; https://www.reddit.com/r/emacs/comments/r7qah6/emacs_is_bloat_and_memory_intensive/
+  :config
+  ;; Additional defuns for compilation management.
+  ;; All below defuns can be executed manually via M-x or via CLI scripts:
 
-;; Set garbage collection threshold to 8GB:
-(setq gc-cons-threshold #x200000000)
-;;(setq gc-cons-threshold most-positive-fixnum)
+  (defun cfg/eln-compile-elisp ()
+    "Compile ALL files inside \"~/.emacs.d/elisp\" (and subfolders) into eln.
+WARNING! Sometimes could cause errors and hang emacs."
+    (interactive)
+    (native-compile-async
+     (expand-file-name "elisp/" user-emacs-directory) 2 t))
 
-(setq read-process-output-max (* 1024 1024))
-
-;; https://akrl.sdf.org/#orgc15a10d
-;; When idle for 30sec run the GC no matter what:
-;; This action ss to set a timer using run-with-idle-timer.
-;; That means that every time Emacs will be idle for 30 secs we'll garbage collect once.
-;; The assumption is that the probability that we are going to input a command exactly after 30 secs is rather low.
-
-(defmacro k-time (&rest body)
-  "Measure and return the time it takes evaluating BODY."
-  `(let ((time (current-time)))
-     ,@body
-     (float-time (time-since time))))
-
-(defvar k-gc-timer
-  (run-with-idle-timer 30 t
-                       (lambda ()
-                         (message "Garbage Collector has run for %.06fsec"
-                                  (k-time (garbage-collect))))))
+  (defun cfg/eln-compile-site-elisp ()
+    "Compile all files inside \"~/.emacs.d/site-elisp\" into eln."
+    (interactive)
+    (native-compile-async
+     (expand-file-name "elisp/site-elisp/" user-emacs-directory) 2 t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> CONFIGURATION FOR PACKAGES AND REPOSITORIES
@@ -977,7 +971,7 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
           (delete-other-windows))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; -> TEMPBUF
+;;;; -> TEMPBUF AND GC TIMER
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Configuration for tempbuf (tempbuf will kill unused buffers after XX seconds) and buffer-menu (M-x Buffer-menu).
@@ -1009,6 +1003,23 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
                 (with-current-buffer "*Async-native-compile-log*"
                   (setq-local tempbuf-minimum-timeout 20)
                   (turn-on-tempbuf-mode))))))
+
+;; https://akrl.sdf.org/#orgc15a10d
+;; When idle for 30sec run the GC no matter what:
+;; This action ss to set a timer using run-with-idle-timer.
+;; That means that every time Emacs will be idle for 30 secs we'll garbage collect once.
+;; The assumption is that the probability that we are going to input a command exactly after 30 secs is rather low.
+(defmacro k-time (&rest body)
+  "Measure and return the time it takes evaluating BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+
+(defvar k-gc-timer
+  (run-with-idle-timer 30 t
+                       (lambda ()
+                         (message "Garbage Collector has run for %.06fsec"
+                                  (k-time (garbage-collect))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> DIAGNOSTICS
