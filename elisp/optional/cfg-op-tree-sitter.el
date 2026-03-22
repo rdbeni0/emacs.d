@@ -248,7 +248,7 @@ The list of parsers is defined in `php-ts-mode--language-source-alist`."
        ;; go-ts-mode is an exception, built on top of pure prog-mode. For other functionalities for `go', LSP should be used.
        '(("\\.go\\'" . go-ts-mode)
          ("/go\\.mod\\'" . go-mod-ts-mode)
-	 ) auto-mode-alist ))
+	     ) auto-mode-alist ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Optional mode exclusions
