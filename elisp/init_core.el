@@ -1246,16 +1246,20 @@ If the directory for the backup does not exist, create it."
   :commands
   (display-line-numbers-mode)
   :functions
-  (display-line-numbers--turn-on)
+  (cfg/-display-line-numbers--turn-on)
   :init
   ;; Disable line numbers in some major modes -> via emacswiki:
   ;; "To disable this in certain major modes you can redefine `display-line-numbers--turn-on:'"
-  (defun display-line-numbers--turn-on ()
+  (defun cfg/-display-line-numbers--turn-on ()
     "Turn on line numbers except for modes in `display-line-numbers-exempt-modes'."
-    (unless (or (member major-mode display-line-numbers-exempt-modes)
-                (minibufferp))
-      (display-line-numbers-mode)))
+    (unless (or (minibufferp)
+                (apply #'derived-mode-p display-line-numbers-exempt-modes))
+      (display-line-numbers-mode 1)))
+
+  (advice-add 'display-line-numbers--turn-on
+              :override #'cfg/-display-line-numbers--turn-on)
   :config
+  (setq-default display-line-numbers t)
   (global-display-line-numbers-mode)
   ;; highlight current line:
   (global-hl-line-mode 1))
@@ -1432,7 +1436,7 @@ error if the module cannot be located."
 
 ;; M-x shell default shell:
 (use-package shell
-  :commands
+  :functions
   (shell-dirtrack-mode)
   :config
   ;; https://stackoverflow.com/questions/9514495/how-to-define-a-function-to-run-multiple-shells-on-emacs
