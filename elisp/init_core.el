@@ -1243,10 +1243,9 @@ If the directory for the backup does not exist, create it."
 
 ;; https://www.emacswiki.org/emacs/LineNumbers
 (use-package display-line-numbers
-  :commands
-  (display-line-numbers-mode)
   :functions
-  (cfg/-display-line-numbers--turn-on)
+  (cfg/-display-line-numbers--turn-on
+   display-line-numbers-mode)
   :init
   ;; Disable line numbers in some major modes -> via emacswiki:
   ;; "To disable this in certain major modes you can redefine `display-line-numbers--turn-on:'"
