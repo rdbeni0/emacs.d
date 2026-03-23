@@ -1086,6 +1086,8 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
 ;; https://codeberg.org/ashton314/emacs-bedrock/src/branch/main/init.el
 ;;
 
+(setq-default font-lock-mode t)
+
 ;; don't ask about .dir-locals.el variables:
 (setq-default enable-local-variables :all)
 
