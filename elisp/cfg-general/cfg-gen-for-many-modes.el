@@ -329,8 +329,11 @@
 ;;;; TEXT MANIPULATIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq list-gen-mode-txtman (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode text-mode)))
-(setq list-gen-mode-map-txtman (append (append list-gen-mode-map list-gen-mode-map-conf-mode) '(org-mode-map text-mode-map)))
+(setq list-gen-mode-txtman
+      (append (append list-gen-mode list-gen-mode-conf-mode) '(org-mode text-mode)))
+
+(setq list-gen-mode-map-txtman
+      (append (append list-gen-mode-map list-gen-mode-map-conf-mode) '(org-mode-map text-mode-map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
