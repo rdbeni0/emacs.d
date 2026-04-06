@@ -1,5 +1,13 @@
 ;;; cfg-gen-for-all-modes-fkeys.el --- general.el for all modes and f-keys -*- lexical-binding: t -*-
+;;; Commentary:
+;;
 ;; Configuration for <f1> to <f12> keys
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; no space + no which-key
 
@@ -16,10 +24,16 @@
  "<f5><f5>" '(cfg/expand-abbrev :which-key "expand-abbrev")
  "<f5><f6>" '(completion-at-point :which-key "completion-at-point-capf"))
 
-;; Bind <f3> inside main minibuffer
-(define-key minibuffer-local-map (kbd "<f3>") #'cfg/switch-to-buffer)
-;; And also in completion minibuffers (like M-x, find-file, etc.)
-(define-key minibuffer-local-completion-map (kbd "<f3>") #'cfg/switch-to-buffer)
+(use-package minibuffer
+  :ensure nil
+  :bind
+  ;; Bind <f3> inside main minibuffer
+  (:map minibuffer-local-map
+        ("<f3>" . cfg/switch-to-buffer))
+  :bind
+  ;; And also in completion minibuffers (like M-x, find-file, etc.)
+  (:map minibuffer-local-completion-map
+        ("<f3>" . cfg/switch-to-buffer)))
 
 ;; space as leader-key + which-key
 
