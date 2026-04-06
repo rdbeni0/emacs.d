@@ -3,6 +3,30 @@
 ;;
 ;;; Code:
 
+(defvar list-gen-mode-comment)
+(defvar list-gen-mode-ffap)
+(defvar list-gen-mode-format-core)
+(defvar list-gen-mode-txtman)
+(defvar list-gen-mode-xref)
+
+(defvar list-gen-mode-map-comment)
+(defvar list-gen-mode-map-ffap)
+(defvar list-gen-mode-map-format-core)
+(defvar list-gen-mode-map-txtman)
+(defvar list-gen-mode-map-xref)
+
+(use-package ediff)
+(use-package evil-collection
+  :functions
+  (evil-make-overriding-map
+   evil-normalize-keymaps
+   evil-set-initial-state
+   evil-initial-state))
+
+(use-package general
+  :functions
+  (general-define-key))
+
 ;; "shell-script-mode is an alias for `sh-mode' in `sh-script.el'."
 (general-define-key
  :states '(normal visual emacs)
@@ -120,7 +144,6 @@
  :states '(normal visual emacs)
  :keymaps list-gen-mode-map-xref
  :major-modes list-gen-mode-xref
-
  "gd" '(xref-find-definitions :which-key "xref-def")
  "gh" '(xref-find-references :which-key "xref-ref")
  "gb" '(xref-go-back :which-key "xref-go-back")
@@ -186,9 +209,6 @@
 
 ;; https://www.gnu.org/software/emacs/manual/html_mono/ediff.html#Customization
 
-(require 'ediff)
-(require 'evil-collection)
-
 ;; remove evil-collection:
 (remove-hook 'ediff-keymap-setup-hook 'evil-collection-ediff-startup-hook)
 
@@ -212,7 +232,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
   "
 [c,k  -previous diff |     | -vert/horiz split   |dp/a do/b -copy A/B's to B/A
 ]c,j  -next diff     |     H -highlighting       | h j k l  -move/copy (vim style)
-zd,zj -jump to diff  |     @ -auto-refinement    | rx       -restore old buf X 
+zd,zj -jump to diff  |     @ -auto-refinement    | rx       -restore old buf X
    gx -goto X's point|    ## -ignore whitespace  |  !       -update diff regions
   C-l -recenter      |    #c -ignore case        |  *       -refine current region
 C-u/d -scroll up/dn  | #f/#h -focus/hide regions |
@@ -224,7 +244,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 
 (defconst ediff-long-help-message-tail
   "=====================|===========================|=============================
-    R -show registry |    = -compare regions     |  ? -help off/on 
+    R -show registry |    = -compare regions     |  ? -help off/on
     D -diff output   |    E -browse Ediff manual |  q -quit (exit)
     i -status info   |    M -show session group  |C-z -suspend (drop to registry)"
   "The tail of the full-help message.")
@@ -316,7 +336,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 (defvar cfg/ediff-long-help-message-tail-backup  ediff-long-help-message-tail)
 
 (defun cfg/ediff-adjust-help ()
-  "Adjust long help messages to reflect cfg/ediff-bindings bindings: for evil-collection and pure ediff."
+  "Adjust Ediff help to match cfg/ediff-bindings."
   (unless cfg/ediff-help-changed
     (dolist (msg '(ediff-long-help-message-compare2
                    ediff-long-help-message-compare3
@@ -328,10 +348,10 @@ Normally, not a user option.  See `ediff-help-message' for details.")
       (dolist (chng '(( " rx -restore buf X's old diff" . " rx       -restore old buf X")
                       ;; ( "* -refine current region"     .    "*       -refine current region")
                       ;; ( "  ! -update diff regions" .      "  !       -update diff regions")
-		      ( "p,DEL -previous diff " . "[c,k  -previous diff ")
-		      ( "k,N,p -previous diff " . "[c,k  -previous diff ")
-		      ( "n,SPC -next diff     " . "]c,j  -next diff     ")
-		      ( "  j,n -next diff     " . "]c,j  -next diff     ")
+		              ( "p,DEL -previous diff " . "[c,k  -previous diff ")
+		              ( "k,N,p -previous diff " . "[c,k  -previous diff ")
+		              ( "n,SPC -next diff     " . "]c,j  -next diff     ")
+		              ( "  j,n -next diff     " . "]c,j  -next diff     ")
                       ("    j -jump to diff  " . "zd,zj -jump to diff  ")
                       ("    d -jump to diff  " . "zd,zj -jump to diff  ")
                       ;; ("    h -highlighting  " . "    H -highlighting  ")
@@ -475,16 +495,14 @@ Normally, not a user option.  See `ediff-help-message' for details.")
  "Q"  'kill-this-buffer
  )
 
-(with-eval-after-load 'ibuffer
-  ;; Binds in the correct map (ibuffer-name-map)
-  (define-key ibuffer-name-map [mouse-1] #'ibuffer-mouse-visit-buffer)  ; Mouse Left Click: visit-buffer
-  (define-key ibuffer-name-map [mouse-2] #'ibuffer-mouse-toggle-mark)
-  (define-key ibuffer-name-map [mouse-8] #'ibuffer-mouse-toggle-mark)
-  (define-key ibuffer-name-map [mouse-9] #'ibuffer-mouse-toggle-mark)
-
-  ;; (define-key ibuffer-name-map [down-mouse-3] nil)  ; Disable popup on right click
-  ;; (define-key ibuffer-name-map [mouse-3] #'cfg/ibuffer-mouse-mark)  ; Mouse Right Click: select buffer
-  )
+(use-package ibuffer
+  :bind
+  (:map ibuffer-name-map
+        ([mouse-1] . ibuffer-mouse-visit-buffer)
+        ([mouse-2] . ibuffer-mouse-toggle-mark)
+        ;; ([mouse-3] . cfg/ibuffer-mouse-mark)  ; Mouse Right Click: select buffer
+        ([mouse-8] . ibuffer-mouse-toggle-mark)
+        ([mouse-9] . ibuffer-mouse-toggle-mark)))
 
 ;; emacs-lisp-mode
 

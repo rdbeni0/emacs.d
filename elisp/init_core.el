@@ -40,7 +40,7 @@
    ;; asynchronous native compilations if any are running.  If nil, when you
    ;; exit Emacs, it will silently kill those asynchronous compilations even
    ;; if ‘confirm-kill-processes’ is non-nil.
-   native-comp-async-query-on-exit t ; no risky, defailt is nil
+   native-comp-async-query-on-exit t ; no risky, default is nil
 
    ;; aggressive performance experiment:
    ;; default is 0, but this value could be risky (the best option is default value)
@@ -71,7 +71,7 @@
    gc-cons-threshold #x200000000
    ;;(setq gc-cons-threshold most-positive-fixnum)
 
-   read-process-output-max (* 1024 1024))
+   read-process-output-max (* 2048 2048))
   :config
   ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Native_002dCompilation-Functions.html
   ;; Additional defuns for compilation management.
@@ -124,11 +124,9 @@ WARNING! Sometimes could cause errors and hang emacs."
 ;; WARNING! Do not use marmalade - is an obsolete repository : https://marmalade-repo.org/#download
 
 (setq package-archives
-      '(
-        ("gnu"    . "http://elpa.gnu.org/packages/")
-        ("melpa"  . "https://melpa.org/packages/")
-		("nongnu" . "https://elpa.nongnu.org/nongnu/")
-		))
+      '(("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa"  . "https://melpa.org/packages/")))
 
 (defun cfg/load-all-el-in-directory (dir)
   "Load all elisp libraries in DIR that are not already loaded."
@@ -176,31 +174,31 @@ WARNING! Sometimes could cause errors and hang emacs."
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Auto-Major-Mode.html
 ;; https://www.emacswiki.org/emacs/AutoModeAlist
-(setq auto-mode-alist
-      (append
-       ;; File name (within directory) starts with a dot:
-       '(("\\.*_conf_file\\'" . conf-mode)
-	     ("\\.npmrc\\'" . conf-mode)
-	     ("\\.bash_aliases\\'" . conf-mode)
-	     ("\\.muttrc\\'" . conf-mode)
-	     ("fish_variables\\'" . conf-mode)
-	     ("\\pkgs_arch.txt\\'" . conf-mode)
-	     ("\\.tmux.conf_x11\\'" . conf-mode)
-	     ("\\.Xresources\\'" . conf-xdefaults-mode)
-	     ("\\Makefile\\'" . makefile-gmake-mode)
-	     ("\\abbrev_defs\\'" . emacs-lisp-mode)
-	     ("\\.gcs\\'" . text-mode)
-	     ("\\.zsh\\'" . sh-mode)
-	     ("\\.bashrc\\'" . sh-mode)
-	     ("\\.bash_profile\\'" . sh-mode)
-	     ("zlogin\\'" . sh-mode)
-	     ("zshenv\\'" . sh-mode)
-	     ("zshrc\\'" . sh-mode))
-       auto-mode-alist))
+(dolist (entry
+         '(("\\.*_conf_file\\'" . conf-mode)
+           ("\\.npmrc\\'" . conf-mode)
+           ("\\.bash_aliases\\'" . conf-mode)
+           ("\\.muttrc\\'" . conf-mode)
+           ("fish_variables\\'" . conf-mode)
+           ("\\pkgs_arch.txt\\'" . conf-mode)
+           ("\\.tmux.conf_x11\\'" . conf-mode)
+           ("\\.Xresources\\'" . conf-xdefaults-mode)
+           ("\\Makefile\\'" . makefile-gmake-mode)
+           ("\\abbrev_defs\\'" . emacs-lisp-mode)
+           ("\\.gcs\\'" . text-mode)
+           ("\\.zsh\\'" . sh-mode)
+           ("\\.bashrc\\'" . sh-mode)
+           ("\\.bash_profile\\'" . sh-mode)
+           ("zlogin\\'" . sh-mode)
+           ("zshenv\\'" . sh-mode)
+           ("zshrc\\'" . sh-mode)))
+  (add-to-list 'auto-mode-alist entry))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> LOCAL ENVIRONMENT VARIABLES
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setenv "LSP_USE_PLISTS" "true")
 
 ;; if true and dedicated file exists, load additional, local env variables
 (if (file-readable-p
