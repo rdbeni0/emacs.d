@@ -6,6 +6,8 @@
  :keymaps '(web-mode-map)
  :major-modes '(web-mode)
  :prefix ","
+ "o"  '(web-mode-comment-or-uncomment :which-key "un/comment")
+ "ko"  '(web-mode-comment-or-uncomment :which-key "un/comment")
  "==" '(web-mode-buffer-indent :which-key "web-mode-buffer-indent")
  "=]" '(cfg/webmode-fix-buffer :which-key "webmode-fix-buffer")
  "=[" '(cfg/webmode-lint-buffer :which-key "webmode-lint-buffer")
@@ -30,8 +32,6 @@
  "f"  '(web-mode-fold-or-unfold :which-key "wm-fold")
  "s"  '(web-mode-snippet-insert :which-key "snippet")
  "x"  '(web-mode-mark-and-expand :which-key "mark-and-expand")
- "o"  '(web-mode-comment-or-uncomment :which-key "un/comment")
- "ko"  '(web-mode-comment-or-uncomment :which-key "un/comment")
 
  "d"  '(:ignore t :which-key "dom")
  "da" '(web-mode-dom-apostrophes-replace :which-key "apostrophes-replace")
