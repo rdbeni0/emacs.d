@@ -40,7 +40,7 @@
                   ("Fish" fish-indent)
                   ("Go" gofmt)
                   ("Fortran Free Form" fprettify)
-                  ("HTML" (prettier "--print-width" "185" "--parser" "html"))
+                  ("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185"))
                   ("HTML+ERB" erb-format)
                   ("Java" clang-format)
                   ("JavaScript" (prettier "--print-width" "185"))
@@ -83,7 +83,11 @@
 (defun cfg/-my-html-format-setup ()
   (setq-local format-all-default-formatters '(("HTML" prettier)))
   (setq-local format-all-formatters
-              '(("HTML" (prettier "--print-width" "185" "--parser" "html")))))
+              ;; optional:
+              ;; '(("HTML" (prettier "--print-width" "185" "--parser" "html")
+              ;; https://www.html-tidy.org/documentation/
+              '(("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185")
+                 ))))
 
 (dolist (html-hook '(html-ts-mode-hook
                      html-mode-hook))
