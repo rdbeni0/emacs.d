@@ -12,14 +12,14 @@
 (use-package format-all
   :ensure t
   :hook (;; if you want format automatically after "save" file, then format-all-mode should be turned on.
-	 ;; For example:
-	 ;;
-	 ;; (prog-mode . format-all-mode)
-	 ;; ^ or any other, particular mode.
-	 ;;
-	 ;;;; do not ask for a choice and always use default formatter:
-	 ;; (format-all-mode . format-all-ensure-formatter)
-	 (prog-mode . format-all-ensure-formatter))
+	     ;; For example:
+	     ;;
+	     ;; (prog-mode . format-all-mode)
+	     ;; ^ or any other, particular mode.
+	     ;;
+	     ;;;; do not ask for a choice and always use default formatter:
+	     ;; (format-all-mode . format-all-ensure-formatter)
+	     (prog-mode . format-all-ensure-formatter))
   :config
 
   ;;;; set to 't' if you want see detailed debug in the "Messages" buffer:
@@ -27,53 +27,53 @@
   (setq format-all-debug nil)
 
   ;; for more options please see source code of package:
-  (custom-set-variables
-   '(format-all-default-formatters
-     '(("Assembly" asmfmt)
-       ("C" clang-format)
-       ("C#" clang-format)
-       ("C++" clang-format)
-       ("CMake" cmake-format)
-       ("CSS" (prettier "--print-width" "185"))
-       ("Dockerfile" dockfmt)
-       ("Elixir" mix-format)
-       ("Emacs Lisp" emacs-lisp)
-       ("Fish" fish-indent)
-       ("Go" gofmt)
-       ("Fortran Free Form" fprettify)
-       ("HTML" (html-tidy "-wrap" "185"))
-       ("HTML+ERB" erb-format)
-       ("Java" clang-format)
-       ("JavaScript" (prettier "--print-width" "185"))
-       ("JSON" (prettier "--print-width" "185"))
-       ("JSON5" (prettier "--print-width" "185"))
-       ("Jsonnet" jsonnetfmt)
-       ("JSX" prettier)
-       ("Kotlin" ktlint)
-       ("LaTeX" latexindent)
-       ("Less" (prettier "--print-width" "185"))
-       ("Lua" (stylua "--indent-type" "Spaces" "--indent-width" "4" "--column-width" "185"))
-       ("Markdown" (prettier "--print-width" "185"))
-       ("Nix" nixfmt)
-       ("Objective-C" clang-format)
-       ("OCaml" ocp-indent)
-       ("Perl" (perltidy "--quiet" "--standard-error-output" "--perl-best-practices" "-l=185"))
-       ("PHP" (prettier "--print-width" "185"))
-       ("Python" (black "-l185"))
-       ("SCSS" (prettier "--print-width" "185"))
-       ("Shell" beautysh)
-       ("SQL" sqlformat)
-       ("Svelte" (prettier "--print-width" "185"))
-       ("TOML" (prettier "--print-width" "185"))
-       ("TSX" prettier)
-       ("TypeScript" (prettier "--print-width" "185"))
-       ("V" v-fmt)
-       ("Verilog" istyle-verilog)
-       ("Vue" prettier)
-       ("XML" (html-tidy "-wrap" "185"))
-       ("YAML" (prettier "--print-width" "185"))
-       ("Zig" zig)
-       ("_Angular" (prettier "--print-width" "185")))))
+  (setq-default format-all-formatters
+                '(("Assembly" asmfmt)
+                  ("C" clang-format)
+                  ("C#" clang-format)
+                  ("C++" clang-format)
+                  ("CMake" cmake-format)
+                  ("CSS" (prettier "--print-width" "185" "--parser" "css"))
+                  ("Dockerfile" dockfmt)
+                  ("Elixir" mix-format)
+                  ("Emacs Lisp" emacs-lisp)
+                  ("Fish" fish-indent)
+                  ("Go" gofmt)
+                  ("Fortran Free Form" fprettify)
+                  ("HTML" (prettier "--print-width" "185" "--parser" "html"))
+                  ("HTML+ERB" erb-format)
+                  ("Java" clang-format)
+                  ("JavaScript" (prettier "--print-width" "185"))
+                  ("JSON" (prettier "--print-width" "185" "--parser" "json"))
+                  ("JSON5" (prettier "--print-width" "185" "--parser" "json5"))
+                  ("Jsonnet" jsonnetfmt)
+                  ("JSX" prettier)
+                  ("Kotlin" ktlint)
+                  ("LaTeX" latexindent)
+                  ("Less" (prettier "--print-width" "185" "--parser" "less"))
+                  ("Lua" (stylua "--indent-type" "Spaces" "--indent-width" "4" "--column-width" "185"))
+                  ("Markdown" (prettier "--print-width" "185" "--parser" "markdown"))
+                  ("Nix" nixfmt)
+                  ("Objective-C" clang-format)
+                  ("OCaml" ocp-indent)
+                  ("Perl" (perltidy "--quiet" "--standard-error-output" "--perl-best-practices" "-l=185"))
+                  ("PHP" (prettier "--print-width" "185" "--parser" "php"))
+                  ("Python" (black "-l185"))
+                  ("SCSS" (prettier "--print-width" "185" "--parser" "scss"))
+                  ("Shell" beautysh)
+                  ("SQL" sqlformat)
+                  ("Svelte" (prettier "--print-width" "185"))
+                  ("TOML" (prettier "--print-width" "185"))
+                  ("TSX" prettier)
+                  ("TypeScript" (prettier "--print-width" "185"))
+                  ("V" v-fmt)
+                  ("Verilog" istyle-verilog)
+                  ("Vue" prettier)
+                  ("XML" (html-tidy "-wrap" "185"))
+                  ("YAML" (prettier "--print-width" "185"))
+                  ("Zig" zig)
+                  ("_Angular" (prettier "--print-width" "185"))))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-format))
 
@@ -84,7 +84,7 @@
   "Set the default format for HTML to html-tidy.
    https://www.html-tidy.org/ "
   (setq-local format-all-formatters
-              '(("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185")))))
+              '((prettier "--print-width" "185" "--parser" "html"))))
 
 (dolist (hook '(html-mode-hook html-ts-mode-hook))
   (add-hook hook #'cfg/-my-html-format-setup))
