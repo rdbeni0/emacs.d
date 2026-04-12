@@ -16,8 +16,8 @@
 	'(("php"    . "\\.phtml\\'")
           ("blade"  . "\\.blade\\.")))
   (setq web-mode-enable-css-colorization t
-	web-mode-css-indent-offset 4
-        web-mode-code-indent-offset 4
+	    web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2
         web-mode-enable-auto-closing t
         web-mode-enable-auto-opening t
         web-mode-enable-auto-pairing t
