@@ -81,13 +81,22 @@
 ;; especially when there are many formatters to choose from,
 ;; and then you need to set it as a hook:
 (defun cfg/-my-html-format-setup ()
-  "Set the default format for HTML to html-tidy.
-   https://www.html-tidy.org/ "
+  (setq-local format-all-default-formatters '(("HTML" prettier)))
   (setq-local format-all-formatters
-              '((prettier "--print-width" "185" "--parser" "html"))))
+              '(("HTML" (prettier "--print-width" "185" "--parser" "html")))))
 
-(dolist (hook '(html-mode-hook html-ts-mode-hook))
-  (add-hook hook #'cfg/-my-html-format-setup))
+(dolist (html-hook '(html-ts-mode-hook
+                     html-mode-hook))
+  (add-hook html-hook #'cfg/-my-html-format-setup))
+
+(defun cfg/-disable-format-all ()
+  "Disable format-all in some buffers."
+  (format-all-mode -1)
+  (setq-local format-all-default-formatters nil))
+
+(dolist (disable-format-all-hook '(markdown-live-preview-after-export-hook
+                                   markdown-live-preview-mode-hook))
+  (add-hook disable-format-all-hook #'cfg/-disable-format-all))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; PYTHON - OPTIONAL SETTINGS:

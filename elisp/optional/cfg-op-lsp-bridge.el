@@ -163,8 +163,8 @@
 
   (add-hook 'nix-mode-hook
             (lambda ()
-	      (setq-local lsp-bridge-enable-inlay-hint t)
-	      ))
+	          (setq-local lsp-bridge-enable-inlay-hint t)
+	          ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; lua-mode
@@ -183,56 +183,37 @@
   (add-hook 'envrc-mode-hook 'lsp-bridge-restart-process)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;; front-end : web-mode / HTML
+  ;;;; front-end : web-mode
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;; thanks to this trick, the "web-mode" functionality will be activated, which can be reused e.g. in HTML:
-  (defun cfg/-html-ts-lsp-web-mode-reinit ()
-    (remove-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
-    (web-mode)
-    (html-ts-mode)
-    (add-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
-    (lsp-bridge-mode))
-
-  (defun cfg/-html-lsp-web-mode-reinit ()
-    (remove-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
-    (web-mode)
-    (html-ts-mode)
-    (add-hook 'html-ts-mode-hook #'cfg/-html-lsp-web-mode-reinit)
-    (lsp-bridge-mode))
-
-  ;; fix for html modes:
-  (add-hook 'html-ts-mode-hook #'cfg/-html-ts-lsp-web-mode-reinit)
-  (add-hook 'html-mode-hook #'cfg/-html-lsp-web-mode-reinit)
-
-  ;; turn off LSP bridge in web-mode:
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (lsp-bridge-mode -1))
-            ;; append = t
-	    ;; it means this will be the last one hook from the list:
-            t)
+    ;; turn off LSP bridge in web-mode:
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (lsp-bridge-mode -1))
+              ;; append = t
+	          ;; it means this will be the last one hook from the list:
+              t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; yaml
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;; turn off LSP bridge in yaml-mode and yaml-ts-mode:
-  (dolist (hook '(yaml-mode-hook yaml-ts-mode-hook))
-    (add-hook hook
-              (lambda ()
-                (lsp-bridge-mode -1)) t))
+    ;; turn off LSP bridge in yaml-mode and yaml-ts-mode:
+    (dolist (hook '(yaml-mode-hook yaml-ts-mode-hook))
+      (add-hook hook
+                (lambda ()
+                  (lsp-bridge-mode -1)) t))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Manipulations with company-mode:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
-  (setq company-idle-delay nil)
+    ;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
+    (setq company-idle-delay nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Load BIG list of keybindings:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (require 'cfg-gen-op-lsp-bridge))
+    (require 'cfg-gen-op-lsp-bridge))
 
-(provide 'cfg-op-lsp-bridge)
+  (provide 'cfg-op-lsp-bridge)
 ;;; cfg-op-lsp-bridge.el ends here
