@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-web-mode.el --- general for web-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; web-mode only and formatting
 (general-define-key

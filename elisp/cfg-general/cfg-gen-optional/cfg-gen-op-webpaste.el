@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-webpaste.el --- general.el for webpaste in Emacs -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; space as leader-key + which-key
 

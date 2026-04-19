@@ -7,6 +7,11 @@
   :functions
   (general-define-key))
 
+(use-package vterm
+  :functions
+  (vterm-clear
+   vterm-clear-scrollback))
+
 (general-define-key
  :states '(normal visual emacs insert)
  :keymaps '(vterm-mode-map)
