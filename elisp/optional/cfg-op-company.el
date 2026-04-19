@@ -37,11 +37,11 @@
   (company-auto-complete nil)
   ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
   (company-dabbrev-downcase nil)
-  ;; NOT to load company-mode for certain major modes.
+  ;; NOT to load company-mode for certain major modes
   ;; https://github.com/company-mode/company-mode/issues/29
   (company-global-modes
    '(not eshell-mode comint-mode erc-mode gud-mode rcirc-mode vterm-mode minibuffer-inactive-mode))
-  ;; The list of active frontends (visualizations).
+  ;; The list of active frontends (visualizations)
   (company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   :config
