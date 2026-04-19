@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-notmuch-mode.el --- general.el for notmuch-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; space as leader-key + which-key
 

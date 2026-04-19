@@ -1,4 +1,15 @@
 ;;; cfg-gen-op-lsp-dap-mode.el --- general.el for lsp and dap -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key
+   general-def))
+
+(defvar lsp-mode)
+(defvar lsp-command-map)
 
 ;; general-lsp-dap-mode : TODO
 ;;;;;;;;;;;;;;;;;;;;;;;;;

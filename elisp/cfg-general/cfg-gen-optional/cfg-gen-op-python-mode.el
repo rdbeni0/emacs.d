@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-python-mode.el --- general.el for python-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

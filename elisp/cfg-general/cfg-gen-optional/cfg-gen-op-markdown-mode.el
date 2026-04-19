@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-markdown-mode.el --- general.el for markdown-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -10,7 +17,7 @@
  "<up>" '(markdown-move-up :which-key "mv-up")
  "<right>" '(markdown-demote :which-key "demote")
  "<left>" '(markdown-promote :which-key "promote")
- 
+
  "a" '(read-only-mode :which-key "toggle-read-only")
 
  "i" '(:ignore t :which-key "insert")

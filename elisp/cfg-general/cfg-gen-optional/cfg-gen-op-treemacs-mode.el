@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-treemacs-mode.el --- general.el for treemacs-mode in Emacs -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; space as leader-key + which-key
 

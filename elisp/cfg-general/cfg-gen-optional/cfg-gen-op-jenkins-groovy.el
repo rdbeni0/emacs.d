@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-jenkins-groovy.el --- general.el for groovy and jenkins -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

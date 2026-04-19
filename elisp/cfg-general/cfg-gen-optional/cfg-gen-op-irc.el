@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-irc.el --- general.el for irc -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; general-erc-mode:
 ;; https://www.emacswiki.org/emacs/ErcBindings

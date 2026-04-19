@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-org-mode.el --- general.el for org-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

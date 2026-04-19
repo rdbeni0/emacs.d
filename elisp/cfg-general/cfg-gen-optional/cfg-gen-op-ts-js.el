@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-ts-js.el --- general for TS/JS -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

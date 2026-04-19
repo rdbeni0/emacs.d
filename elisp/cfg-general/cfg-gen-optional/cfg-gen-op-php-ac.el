@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-php-ac.el --- general.el for ac-php -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

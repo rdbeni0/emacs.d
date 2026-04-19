@@ -1,10 +1,22 @@
 ;;; cfg-gen-op-ggtags.el --- general.el for tagging systems -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
+
+(defvar list-gen-mode)
+(defvar list-gen-mode-ggtags)
+(defvar list-gen-mode-map)
+(defvar list-gen-mode-map-ggtags)
 
 ;; ggtags - list:
 ;; for more info see "cfg-gen-for-many-modes.el"
 
-(setq list-gen-mode-map-ggtags (append list-gen-mode-map '(ggtags-mode-map ggtags-global-mode-map)))
 (setq list-gen-mode-ggtags (append list-gen-mode '(ggtags-mode ggtags-global-mode)))
+(setq list-gen-mode-map-ggtags (append list-gen-mode-map '(ggtags-mode-map ggtags-global-mode-map)))
 
 
 ;; with prefix:

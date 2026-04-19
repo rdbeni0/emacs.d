@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-pdf-tools.el --- general.el for webpaste in Emacs -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

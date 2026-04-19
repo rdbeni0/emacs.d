@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-tree-sitter-mode.el --- general for tree-sitter -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; space as leader-key + which-key
 

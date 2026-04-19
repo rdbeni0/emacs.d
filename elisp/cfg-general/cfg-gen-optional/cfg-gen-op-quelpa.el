@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-quelpa.el --- general.el for quelpa -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; space as leader-key + which-key
 
