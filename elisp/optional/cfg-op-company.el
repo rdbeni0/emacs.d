@@ -3,10 +3,6 @@
 ;;
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; USE-PACKAGE:
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; https://company-mode.github.io/
 (use-package company
   :ensure t
@@ -39,34 +35,17 @@
   ;; "M-x describe-variable company-auto-complete-chars" for details.
   ;; So that's BAD idea.
   (company-auto-complete nil)
-  :config
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; common options:
-  (global-company-mode 1)
-
-  ;;
-  ;;
+  ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
+  (company-dabbrev-downcase nil)
   ;; NOT to load company-mode for certain major modes.
   ;; https://github.com/company-mode/company-mode/issues/29
-  ;;
-  (setq company-global-modes
-        '(not
-          eshell-mode
-          comint-mode
-          erc-mode
-          gud-mode
-          rcirc-mode
-	      vterm-mode
-          minibuffer-inactive-mode))
-
+  (company-global-modes
+   '(not eshell-mode comint-mode erc-mode gud-mode rcirc-mode vterm-mode minibuffer-inactive-mode))
+  ;; The list of active frontends (visualizations).
+  (company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; https://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text
-  (setq company-dabbrev-downcase nil)
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; COMPANY FRONTENDS:
-  ;;
-  (setq company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))
+  :config
+  (global-company-mode 1)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMPANY BACKENDS - CONFIGURATION PER MODE (LOCALLY, NOT GLOBALLY):
@@ -364,7 +343,7 @@
 ;;;; END
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; load keybindings from general.el framework:
-(require 'cfg-gen-op-company)
+(use-package cfg-gen-op-company)
 
 (provide 'cfg-op-company)
 ;;; cfg-op-company.el ends here
