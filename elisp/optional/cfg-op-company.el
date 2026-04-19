@@ -16,25 +16,34 @@
          ;; no working, DO NOT USE! See later in section "Update capf".
          ;; ([remap completion-at-point]               . company-capf) ;; completion-at-point-functions = CAPF
 	     )
+  :custom
+  ;; if (setq company-idle-delay nil), then autocompletion will be turned off
+  ;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
+  ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
+  (company-idle-delay 0.5)
+  ;; show completion after 2 characters (default is 3!)
+  (company-minimum-prefix-length 2)
+  ;; If non-nil, show quick-access hints beside the candidates
+  (company-show-numbers t)
+  ;; The maximum number of candidates in the tooltip
+  (company-tooltip-limit 40)
+  ;; transformers - could be changed "per mode":
+  ;; https://github.com/company-mode/company-mode/issues/818
+  ;; https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
+  ;; https://company-mode.github.io/manual/Backends.html
+  (company-transformers
+   '(company-sort-by-statistics
+     company-sort-by-backend-importance
+     delete-dups))  ;; or  / company-sort-by-occurrence
+  ;; Press SPACE will accept the highlighted candidate and insert a space
+  ;; "M-x describe-variable company-auto-complete-chars" for details.
+  ;; So that's BAD idea.
+  (company-auto-complete nil)
   :config
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; common options:
   (global-company-mode 1)
-  (setq company-idle-delay              0.5 ;; https://github.com/company-mode/company-mode/issues/255 - should be some delay, for example 0.5
-	    ;; if (setq company-idle-delay nil), then autocompletion will be turned off
-	    ;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
-	    company-minimum-prefix-length   2   ;; show completion after 2 characters (default is 3!)
-	    company-show-numbers            t
-	    company-tooltip-limit           40  ;; The maximum number of candidates in the tooltip
-	    ;; transformers - could be changed "per mode":
-	    ;; https://github.com/company-mode/company-mode/issues/818
-	    ;; https://emacs.stackexchange.com/questions/68733/delete-duplicates-from-company-popups
-	    ;; https://company-mode.github.io/manual/Backends.html
-	    company-transformers '(company-sort-by-statistics company-sort-by-backend-importance delete-dups)) ;; or  / company-sort-by-occurrence
-  ;; Press SPACE will accept the highlighted candidate and insert a space
-  ;; "M-x describe-variable company-auto-complete-chars" for details.
-  ;; So that's BAD idea.
-  (setq company-auto-complete nil)
+
   ;;
   ;;
   ;; NOT to load company-mode for certain major modes.

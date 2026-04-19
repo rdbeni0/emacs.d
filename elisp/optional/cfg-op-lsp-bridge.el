@@ -186,34 +186,34 @@
   ;;;; front-end : web-mode
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ;; turn off LSP bridge in web-mode:
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (lsp-bridge-mode -1))
-              ;; append = t
-	          ;; it means this will be the last one hook from the list:
-              t)
+  ;; turn off LSP bridge in web-mode:
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (lsp-bridge-mode -1))
+            ;; append = t
+	        ;; it means this will be the last one hook from the list:
+            t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; yaml
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ;; turn off LSP bridge in yaml-mode and yaml-ts-mode:
-    (dolist (hook '(yaml-mode-hook yaml-ts-mode-hook))
-      (add-hook hook
-                (lambda ()
-                  (lsp-bridge-mode -1)) t))
+  ;; turn off LSP bridge in yaml-mode and yaml-ts-mode:
+  (dolist (hook '(yaml-mode-hook yaml-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (lsp-bridge-mode -1)) t))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Manipulations with company-mode:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
-    (setq company-idle-delay nil)
+  ;; turn off AUTOcomplete in company, but keep it optional to manually triggering:
+  (setq company-idle-delay nil)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;; Load BIG list of keybindings:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (require 'cfg-gen-op-lsp-bridge))
+  (require 'cfg-gen-op-lsp-bridge))
 
-  (provide 'cfg-op-lsp-bridge)
+(provide 'cfg-op-lsp-bridge)
 ;;; cfg-op-lsp-bridge.el ends here
