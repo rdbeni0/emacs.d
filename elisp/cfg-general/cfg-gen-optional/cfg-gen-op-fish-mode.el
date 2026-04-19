@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-fish-mode.el --- general.el for fish-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -7,5 +14,5 @@
  :prefix ","
  "=t" '(fish_indent :which-key "fish_indent"))
 
- (provide 'cfg-gen-op-fish-mode)
+(provide 'cfg-gen-op-fish-mode)
 ;;; cfg-gen-op-fish-mode.el ends here

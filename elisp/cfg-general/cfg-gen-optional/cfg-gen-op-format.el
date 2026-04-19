@@ -1,4 +1,14 @@
 ;;; cfg-gen-op-format.el ---  general.el for code formatters -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
+
+(defvar list-gen-mode-format-optional)
+(defvar list-gen-mode-map-format-optional)
 
 (general-define-key
  :states '(normal visual emacs)

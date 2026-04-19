@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-embark.el --- general.el for various embark modes -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)

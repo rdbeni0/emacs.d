@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-eglot-mode.el --- eglot keybindings -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; https://joaotavora.github.io/eglot/#Eglot-Commands
 ;; https://www.gnu.org/software/emacs/manual/html_node/eglot/Eglot-Commands.html

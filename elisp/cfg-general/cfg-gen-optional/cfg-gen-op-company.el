@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-company.el --- general.el - configuration for company-mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; global - no space + no which-key
 (general-define-key

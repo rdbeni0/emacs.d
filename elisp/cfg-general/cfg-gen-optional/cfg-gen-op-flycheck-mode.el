@@ -1,4 +1,15 @@
 ;;; cfg-gen-op-flycheck-mode.el ---  general.el for flycheck -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
+
+(defvar list-gen-mode-flycheck)
+(defvar list-gen-mode-map-flycheck)
+
 ;; general-flycheck:
 
 (general-define-key

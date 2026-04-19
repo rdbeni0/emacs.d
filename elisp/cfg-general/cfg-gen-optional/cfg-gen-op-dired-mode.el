@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-dired-mode.el --- general.el for dired mode -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 (general-define-key
  :states '(normal visual emacs)
@@ -13,4 +20,4 @@
  "dh" '(dired-du--toggle-human-readable :which-key "toggle-human-readable"))
 
 (provide 'cfg-gen-op-dired-mode)
-;;; cfg-gen-co-dired-mode.el ends here
+;;; cfg-gen-op-dired-mode.el ends here

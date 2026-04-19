@@ -1,4 +1,11 @@
 ;;; cfg-gen-op-emmet.el --- general.el for emmet -*- lexical-binding: t -*-
+;;; Commentary:
+;;
+;;; Code:
+
+(use-package general
+  :functions
+  (general-define-key))
 
 ;; should be used with combination with web-mode:
 (general-define-key
