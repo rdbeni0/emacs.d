@@ -12,10 +12,10 @@
          ;; no working, DO NOT USE! See later in section "Update capf".
          ;; ([remap completion-at-point]               . company-capf) ;; completion-at-point-functions = CAPF
 	     )
-  :init
-  (defvar company-selection)
-  (defvar company-candidates)
-  (defvar company-active-map)
+  :defines
+  (company-selection
+   company-candidates
+   company-active-map)
   :custom
   ;; if (setq company-idle-delay nil), then autocompletion will be turned off
   ;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
@@ -258,7 +258,7 @@
   (company-statistics-size 5000)
   (company-statistics-file
    (expand-file-name ".cache/company-statistics-cache.el" user-emacs-directory))
-  :commands
+  :functions
   (company-statistics-mode)
   :config
   (company-statistics-mode))
@@ -267,10 +267,10 @@
 (use-package company-quickhelp
   :after company
   :ensure t
-  :commands (company-quickhelp-mode)
   :functions
   (turn-on-tempbuf-mode
-   cfg/company-show-doc-buffer-f1)
+   cfg/company-show-doc-buffer-f1
+   company-quickhelp-mode)
   :config
   ;; (company-quickhelp-mode 1)
   ;; (setq company-quickhelp-delay 0.2)
