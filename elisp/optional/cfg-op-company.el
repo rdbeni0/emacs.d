@@ -62,23 +62,22 @@
 ;; OTHER EXAMPLE:
 ;; https://emacs.stackexchange.com/questions/23999/php-completion-with-company-does-not-work-on-local-variables
 ;;
-;; Description of particular backends: https://company-mode.github.io/manual/Backends.html
-;;
-;; How TO MANIPULATE BACKENDS PER MAJOR MODE:
-;; 1) clean and make local var ((setq-local company-backends '())) - from now it will be empty
-;; 2) add your preferred backends - choose only the best options (and not add everything! - it will be messy and slow):
-;; 2A) the most important - backends should be at the beginning (from the left side of the list)
-;; 2B) the less important - should be declared at the end (from the right side of the list)
-;; 3) run emacs and check variable `company-backends' as `describe-variable' and also use M-x `company-diag' in real examples
-;; 4) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options for particular mode
-;; 5) OPTIONAL: no new line for particular mode: https://github.com/joaotavora/yasnippet/issues/192
-;; just add: (setq-local require-final-newline nil) into particular mode hook
-
-;;; ====================== Company backends – zoptymalizowana konfiguracja ======================
-
-(defun my/setup-company-backends (backends)
+(defun cfg/-setup-company-backends (backends)
   "Set `company-backends' locally to BACKENDS."
   (setq-local company-backends backends))
+
+;; Description of particular backends: https://company-mode.github.io/manual/Backends.html
+;;
+;; HOW TO MANIPULATE BACKENDS PER MAJOR MODE:
+;; 1) add your preferred backends via "(cfg/-setup-company-backends (...))";
+;; choose only the best options (and do not add everything! - it will be messy and slow):
+;; 1A) the most important - backends should be at the beginning (from the left side of the list)
+;; 1B) the less important - should be declared at the end (from the right side of the list)
+;; 2) run emacs and check variable `company-backends' as `describe-variable' and also use M-x `company-diag' in real examples
+;; 3) OPTIONAL: check & change: company-transformers '(company-sort-by-occurrence) > sorting options for particular mode
+;; 4) OPTIONAL: no new line for particular mode: https://github.com/joaotavora/yasnippet/issues/192
+;; just add: (setq-local require-final-newline nil) into particular mode hook
+
 
 ;; PHP
 (when (require 'php-mode nil 'noerror)
@@ -86,14 +85,14 @@
     (add-hook hook
               (lambda ()
                 (if (require 'company-php nil 'noerror)
-                    (my/setup-company-backends
+                    (cfg/-setup-company-backends
                      '((company-abbrev :separate
                                        company-ac-php-backend
                                        company-keywords
                                        company-dabbrev-code
                                        company-files
                                        company-dabbrev)))
-                  (my/setup-company-backends
+                  (cfg/-setup-company-backends
                    '((company-capf :separate
                                    company-abbrev :separate
                                    company-keywords
@@ -105,7 +104,7 @@
 (dolist (hook '(emacs-lisp-mode-hook emacs-lisp-ts-mode-hook))
   (add-hook hook
             (lambda ()
-              (my/setup-company-backends
+              (cfg/-setup-company-backends
                '((company-abbrev :separate
                                  company-keywords
                                  company-capf
@@ -114,7 +113,7 @@
 
 ;; Bash / Shell
 (dolist (hook '(sh-mode-hook bash-ts-mode-hook))
-  (add-hook hook (lambda () (my/setup-company-backends
+  (add-hook hook (lambda () (cfg/-setup-company-backends
                              '((company-abbrev :separate
                                                company-keywords
                                                company-dabbrev-code
@@ -125,7 +124,7 @@
 (dolist (hook '(lua-mode-hook lua-ts-mode-hook
                               nix-mode-hook nix-ts-mode-hook
                               cperl-mode-hook perl-ts-mode-hook))
-  (add-hook hook (lambda () (my/setup-company-backends
+  (add-hook hook (lambda () (cfg/-setup-company-backends
                              '((company-abbrev :separate
                                                company-keywords
                                                company-dabbrev-code
@@ -138,14 +137,14 @@
   (add-hook hook
             (lambda ()
               (if (require 'company-web nil 'noerror)
-                  (my/setup-company-backends
+                  (cfg/-setup-company-backends
                    '((company-web-html :separate
                                        company-abbrev :separate
                                        company-keywords
                                        company-dabbrev-code
                                        company-files
                                        company-dabbrev)))
-                (my/setup-company-backends
+                (cfg/-setup-company-backends
                  '((company-abbrev :separate
                                    company-keywords
                                    company-dabbrev-code
@@ -157,7 +156,7 @@
   (add-hook hook
             (lambda ()
               (if (require 'anaconda-mode nil 'noerror)
-                  (my/setup-company-backends
+                  (cfg/-setup-company-backends
                    '((company-abbrev :separate
                                      company-anaconda
                                      company-dabbrev-code
@@ -165,7 +164,7 @@
                                      company-files
                                      company-dabbrev)))
 
-                (my/setup-company-backends
+                (cfg/-setup-company-backends
                  '((company-abbrev :separate
                                    company-keywords
                                    company-dabbrev-code
@@ -176,7 +175,7 @@
 (dolist (hook '(snippet-mode-hook org-mode-hook))
   (add-hook hook
             (lambda ()
-              (my/setup-company-backends
+              (cfg/-setup-company-backends
                '((company-abbrev :separate
                                  company-dabbrev-code
                                  company-files
@@ -186,7 +185,7 @@
 ;; Notmuch
 (add-hook 'notmuch-message-mode-hook
           (lambda ()
-            (my/setup-company-backends
+            (cfg/-setup-company-backends
              '((company-abbrev :separate
                                company-capf
                                notmuch-company
@@ -199,7 +198,7 @@
 (dolist (hook '(c-mode-hook c++-mode-hook))
   (add-hook hook
             (lambda ()
-              (my/setup-company-backends
+              (cfg/-setup-company-backends
                '((company-abbrev :separate
                                  company-clang
                                  company-cmake
@@ -209,21 +208,12 @@
                                  company-dabbrev))))))
 
 ;; Common modes (conf, yaml, json, nxml itp.)
-
-(defvar my/company-default
-  '((company-abbrev :separate
-                    company-keywords
-                    company-dabbrev-code
-                    company-files
-                    company-dabbrev))
-  )
-
 (dolist (hook '(conf-mode-hook conf-unix-mode-hook conf-space-mode-hook
                                conf-windows-mode-hook conf-xdefaults-mode-hook
                                esql-mode-hook nxml-mode-hook
                                yaml-ts-mode-hook yaml-mode-hook
                                json-ts-mode-hook json-mode-hook js-json-mode-hook))
-  (add-hook hook (lambda () (my/setup-company-backends
+  (add-hook hook (lambda () (cfg/-setup-company-backends
                              '((company-abbrev :separate
                                                company-capf
                                                company-dabbrev-code
