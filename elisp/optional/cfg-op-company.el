@@ -230,7 +230,6 @@
 ;; https://github.com/minad/vertico?tab=readme-ov-file#completion-at-point-and-completion-in-region
 
 ;; If you want to make sure that libraries are actually available (not just available in the load path):
-;;
 ;; `featurep' checks if a given package has already been loaded (provided),
 ;; but `require' with `noerror' attempts to load the package and doesn't report an error if it's not present.
 ;; This avoids Emacs trying to set `completion-in-region-function' to something that doesn't exist:
@@ -246,7 +245,7 @@
 ;;;; ADDITIONAL PACKAGES FOR COMPANY (BACKEND):
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; AI: https://github.com/TommyX12/company-tabnine
+;; EXAMPLE: https://github.com/TommyX12/company-tabnine
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ADDITIONAL PACKAGES AND CONFIGURATION FOR COMPANY (FRONTEND):
