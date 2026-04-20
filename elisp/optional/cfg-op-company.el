@@ -74,198 +74,162 @@
 ;; 5) OPTIONAL: no new line for particular mode: https://github.com/joaotavora/yasnippet/issues/192
 ;; just add: (setq-local require-final-newline nil) into particular mode hook
 
-;; php
+;;; ====================== Company backends – zoptymalizowana konfiguracja ======================
+
+(defun my/setup-company-backends (backends)
+  "Set `company-backends' locally to BACKENDS."
+  (setq-local company-backends backends))
+
+;; PHP
 (when (require 'php-mode nil 'noerror)
   (dolist (hook '(php-mode-hook php-ts-mode-hook))
     (add-hook hook
               (lambda ()
-                (setq-local company-backends '())
-                ;; company-capf, company-gtags
-                ;; OPTIONALLY load "company-php" as "company-ac-php-backend"
                 (if (require 'company-php nil 'noerror)
-                    (setq-local company-backends
-                                '(company-abbrev :separate
-                                                 company-ac-php-backend
-                                                 company-keywords
-                                                 company-dabbrev-code
-                                                 company-files
-                                                 company-dabbrev))
-                  (setq-local company-backends
-                              '(company-capf :separate
-                                             company-abbrev :separate
-                                             company-keywords
-                                             company-dabbrev-code
-                                             company-files
-                                             company-dabbrev)))))))
+                    (my/setup-company-backends
+                     '((company-abbrev :separate
+                                       company-ac-php-backend
+                                       company-keywords
+                                       company-dabbrev-code
+                                       company-files
+                                       company-dabbrev)))
+                  (my/setup-company-backends
+                   '((company-capf :separate
+                                   company-abbrev :separate
+                                   company-keywords
+                                   company-dabbrev-code
+                                   company-files
+                                   company-dabbrev))))))))
 
-;; emacs lisp (elisp)
+;; Emacs Lisp
 (dolist (hook '(emacs-lisp-mode-hook emacs-lisp-ts-mode-hook))
   (add-hook hook
             (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-keywords
-                                           company-capf
-                                           company-files
-                                           company-dabbrev-code)))))
+              (my/setup-company-backends
+               '((company-abbrev :separate
+                                 company-keywords
+                                 company-capf
+                                 company-files
+                                 company-dabbrev-code))))))
 
-;; bash / shell
+;; Bash / Shell
 (dolist (hook '(sh-mode-hook bash-ts-mode-hook))
-  (add-hook hook
-            (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-keywords
-                                           company-dabbrev-code
-                                           company-files
-                                           company-dabbrev)))))
+  (add-hook hook (lambda () (my/setup-company-backends
+                             '((company-abbrev :separate
+                                               company-keywords
+                                               company-dabbrev-code
+                                               company-files
+                                               company-dabbrev))))))
 
-;; lua
-(dolist (hook '(lua-mode-hook lua-ts-mode-hook))
-  (add-hook hook
-            (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-keywords
-                                           company-dabbrev-code
-                                           company-files
-                                           company-dabbrev)))))
+;; Lua, Nix, Perl
+(dolist (hook '(lua-mode-hook lua-ts-mode-hook
+                              nix-mode-hook nix-ts-mode-hook
+                              cperl-mode-hook perl-ts-mode-hook))
+  (add-hook hook (lambda () (my/setup-company-backends
+                             '((company-abbrev :separate
+                                               company-keywords
+                                               company-dabbrev-code
+                                               company-files
+                                               company-dabbrev))))))
 
-;; nix
-(dolist (hook '(nix-mode-hook nix-ts-mode-hook))
+;; Web / HTML / CSS
+(dolist (hook '(web-mode-hook html-mode-hook html-ts-mode-hook
+                              mhtml-mode-hook css-mode-hook css-ts-mode-hook sgml-mode-hook))
   (add-hook hook
             (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-keywords
-                                           company-dabbrev-code
-                                           company-files
-                                           company-dabbrev)))))
-
-;; perl
-(dolist (hook '(cperl-mode-hook perl-ts-mode-hook))
-  (add-hook hook
-            (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-keywords
-                                           company-dabbrev-code
-                                           company-files
-                                           company-dabbrev)))))
-
-;; web-mode / html + css
-(dolist (hook '(web-mode-hook
-                html-mode-hook
-                html-ts-mode-hook
-                mhtml-mode-hook
-                css-mode-hook
-                css-ts-mode-hook
-                sgml-mode-hook))
-  (add-hook hook
-            (lambda ()
-              (setq-local company-backends '())
               (if (require 'company-web nil 'noerror)
-                  (setq-local company-backends
-                              '(company-web-html :separate
-                                                 company-abbrev :separate
-                                                 company-keywords
-                                                 company-dabbrev-code
-                                                 company-files
-                                                 company-dabbrev))
-                (setq-local company-backends
-                            '(company-abbrev :separate
-                                             company-keywords
-                                             company-dabbrev-code
-                                             company-files
-                                             company-dabbrev))))))
+                  (my/setup-company-backends
+                   '((company-web-html :separate
+                                       company-abbrev :separate
+                                       company-keywords
+                                       company-dabbrev-code
+                                       company-files
+                                       company-dabbrev)))
+                (my/setup-company-backends
+                 '((company-abbrev :separate
+                                   company-keywords
+                                   company-dabbrev-code
+                                   company-files
+                                   company-dabbrev)))))))
 
 ;; Python
 (dolist (hook '(python-mode-hook python-ts-mode-hook))
   (add-hook hook
             (lambda ()
-              (setq-local company-backends '())
               (if (require 'anaconda-mode nil 'noerror)
-                  (setq-local company-backends
-                              '(company-abbrev :separate
-                                               company-anaconda
-                                               company-dabbrev-code
-                                               company-keywords
-                                               company-files
-                                               company-dabbrev))
-                (setq-local company-backends
-                            '(company-abbrev :separate
-                                             company-dabbrev-code
-                                             company-keywords
-                                             company-files
-                                             company-dabbrev))))))
+                  (my/setup-company-backends
+                   '((company-abbrev :separate
+                                     company-anaconda
+                                     company-dabbrev-code
+                                     company-keywords
+                                     company-files
+                                     company-dabbrev)))
 
-;; snippets
-(add-hook 'snippet-mode-hook
-          (lambda ()
-            (setq-local company-backends
-                        '(company-abbrev :separate
-                                         company-dabbrev-code
-                                         company-files
-                                         company-keywords
-                                         company-dabbrev))))
+                (my/setup-company-backends
+                 '((company-abbrev :separate
+                                   company-keywords
+                                   company-dabbrev-code
+                                   company-files
+                                   company-dabbrev)))))))
 
-;; org-mode
-(add-hook 'org-mode-hook
-          (lambda ()
-            (setq-local company-backends
-                        '(company-abbrev :separate
-                                         company-dabbrev-code
-                                         company-files
-                                         company-keywords
-                                         company-dabbrev))))
+;; Snippets + Org
+(dolist (hook '(snippet-mode-hook org-mode-hook))
+  (add-hook hook
+            (lambda ()
+              (my/setup-company-backends
+               '((company-abbrev :separate
+                                 company-dabbrev-code
+                                 company-files
+                                 company-keywords
+                                 company-dabbrev))))))
 
 ;; Notmuch
 (add-hook 'notmuch-message-mode-hook
           (lambda ()
-            (setq-local company-backends
-                        '(company-abbrev :separate
-                                         company-capf
-                                         notmuch-company
-                                         company-files
-                                         company-dabbrev
-                                         company-dabbrev-code))
-            (setq-local require-final-newline nil)))  ;; no new lines after inserting snippet
+            (my/setup-company-backends
+             '((company-abbrev :separate
+                               company-capf
+                               notmuch-company
+                               company-files
+                               company-dabbrev
+                               company-dabbrev-code)))
+            (setq-local require-final-newline nil)))
 
-;; C/C++
+;; C / C++
 (dolist (hook '(c-mode-hook c++-mode-hook))
   (add-hook hook
             (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-clang
-                                           company-cmake
-                                           company-dabbrev-code
-                                           company-keywords
-                                           company-files
-                                           company-dabbrev)))))
+              (my/setup-company-backends
+               '((company-abbrev :separate
+                                 company-clang
+                                 company-cmake
+                                 company-dabbrev-code
+                                 company-keywords
+                                 company-files
+                                 company-dabbrev))))))
 
-;; SHARED, conf modes:
-(dolist (hook '(conf-mode-hook
-                conf-unix-mode-hook
-                conf-space-mode-hook
-                conf-windows-mode-hook
-                conf-xdefaults-mode-hook
-                esql-mode-hook
-                nxml-mode-hook
-                yaml-ts-mode-hook
-                yaml-mode-hook
-                json-ts-mode-hook
-                json-mode-hook
-                js-json-mode-hook))
-  (add-hook hook
-            (lambda ()
-              (setq-local company-backends
-                          '(company-abbrev :separate
-                                           company-capf
-                                           company-dabbrev-code
-                                           company-keywords
-                                           company-files
-                                           company-dabbrev)))))
+;; Common modes (conf, yaml, json, nxml itp.)
+
+(defvar my/company-default
+  '((company-abbrev :separate
+                    company-keywords
+                    company-dabbrev-code
+                    company-files
+                    company-dabbrev))
+  )
+
+(dolist (hook '(conf-mode-hook conf-unix-mode-hook conf-space-mode-hook
+                               conf-windows-mode-hook conf-xdefaults-mode-hook
+                               esql-mode-hook nxml-mode-hook
+                               yaml-ts-mode-hook yaml-mode-hook
+                               json-ts-mode-hook json-mode-hook js-json-mode-hook))
+  (add-hook hook (lambda () (my/setup-company-backends
+                             '((company-abbrev :separate
+                                               company-capf
+                                               company-dabbrev-code
+                                               company-keywords
+                                               company-files
+                                               company-dabbrev))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; UPDATE CAPF FUNCTION:
