@@ -643,7 +643,7 @@ there's a region, all lines that region covers will be duplicated."
 
 (use-package tab-bar
   :defer t
-  :commands
+  :functions
   (cfg/tab-group-from-project
    cfg/tab-switch-to-group)
   :bind

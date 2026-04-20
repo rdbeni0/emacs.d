@@ -21,9 +21,8 @@
   :defines
   (vertico-map)
   :functions
-  (vertico-repeat-save)
-  :commands
-  (vertico-mode
+  (vertico-repeat-save
+   vertico-mode
    vertico-mouse-mode
    vertico-multiform-mode)
   :custom
@@ -56,6 +55,8 @@
 (use-package orderless
   :ensure t
   :after vertico
+  :defines
+  (orderless-style-dispatchers)
   :custom
   (orderless-matching-styles '(orderless-regexp
                                orderless-initialism
@@ -77,7 +78,8 @@
   :ensure t
   :after vertico
   ;; :demand t
-  :commands (marginalia-mode)
+  :functions
+  (marginalia-mode)
   :config (marginalia-mode 1))
 
 ;; https://github.com/minad/consult
@@ -118,9 +120,12 @@
 	     )
   :functions
   (cfg/-adv-consult-grep-always-choose-dir
-   consult-customize)
+   cfg/orderless-fix-consult-tofu
+   consult-customize
+   consult--grep-exclude-args)
   :defines
   (consult-buffer
+   consult-buffer-sources
    consult-grep
    consult-ripgrep
    consult-grep-args
@@ -129,66 +134,67 @@
   ;; Use Consult to select xref locations with preview
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
-  :config (progn
-	        (defun cfg/-adv-consult-grep-always-choose-dir (orig &rest args)
-	          "Add prefix argument and always choose directory for consult-grep"
-	          (setq prefix-arg '(4))
-	          (funcall orig args))
-	        (advice-add 'consult-grep    :around #'cfg/-adv-consult-grep-always-choose-dir)
-	        (advice-add 'consult-ripgrep :around #'cfg/-adv-consult-grep-always-choose-dir)
+  :config
 
-	        ;; consult git-grep with
-	        ;; -F will remove regexp filtering for the grep
-	        ;; -R, --dereference-recursive :
-	        ;; ^ Read all files under each directory, recursively. Follow all symbolic links (and dirs),
-	        ;; unlike -r (-r will not follow dirs)
-	        (add-to-list 'consult-grep-args "-F -R" 'append)
+  (defun cfg/-adv-consult-grep-always-choose-dir (orig &rest args)
+	"Add prefix argument and always choose directory for consult-grep"
+	(setq prefix-arg '(4))
+	(apply orig args))
+  (advice-add 'consult-grep    :around #'cfg/-adv-consult-grep-always-choose-dir)
+  (advice-add 'consult-ripgrep :around #'cfg/-adv-consult-grep-always-choose-dir)
 
-	        ;; alternative, but also working:
-	        ;; (setq consult-grep-args
-	        ;; 	  '("grep" (consult--grep-exclude-args)
-	        ;; 	    "--null --line-buffered --color=never --ignore-case --line-number -I -F -R ."))
+  ;; consult git-grep with
+  ;; -F will remove regexp filtering for the grep
+  ;; -R, --dereference-recursive :
+  ;; ^ Read all files under each directory, recursively. Follow all symbolic links (and dirs),
+  ;; unlike -r (-r will not follow dirs)
+  (add-to-list 'consult-grep-args "-F -R" 'append)
 
-	        ;; remove automatic previev of selected entry:
-            (consult-customize
-             consult-ripgrep consult-grep
-             consult-buffer consult-recent-file
-             :preview-key "M-.")
+  ;; alternative, but also working:
+  ;; (setq consult-grep-args
+  ;; 	  '("grep" (consult--grep-exclude-args)
+  ;; 	    "--null --line-buffered --color=never --ignore-case --line-number -I -F -R ."))
 
-	        ;; fix hidden characters:
-            (defun cfg/orderless-fix-consult-tofu (pattern index total)
-              "Ignore the last character which is hidden and used only internally."
-              (when (string-suffix-p "$" pattern)
-		        `(orderless-regexp . ,(concat (substring pattern 0 -1)
-                                              "[\x200000-\x300000]*$"))))
+  ;; remove automatic previev of selected entry:
+  (consult-customize
+   consult-ripgrep consult-grep
+   consult-buffer consult-recent-file
+   :preview-key "M-.")
 
-            (dolist (command '(consult-buffer consult-line))
-              (advice-add command :around
-                          (lambda (orig &rest args)
-                            (let ((orderless-style-dispatchers (cons #'cfg/orderless-fix-consult-tofu
-                                                                     orderless-style-dispatchers)))
-                              (apply orig args)))))
+  ;; fix hidden characters:
+  (defun cfg/orderless-fix-consult-tofu (pattern _index _total)
+    "Ignore the last character which is hidden and used only internally."
+    (when (string-suffix-p "$" pattern)
+      `(orderless-regexp . ,(concat (substring pattern 0 -1)
+                                    "[\x200000-\x300000]*$"))))
 
-            ;; Disable consult-buffer project-related capabilities as they are very slow in TRAMP.
-            (setq consult-buffer-sources
-                  (delq 'consult--source-project-buffer
-                        (delq 'consult--source-project-file consult-buffer-sources)))
+  (dolist (command '(consult-buffer consult-line))
+    (advice-add command :around
+                (lambda (orig &rest args)
+                  (let ((orderless-style-dispatchers (cons #'cfg/orderless-fix-consult-tofu
+                                                           orderless-style-dispatchers)))
+                    (apply orig args)))))
 
-            ;; ;; Hidden buffers – change the narrow key to ?h
-            ;; (consult-customize consult-buffer
-            ;;                    :narrow-key ?h    ; <- this changes the key for all sources at once (if you want globally)
-            ;;                    ;; or more precisely – only for the hidden source:
-            ;;                    ;; consult-source-hidden-buffer (narrow . ?h)
-            ;;                    )
+  ;; Disable consult-buffer project-related capabilities as they are very slow in TRAMP.
+  (setq consult-buffer-sources
+        (delq 'consult--source-project-buffer
+              (delq 'consult--source-project-file consult-buffer-sources)))
 
-            (consult-customize consult-buffer
-                               ;; ?h instead of the default space for hidden buffers
-                               :narrow '(?b "Buffers"
-                                            ?h "Hidden"
-                                            ?* "Modified"
-                                            ;; ... the rest is default
-                                            ))
-            ))
+  ;; ;; Hidden buffers – change the narrow key to ?h
+  ;; (consult-customize consult-buffer
+  ;;                    :narrow-key ?h    ; <- this changes the key for all sources at once (if you want globally)
+  ;;                    ;; or more precisely – only for the hidden source:
+  ;;                    ;; consult-source-hidden-buffer (narrow . ?h)
+  ;;                    )
+
+  (consult-customize consult-buffer
+                     ;; ?h instead of the default space for hidden buffers
+                     :narrow '(?b "Buffers"
+                                  ?h "Hidden"
+                                  ?* "Modified"
+                                  ;; ... the rest is default
+                                  ))
+  )
 
 ;; https://github.com/oantolin/embark
 (use-package embark
