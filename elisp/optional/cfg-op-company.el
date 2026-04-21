@@ -16,6 +16,9 @@
   (company-selection
    company-candidates
    company-active-map)
+  :functions
+  (global-company-mode
+   company-call-backend)
   :custom
   ;; if (setq company-idle-delay nil), then autocompletion will be turned off
   ;; https://emacs.stackexchange.com/questions/4011/i-want-company-mode-to-show-completions-list-after-the-second-character
@@ -48,9 +51,6 @@
   ;; The list of active frontends (visualizations)
   (company-frontends '(company-pseudo-tooltip-frontend company-echo-metadata-frontend))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  :functions
-  (global-company-mode
-   company-call-backend)
   :config
   (global-company-mode 1))
 

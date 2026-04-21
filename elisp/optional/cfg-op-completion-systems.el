@@ -196,6 +196,9 @@
                                   ))
   )
 
+(declare-function which-key--hide-popup-ignore-command "which-key")
+(declare-function which-key--show-keymap "which-key")
+
 ;; https://github.com/oantolin/embark
 (use-package embark
   :ensure t
@@ -218,6 +221,10 @@
 	     ("C-<down>"  . scroll-other-window)       ; Ctrl-down arrow
 	     ("C-<up>"    . scroll-other-window-down)  ; Ctrl-up arrow
 	     )
+  :functions
+  (embark-prefix-help-command
+   embark--truncate-target
+   )
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
