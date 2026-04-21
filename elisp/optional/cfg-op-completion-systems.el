@@ -1,10 +1,12 @@
 ;;; cfg-op-completion-systems.el --- configfuration for completion styles and engines -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with modern completion styles in bottom minibuffer.
-;; Requires Emacs 27.1++
+;; https://www.chiply.dev/post-vompeccc
 ;;
 ;;; Code:
+
+(declare-function which-key--hide-popup-ignore-command "which-key")
+(declare-function which-key--show-keymap "which-key")
 
 ;; https://github.com/minad/vertico
 (use-package vertico
@@ -39,6 +41,7 @@
   (vertico-mouse-mode 1)
   (vertico-multiform-mode 1))
 
+;; https://github.com/minad/vertico
 (use-package vertico-directory
   :after vertico
   :ensure nil
@@ -193,11 +196,7 @@
                                   ?h "Hidden"
                                   ?* "Modified"
                                   ;; ... the rest is default
-                                  ))
-  )
-
-(declare-function which-key--hide-popup-ignore-command "which-key")
-(declare-function which-key--show-keymap "which-key")
+                                  )))
 
 ;; https://github.com/oantolin/embark
 (use-package embark
@@ -225,6 +224,17 @@
   (embark-prefix-help-command
    embark--truncate-target
    )
+  :custom
+  (resize-mini-windows t)
+  ;; Configure indicator:
+  ;; use as mixed-indicator as default:
+  (embark-mixed-indicator-delay 2)
+  (embark-indicators
+   '(embark-mixed-indicator
+     ;; embark-which-key-indicator ;; put it somewhere in the "embark-indicators" if you want use it
+     embark--vertico-indicator
+     embark-highlight-indicator
+     embark-isearch-highlight-indicator))
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -261,23 +271,10 @@ targets."
                (_ (key-binding prefix 'accept-default)))
            keymap)
 	     nil nil t (lambda (binding)
-                     (not (string-suffix-p "-argument" (cdr binding))))))))
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Configure indicator:
-
-  ;; use as mixed-indicator as default:
-  (setq embark-mixed-indicator-delay 2)
-
-  (setq embark-indicators '(embark-mixed-indicator
-			                ;; embark-which-key-indicator ;; put it somewhere in the "embark-indicators" if you want use it
-			                embark--vertico-indicator
-			                embark-highlight-indicator
-			                embark-isearch-highlight-indicator))
-  (setq resize-mini-windows t)
-  )
+                     (not (string-suffix-p "-argument" (cdr binding)))))))))
 
 ;; Consult users will also want the embark-consult package.
+;; https://github.com/oantolin/embark
 (use-package embark-consult
   :ensure t
   ;; :after embark
