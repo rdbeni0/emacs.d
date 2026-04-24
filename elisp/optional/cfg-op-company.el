@@ -287,7 +287,6 @@
       (display-buffer doc-buffer t)))
 
   (add-hook 'company-mode-hook #'company-quickhelp-mode)
-  (add-hook 'company-quickhelp-mode-hook #'turn-on-tempbuf-mode)
 
   (define-key company-active-map (kbd "<f1>") #'cfg/company-show-doc-buffer-f1))
 
