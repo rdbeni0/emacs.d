@@ -103,7 +103,9 @@
          ([remap switch-to-buffer-other-frame]    . consult-buffer-other-frame)
          ([remap switch-to-buffer-other-window]   . consult-buffer-other-window)
          ([remap switch-to-buffer]                . consult-buffer)
-         ([remap rgrep]                           . consult-grep)
+         ([remap rgrep]                           . cfg/consult-grep-with-dir)
+         ([remap consult-grep]                    . cfg/consult-grep-with-dir)
+         ([remap consult-ripgrep]                 . cfg/consult-ripgrep-with-dir)
          ([remap vc-git-grep]                     . consult-git-grep)
          ([remap find-dired]                      . consult-find)
          ([remap yank-pop]                        . consult-yank-pop)
@@ -125,12 +127,12 @@
   (cfg/-adv-consult-grep-always-choose-dir
    cfg/orderless-fix-consult-tofu
    consult-customize
+   consult-ripgrep
+   consult-grep
    consult--grep-exclude-args)
   :defines
   (consult-buffer
    consult-buffer-sources
-   consult-grep
-   consult-ripgrep
    consult-grep-args
    consult-recent-file)
   :custom
@@ -139,12 +141,17 @@
   (xref-show-definitions-function #'consult-xref)
   :config
 
-  (defun cfg/-adv-consult-grep-always-choose-dir (orig &rest args)
-	"Add prefix argument and always choose directory for consult-grep"
-	(setq prefix-arg '(4))
-	(apply orig args))
-  (advice-add 'consult-grep    :around #'cfg/-adv-consult-grep-always-choose-dir)
-  (advice-add 'consult-ripgrep :around #'cfg/-adv-consult-grep-always-choose-dir)
+  (defun cfg/consult-grep-with-dir ()
+    "Call `consult-grep' always with directory selection (with C-u)."
+    (interactive)
+    (let ((current-prefix-arg '(4)))
+      (call-interactively #'consult-grep)))
+
+  (defun cfg/consult-ripgrep-with-dir ()
+    "Call `consult-ripgrep' always with directory selection (with C-u)."
+    (interactive)
+    (let ((current-prefix-arg '(4)))
+      (call-interactively #'consult-ripgrep)))
 
   ;; consult git-grep with
   ;; -F will remove regexp filtering for the grep
