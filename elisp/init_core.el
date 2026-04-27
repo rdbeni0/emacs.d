@@ -2016,6 +2016,10 @@ With prefix ARG, prompt for file to visit."
 ;; New options since Emacs 29+++
 (use-package org
   :pin gnu ;; gnu must be there, other versions are buggy!
+  :custom
+  (org-latex-compiler "xelatex")
+  (org-latex-pdf-process
+   '("latexmk -xelatex -interaction=nonstopmode -output-directory=%o %f"))
   :config
 
   ;; Please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
@@ -2029,9 +2033,15 @@ With prefix ARG, prompt for file to visit."
     (message "WARNING! File data/local/lo-org.el inside your emacs.d is not readable (or not exist)! Please create it and add correct org-mode options!"))
 
   (setq org-babel-default-header-args
-        (assq-delete-all :tangle org-babel-default-header-args))
+        (assq-delete-all :tangle org-babel-default-header-args)))
 
-  (require 'org-compat))
+(use-package org-compat
+  :after org
+  :ensure nil)
+
+(use-package ox-latex
+  :after org
+  :ensure nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> IRC and rcirc
