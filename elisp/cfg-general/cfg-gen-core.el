@@ -868,6 +868,7 @@ Normally, not a user option.  See `ediff-help-message' for details.")
  "ee" '(org-export-dispatch :which-key "export-dispatch")
  "ep" '(org-latex-export-to-pdf :which-key "latex-export-to-pdf")
  "el" '(org-latex-export-to-latex :which-key "latex-export-to-latex")
+ "eL" '(org-latex-export-as-latex :which-key "latex-export-as-latex")
  "em" '(org-md-export-to-markdown :which-key "export-to-md")
  "eh" '(org-html-export-to-html :which-key "export-to-html")
 
