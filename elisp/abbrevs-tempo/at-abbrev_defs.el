@@ -58,6 +58,7 @@
 ;; (setq org-mode-abbrev-table nil)
 (define-abbrev-table 'org-mode-abbrev-table
   '(
+    ("qqsta1" "#+OPTIONS: \n:t *:t ^:nil |:t toc:nil num:nil" nil :count 0)
     ("qqex" "#+BEGIN_EXAMPLE\n\n\#+END_EXAMPLE\n" nil 0 :system t)
     ("qqs" "#+BEGIN_SRC\n\n#+END_SRC\n" nil 0 :system t)
     ("qqscss" "#+BEGIN_SRC css\n\n#+END_SRC\n" nil 0 :system t)
