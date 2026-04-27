@@ -189,6 +189,7 @@
                         jenkinsfile-mode
                         fish-mode
                         web-mode
+                        latex-mode
                         makefile-mode
                         makefile-gmake-mode)))
 
@@ -198,6 +199,7 @@
                         jenkinsfile-mode-map
                         fish-mode-map
                         web-mode-map
+                        latex-mode-map
                         makefile-mode-map
                         makefile-gmake-mode-map)))
 
@@ -227,7 +229,6 @@
                                                    js-json-mode
                                                    nxml-mode
                                                    markdown-mode
-                                                   latex-mode
                                                    makefile-mode
                                                    makefile-gmake-mode
                                                    gfm-mode))
@@ -243,7 +244,6 @@
                                                        js-json-mode-map
                                                        nxml-mode-map
                                                        markdown-mode-map
-                                                       latex-mode-map
                                                        makefile-mode-map
                                                        makefile-gmake-mode-map
                                                        gfm-mode-map))
@@ -259,6 +259,7 @@
 				                     (seq-difference list-gen-mode
                                                      '(ssh-config-mode
                                                        web-mode
+                                                       latex-mode
                                                        makefile-mode
                                                        makefile-gmake-mode
                                                        esql-mode))
@@ -270,6 +271,7 @@
 					                     (seq-difference list-gen-mode-map
                                                          '(ssh-config-mode-map
                                                            web-mode-map
+                                                           latex-mode-map
                                                            makefile-mode-map
                                                            makefile-gmake-mode-map
                                                            esql-mode-map))
