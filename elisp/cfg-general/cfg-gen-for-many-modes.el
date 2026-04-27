@@ -47,6 +47,7 @@
     lua-mode
     lua-ts-mode
     markdown-mode
+    latex-mode
     mhtml-mode
     makefile-gmake-mode
     makefile-mode
@@ -95,6 +96,7 @@
     lua-mode-map
     lua-ts-mode-map
     markdown-mode-map
+    latex-mode-map
     mhtml-mode-map
     makefile-gmake-mode-map
     makefile-mode-map
@@ -225,6 +227,7 @@
                                                    js-json-mode
                                                    nxml-mode
                                                    markdown-mode
+                                                   latex-mode
                                                    makefile-mode
                                                    makefile-gmake-mode
                                                    gfm-mode))
@@ -240,6 +243,7 @@
                                                        js-json-mode-map
                                                        nxml-mode-map
                                                        markdown-mode-map
+                                                       latex-mode-map
                                                        makefile-mode-map
                                                        makefile-gmake-mode-map
                                                        gfm-mode-map))
@@ -292,6 +296,7 @@
                        '(ssh-config-mode
                          nxml-mode
                          markdown-mode
+                         latex-mode
                          makefile-mode
                          makefile-gmake-mode
                          gfm-mode))))
@@ -303,6 +308,7 @@
                        '(ssh-config-mode-map
                          nxml-mode-map
                          markdown-mode-map
+                         latex-mode-map
                          makefile-mode-map
                          makefile-gmake-mode-map
                          gfm-mode-map))))
