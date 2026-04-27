@@ -865,7 +865,10 @@ Normally, not a user option.  See `ediff-help-message' for details.")
  "ts" '(org-table-sort-lines :which-key "sort-lines")
 
  "e" '(:ignore t :which-key "export")
- "ed" '(org-md-export-to-markdown :which-key "export-to-md")
+ "ee" '(org-export-dispatch :which-key "export-dispatch")
+ "ep" '(org-latex-export-to-pdf :which-key "latex-export-to-pdf")
+ "el" '(org-latex-export-to-latex :which-key "latex-export-to-latex")
+ "em" '(org-md-export-to-markdown :which-key "export-to-md")
  "eh" '(org-html-export-to-html :which-key "export-to-html")
 
  "i" '(:ignore t :which-key "insert")
