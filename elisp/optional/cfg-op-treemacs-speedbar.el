@@ -143,7 +143,8 @@ Do nothing if the file is not part of any project."
             (error
              (message "Treemacs switch error: %s" err)))))))
 
-  (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change))
+  ;; (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change)
+  )
 
 (use-package sr-speedbar
   :ensure t
