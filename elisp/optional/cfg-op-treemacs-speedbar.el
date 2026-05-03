@@ -51,6 +51,12 @@
   :config
   (treemacs-set-scope-type 'Tabs)
 
+  (defun cfg/-safe-project-root ()
+    "Return project root or nil without throwing."
+    (when-let ((proj (project-current nil)))
+      (project-root proj)))
+
+
   (defun cfg/-treemacs-find-matching-workspace (project-dir)
     "Find a Treemacs workspace whose name ends with the project directory name.
 
@@ -120,17 +126,15 @@ Never creates new workspaces."
 
   (advice-add 'project-switch-project :after
               (lambda (dir)
-                (when dir
+                (when-let ((dir (cfg/-safe-project-root)))
                   (cfg/-treemacs-switch-workspace-on-project-switch dir))))
+
 
   (defun cfg/-treemacs-auto-switch-on-buffer-change ()
     "Switch Treemacs workspace based on current buffer.
-If the file belongs to a project, switch accordingly.
-Do nothing if already in the correct workspace.
-Do nothing if the file is not part of any project."
+Do nothing if file is not part of a project."
     (when-let* ((file (buffer-file-name))
-                (project (project-current nil))
-                (dir (project-root project)))
+                (dir (cfg/-safe-project-root)))
       (let* ((target-workspace
               (or (cfg/-treemacs-find-matching-workspace dir)
                   "MAIN"))
@@ -143,8 +147,14 @@ Do nothing if the file is not part of any project."
             (error
              (message "Treemacs switch error: %s" err)))))))
 
-  ;; (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change)
-  )
+
+  (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change)
+
+  (defun cfg/-treemacs-safe-project-position (orig project)
+    (when project
+      (funcall orig project)))
+
+  (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position))
 
 (use-package sr-speedbar
   :ensure t

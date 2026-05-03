@@ -88,18 +88,20 @@
 
   (advice-add 'projectile-switch-project :after
               (lambda (&optional dir)
-                ;; projectile passes DIR optionally, so fallback:
-                (let ((project-dir (or dir (projectile-project-root))))
-                  (when project-dir
-                    (cfg/-treemacs-switch-workspace-on-project-switch
-                     project-dir)))))
+                ;; projectile sometimes passes nil, so fallback safely:
+                (let* ((root (or dir
+                                 (ignore-errors (projectile-project-root)))))
+                  (when root
+                    (cfg/-treemacs-switch-workspace-on-project-switch root)))))
 
   (defun cfg/-treemacs-auto-switch-on-buffer-change-projectile ()
-    "Switch Treemacs workspace based on current buffer using Projectile."
-    (when (and (buffer-file-name)
-               (projectile-project-p))
-      (let* ((dir (projectile-project-root))
-             (target-workspace
+    "Switch Treemacs workspace based on current buffer using Projectile.
+Safe version: never crashes when file is outside any project."
+    (when-let* ((file (buffer-file-name))
+                ;; projectile-project-p may throw, so wrap:
+                (_ (ignore-errors (projectile-project-p)))
+                (dir (ignore-errors (projectile-project-root))))
+      (let* ((target-workspace
               (or (cfg/-treemacs-find-matching-workspace dir)
                   "MAIN"))
              (current-workspace
@@ -110,6 +112,7 @@
               (treemacs-do-switch-workspace target-workspace)
             (error
              (message "Treemacs switch error: %s" err)))))))
+
 
   ;; remove default project.el hook
   (remove-hook 'find-file-hook
