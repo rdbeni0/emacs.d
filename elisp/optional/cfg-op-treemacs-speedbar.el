@@ -14,7 +14,6 @@
   :config
   ;;;; Probably not required.
   ;; (require 'treemacs-project-follow-mode)
-  ;; (setq treemacs-project-follow-mode t)
   (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
   (setq
    treemacs-show-hidden-files               t
