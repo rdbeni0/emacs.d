@@ -154,8 +154,7 @@ Do nothing if file is not part of a project."
     (when project
       (funcall orig project)))
 
-  ;; (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position)
-  )
+  (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position))
 
 (use-package sr-speedbar
   :ensure t
