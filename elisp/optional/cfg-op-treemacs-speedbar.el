@@ -20,7 +20,7 @@
    treemacs-show-hidden-files               t
    treemacs-indentation                     1
    treemacs-follow-mode                     nil
-   treemacs-project-follow-mode             t
+   treemacs-project-follow-mode             nil
    )
   (treemacs-resize-icons 18) ;; icon's size
   (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
