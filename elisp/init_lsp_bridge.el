@@ -16,7 +16,6 @@
 (require 'cfg-op-treemacs-speedbar)
 (require 'cfg-op-dumbjump)
 (require 'cfg-op-epm)
-(require 'cfg-op-projectile)
 (require 'cfg-op-evil)
 (require 'cfg-op-dired)
 (require 'cfg-op-webpaste-htmlize)
