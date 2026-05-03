@@ -56,7 +56,6 @@
     (when-let ((proj (project-current nil)))
       (project-root proj)))
 
-
   (defun cfg/-treemacs-find-matching-workspace (project-dir)
     "Find a Treemacs workspace whose name ends with the project directory name.
 
