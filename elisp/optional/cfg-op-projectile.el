@@ -86,23 +86,12 @@
   :after general
   :config
 
-  (defun cfg/-treemacs-switch-workspace-on-projectile-switch (project-dir)
-    "Switch Treemacs workspace based on PROJECT-DIR from Projectile.
-Fallback to \"MAIN\" if no match."
-    (let* ((workspace-name
-            (or (cfg/-treemacs-find-matching-workspace project-dir)
-                "MAIN")))
-      (condition-case err
-          (treemacs-do-switch-workspace workspace-name)
-        (error
-         (message "Treemacs switch error: %s" err)))))
-
   (advice-add 'projectile-switch-project :after
               (lambda (&optional dir)
                 ;; projectile passes DIR optionally, so fallback:
                 (let ((project-dir (or dir (projectile-project-root))))
                   (when project-dir
-                    (cfg/-treemacs-switch-workspace-on-projectile-switch
+                    (cfg/-treemacs-switch-workspace-on-project-switch
                      project-dir)))))
 
   (defun cfg/-treemacs-auto-switch-on-buffer-change-projectile ()
