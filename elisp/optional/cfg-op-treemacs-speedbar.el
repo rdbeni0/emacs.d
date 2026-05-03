@@ -12,7 +12,7 @@
 (use-package treemacs
   :ensure t
   :config
-  ;;;; Probably not required. Not working in Ubuntu LTS:
+  ;;;; Probably not required.
   ;; (require 'treemacs-project-follow-mode)
   ;; (setq treemacs-project-follow-mode t)
   (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
@@ -20,6 +20,7 @@
    treemacs-show-hidden-files               t
    treemacs-indentation                     1
    treemacs-follow-mode                     nil
+   treemacs-project-follow-mode             t
    )
   (treemacs-resize-icons 18) ;; icon's size
   (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
@@ -43,6 +44,63 @@
   :ensure t
   :config
   )
+
+(use-package treemacs-tab-bar
+  :after (treemacs tab-bar)
+  :ensure t
+  :config
+  (treemacs-set-scope-type 'Tabs)
+
+  (defun cfg/-treemacs-find-matching-workspace (project-dir)
+    "Znajdź workspace Treemacs, którego nazwa kończy się nazwą projektu."
+    (let* ((project-name (file-name-nondirectory
+                          (directory-file-name project-dir)))
+           (workspaces (treemacs-workspaces)))
+      (catch 'found
+        (dolist (ws workspaces)
+          (let ((name (treemacs-workspace->name ws)))
+            (when (string-match (concat project-name "$") name)
+              (throw 'found name))))
+        nil)))
+
+  (defun cfg/-treemacs-switch-workspace-on-project-switch (project-dir)
+    "Switch Treemacs workspace based on PROJECT-DIR.
+If no matching workspace is found, fall back to \"MAIN\".
+Never creates new workspaces."
+    (let* ((workspace-name
+            (or (cfg/-treemacs-find-matching-workspace project-dir)
+                "MAIN")))
+      (condition-case err
+          (treemacs-do-switch-workspace workspace-name)
+        (error
+         (message "Treemacs switch error: %s" err)))))
+
+  (advice-add 'project-switch-project :after
+              (lambda (dir)
+                (when dir
+                  (cfg/-treemacs-switch-workspace-on-project-switch dir))))
+
+  (defun cfg/-treemacs-auto-switch-on-buffer-change ()
+    "Switch Treemacs workspace based on current buffer.
+If the file belongs to a project, switch accordingly.
+Do nothing if already in the correct workspace.
+Do nothing if the file is not part of any project."
+    (when-let* ((file (buffer-file-name))
+                (project (project-current nil))
+                (dir (project-root project)))
+      (let* ((target-workspace
+              (or (cfg/-treemacs-find-matching-workspace dir)
+                  "MAIN"))
+             (current-workspace
+              (treemacs-workspace->name
+               (treemacs-current-workspace))))
+        (unless (equal target-workspace current-workspace)
+          (condition-case err
+              (treemacs-do-switch-workspace target-workspace)
+            (error
+             (message "Treemacs switch error: %s" err)))))))
+
+  (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change))
 
 (use-package sr-speedbar
   :ensure t
