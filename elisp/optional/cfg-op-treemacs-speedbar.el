@@ -52,7 +52,50 @@
   (treemacs-set-scope-type 'Tabs)
 
   (defun cfg/-treemacs-find-matching-workspace (project-dir)
-    "Znajdź workspace Treemacs, którego nazwa kończy się nazwą projektu."
+    "Find a Treemacs workspace whose name ends with the project directory name.
+
+The function extracts the project name from PROJECT-DIR and searches
+through all available Treemacs workspaces. It returns the first workspace
+whose name matches the pattern:
+
+    <workspace-name> ends with <project-name>
+
+If no matching workspace is found, it returns nil.
+
+Example:
+
+  PROJECT-DIR:
+    /home/user/projects/my-app
+
+  Extracted project name:
+    my-app
+
+  Workspace names:
+    \"DEV-my-app\"
+    \"my-app\"
+    \"legacy-app\"
+
+  Match result:
+    => \"DEV-my-app\" (first match found)
+
+Another example:
+
+  PROJECT-DIR:
+    /home/user/code/alpha
+
+  Workspace names:
+    \"alpha\"
+    \"beta\"
+    \"gamma-alpha\"
+
+  Match result:
+    => \"alpha\" (exact ending match)
+
+Matching rule:
+  (string-match (concat project-name \"$\") workspace-name)
+
+This ensures only workspaces that END exactly with the project name are considered.
+For example, \"foo-bar\" will NOT match \"foobar\" or \"foo-bar-baz\"."
     (let* ((project-name (file-name-nondirectory
                           (directory-file-name project-dir)))
            (workspaces (treemacs-workspaces)))

@@ -76,7 +76,7 @@
     (define-key projectile-mode-map [remap projectile-ripgrep] 'consult-ripgrep))
 
   (add-hook 'projectile-after-switch-project-hook (lambda ()
-						    (projectile-invalidate-cache nil)))
+						                            (projectile-invalidate-cache nil)))
   ;; load keybindings from general.el framework:
   (require 'cfg-gen-op-projectile))
 
@@ -85,7 +85,49 @@
   :ensure t
   :after general
   :config
-  )
+
+  (defun cfg/-treemacs-switch-workspace-on-projectile-switch (project-dir)
+    "Switch Treemacs workspace based on PROJECT-DIR from Projectile.
+Fallback to \"MAIN\" if no match."
+    (let* ((workspace-name
+            (or (cfg/-treemacs-find-matching-workspace project-dir)
+                "MAIN")))
+      (condition-case err
+          (treemacs-do-switch-workspace workspace-name)
+        (error
+         (message "Treemacs switch error: %s" err)))))
+
+  (advice-add 'projectile-switch-project :after
+              (lambda (&optional dir)
+                ;; projectile passes DIR optionally, so fallback:
+                (let ((project-dir (or dir (projectile-project-root))))
+                  (when project-dir
+                    (cfg/-treemacs-switch-workspace-on-projectile-switch
+                     project-dir)))))
+
+  (defun cfg/-treemacs-auto-switch-on-buffer-change-projectile ()
+    "Switch Treemacs workspace based on current buffer using Projectile."
+    (when (and (buffer-file-name)
+               (projectile-project-p))
+      (let* ((dir (projectile-project-root))
+             (target-workspace
+              (or (cfg/-treemacs-find-matching-workspace dir)
+                  "MAIN"))
+             (current-workspace
+              (treemacs-workspace->name
+               (treemacs-current-workspace))))
+        (unless (equal target-workspace current-workspace)
+          (condition-case err
+              (treemacs-do-switch-workspace target-workspace)
+            (error
+             (message "Treemacs switch error: %s" err)))))))
+
+  ;; remove default project.el hook
+  (remove-hook 'find-file-hook
+               #'cfg/-treemacs-auto-switch-on-buffer-change)
+
+  (add-hook 'find-file-hook
+            #'cfg/-treemacs-auto-switch-on-buffer-change-projectile))
 
 ;; def advice
 ;; https://stackoverflow.com/questions/70042843/how-to-advice-add-a-function-with-no-arguments-to-a-function-that-takes-argument
