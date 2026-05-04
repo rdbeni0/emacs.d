@@ -23,32 +23,6 @@
    )
   (treemacs-resize-icons 18) ;; icon's size
   (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
-  ;; load general.el and keybindings:
-  (require 'cfg-gen-op-treemacs-mode))
-
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t
-  :config
-  )
-
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t
-  :config
-  )
-
-(use-package treemacs-icons-dired
-  :after treemacs
-  :ensure t
-  :config
-  )
-
-(use-package treemacs-tab-bar
-  :after (treemacs tab-bar)
-  :ensure t
-  :config
-  (treemacs-set-scope-type 'Tabs)
 
   (defun cfg/-safe-project-root ()
     "Return project root or nil without throwing."
@@ -127,7 +101,6 @@ Never creates new workspaces."
                 (when-let ((dir (cfg/-safe-project-root)))
                   (cfg/-treemacs-switch-workspace-on-project-switch dir))))
 
-
   (defun cfg/-treemacs-auto-switch-on-buffer-change ()
     "Switch Treemacs workspace based on current buffer.
 Do nothing if file is not part of a project."
@@ -145,14 +118,40 @@ Do nothing if file is not part of a project."
             (error
              (message "Treemacs switch error: %s" err)))))))
 
-
   (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change)
 
   (defun cfg/-treemacs-safe-project-position (orig project)
     (when project
       (funcall orig project)))
 
-  (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position))
+  (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position)
+
+  ;; load general.el and keybindings:
+  (require 'cfg-gen-op-treemacs-mode))
+
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t
+  :config
+  )
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t
+  :config
+  )
+
+(use-package treemacs-icons-dired
+  :after treemacs
+  :ensure t
+  :config
+  )
+
+(use-package treemacs-tab-bar
+  :after (treemacs tab-bar)
+  :ensure t
+  :config
+  (treemacs-set-scope-type 'Tabs))
 
 (use-package sr-speedbar
   :ensure t
