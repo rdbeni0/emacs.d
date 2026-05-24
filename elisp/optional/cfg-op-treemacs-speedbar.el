@@ -281,6 +281,10 @@ This dramatically reduces race conditions involving:
 
   (defvar cfg/-last-project-root nil)
 
+  (defun cfg/-treemacs-visible-and-selected-p ()
+    (and (treemacs-current-visibility)
+         (eq (selected-window) (treemacs-get-local-window))))
+
   (defun cfg/-treemacs--do-buffer-switch ()
     "Perform actual safe workspace switch."
 
@@ -296,22 +300,25 @@ This dramatically reduces race conditions involving:
     (when-let* ((file (buffer-file-name))
                 (dir  (cfg/-safe-project-root)))
 
-      (let* ((target-workspace
-              (or (cfg/-treemacs-find-matching-workspace dir)
-                  "MAIN"))
+      (unless (equal dir cfg/-last-project-root)
+        (setq cfg/-last-project-root dir)
 
-             (current-workspace
-              (when-let ((ws (treemacs-current-workspace)))
-                (treemacs-workspace->name ws))))
+        (let* ((target-workspace
+                (or (cfg/-treemacs-find-matching-workspace dir)
+                    "MAIN"))
 
-        ;; Avoid unnecessary workspace switches.
-        ;;
-        ;; Re-switching to the same workspace creates
-        ;; unnecessary Treemacs updates and increases the risk
-        ;; of hitting internal race conditions.
-        (unless (equal target-workspace current-workspace)
+               (current-workspace
+                (when-let ((ws (treemacs-current-workspace)))
+                  (treemacs-workspace->name ws))))
 
-          (cfg/-treemacs-switch-workspace target-workspace)))))
+          ;; Avoid unnecessary workspace switches.
+          ;;
+          ;; Re-switching to the same workspace creates
+          ;; unnecessary Treemacs updates and increases the risk
+          ;; of hitting internal race conditions.
+          (unless (equal target-workspace current-workspace)
+            (when (cfg/-treemacs-visible-and-selected-p)
+              (cfg/-treemacs-switch-workspace target-workspace)))))))
 
 
   ;; Use buffer-list-update-hook instead of find-file-hook.
