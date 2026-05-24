@@ -51,7 +51,7 @@
    ;; In this configuration we implement our own workspace
    ;; switching logic, therefore built-in follow mode is disabled
    ;; to avoid conflicting behaviors.
-   treemacs-follow-mode nil
+   treemacs-follow-mode -1
 
    ;; Disable built-in project follow mode.
    ;;
@@ -317,8 +317,7 @@ This dramatically reduces race conditions involving:
         ;; of hitting internal race conditions.
         (unless (equal target-workspace current-workspace)
 
-          (cfg/-treemacs-switch-workspace
-           target-workspace)))))
+          (cfg/-treemacs-switch-workspace target-workspace)))))
 
   ;; Use buffer-list-update-hook instead of find-file-hook.
   ;;
@@ -378,17 +377,26 @@ This function is one of the common sources of errors like:
 
 The wrapper suppresses failures caused by invalid internal
 Treemacs markers."
+    (if (and project
+             (treemacs-current-visibility))
+        (ignore-errors (funcall orig project))
+      nil))
 
-    (when (and project
-               (treemacs-current-visibility))
+  (defun cfg/-treemacs-safe-find-file-node (orig file project)
+    "Prevent crashes when PROJECT is nil or invalid."
+    (if (and file project)
+        (ignore-errors (funcall orig file project))
+      nil))
 
-      (ignore-errors
-        (funcall orig project))))
+  (defun cfg/-treemacs-safe-expand-root-node (orig root &rest args)
+    "Avoid crashes when ROOT is nil or corrupted."
+    (if root
+        (ignore-errors (apply orig root args))
+      nil))
 
-  (advice-add
-   'treemacs-project->position
-   :around
-   #'cfg/-treemacs-safe-project-position)
+  (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position)
+  (advice-add 'treemacs-find-file-node :around #'cfg/-treemacs-safe-find-file-node)
+  (advice-add 'treemacs--expand-root-node :around #'cfg/-treemacs-safe-expand-root-node)
 
   ;; ---------------------------------------------------------------------------
   ;; general.el keybindings
