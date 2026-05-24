@@ -25,7 +25,16 @@
   (setq ggtags-executable-directory "~/.emacs.d/tools/bin")
   (add-hook 'prog-mode-hook
             (lambda ()
-	      (ggtags-mode))))
+	          (ggtags-mode)))
+  ;; ---------------------------------------------------------------------------
+  ;; imenu / ggtags integration
+  ;; ---------------------------------------------------------------------------
+
+  ;; Use ggtags for imenu indexing in C-like modes.
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (setq-local imenu-create-index-function
+                          #'ggtags-build-imenu-index))))
 
 
 ;; customize PATH and exec-path:

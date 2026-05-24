@@ -12,20 +12,47 @@
 (use-package treemacs
   :ensure t
   :config
-  ;;;; Probably not required.
-  ;; (require 'treemacs-project-follow-mode)
-  (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
+
+  ;; ---------------------------------------------------------------------------
+  ;; Basic configuration
+  ;; ---------------------------------------------------------------------------
+
+  ;; Disable line numbers inside Treemacs buffer.
+  (add-hook 'treemacs-mode-hook
+            (lambda ()
+              (display-line-numbers-mode -1)))
+
   (setq
-   treemacs-show-hidden-files               t
-   treemacs-indentation                     1
-   treemacs-follow-mode                     nil
-   treemacs-project-follow-mode             t
-   )
-  (treemacs-resize-icons 18) ;; icon's size
-  (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+   ;; Show hidden files.
+   treemacs-show-hidden-files   t
+
+   ;; Reduce indentation width.
+   treemacs-indentation         1
+
+   ;; Disable automatic file following.
+   treemacs-follow-mode         nil
+
+   ;; Enable automatic project following.
+   treemacs-project-follow-mode t)
+
+  ;; Set icon size.
+  (treemacs-resize-icons 18)
+
+  ;; Treemacs filewatch mode is known to be unstable when
+  ;; workspaces are switched frequently.
+  ;;
+  ;; It is the primary source of errors like:
+  ;;
+  ;;   wrong-type-argument integer-or-marker-p nil
+  ;;
+  (treemacs-filewatch-mode -1)
+
+  ;; ---------------------------------------------------------------------------
+  ;; Helper functions
+  ;; ---------------------------------------------------------------------------
 
   (defun cfg/-safe-project-root ()
-    "Return project root or nil without throwing."
+    "Return current project root or nil without throwing errors."
     (when-let ((proj (project-current nil)))
       (project-root proj)))
 
@@ -74,59 +101,149 @@ Matching rule:
 
 This ensures only workspaces that END exactly with the project name are considered.
 For example, \"foo-bar\" will NOT match \"foobar\" or \"foo-bar-baz\"."
-    (let* ((project-name (file-name-nondirectory
-                          (directory-file-name project-dir)))
-           (workspaces (treemacs-workspaces)))
+
+    (let* ((project-name
+            (file-name-nondirectory
+             (directory-file-name project-dir)))
+
+           (workspaces
+            (treemacs-workspaces)))
+
       (catch 'found
         (dolist (ws workspaces)
           (let ((name (treemacs-workspace->name ws)))
-            (when (string-match (concat project-name "$") name)
+            (when (string-match
+                   (concat (regexp-quote project-name) "$")
+                   name)
               (throw 'found name))))
         nil)))
 
+  ;; ---------------------------------------------------------------------------
+  ;; Safe workspace switching
+  ;; ---------------------------------------------------------------------------
+
   (defun cfg/-treemacs-switch-workspace-on-project-switch (project-dir)
     "Switch Treemacs workspace based on PROJECT-DIR.
-If no matching workspace is found, fall back to \"MAIN\".
-Never creates new workspaces."
-    (let* ((workspace-name
-            (or (cfg/-treemacs-find-matching-workspace project-dir)
-                "MAIN")))
+
+If no matching workspace exists, fallback to \"MAIN\"."
+
+    (let ((workspace-name
+           (or (cfg/-treemacs-find-matching-workspace project-dir)
+               "MAIN")))
+
       (condition-case err
-          (treemacs-do-switch-workspace workspace-name)
+          (when (treemacs-current-visibility)
+            (treemacs-do-switch-workspace workspace-name))
+
         (error
          (message "Treemacs switch error: %s" err)))))
 
-  (advice-add 'project-switch-project :after
-              (lambda (dir)
-                (when-let ((dir (cfg/-safe-project-root)))
-                  (cfg/-treemacs-switch-workspace-on-project-switch dir))))
+  ;; ---------------------------------------------------------------------------
+  ;; project-switch-project integration
+  ;; ---------------------------------------------------------------------------
+
+  ;; Automatically switch Treemacs workspace after project switch.
+  (advice-add
+   'project-switch-project
+   :after
+   (lambda (&rest _)
+     (when-let ((dir (cfg/-safe-project-root)))
+       (cfg/-treemacs-switch-workspace-on-project-switch dir))))
+
+  ;; ---------------------------------------------------------------------------
+  ;; Debounced automatic workspace switching
+  ;; ---------------------------------------------------------------------------
+
+  ;; Timer used for debouncing workspace switches.
+  (defvar cfg/-treemacs-switch-timer nil)
 
   (defun cfg/-treemacs-auto-switch-on-buffer-change ()
-    "Switch Treemacs workspace based on current buffer.
-Do nothing if file is not part of a project."
-    (when-let* ((file (buffer-file-name))
-                (dir (cfg/-safe-project-root)))
-      (let* ((target-workspace
-              (or (cfg/-treemacs-find-matching-workspace dir)
-                  "MAIN"))
-             (current-workspace
-              (treemacs-workspace->name
-               (treemacs-current-workspace))))
-        (unless (equal target-workspace current-workspace)
-          (condition-case err
-              (treemacs-do-switch-workspace target-workspace)
-            (error
-             (message "Treemacs switch error: %s" err)))))))
+    "Debounced Treemacs workspace switch."
 
-  (add-hook 'find-file-hook #'cfg/-treemacs-auto-switch-on-buffer-change)
+    ;; Cancel previous pending timer.
+    (when cfg/-treemacs-switch-timer
+      (cancel-timer cfg/-treemacs-switch-timer))
+
+    ;; Schedule workspace switch after Emacs becomes idle.
+    (setq cfg/-treemacs-switch-timer
+          (run-with-idle-timer
+           0.3
+           nil
+           #'cfg/-treemacs--do-buffer-switch)))
+
+  (defun cfg/-treemacs--do-buffer-switch ()
+    "Perform safe Treemacs workspace switch."
+
+    (when-let* ((file (buffer-file-name))
+                (dir  (cfg/-safe-project-root)))
+
+      ;; Only continue if Treemacs is visible.
+      (when (treemacs-current-visibility)
+
+        (let* ((target-workspace
+                (or (cfg/-treemacs-find-matching-workspace dir)
+                    "MAIN"))
+
+               (current-workspace
+                (when-let ((ws (treemacs-current-workspace)))
+                  (treemacs-workspace->name ws))))
+
+          ;; Avoid unnecessary workspace switches.
+          (unless (equal target-workspace current-workspace)
+
+            (condition-case err
+                (treemacs-do-switch-workspace target-workspace)
+
+              (error
+               (message "Treemacs switch error: %s" err))))))))
+
+  ;; buffer-list-update-hook is safer than find-file-hook.
+  ;;
+  ;; find-file-hook is too aggressive and may trigger race conditions
+  ;; with Treemacs refresh timers and filewatch events.
+  (add-hook 'buffer-list-update-hook
+            #'cfg/-treemacs-auto-switch-on-buffer-change)
+
+  ;; ---------------------------------------------------------------------------
+  ;; Safe refresh wrapper
+  ;; ---------------------------------------------------------------------------
+
+  (defun cfg/-treemacs-safe-refresh (orig &rest args)
+    "Protect Treemacs refresh from internal marker errors."
+
+    (condition-case err
+        (apply orig args)
+
+      (error
+       (message
+        "Treemacs refresh error suppressed: %s"
+        err))))
+
+  (advice-add
+   'treemacs-refresh
+   :around
+   #'cfg/-treemacs-safe-refresh)
+
+  ;; ---------------------------------------------------------------------------
+  ;; Safe project position wrapper
+  ;; ---------------------------------------------------------------------------
 
   (defun cfg/-treemacs-safe-project-position (orig project)
-    (when project
-      (funcall orig project)))
+    "Protect `treemacs-project->position' from invalid state."
+    (when (and project
+               (treemacs-current-visibility))
+      (ignore-errors
+        (funcall orig project))))
 
-  (advice-add 'treemacs-project->position :around #'cfg/-treemacs-safe-project-position)
+  (advice-add
+   'treemacs-project->position
+   :around
+   #'cfg/-treemacs-safe-project-position)
 
-  ;; load general.el and keybindings:
+  ;; ---------------------------------------------------------------------------
+  ;; general.el keybindings
+  ;; ---------------------------------------------------------------------------
+
   (require 'cfg-gen-op-treemacs-mode))
 
 (use-package treemacs-evil
