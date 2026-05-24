@@ -194,17 +194,9 @@ This function applies several protections:
     (unless cfg/-treemacs-switch-in-progress
 
       ;; Avoid workspace switching during minibuffer activity.
-      ;;
-      ;; Certain commands temporarily alter window state while
-      ;; minibuffer is active.
-      ;;
-      ;; Avoiding switches here improves overall stability.
       (unless (active-minibuffer-window)
 
         ;; Only continue when Treemacs is visible.
-        ;;
-        ;; Attempting workspace operations while Treemacs is
-        ;; hidden may trigger invalid internal state.
         (when (treemacs-current-visibility)
 
           (let ((cfg/-treemacs-switch-in-progress t))
@@ -274,7 +266,7 @@ This dramatically reduces race conditions involving:
 
     ;; Schedule actual switch operation.
     ;;
-    ;; 0.3 seconds is usually enough to allow:
+    ;; 0.9 seconds is usually enough to allow:
     ;;
     ;;   - window changes
     ;;   - mode hooks
@@ -283,9 +275,11 @@ This dramatically reduces race conditions involving:
     ;; to stabilize before touching Treemacs state.
     (setq cfg/-treemacs-switch-timer
           (run-with-idle-timer
-           0.3
+           0.9
            nil
            #'cfg/-treemacs--do-buffer-switch)))
+
+  (defvar cfg/-last-project-root nil)
 
   (defun cfg/-treemacs--do-buffer-switch ()
     "Perform actual safe workspace switch."
@@ -318,6 +312,7 @@ This dramatically reduces race conditions involving:
         (unless (equal target-workspace current-workspace)
 
           (cfg/-treemacs-switch-workspace target-workspace)))))
+
 
   ;; Use buffer-list-update-hook instead of find-file-hook.
   ;;
