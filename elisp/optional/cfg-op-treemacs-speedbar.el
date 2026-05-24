@@ -266,7 +266,7 @@ This dramatically reduces race conditions involving:
 
     ;; Schedule actual switch operation.
     ;;
-    ;; 0.9 seconds is usually enough to allow:
+    ;; 0.7 seconds is usually enough to allow:
     ;;
     ;;   - window changes
     ;;   - mode hooks
@@ -275,7 +275,7 @@ This dramatically reduces race conditions involving:
     ;; to stabilize before touching Treemacs state.
     (setq cfg/-treemacs-switch-timer
           (run-with-idle-timer
-           0.9
+           0.7
            nil
            #'cfg/-treemacs--do-buffer-switch)))
 
