@@ -5,12 +5,12 @@
 
 (defcustom emacs-cfg-use-custom-theme 'modusdisco
   ;; (defcustom emacs-cfg-use-custom-theme 'crafters
-  "Select which `emacs-cfg' customization theme to use.
+  "Select which \\=`emacs-cfg' customization theme to use.
 
 - nil: Disable custom theme
-- 'catppuccin: Use customizations for Catppuccin
-- 'crafters: Use customizations for the Crafters theme
-- 'modusdisco: A more colorful version of Modus"
+- \\='catppuccin: Use customizations for Catppuccin
+- \\='crafters: Use customizations for the Crafters theme
+- \\='modusdisco: A more colorful version of Modus"
   :type '(choice
           (const :tag "Disabled" nil)
           (const :tag "Catppuccin" catppuccin)
@@ -29,6 +29,8 @@
   :if (eq emacs-cfg-use-custom-theme 'catppuccin)
   :ensure nil
   :defer t
+  :functions
+  (modus-themes-with-colors)
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
@@ -278,6 +280,7 @@
   :if (eq emacs-cfg-use-custom-theme 'modusdisco)
   :ensure nil
   :defer t
+  :functions (mode-line)
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)

@@ -134,6 +134,8 @@
   (consult-buffer
    consult-buffer-sources
    consult-grep-args
+   consult-ripgrep
+   consult-grep
    consult-recent-file)
   :custom
   ;; Use Consult to select xref locations with preview
