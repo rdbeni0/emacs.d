@@ -13,12 +13,20 @@
 ;;
 ;;; Code:
 
+(defvar icomplete-minibuffer-map)
+
 (if (version< emacs-version "28.1")
     ;; if "M-x version" < 28.1:
     (progn
       ;; ido:
       ;; make buffer switch command do suggestions, also for find-file command
       (require 'ido)
+      (defvar ido-everywhere)
+      (defvar ido-decorations)
+      (defvar ido-enable-flex-matching)
+      (defvar ido-default-file-method)
+      (defvar ido-default-buffer-method)
+
       (ido-mode 1)
       (setq ido-everywhere t)
       ;; show choices vertically
@@ -33,6 +41,10 @@
       ;; icomplete
       ;; minibuffer enhanced completion icomplete
       (require 'icomplete)
+      (defvar icomplete-separator)
+      (defvar icomplete-hide-common-prefix)
+      (defvar icomplete-in-buffer)
+
       (icomplete-mode 1)
       ;; show choices vertically
       (setq icomplete-separator "\n")
