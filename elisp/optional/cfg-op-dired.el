@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;
 ;; Everything what is connected with "dired" - additional packages.
-;; https://github.com/alexluigit/dirvish - optional dired alternative
+;; https://github.com/alexluigit/dirvish - optional Dired alternative
 ;;
 ;;; Code:
 
@@ -57,6 +57,8 @@
 
 (use-package diredfl
   :ensure t
+  :functions
+  (diredfl-mode)
   :config
   (add-hook 'dired-mode-hook #'diredfl-mode))
 
