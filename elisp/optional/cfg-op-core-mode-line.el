@@ -73,73 +73,96 @@
 ;; This information is useless for most:
 (setopt display-time-default-load-average nil)
 
+;; anzu & evil-anzu
+;; https://github.com/emacsorphanage/evil-anzu
+;; https://github.com/emacsorphanage/anzu
+(defvar anzu-cons-mode-line-p)
+(setq anzu-cons-mode-line-p nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; defface
+(defgroup cfg-mode-line nil
+  "Custom mode-line configuration."
+  :group 'convenience)
 
 (defface cfg/mode-line-path-face
   ;; '((t :foreground "LightSkyBlue" :weight bold))
   '((t :foreground "cyan" :weight bold))
-  "Face used to highlight buffer path or name in the mode-line.")
+  "Face used to highlight buffer path or name in the mode-line."
+  :group 'cfg-mode-line)
 
 ;; Define a custom face for mode-name in the mode-line
 (defface cfg/mode-line-mode-name-face
   '((t :foreground "white" :weight bold))
-  "Face used to highlight the major mode name in the mode-line.")
+  "Face used to highlight the major mode name in the mode-line."
+  :group 'cfg-mode-line)
 
 (defface cfg/mode-line-pos-face
   '((t :foreground "light pink" :weight bold))
-  "Face for line/column indicator [l%l,c%c].")
+  "Face for line/column indicator [l%l,c%c]."
+  :group 'cfg-mode-line)
 
 (defface cfg/mode-line-modified-face
   '((t :foreground "aquamarine" :weight bold))
-  "Face for [mod:%*] indicator.")
+  "Face for [mod:%*] indicator."
+  :group 'cfg-mode-line)
 
 (defface cfg/mode-line-encoding-face
   '((t :foreground "DeepSkyBlue" :weight bold))
-  "Face for encoding indicator [U8].")
+  "Face for encoding indicator [U8]."
+  :group 'cfg-mode-line)
 
 (defface cfg/mode-line-eol-face
   '((t :foreground "PaleGreen" :weight bold))
-  "Face for EOL indicator [LF/CRLF/CR].")
+  "Face for EOL indicator [LF/CRLF/CR]."
+  :group 'cfg-mode-line)
 
 (defface cfg/mode-line-size-face
   '((t :foreground "wheat" :weight bold))
-  "Face for buffer size indicator [size:%I].")
+  "Face for buffer size indicator [size:%I]."
+  :group 'cfg-mode-line)
 
 (defface cfg/mode-line-percent-face
   '((t :foreground "RosyBrown1" :weight bold))
-  "Face for buffer percentage indicator [%p].")
+  "Face for buffer percentage indicator [%p]."
+  :group 'cfg-mode-line)
 
 ;; defuns
 
 (defun cfg/-mode-line-pos-colored ()
+  "Return line and column indicator with mode-line face applied."
   (propertize (format-mode-line "l%l,c%c")
               'face 'cfg/mode-line-pos-face))
 
 (defun cfg/-mode-line-modified-colored ()
+  "Return modified buffer indicator with mode-line face applied."
   (propertize (format-mode-line "%*")
               'face 'cfg/mode-line-modified-face))
 
 (defun cfg/-mode-line-encoding-colored ()
+  "Return buffer encoding string with mode-line face applied."
   (propertize (cfg/-mode-line-encoding)
               'face 'cfg/mode-line-encoding-face))
 
 (defun cfg/-mode-line-eol-colored ()
+  "Return end-of-line style string with mode-line face applied."
   (propertize (cfg/-mode-line-eol)
               'face 'cfg/mode-line-eol-face))
 
 (defun cfg/-mode-line-size-colored ()
+  "Return buffer size string with mode-line face applied."
   (propertize (format-mode-line "%I")
               'face 'cfg/mode-line-size-face))
 
 (defun cfg/-mode-line-percent-colored ()
+  "Return buffer position percentage with mode-line face applied."
   (propertize (concat (format-mode-line "%p") "%")
               'face 'cfg/mode-line-percent-face))
 
 (defun cfg/-mode-line-buffer-or-path-colored ()
-  "Return buffer file path truncated to 55% of window width, or buffer name if no file.
-Expands $HOME to ~ for readability, and applies a custom face for styling."
+  "Return buffer file path truncated to 55% of window width, or buffer name.
+If no file is associated, use the buffer name instead.  Expand $HOME to ~ for
+readability and apply a custom face."
   (let* ((win-width (window-total-width))          ;; total width of the current window
          (max-len (floor (* win-width 0.55)))      ;; maximum allowed length (55% of current window width)
          (fname (buffer-file-name))                ;; full file path, or nil if buffer is not visiting a file
@@ -195,27 +218,40 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
 
+(defvar cfg/flycheck-last-result " "
+  "Cached Flycheck indicator for mode-line.")
+
 (when (and (require 'flycheck nil :noerror)
            (featurep 'flycheck))
+
+  (defvar flycheck-last-status-change)
+  (defvar flycheck-current-errors)
+
+  (declare-function flycheck-count-errors "flycheck")
+  (declare-function cfg/-flycheck-update-cache "cfg-op-core-mode-line")
 
   ;; faces
   (defface cfg/flycheck-ok-face
     '((t (:foreground "green" :weight bold)))
-    "Face for Flycheck OK.")
+    "Face for Flycheck OK."
+    :group 'cfg-mode-line)
 
   (defface cfg/flycheck-error-face
     '((t (:foreground "deep sky blue" :weight bold)))
-    "Face for Flycheck errors.")
+    "Face for Flycheck errors."
+    :group 'cfg-mode-line)
 
   (defface cfg/flycheck-warning-face
     ;; '((t (:foreground "gray" :weight bold)))
     '((t (:foreground "wheat" :weight bold)))
-    "Face for Flycheck warnings.")
+    "Face for Flycheck warnings."
+    :group 'cfg-mode-line)
 
   (defface cfg/flycheck-info-face
     ;; '((t (:foreground "#8B4513" :weight bold)))
     '((t (:foreground "green yellow" :weight bold)))
-    "Face for Flycheck info.")
+    "Face for Flycheck info."
+    :group 'cfg-mode-line)
 
   ;; vars
   (defvar cfg/flycheck-last-result " "
@@ -256,6 +292,7 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
     "no"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; mode-line-format
 
 (setq-default mode-line-format
               '(
@@ -281,12 +318,8 @@ Expands $HOME to ~ for readability, and applies a custom face for styling."
                 " " (:eval (anzu--update-mode-line)) ""
                 ))
 
-;; https://github.com/emacsorphanage/evil-anzu
-;; https://github.com/emacsorphanage/anzu
-(setq anzu-cons-mode-line-p nil)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; make mode-line smaller:
+;; OPTIONAL: make mode-line smaller:
 
 ;;;; Smaller font for active mode line
 ;; (set-face-attribute 'mode-line nil :height 0.90)
