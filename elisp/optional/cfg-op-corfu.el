@@ -1,7 +1,6 @@
 ;;; cfg-op-corfu.el --- configfuration for corfu and cape -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with completion corfu and cape.
 ;; https://github.com/minad/corfu
 ;; https://github.com/minad/cape
 ;;
@@ -9,7 +8,10 @@
 
 (use-package corfu
   :ensure t
-  ;; Optional customizations
+  :defines
+  (corfu-map)
+  :functions
+  (global-corfu-mode)
   :custom
   ;; (corfu-auto t)                 ;; Enable auto completion
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
