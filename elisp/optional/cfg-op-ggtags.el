@@ -19,6 +19,12 @@
 
 (use-package ggtags
   :ensure t
+  :defines
+  (ggtags-completing-read-function
+   ggtags-executable-directory)
+  :functions
+  (ggtags-mode
+   ggtags-build-imenu-index)
   :config
   (setq ggtags-completing-read-function nil)
   ;; optional and not required:
@@ -34,8 +40,10 @@
   (add-hook 'c-mode-common-hook
             (lambda ()
               (setq-local imenu-create-index-function
-                          #'ggtags-build-imenu-index))))
+                          #'ggtags-build-imenu-index)))
 
+  ;; load keybindings from general.el framework:
+  (use-package cfg-gen-op-ggtags))
 
 ;; customize PATH and exec-path:
 ;; https://www.emacswiki.org/emacs/ExecPath
@@ -50,9 +58,6 @@
 (setenv "GTAGSLABEL" "new-ctags") ;; it's universal-ctags, faster option than pygments
 ;; (setenv "GTAGSLABEL" "pygments") ;; if "universal-ctags" will not be enough, then "pygments" can cover less popular languages
 ;; (setenv "GTAGSLABEL" "universalctags-pygments-native") ;; that config is slow for big codebase, use it only for small projects
-
-;; load keybindings from general.el framework:
-(require 'cfg-gen-op-ggtags)
 
 (provide 'cfg-op-ggtags)
 ;;; cfg-op-ggtags.el ends here
