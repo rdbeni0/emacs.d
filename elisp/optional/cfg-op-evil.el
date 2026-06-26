@@ -10,6 +10,8 @@
 (use-package evil-anzu
   :after evil
   :ensure t
+  :functions
+  (global-anzu-mode)
   :config
   (global-anzu-mode +1))
 
@@ -17,6 +19,9 @@
 (use-package evil-indent-plus
   :after 'evil
   :ensure t
+  :defines
+  (evil-inner-text-objects-map
+   evil-outer-text-objects-map)
   :config
   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
   (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)
@@ -29,6 +34,8 @@
 (use-package evil-matchit
   :after 'evil
   :ensure t
+  :functions
+  (global-evil-matchit-mode)
   :config
   (global-evil-matchit-mode 1))
 
