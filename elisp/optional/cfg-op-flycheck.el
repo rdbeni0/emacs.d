@@ -11,7 +11,7 @@
   (flycheck-mode
    global-flycheck-mode
    flycheck-list-errors)
-  :variables
+  :defines
   (flycheck-checker-error-threshold
    flycheck-display-errors-delay)
   :hook

@@ -48,7 +48,7 @@
 ;; https://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
 ;; add prefix arg to show more detailed output of font:
 (defun cfg/-adv-show-face-under-point-detailed (orig &rest args)
-  "Add prefix argument and always choose directory for consult-grep"
+  "Add prefix argument and always choose directory for consult-grep."
   (setq prefix-arg '(4))
   (funcall orig args))
 

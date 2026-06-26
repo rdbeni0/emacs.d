@@ -228,7 +228,6 @@
 
 ;; SENDING EMAIL:
 (use-package message
-  :ensure t
   :config
   (setq send-mail-function 'sendmail-send-it
         sendmail-program "msmtp"
