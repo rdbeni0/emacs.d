@@ -1,7 +1,7 @@
 ;;; cfg-op-evil.el --- evil mode add ons -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Various add ons for evil-mode for emacs.
+;; Various add ons for evil-mode for Emacs.
 ;;
 ;;; Code:
 
