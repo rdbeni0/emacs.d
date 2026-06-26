@@ -1,7 +1,6 @@
 ;;; cfg-op-dired.el --- configfuration for dired -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with "dired" - additional packages.
 ;; https://github.com/alexluigit/dirvish - optional Dired alternative
 ;;
 ;;; Code:
@@ -33,6 +32,17 @@
 (use-package dired-rainbow
   :ensure t
   :config
+
+  (eval-when-compile
+    (unless (fboundp 'dired-rainbow-define)
+      (defmacro dired-rainbow-define (_name _color _extensions)
+        "Stub for linter."
+        nil))
+    (unless (fboundp 'dired-rainbow-define-chmod)
+      (defmacro dired-rainbow-define-chmod (_name _color _regexp)
+        "Stub for linter."
+        nil)))
+
   (progn
     (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
     (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))

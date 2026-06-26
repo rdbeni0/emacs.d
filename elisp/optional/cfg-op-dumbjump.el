@@ -9,10 +9,15 @@
 (use-package dumb-jump
   :ensure t
   :hook ((prog-mode . cfg/dumb-jump-activate))
+  :defines
+  (xref-show-definitions-function)
+  :functions
+  (dumb-jump-xref-activate
+   xref-show-definitions-completing-read)
   :init (defun cfg/dumb-jump-activate ()
           (interactive)
-	  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate nil t)
-	  (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+	      (add-hook 'xref-backend-functions #'dumb-jump-xref-activate nil t)
+	      (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
   :config
   ;; https://github.com/jacktasia/dumb-jump#configuration
   )

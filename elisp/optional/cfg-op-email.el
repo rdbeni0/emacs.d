@@ -1,7 +1,7 @@
 ;;; cfg-op-email.el --- configfuration for emails -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with reading and composing emails via emacs.
+;; Everything what is connected with reading and composing emails via Emacs.
 ;;
 ;;; Code:
 
