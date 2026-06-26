@@ -10,7 +10,8 @@
   :functions
   (flycheck-mode
    global-flycheck-mode
-   flycheck-list-errors)
+   flycheck-list-errors
+   flycheck-disable-checker)
   :defines
   (flycheck-checker-error-threshold
    flycheck-display-errors-delay)

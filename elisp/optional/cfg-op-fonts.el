@@ -42,15 +42,19 @@
 ;; https://github.com/rolandwalker/unicode-fonts
 (use-package unicode-fonts
   :ensure t
+  :functions
+  (unicode-fonts-setup)
   :config
   (unicode-fonts-setup))
 
 ;; https://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
 ;; add prefix arg to show more detailed output of font:
 (defun cfg/-adv-show-face-under-point-detailed (orig &rest args)
-  "Add prefix argument and always choose directory for consult-grep."
+  "Add prefix argument and always choose directory for consult-grep.
+ORIG is the original function being advised.
+ARGS are the arguments passed to the original function."
   (setq prefix-arg '(4))
-  (funcall orig args))
+  (apply orig args))
 
 (advice-add 'what-cursor-position :around #'cfg/-adv-show-face-under-point-detailed)
 
