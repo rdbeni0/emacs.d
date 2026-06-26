@@ -6,11 +6,19 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;; FORMAT-ALL-MODE :  https://github.com/lassik/emacs-format-all-the-code
+;;;;;;;;;;;;;;;; FORMAT-ALL-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; https://github.com/lassik/emacs-format-all-the-code
 (use-package format-all
   :ensure t
+  :defines (format-all-debug
+            format-all-formatters
+            format-all-default-formatters)
+  :functions
+  (format-all-mode
+   cfg/-my-html-format-setup
+   cfg/-disable-format-all)
   :hook (;; if you want format automatically after "save" file, then format-all-mode should be turned on.
 	     ;; For example:
 	     ;;
@@ -76,33 +84,34 @@
                   ("Zig" zig)
                   ("_Angular" (prettier "--print-width" "185"))))
 
+  ;; Sometimes the above list does not work,
+  ;; especially when there are many formatters to choose from,
+  ;; and then you need to set it as a hook:
+  (defun cfg/-my-html-format-setup ()
+    "Set HTML formatter overrides for format-all."
+    (setq-local format-all-default-formatters '(("HTML" prettier)))
+    (setq-local format-all-formatters
+                ;; optional:
+                ;; '(("HTML" (prettier "--print-width" "185" "--parser" "html")
+                ;; https://www.html-tidy.org/documentation/
+                '(("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185")
+                   ))))
+
+  (dolist (html-hook '(html-ts-mode-hook
+                       html-mode-hook))
+    (add-hook html-hook #'cfg/-my-html-format-setup))
+
+  (defun cfg/-disable-format-all ()
+    "Disable format-all in some buffers."
+    (format-all-mode -1)
+    (setq-local format-all-default-formatters nil))
+
+  (dolist (disable-format-all-hook '(markdown-live-preview-after-export-hook
+                                     markdown-live-preview-mode-hook))
+    (add-hook disable-format-all-hook #'cfg/-disable-format-all))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-format))
-
-;; Sometimes the above list does not work,
-;; especially when there are many formatters to choose from,
-;; and then you need to set it as a hook:
-(defun cfg/-my-html-format-setup ()
-  (setq-local format-all-default-formatters '(("HTML" prettier)))
-  (setq-local format-all-formatters
-              ;; optional:
-              ;; '(("HTML" (prettier "--print-width" "185" "--parser" "html")
-              ;; https://www.html-tidy.org/documentation/
-              '(("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185")
-                 ))))
-
-(dolist (html-hook '(html-ts-mode-hook
-                     html-mode-hook))
-  (add-hook html-hook #'cfg/-my-html-format-setup))
-
-(defun cfg/-disable-format-all ()
-  "Disable format-all in some buffers."
-  (format-all-mode -1)
-  (setq-local format-all-default-formatters nil))
-
-(dolist (disable-format-all-hook '(markdown-live-preview-after-export-hook
-                                   markdown-live-preview-mode-hook))
-  (add-hook disable-format-all-hook #'cfg/-disable-format-all))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; PYTHON - OPTIONAL SETTINGS:
@@ -128,14 +137,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun cfg/-php-format ()
-  "Run custom PHP formatter on the current file (via CLI)."
+  "Run custom PHP formatter on the current region."
   (save-excursion
-    (shell-command-on-region (point) (mark) (concat "prettier --parser php --print-width 180 --stdin-filepath " (buffer-file-name)) nil t)))
+    (shell-command-on-region
+     (point-min) (point-max)
+     (concat "prettier --parser php --print-width 180 --stdin-filepath "
+             (shell-quote-argument (buffer-file-name)))
+     nil t)))
 
 (defun cfg/php-custom-format ()
   "Format current php buffer."
   (interactive)
-  (mark-whole-buffer)
   (cfg/-php-format)
   (message "Reformatted! In case of formatting errors, please undo buffer."))
 
