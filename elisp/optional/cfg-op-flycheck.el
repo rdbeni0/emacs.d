@@ -7,6 +7,13 @@
 
 (use-package flycheck
   :ensure t
+  :functions
+  (flycheck-mode
+   global-flycheck-mode
+   flycheck-list-errors)
+  :variables
+  (flycheck-checker-error-threshold
+   flycheck-display-errors-delay)
   :hook
   (makefile-gmake-mode . (lambda () (flycheck-mode -1)))
   (makefile-mode . (lambda () (flycheck-mode -1)))
@@ -28,12 +35,38 @@
   ;; add some delay for better performance
   (setq flycheck-display-errors-delay 0.8)
 
+  (defun cfg/flycheck-enable-checker ()
+    "Enable disabled checker in flycheck."
+    (interactive)
+    (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
+      (call-interactively #'flycheck-disable-checker)))
+
+  ;; https://emacs.stackexchange.com/questions/5371/how-to-change-emacs-windows-from-vertical-split-to-horizontal-split
+  (defun cfg/flycheck-list-errors-below ()
+    (interactive)
+    (flycheck-list-errors)
+    (if (> (length (window-list)) 2)
+        (error "Can't toggle with more than 2 windows!")
+      (progn
+        (delete-other-windows)
+        (let* ((total-height (window-total-height))
+               ;; 0.85 will be calculated as 15% window size:
+               (error-height (floor (* 0.85 total-height))))
+          (split-window-below error-height))
+        ;; `save-selected-window' dropped out ->
+        ;; thanks to this exclusion, the lower window becomes the active one.
+        ;; (save-selected-window
+        (other-window 1)
+        (switch-to-buffer "*Flycheck errors*"))))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-flycheck-mode))
 
 ;; https://github.com/flycheck/flycheck-eglot
 (use-package flycheck-eglot
   :ensure t
+  :functions
+  (global-flycheck-eglot-mode)
   :after (flycheck eglot)
   ;; By default, the Flycheck-Eglot considers the Eglot to be the only provider of syntax checks.
   ;; The LSP-mode with Flycheck and the Eglot with Flymake behave in a similar way. It is assumed that all suitable checkers are plugged in the LSP server. In most cases, this is what you need. However, in case you need to use an Eglot checker in parallel with regular Flycheck checkers, there is a variable flycheck-eglot-exclusive that controls this. You can override it system wide:
@@ -47,34 +80,10 @@
 
 (use-package flycheck-checkbashisms
   :ensure t
+  :functions
+  (flycheck-checkbashisms-setup)
   :config
   (flycheck-checkbashisms-setup))
-
-;; https://emacs.stackexchange.com/questions/5371/how-to-change-emacs-windows-from-vertical-split-to-horizontal-split
-(defun cfg/flycheck-list-errors-below ()
-  (interactive)
-  (flycheck-list-errors)
-  (if (> (length (window-list)) 2)
-      (error "Can't toggle with more than 2 windows!")
-    (progn
-      (delete-other-windows)
-      (let* ((total-height (window-total-height))
-             ;; 0.85 will be calculated as 15% window size:
-             (error-height (floor (* 0.85 total-height))))
-        (split-window-below error-height))
-      ;; `save-selected-window' dropped out ->
-      ;; thanks to this exclusion, the lower window becomes the active one.
-      ;; (save-selected-window
-      (other-window 1)
-      (switch-to-buffer "*Flycheck errors*"))))
-;; )
-
-
-(defun cfg/flycheck-enable-checker ()
-  "Enable disabled checker in flycheck."
-  (interactive)
-  (let ((current-prefix-arg '(4))) ; Sets the prefix argument to C-u
-    (call-interactively #'flycheck-disable-checker)))
 
 (provide 'cfg-op-flycheck)
 ;;; cfg-op-flycheck.el ends here
