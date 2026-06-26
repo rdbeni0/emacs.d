@@ -8,6 +8,29 @@
 ;; https://gist.github.com/vedang/26a94c459c46e45bc3a9ec935457c80f
 (use-package notmuch
   :ensure t
+  :defines
+  (mm-text-html-renderer
+   shr-use-fonts
+   shr-use-colors
+   shr-max-width
+   notmuch-saved-searches
+   notmuch-search-result-format
+   notmuch-always-prompt-for-sender
+   notmuch-wash-signature-lines-max)
+  :functions
+  (notmuch-show-get-tags
+   notmuch-show-tag
+   notmuch-show-view-part
+   notmuch-search
+   notmuch-search-get-tags
+   notmuch-search-tag
+   notmuch-tree-get-tags
+   notmuch-tree-tag
+   notmuch-fcc-header-setup
+   message-remove-header
+   evil-collection-notmuch-search-toggle-flagged
+   evil-collection-notmuch-tree-toggle-flagged
+   evil-collection-notmuch-show-toggle-flagged)
   :config
   (setq-default
    ;; do not load all the messages on search, needs:
@@ -16,10 +39,10 @@
 
    ;; adjust hello sections
    notmuch-hello-sections (quote (
-				  notmuch-hello-insert-saved-searches
-				  notmuch-hello-insert-recent-searches
-				  notmuch-hello-insert-alltags
-				  ))
+				                  notmuch-hello-insert-saved-searches
+				                  notmuch-hello-insert-recent-searches
+				                  notmuch-hello-insert-alltags
+				                  ))
 
    ;; drop the logo on the front page
    notmuch-show-logo nil
@@ -134,10 +157,10 @@
     (save-excursion
       (goto-char
        (prop-match-beginning
-	(text-property-search-forward
-	 :notmuch-part
-	 "text/html"
-	 (lambda (value notmuch-part)
+	    (text-property-search-forward
+	     :notmuch-part
+	     "text/html"
+	     (lambda (value notmuch-part)
            (equal (plist-get notmuch-part :content-type)
                   value)))))
       (notmuch-show-view-part)))
@@ -169,16 +192,16 @@
   ;;
   ;; ... but this solution is working:
   (add-hook 'notmuch-search-mode-hook
-	    (lambda ()
-	      (set-fontset-font t 'symbol "Noto Color Emoji")))
+	        (lambda ()
+	          (set-fontset-font t 'symbol "Noto Color Emoji")))
 
   ;; how columns should look like:
   (setq notmuch-search-result-format '(("date" . "%12s ")
-				       ("count" . "%-7s ")
-				       ("authors" . "%-20s ")
-				       ("tags" . "(%s) ")
-				       ("subject" . "%s")
-				       ))
+				                       ("count" . "%-7s ")
+				                       ("authors" . "%-20s ")
+				                       ("tags" . "(%s) ")
+				                       ("subject" . "%s")
+				                       ))
 
   ;; Please create correct "lo-email.el" file inside ~/.emacs.d/data/local/lo-email.el (or other emacs dir)
   ;; Please implement email management defuns and add below variables (and any other config):
@@ -190,12 +213,12 @@
   ;; (defun cfg/notmuch-poll-empty-spam () ;; function to empty spam
   ;;
   ;; (setq notmuch-saved-searches ...
-  ;; (setq notmuch-fcc-dirs ... 
+  ;; (setq notmuch-fcc-dirs ...
   ;; (setq message-signature ...
 
   (if (file-readable-p (expand-file-name "data/local/lo-email.el" user-emacs-directory))
       (require 'lo-email) ; if true, load additional elisp for email
-					; if false, then message with "WARNING" will appear during initialization of email:
+                                        ; if false, then message with "WARNING" will appear during initialization of email:
     (message "WARNING! File data/local/lo-email.el inside your emacs.d is not readable (or not exist)! Please create it and add correct email options!"))
 
   ;; load general.el and keybindings:
@@ -204,19 +227,20 @@
   )
 
 ;; SENDING EMAIL:
+(use-package message
+  :ensure t
+  :config
+  (setq send-mail-function 'sendmail-send-it
+        sendmail-program "msmtp"
+        mail-specify-envelope-from t
+        message-sendmail-envelope-from 'header
+        mail-envelope-from 'header)
+  (setq notmuch-always-prompt-for-sender t)
+  (setq message-auto-save-directory nil)
+  (setq message-confirm-send t)
+  (setq notmuch-wash-signature-lines-max 3)
 
-(setq send-mail-function 'sendmail-send-it
-      sendmail-program "msmtp"
-      mail-specify-envelope-from t
-      message-sendmail-envelope-from 'header
-      mail-envelope-from 'header)
-(setq notmuch-always-prompt-for-sender t)
-(setq message-auto-save-directory nil)
-(setq message-confirm-send t)
-(setq notmuch-wash-signature-lines-max 3)
-
-;; https://emacs.stackexchange.com/questions/57720/how-can-i-get-emacs-notmuch-to-format-replies-the-same-way-gmail-does
-(with-eval-after-load 'message
+  ;; https://emacs.stackexchange.com/questions/57720/how-can-i-get-emacs-notmuch-to-format-replies-the-same-way-gmail-does
   (setq message-cite-style message-cite-style-gmail)
   (setq message-citation-line-function 'message-insert-formatted-citation-line))
 
