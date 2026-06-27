@@ -17,6 +17,9 @@
 ;; https://github.com/emacs-php/composer.el
 (use-package composer
   :ensure t
+  :functions
+  (composer
+   composer-require)
   :config
   (defun cfg/composer-global ()
     "Run `composer' (global) sub command (with completing read)"
@@ -38,32 +41,31 @@
 ;; https://github.com/OVYA/php-cs-fixer
 (use-package php-cs-fixer
   :ensure t
+  :defines
+  (php-cs-fixer-rules-fixer-part-options)
   :config
-  (setq php-cs-fixer-rules-fixer-part-options 
+  (setq php-cs-fixer-rules-fixer-part-options
         '(
-	  "multiline_whitespace_before_semicolons"
-	  "concat_space"
-	  ))
+	      "multiline_whitespace_before_semicolons"
+	      "concat_space"
+	      ))
   )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; TODO: https://github.com/Junker/flycheck-php-noverify
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; https://melpa.org/#/psalm
 (use-package psalm
   :ensure t
+  :defines
+  (psalm-level)
   :config
-  (setq psalm-level 'max)
-  )
-
+  (setq psalm-level 'max))
 
 ;; https://github.com/emacs-php/phpstan.el
 (use-package phpstan
   :ensure t
+  :defines
+  (phpstan-level)
   :config
-  (setq phpstan-level 'max)
-  )
+  (setq phpstan-level 'max))
 
 ;; https://github.com/nlamirault/phpunit.el
 ;; https://melpa.org/#/phpunit
@@ -105,7 +107,16 @@
           (kill-buffer errbuf)))))
   )
 
-;;;; php
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; flycheck integration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(declare-function flycheck-add-mode "flycheck")
+(declare-function flycheck-add-next-checker "flycheck")
+(declare-function flycheck-select-checker "flycheck")
+
+;; OPTIONAL TODO: https://github.com/Junker/flycheck-php-noverify
+
 ;; https://melpa.org/#/flycheck-phpstan
 (use-package flycheck-phpstan
   :ensure t
@@ -115,10 +126,7 @@
 (use-package flycheck-psalm
   :ensure t
   :config
-  (flycheck-add-mode 'psalm 'php-ts-mode)
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (flycheck-add-mode 'psalm 'php-ts-mode))
 
 (defun cfg/-my-php-mode-setup ()
   "My PHP-mode hook - integration with flycheck."

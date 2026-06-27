@@ -33,8 +33,7 @@
       (require 'semantic/symref/grep)
       (add-to-list 'semantic-symref-filepattern-alist '(php-mode "*.php"))
       ;; load general.el and keybindings:
-      (require 'cfg-gen-op-php-ac)
-      )))
+      (require 'cfg-gen-op-php-ac))))
 
 (provide 'cfg-op-php-ac)
 ;;; cfg-op-php-ac.el ends here
