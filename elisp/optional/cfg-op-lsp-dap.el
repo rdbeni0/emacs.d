@@ -10,14 +10,22 @@
 ;; too buggy... but  if you really want use PLIST, then: try setting (setenv "LSP_USE_PLISTS" "1") in your init.el before lsp-mode is loaded.
 ;; (setenv "LSP_USE_PLISTS" "1") ;; "1" or "true"
 
+(declare-function evil-define-key "evil-core")
+
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/
 (use-package lsp-mode
   :ensure t
+  :defines
+  (lsp-headerline-breadcrumb-enable
+   lsp-log-io
+   lsp-idle-delay
+   lsp-command-map
+   lsp-mode-map)
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
          (sh-mode . lsp-deferred)
-	 ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp))))
+	     ((c-mode c++-mode objc-mode cuda-mode) . (lambda () (require 'ccls) (lsp))))
   :commands (lsp lsp-deferred)
   :config
   (custom-set-variables
@@ -42,38 +50,40 @@
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
   ;; (setq lsp-use-plists t)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; evil
+  (evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
+  (evil-define-key 'visual lsp-mode-map (kbd "\\") lsp-command-map)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; load keybindings from general.el framework:
   (require 'cfg-gen-op-lsp-dap-mode))
-
-;; evil
-(evil-define-key 'normal lsp-mode-map (kbd "\\") lsp-command-map)
-(evil-define-key 'visual lsp-mode-map (kbd "\\") lsp-command-map)
 
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
   )
 
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 (use-package dap-mode
   :ensure t
   )
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;; PYTHON:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; PYTHON
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python : https://github.com/emacs-lsp/lsp-pyright
 ;; https://microsoft.github.io/pyright/#/installation
 ;; required: "pip install pyright"
 
 (use-package lsp-pyright
   :ensure t
-  :hook (
-					; or lsp-deferred
-	 (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))))
+  :hook ((python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred))))
+  )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;; C/C++:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; C/C++
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; clangd and ccls should be installed as system packages
 ;; default lsp client is clangd: https://emacs-lsp.github.io/lsp-mode/page/lsp-clangd/
 ;; https://github.com/clangd/clangd
@@ -83,6 +93,8 @@
 
 (use-package ccls
   :ensure t
+  :defines
+  (ccls-executable)
   :config
   (setq ccls-executable "ccls"))
 
