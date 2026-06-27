@@ -3,13 +3,18 @@
 ;;
 ;; https://github.com/nex3/perspective-el
 ;; WARNING! perspective-el is incompatible with desktop+ or desktop save session
-;; Perspective does not work with Emacs desktop.el. 
+;; Perspective does not work with Emacs desktop.el.
 ;; This is because Perspective state stores buffer and window information in frame parameters, and desktop-save-mode does not support saving those types of data.
 ;;
 ;;; Code:
 
 (use-package perspective
   :ensure t
+  :defines
+  (persp-mode-prefix-key
+   persp-state-default-file)
+  :functions
+  (persp-mode)
   :config
   ;; MUST be here to avoid ugly warning:
   ;; more: https://stackoverflow.com/questions/58615798/how-to-use-leader-key-as-part-of-package-prefix

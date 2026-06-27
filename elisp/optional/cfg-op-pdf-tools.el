@@ -1,12 +1,12 @@
 ;;; cfg-op-pdf-tools.el --- configfuration for pdf-tools  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Config for pdf-tools
-;;
 ;;; Code:
 
 (use-package pdf-tools
   :ensure t
+  :functions
+  (pdf-tools-install)
   :config
   (pdf-tools-install)
   ;; load general.el and keybindings:
