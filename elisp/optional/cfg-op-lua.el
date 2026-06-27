@@ -5,6 +5,8 @@
 
 (use-package lua-mode
   :ensure t
+  :defines
+  (lua-indent-level)
   :config
   (add-hook 'lua-mode-hook
             (lambda ()

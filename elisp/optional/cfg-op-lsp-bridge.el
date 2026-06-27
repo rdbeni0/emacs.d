@@ -19,6 +19,10 @@
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#lsp-server-options
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#options
 
+(declare-function flycheck-disable-checker "flycheck")
+(declare-function flycheck-mode "flycheck")
+(defvar company-idle-delay)
+
 (use-package lsp-bridge
   :defines
   (acm-enable-codeium
@@ -38,8 +42,8 @@
    lsp-bridge-user-langserver-dir
    lsp-bridge-user-multiserver-dir)
   :functions
-  (lsp-bridge-mode
-   global-lsp-bridge-mode
+  (global-lsp-bridge-mode
+   lsp-bridge-mode
    lsp-bridge-restart-process)
   :config
   ;; use in global-mode, but disable per particular mode:

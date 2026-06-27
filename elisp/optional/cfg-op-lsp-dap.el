@@ -1,7 +1,7 @@
 ;;; cfg-op-lsp-dap.el --- dap and lsp-mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with lsp-mode and dap-mode for emacs.
+;; Everything what is connected with lsp-mode and dap-mode for Emacs.
 ;; https://emacs-lsp.github.io/lsp-mode/
 ;; https://github.com/emacs-lsp/dap-mode
 ;;
