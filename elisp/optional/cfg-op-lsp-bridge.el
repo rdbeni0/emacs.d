@@ -5,7 +5,7 @@
 ;; Experimental package.
 ;; Installation on emacs:
 ;; When using `lsp-bridge', please first disable other completion plugins, such as `lsp-mode', `eglot', `company', `corfu', etc.
-;; lsp-bridge provides a complete solution from the completion backend, completion frontend to multi-backend integration.
+;; `lsp-bridge' provides a complete solution from the completion backend, completion frontend to multi-backend integration.
 ;;
 ;; Installation via NixOS:
 ;; https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=lsp-bridge
@@ -20,10 +20,30 @@
 ;; https://github.com/manateelazycat/lsp-bridge?tab=readme-ov-file#options
 
 (use-package lsp-bridge
+  :defines
+  (acm-enable-codeium
+   acm-enable-copilot
+   acm-enable-tabnine
+   lsp-bridge-code-action-enable-popup-menu
+   lsp-bridge-default-mode-hooks
+   lsp-bridge-diagnostic-fetch-idle
+   lsp-bridge-enable-debug
+   lsp-bridge-find-def-fallback-function
+   lsp-bridge-find-def-return-fallback-function
+   lsp-bridge-find-ref-fallback-function
+   lsp-bridge-log-level
+   lsp-bridge-php-lsp-server
+   lsp-bridge-lua-lsp-server
+   lsp-bridge-multi-lang-server-mode-list
+   lsp-bridge-user-langserver-dir
+   lsp-bridge-user-multiserver-dir)
+  :functions
+  (lsp-bridge-mode
+   global-lsp-bridge-mode
+   lsp-bridge-restart-process)
   :config
   ;; use in global-mode, but disable per particular mode:
   (global-lsp-bridge-mode)
-
 
   ;; popup menu seems to be broken and unstable,
   ;; better to use standard completion at the bottom:
@@ -61,10 +81,10 @@
   ;; Use `cfg/lsp-bridge-toggle-debug' to turn OFF/ON dynamic debugger.
   ;;
   ;; OPTIONAL -> debug if something is wrong:
-  ;; (setq lsp-bridge-enable-debug t)
+  ;;   (setq lsp-bridge-enable-debug t)
   ;; log levels, the same convention as for python:
   ;; https://docs.python.org/3/library/logging.html#levels
-  ;; (setq lsp-bridge-log-level "debug")
+  ;;   (setq lsp-bridge-log-level "debug")
 
   (defun cfg/lsp-bridge-toggle-debug ()
     "Toggle (ON/OFF) debug mode for `lsp-bridge' and restart its process.
