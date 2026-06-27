@@ -1,7 +1,7 @@
 ;;; cfg-op-json.el --- configfuration for json  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with json.
+;; Everything related to handling the json format.
 ;;
 ;;; Code:
 

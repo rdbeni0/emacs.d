@@ -6,6 +6,8 @@
 ;;  https://github.com/DarthFennec/highlight-indent-guides
 (use-package highlight-indent-guides
   :ensure t
+  :defines
+  (highlight-indent-guides-method)
   :config
   (setq highlight-indent-guides-method 'bitmap)
   (set-face-background 'highlight-indent-guides-odd-face "darkgray")
