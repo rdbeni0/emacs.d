@@ -26,6 +26,10 @@
 ;; https://systemcrafters.cc/build-a-second-brain-in-emacs/getting-started-with-org-roam/
 (use-package org-roam
   :ensure t
+  :defines
+  (org-roam-v2-ack)
+  :functions
+  (org-roam-setup)
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -36,7 +40,7 @@
   (org-roam-setup))
 
 ;; load general.el and keybindings - will be used also for other packages:
-(require 'cfg-gen-op-org-mode)
+(use-package cfg-gen-op-org-mode)
 
 ;; Please create correct "lo-org.el" file inside ~/.emacs.d/data/local/lo-org.el (or other emacs dir)
 ;; Please add additional configuration for org-static-blog or/and org-roam inside this file.
