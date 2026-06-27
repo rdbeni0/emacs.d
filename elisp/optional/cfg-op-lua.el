@@ -15,6 +15,5 @@
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-lua-mode))
 
-
 (provide 'cfg-op-lua)
 ;;; cfg-op-lua.el ends here

@@ -1,12 +1,16 @@
 ;;; cfg-op-magit.el --- configfuration for git/magit  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Everything what is connected with Magit: https://magit.vc/
-;;
 ;;; Code:
 
+;;  https://magit.vc/
 (use-package magit
   :ensure t
+  :defines
+  (magit-status-buffer-switch-function
+   magit-display-buffer-function)
+  :functions
+  (magit-display-buffer-fullframe-status-v1)
   :config
   ;; TODO: update config
   ;; https://stackoverflow.com/questions/9439702/how-to-open-magit-status-in-full-window
