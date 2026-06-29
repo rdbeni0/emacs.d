@@ -45,8 +45,12 @@
 ;; https://cgit.git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide
 (require 'treesit)
 
+(declare-function php-ts-mode-install-parsers "php-ts-mode")
+(declare-function treesit-auto-install-all "treesit-auto")
+(declare-function treesit-auto-add-to-auto-mode-alist "treesit-auto")
+
 ;; keybindings:
-(require 'cfg-gen-op-tree-sitter-mode)
+(use-package cfg-gen-op-tree-sitter-mode)
 
 ;; Tree-sitter based code folding for Emacs 29+
 ;; https://github.com/emacs-tree-sitter/ts-fold
@@ -152,6 +156,7 @@ before reinstalling the grammar from its source repository."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Grammar maintenance commands (interactive)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (defun cfg/treesit-reinstall-full ()
   "Fully reinstall all tree-sitter grammars.

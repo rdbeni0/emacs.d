@@ -3,7 +3,6 @@
 ;;
 ;;; Code:
 
-;;;;;; ssh-config-mode
 ;; https://github.com/jhgorrell/ssh-config-mode-el
 (use-package ssh-config-mode
   :ensure t
