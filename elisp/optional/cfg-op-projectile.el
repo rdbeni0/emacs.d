@@ -10,6 +10,21 @@
 
 (use-package projectile
   :ensure t
+  :defines
+  (projectile-switch-project-action
+   projectile-project-compilation-cmd
+   projectile-enable-caching
+   projectile-indexing-method
+   projectile-track-known-projects-automatically
+   projectile-generic-command
+   projectile-mode-map)
+  :functions
+  (projectile-mode
+   projectile-commander
+   projectile-register-project-type
+   projectile-invalidate-cache
+   projectile-project-root
+   projectile-project-p)
   :bind (([remap project-shell-command]             . projectile-run-shell-command-in-root)
          ([remap project-shell]                     . projectile-run-shell)
          ([remap project-async-shell-command]       . projectile-run-async-shell-command-in-root)
@@ -80,9 +95,19 @@
   ;; load keybindings from general.el framework:
   (require 'cfg-gen-op-projectile))
 
+(declare-function treemacs-workspace->name "treemacs-workspaces")
+(declare-function treemacs-current-workspace "treemacs-workspaces")
+(declare-function treemacs-do-switch-workspace "treemacs-workspaces")
+
 (use-package treemacs-projectile
   :after (treemacs projectile)
   :ensure t
+  :functions
+  (cfg/-treemacs-switch-workspace-on-project-switch
+   cfg/-treemacs-auto-switch-on-buffer-change-projectile
+   cfg/-treemacs-find-matching-workspace
+   cfg/-treemacs-auto-switch-on-buffer-change
+   )
   :after general
   :config
 
@@ -125,8 +150,16 @@ Safe version: never crashes when file is outside any project."
 ;; https://stackoverflow.com/questions/70042843/how-to-advice-add-a-function-with-no-arguments-to-a-function-that-takes-argument
 
 (defun cfg/-adv-projectile-buffer-file (&optional _args)
+  "Invalidate Projectile cache for the current project.
+
+This is meant to be used as advice: whenever the buffer's file
+changes, refresh the Projectile cache. The optional ARGS are
+ignored."
   (when (projectile-project-p)
     (call-interactively #'projectile-invalidate-cache)))
+
+(declare-function cfg/delete-current-buffer-file "init-core")
+(declare-function cfg/rename-current-buffer-file "init-core")
 
 (advice-add 'cfg/-adv-projectile-buffer-file :after #'cfg/delete-current-buffer-file)
 (advice-add 'cfg/-adv-projectile-buffer-file :after #'cfg/rename-current-buffer-file)
@@ -138,13 +171,14 @@ Safe version: never crashes when file is outside any project."
 
 (defun cfg/-projectile-directory-path ()
   "Retrieve the directory path relative to project root.
-  If the buffer is not visiting a file, use the `list-buffers-directory'
-  variable as a fallback to display the directory, useful in buffers like the
-  ones created by `magit' and `dired'.
 
-  Returns:
-  - A string containing the directory path in case of success.
-  - `nil' in case the current buffer does not have a directory."
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'.
+
+Returns:
+ - A string containing the directory path in case of success.
+ - nil in case the current buffer does not have a directory."
   (when-let (directory-name (if-let (file-name (buffer-file-name))
                                 (file-name-directory file-name)
                               list-buffers-directory))
@@ -155,9 +189,9 @@ Safe version: never crashes when file is outside any project."
 (defun cfg/-projectile-file-path ()
   "Retrieve the file path relative to project root.
 
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not visit a file."
+Returns:
+- A string containing the file path in case of success.
+- nil in case the current buffer does not visit a file."
   (when-let (file-name (buffer-file-name))
     (file-relative-name (file-truename file-name) (projectile-project-root))))
 
@@ -166,29 +200,21 @@ Safe version: never crashes when file is outside any project."
 
   Returns:
   - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not visit a file."
+  - nil in case the current buffer does not visit a file."
   (when-let (file-path (cfg/-projectile-file-path))
     (concat file-path ":" (number-to-string (line-number-at-pos)))))
 
 (defun cfg/-projectile-file-path-with-line-column ()
-  "Retrieve the file path relative to project root, including line and column number.
+  "Return the project-relative file path with line and column numbers.
 
-  This function respects the value of the `column-number-indicator-zero-based' variable.
-
-  Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not visit a file."
-  (when-let (file-path (cfg/-projectile-file-path-with-line))
+Returns:
+- A string containing the file path in case of success.
+- nil if the current buffer does not visit a file."
+  (when-let ((file-path (cfg/-projectile-file-path-with-line)))
     (concat
      file-path
      ":"
-     (number-to-string (if (and
-                            ;; Emacs 26 introduced this variable.
-                            ;; Remove this check once 26 becomes the minimum version.
-                            (boundp column-number-indicator-zero-based)
-                            (not column-number-indicator-zero-based))
-                           (1+ (current-column))
-                         (current-column))))))
+     (number-to-string (1+ (current-column))))))
 
 (defun cfg/projectile-copy-directory-path ()
   "Copy and show the directory path relative to project root.
@@ -222,9 +248,9 @@ Safe version: never crashes when file is outside any project."
     (message "WARNING: Current buffer is not visiting a file!")))
 
 (defun cfg/projectile-copy-file-path-with-line-column ()
-  "Copy and show the file path relative to project root, including line and column number.
+  "Copy the project-relative file path with line and column numbers.
 
-  This function respects the value of the `column-number-indicator-zero-based' variable."
+This function respects the value of `mode-line-position-column-format'."
   (interactive)
   (if-let (file-path (cfg/-projectile-file-path-with-line-column))
       (progn

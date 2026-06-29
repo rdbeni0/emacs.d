@@ -15,25 +15,29 @@
 
 (use-package anaconda-mode
   :ensure t
+  :defines
+  (anaconda-mode-map)
+  :functions
+  (anaconda-mode)
   :config
 
   ;; it will be DISABLED by default:
   (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'anaconda-mode-hook 'anaconda-eldoc-mode)
 
+  (defun cfg/enable-anaconda-mode ()
+    "Enable anaconda-mode for future python buffers (current session only)."
+    (interactive)
+    (add-hook 'python-mode-hook 'anaconda-mode)
+    (if (bound-and-true-p anaconda-mode)
+        (message "anaconda-mode is on")
+      (anaconda-mode)))
+
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-python-anaconda-mode)
 
   ;; turn off anaconda-mode-map, because it seems it could overwrite ggtags keymap (and general.el):
   (setcdr anaconda-mode-map nil))
-
-(defun cfg/enable-anaconda-mode ()
-  "Enable anaconda-mode for all python buffers in the future (for corrent emacs session only)."
-  (interactive)
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (if (bound-and-true-p anaconda-mode)
-      (message "anaconda-mode is on")
-    (anaconda-mode)))
 
 ;; integration with company-mode:
 ;; https://github.com/pythonic-emacs/company-anaconda
