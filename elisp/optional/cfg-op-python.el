@@ -24,6 +24,10 @@
 ;; https://www.sphinx-doc.org/
 (use-package sphinx-doc
   :ensure t
+  :defines
+  (sphinx-doc-include-types)
+  :functions
+  (sphinx-doc-mode)
   :config
   (setq sphinx-doc-include-types t)
 
@@ -36,6 +40,11 @@
 ;; we need to know that flycheck has excellent support for python-mode in emacs,
 ;; but it needs some executables to be installed
 (when (require 'flycheck nil 'noerror)
+
+  (defvar flycheck-python-mypy-cache-dir)
+  (defvar flycheck-python-ruff-args)
+  (declare-function flycheck-select-checker "flycheck")
+  (declare-function flycheck-add-next-checker "flycheck")
 
   ;; Additional `flycheck-*' variables:
   ;;
@@ -75,7 +84,7 @@
     ))
 
 ;; load general.el and keybindings:
-(require 'cfg-gen-op-python-mode)
+(use-package cfg-gen-op-python-mode)
 
 (provide 'cfg-op-python)
 ;;; cfg-op-python.el ends here
