@@ -19,7 +19,6 @@
               (lambda ()
                 (emmet-mode)))))
 
-
 ;; load general.el and keybindings:
 (use-package cfg-gen-op-emmet)
 

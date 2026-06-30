@@ -863,7 +863,7 @@ If the universal prefix argument ARG is used, then kill the windows too."
       (message "Buffers deleted!")))
 
   (defun cfg/delete-current-buffer-file ()
-  "Remove file connected to current buffer and kill buffer."
+    "Remove file connected to current buffer and kill buffer."
     (interactive)
     (let ((filename (buffer-file-name))
           (buffer (current-buffer))

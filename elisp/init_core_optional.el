@@ -1,7 +1,7 @@
 (load (expand-file-name "elisp/init_core.el" user-emacs-directory))
 
 ;; Optional core packages:
-(require 'cfg-op-core-eglot)
-(require 'cfg-op-core-dark-theme)
-(require 'cfg-op-core-mode-line)
-(require 'cfg-op-core-completion-systems)
+(use-package cfg-op-core-eglot)
+(use-package cfg-op-core-dark-theme)
+(use-package cfg-op-core-mode-line)
+(use-package cfg-op-core-completion-systems)
