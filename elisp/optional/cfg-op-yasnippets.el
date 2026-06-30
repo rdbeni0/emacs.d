@@ -11,8 +11,13 @@
 (use-package yasnippet
   :ensure t
   :bind (
-	 ([remap company-indent-or-complete-common]             . cfg/yas-expand-or-company-complete)
-	 ([remap company-complete]                        . cfg/yas-expand-or-company-complete))
+	     ([remap company-indent-or-complete-common]             . cfg/yas-expand-or-company-complete)
+	     ([remap company-complete]                        . cfg/yas-expand-or-company-complete))
+  :defines
+  (yas-snippet-dirs)
+  :functions
+  (yas-reload-all
+   yas-minor-mode)
   :config
   (when (file-directory-p (expand-file-name "data/yasnippets" user-emacs-directory))
     (setq yas-snippet-dirs (append yas-snippet-dirs (list (expand-file-name "data/yasnippets" user-emacs-directory)))))
@@ -57,29 +62,33 @@
   (when (require 'company nil 'noerror)
     (progn
 
+      (defvar company-backends)
+      (declare-function cfg/company-backend-with-yas "cfg-op-yasnippets")
+      (declare-function cfg/yas-expand-or-company-complete "cfg-op-yasnippets")
+      (declare-function company-indent-or-complete-common "company")
+      (declare-function company-yasnippet "company-yasnippet")
+
       ;; Optional:
       (defun cfg/company-backend-with-yas (backends)
-	"Add :with company-yasnippet to ALL company BACKENDS - not only to one.
+	    "Add :with company-yasnippet to ALL company BACKENDS - not only to one.
   Taken from https://github.com/syl20bnr/spacemacs/pull/179."
-	(if (and (listp backends) (memq 'company-yasnippet backends))
-	    backends
-	  (append (if (consp backends)
-		      backends
-		    (list backends))
-		  '(:with company-yasnippet))))
-
+	    (if (and (listp backends) (memq 'company-yasnippet backends))
+	        backends
+	      (append (if (consp backends)
+		              backends
+		            (list backends))
+		          '(:with company-yasnippet))))
 
       ;; Shift-<TAB> - SHOULD BE USED WITH BOTH (SMART TAB):
       (defun cfg/yas-expand-or-company-complete (&optional arg)
-	(interactive)
-	(or
-	 (company-yasnippet arg) ;; (yas-expand)
-	 (company-indent-or-complete-common arg)))
+	    (interactive)
+	    (or
+	     (company-yasnippet arg) ;; (yas-expand)
+	     (company-indent-or-complete-common arg)))
 
       (with-eval-after-load 'company
-	(setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
-	)))
-  )
+	    (setq company-backends (mapcar #'cfg/company-backend-with-yas company-backends))
+	    ))))
 
 ;; https://github.com/AndreaCrotti/yasnippet-snippets
 (use-package yasnippet-snippets
