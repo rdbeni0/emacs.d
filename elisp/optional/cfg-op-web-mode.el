@@ -25,7 +25,7 @@
    web-mode-enable-current-element-highlight)
   :config
   (setq web-mode-engines-alist
-	'(("php"    . "\\.phtml\\'")
+	    '(("php"    . "\\.phtml\\'")
           ("blade"  . "\\.blade\\.")))
   (setq web-mode-enable-css-colorization t
 	    web-mode-css-indent-offset 2
@@ -73,7 +73,7 @@ Set to a string of arguments, e.g. `--no-cache --verbose'.")
 (defun cfg/twig-cs-fixer-fix-buffer ()
   "Run `twig-cs-fixer fix' on the current buffer file.
 This saves the buffer, runs the fixer, and reloads the buffer
-to reflect any changes made by twig-cs-fixer, without showing 'Mark set'."
+to reflect any changes made by twig-cs-fixer, without showing `Mark set'."
   (interactive)
   (if (and buffer-file-name (executable-find cfg/twig-cs-fixer-executable))
       (progn
@@ -91,7 +91,7 @@ to reflect any changes made by twig-cs-fixer, without showing 'Mark set'."
 (defun cfg/twig-cs-fixer-lint-buffer ()
   "Run `twig-cs-fixer lint' on the current buffer file.
 This saves the buffer, runs the linter, and reloads the buffer
-if necessary to reflect any changes, without showing 'Mark set'."
+if necessary to reflect any changes, without showing `Mark set'."
   (interactive)
   (if (and buffer-file-name (executable-find cfg/twig-cs-fixer-executable))
       (progn

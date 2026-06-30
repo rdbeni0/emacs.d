@@ -8,8 +8,7 @@
   :ensure t
   :config
   ;; load general.el and keybindings:
-  (require 'cfg-gen-op-yaml-mode)
-  )
+  (require 'cfg-gen-op-yaml-mode))
 
 (provide 'cfg-op-yaml)
 ;;; cfg-op-yaml.el ends here

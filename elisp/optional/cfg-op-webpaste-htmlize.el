@@ -9,6 +9,10 @@
   :ensure t
   :init
   (require 'request)
+  :defines
+  (webpaste-provider-priority)
+  :functions
+  (simpleclip-set-contents)
   :config
   (progn
     (setq webpaste-provider-priority '("ix.io" "dpaste.de")))
