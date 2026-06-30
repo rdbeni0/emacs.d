@@ -11,6 +11,18 @@
 
 (use-package web-mode
   :ensure t
+  :defines
+  (web-mode-engines-alist
+   web-mode-enable-css-colorization
+   web-mode-css-indent-offset
+   web-mode-code-indent-offset
+   web-mode-enable-auto-closing
+   web-mode-enable-auto-opening
+   web-mode-enable-auto-pairing
+   web-mode-enable-auto-indentation
+   web-mode-enable-auto-quoting
+   web-mode-enable-current-column-highlight
+   web-mode-enable-current-element-highlight)
   :config
   (setq web-mode-engines-alist
 	'(("php"    . "\\.phtml\\'")

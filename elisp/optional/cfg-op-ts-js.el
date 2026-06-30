@@ -4,7 +4,9 @@
 ;;; Code:
 
 ;; load general.el and keybindings:
-(require 'cfg-gen-op-ts-js)
+(use-package cfg-gen-op-ts-js)
+
+(declare-function flycheck-add-mode "flycheck")
 
 ;; flycheck: eslint for JS and TS
 (flycheck-add-mode 'javascript-eslint 'typescript-mode)

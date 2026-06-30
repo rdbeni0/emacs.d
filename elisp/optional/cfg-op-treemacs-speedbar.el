@@ -9,9 +9,36 @@
 ;;
 ;;; Code:
 
+(declare-function project-root "project")
+
 (use-package treemacs
   :ensure t
-
+  :defines
+  (treemacs-follow-mode
+   treemacs-indentation
+   treemacs-project-follow-mode
+   treemacs-show-hidden-files)
+  :functions
+  (treemacs-set-scope-type
+   treemacs-resize-icons
+   treemacs-filewatch-mode
+   treemacs-workspaces
+   treemacs-workspace->name
+   treemacs-get-local-window
+   treemacs-current-workspace
+   treemacs-current-visibility
+   treemacs-do-switch-workspace
+   cfg/-treemacs-find-matching-workspace
+   cfg/-treemacs-switch-workspace
+   cfg/-treemacs-visible-and-selected-p
+   cfg/-treemacs-auto-switch-on-buffer-change
+   cfg/-treemacs-safe-refresh
+   cfg/-treemacs-safe-project-position
+   cfg/-treemacs-safe-find-file-node
+   cfg/-treemacs-safe-expand-root-node
+   cfg/-treemacs-switch-workspace-on-project-switch
+   cfg/-treemacs--do-buffer-switch
+   cfg/-safe-project-root)
   :config
 
   ;; ---------------------------------------------------------------------------
