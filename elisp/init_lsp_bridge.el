@@ -36,6 +36,7 @@
 (use-package cfg-op-groovy-jenkins)
 (use-package cfg-op-nix)
 (use-package cfg-op-php)
+(use-package cfg-op-go)
 (use-package cfg-op-org)
 (use-package cfg-op-yaml)
 (use-package cfg-op-emmet)
