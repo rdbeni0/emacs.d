@@ -1077,6 +1077,40 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'"
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; -> AUTOLOADS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun cfg/generate-elpa-autoloads ()
+  "Generate autoloads for ELPA packages.
+
+Generate autoloads for every package directory under
+`user-emacs-directory/elpa`.  Skip the directory named \"archives\".
+This command is intended for interactive use."
+  (interactive)
+  (let* ((elpa-dir (expand-file-name "elpa" user-emacs-directory))
+         (dirs (directory-files elpa-dir t directory-files-no-dot-files-regexp))
+         (ok 0)
+         (fail 0))
+    (unless (file-directory-p elpa-dir)
+      (user-error "No ELPA directory found: %s" elpa-dir))
+    (dolist (dir dirs)
+      (when (and (file-directory-p dir)
+                 (not (member (file-name-nondirectory dir)
+                              '("archives"))))
+        (let* ((base (file-name-nondirectory (directory-file-name dir)))
+               ;; e.g. "evil-collection" from "evil-collection-20260714.4"
+               (pkg (replace-regexp-in-string "[0-9].*$" "" base)))
+          (condition-case err
+              (progn
+                (package-generate-autoloads pkg dir)
+                (setq ok (1+ ok)))
+            (error
+             (setq fail (1+ fail))
+             (message "Autoloads FAILED for %s (%s): %s"
+                      pkg base err))))))
+    (message "ELPA autoloads generation done! %d OK, %d failed" ok fail)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> COMMON OPTIONS FOR EMACS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
