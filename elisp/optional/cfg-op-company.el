@@ -292,7 +292,7 @@
 
 (custom-set-variables
  '(company-quickhelp-color-background "black") ;; "blue" for wayland/pgtk
- '(company-quickhelp-color-foreground "white")  ;; "white" for waylant/pgtk
+ '(company-quickhelp-color-foreground "white")  ;; "white" for wayland/pgtk
  '(company-quickhelp-use-propertized-text nil)
  '(company-quickhelp-delay 0.0)
  '(company-quickhelp-mode t))
