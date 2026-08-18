@@ -1,7 +1,8 @@
-;;; cfg-op-dumbjump.el --- configfuration for dumbjump package-*- lexical-binding: t -*-
+;;; cfg-op-dumbjump.el --- configuration for dumbjump package -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; dumb-jump - Dumb Jump is an Emacs "jump to definition" package with support for 50+ programming languages that favors "just working".
+;; dumb-jump - Dumb Jump is an Emacs "jump to definition" package with
+;; support for 50+ programming languages that favors "just working".
 ;; https://github.com/jacktasia/dumb-jump
 ;;
 ;;; Code:
@@ -14,26 +15,33 @@
   :functions
   (dumb-jump-xref-activate
    xref-show-definitions-completing-read)
-  :init (defun cfg/dumb-jump-activate ()
-          (interactive)
-	      (add-hook 'xref-backend-functions #'dumb-jump-xref-activate nil t)
-	      (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+
+  :init
+  (defun cfg/dumb-jump-activate ()
+    (interactive)
+    (add-hook 'xref-backend-functions
+              #'dumb-jump-xref-activate
+              nil
+              t)
+    (setq xref-show-definitions-function
+          #'xref-show-definitions-completing-read))
+
   :config
   ;; https://github.com/jacktasia/dumb-jump#configuration
 
   ;; https://github.com/BurntSushi/ripgrep
   (setq dumb-jump-prefer-searcher 'rg)
 
-  ;; Following symbolic links
+  ;; Following symbolic links.
   (setq dumb-jump-rg-search-args "--pcre2 --follow")
-  ;; For grep:
+
+  ;; For grep.
   (setq dumb-jump-grep-args "-REn")
 
   (defun cfg-/dumb-jump-extra-search-paths-function (lang proj-root)
-    "Return additional paths extracted env."
+    "Return additional search paths extracted from the environment."
     ;;
     ;; Lua:
-    ;;
     (when (string= lang "lua")
       (let ((package-path
              (or (getenv "LUA_PATH_5_5")
@@ -52,13 +60,18 @@
             ;;   ./?.lua              -> PROJ-ROOT
             (let ((dir
                    (cond
-                    ((string-match "\\`\\(.*\\)/?/\\?\\.lua\\'" template)
+                    ((string-match
+                      "\\`\\(.*\\)/?/\\?\\.lua\\'"
+                      template)
                      (match-string 1 template))
-                    ((string-match "\\`\\(.*\\)/?/init\\.lua\\'" template)
+                    ((string-match
+                      "\\`\\(.*\\)/?/init\\.lua\\'"
+                      template)
                      (match-string 1 template))
                     (t
                      (replace-regexp-in-string
-                      "/?\\?.*" ""
+                      "/?\\?.*"
+                      ""
                       template)))))
               (when (and dir
                          (not (string-empty-p dir)))
@@ -66,14 +79,13 @@
                       (if (file-name-absolute-p dir)
                           (expand-file-name dir)
                         (expand-file-name dir proj-root)))
-                (when (file-directory-p dir)
-                  ;; exclude /nix/store
-                  (not (string-prefix-p "/nix/store/" dir))
-                  ;;
+                (when (and (file-directory-p dir)
+                           (not (string-prefix-p "/nix/store/" dir)))
                   (push dir paths))))))
         (delete-dups (nreverse paths)))))
 
-  (setq dumb-jump-extra-search-paths-function #'cfg-/dumb-jump-extra-search-paths-function))
+  (setq dumb-jump-extra-search-paths-function
+        #'cfg-/dumb-jump-extra-search-paths-function))
 
 (provide 'cfg-op-dumbjump)
 ;;; cfg-op-dumbjump.el ends here
