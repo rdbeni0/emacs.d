@@ -18,6 +18,7 @@
   :functions
   (format-all-mode
    cfg/-my-html-format-setup
+   cfg/format-smart
    cfg/-disable-format-all)
   :hook (;; if you want format automatically after "save" file, then format-all-mode should be turned on.
 	     ;; For example:
@@ -109,6 +110,19 @@
   (dolist (disable-format-all-hook '(markdown-live-preview-after-export-hook
                                      markdown-live-preview-mode-hook))
     (add-hook disable-format-all-hook #'cfg/-disable-format-all))
+
+  (defun cfg/format-smart ()
+    "Try `format-all-region-or-buffer` first.
+If it fails (no formatter or error), fall back to `cfg/built-in-format-via-indent`."
+    (interactive)
+    (condition-case err
+        (progn
+          (message "[format-smart] using: format-all")
+          (format-all-region-or-buffer))
+      (error
+       (message "[format-smart] using: built-in (reason: %s)" err)
+       (cfg/built-in-format-via-indent))))
+
 
   ;; load general.el and keybindings:
   (require 'cfg-gen-op-format))

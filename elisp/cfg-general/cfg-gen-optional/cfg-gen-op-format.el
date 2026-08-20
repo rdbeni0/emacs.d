@@ -16,7 +16,7 @@
  :major-modes list-gen-mode-format-optional
  :prefix ","
  "="  '(:ignore t :which-key "format")
- "==" '(format-all-region-or-buffer :which-key "format-all")
+ "==" '(cfg/format-smart :which-key "format-smart")
  "=]" '(format-all-buffer :which-key "format-all-buffer")
  "=[" '(format-all-region :which-key "format-all-region"))
 

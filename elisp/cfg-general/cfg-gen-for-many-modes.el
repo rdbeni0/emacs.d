@@ -60,6 +60,7 @@
     php-ts-mode
     python-mode
     python-ts-mode
+    scheme-mode
     sh-mode
     ssh-config-mode
     web-mode
@@ -109,6 +110,7 @@
     php-ts-mode-map
     python-mode-map
     python-ts-mode-map
+    scheme-mode-map
     sh-mode-map
     ssh-config-mode-map
     web-mode-map
