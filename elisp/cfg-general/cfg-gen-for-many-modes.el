@@ -192,6 +192,7 @@
                         fish-mode
                         web-mode
                         latex-mode
+                        scheme-mode
                         makefile-mode
                         makefile-gmake-mode)))
 
@@ -202,6 +203,7 @@
                         fish-mode-map
                         web-mode-map
                         latex-mode-map
+                        scheme-mode-map
                         makefile-mode-map
                         makefile-gmake-mode-map)))
 
