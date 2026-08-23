@@ -111,19 +111,13 @@
                                  company-files
                                  company-dabbrev-code))))))
 
-;; Bash / Shell
-(dolist (hook '(sh-mode-hook bash-ts-mode-hook))
-  (add-hook hook (lambda () (cfg/-setup-company-backends
-                             '((company-abbrev :separate
-                                               company-keywords
-                                               company-dabbrev-code
-                                               company-files
-                                               company-dabbrev))))))
-
-;; Lua, Nix, Perl
+;; Lua, Nix, Perl, Bash / Shell, Rust, Scheme
 (dolist (hook '(lua-mode-hook lua-ts-mode-hook
+                              sh-mode-hook bash-ts-mode-hook
                               nix-mode-hook nix-ts-mode-hook
-                              cperl-mode-hook perl-ts-mode-hook))
+                              cperl-mode-hook perl-ts-mode-hook
+                              rust-mode-hook rust-ts-mode-hook
+                              scheme-mode-hook))
   (add-hook hook (lambda () (cfg/-setup-company-backends
                              '((company-abbrev :separate
                                                company-keywords

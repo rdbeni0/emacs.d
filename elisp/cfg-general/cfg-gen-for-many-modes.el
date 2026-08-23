@@ -60,6 +60,8 @@
     php-ts-mode
     python-mode
     python-ts-mode
+    rust-mode
+    rust-ts-mode
     scheme-mode
     sh-mode
     ssh-config-mode
@@ -110,6 +112,8 @@
     php-ts-mode-map
     python-mode-map
     python-ts-mode-map
+    rust-mode-map
+    rust-ts-mode-map
     scheme-mode-map
     sh-mode-map
     ssh-config-mode-map

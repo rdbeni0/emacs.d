@@ -29,6 +29,7 @@
 (use-package cfg-op-python)
 (use-package cfg-op-fish)
 (use-package cfg-op-lua)
+(use-package cfg-op-rust)
 (use-package cfg-op-ssh-config)
 (use-package cfg-op-flycheck)
 (use-package cfg-op-markdown)

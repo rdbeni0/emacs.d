@@ -237,6 +237,7 @@ The list of parsers is defined in `php-ts-mode--language-source-alist`."
         (typescript-mode . typescript-ts-mode)
         (json-mode       . json-ts-mode)
         (lua-mode        . lua-ts-mode)
+        (rust-mode       . rust-ts-mode)
         (css-mode        . css-ts-mode)
         ;; (mhtml-mode    . html-ts-mode)
         (html-mode       . html-ts-mode)

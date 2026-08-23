@@ -68,6 +68,7 @@
                   ("Perl" (perltidy "--quiet" "--standard-error-output" "--perl-best-practices" "-l=185"))
                   ("PHP" (prettier "--print-width" "185" "--parser" "php"))
                   ("Python" (black "-l185"))
+                  ("Rust" rustfmt)
                   ("SCSS" (prettier "--print-width" "185" "--parser" "scss"))
                   ;; ("Shell" beautysh)
                   ;; ("Shell" (shfmt "-i" "2" "-bn" "-ci" "-sr"))
