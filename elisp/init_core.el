@@ -1762,12 +1762,13 @@ The current buffer's `default-directory' is available as part of
 
 (setq project-switch-commands
       '((project-dired "dired" ?d)
-      '((project-find-dir "find-dir" ?D)
+        (project-find-dir "find-dir" ?D)
         (project-find-file "find-file" ?f)
         (project-find-regexp "find-regexp" ?r)
         (project-shell "shell" ?s)
         (magit-project-status "magit" ?m)
         (project-eshell "eshell" ?e)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; -> VCS/GIT
