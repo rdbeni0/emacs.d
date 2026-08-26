@@ -17,6 +17,8 @@
   (setq magit-status-buffer-switch-function 'switch-to-buffer) ;; old magit
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)  ;; new
   ;; load general.el and keybindings:
+  (add-to-list 'project-switch-commands
+               '(magit-project-status "magit" ?m))
   (require 'cfg-gen-op-magit))
 
 (provide 'cfg-op-magit)

@@ -1766,7 +1766,6 @@ The current buffer's `default-directory' is available as part of
         (project-find-file "find-file" ?f)
         (project-find-regexp "find-regexp" ?r)
         (project-shell "shell" ?s)
-        (magit-project-status "magit" ?m)
         (project-eshell "eshell" ?e)))
 
 
