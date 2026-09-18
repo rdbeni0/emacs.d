@@ -2240,5 +2240,14 @@ If no expansion, prompt to select from the current mode's abbrev table."
 	            (insert expansion)))
 	      (message "No abbrev found."))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; -> ADDITIONAL LOCAL INIT ELISP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; if true and dedicated file exists, load additional init.el
+(if (file-readable-p
+     (expand-file-name "data/local/lo-init.el" user-emacs-directory))
+    (require 'lo-init))
+
 (provide 'init_core)
 ;;; init_core.el ends here
