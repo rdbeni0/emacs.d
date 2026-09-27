@@ -1,0 +1,14 @@
+Dir for various emacs tools. To install, add the following config to your elisp code:
+
+#+begin_src emacs-lisp
+;; customize PATH and exec-path:
+
+(setenv "PATH" (concat (concat (getenv "HOME") "/.emacs.d/data/tools/bin") path-separator (getenv "PATH")))
+(add-to-list 'exec-path (concat (getenv "HOME") "/.emacs.d/data/tools/bin"))
+#+end_src
+
+-- *OPTIONAL*: if you like to use tools outside your emacs, then add this into the =$PATH= (env variable):
+
+#+BEGIN_EXAMPLE
+export PATH="$PATH:$HOME/.emacs.d/data/tools/bin"
+#+END_EXAMPLE

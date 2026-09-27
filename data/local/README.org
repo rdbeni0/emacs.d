@@ -1,0 +1,1 @@
+A folder containing private (local) configuration. This applies to both Elisp files and any other data files.
