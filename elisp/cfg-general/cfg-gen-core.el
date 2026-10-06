@@ -322,6 +322,10 @@ Normally, not a user option.  See `ediff-help-message' for details.")
 (evil-set-initial-state 'ediff-mode 'normal)
 (add-hook 'ediff-keymap-setup-hook 'cfg/ediff-startup-hook)
 
+;; messages-buffer-mode starts in motion by default (special-mode);
+;; force normal so leader bindings (SPC TAB, etc.) behave like elsewhere.
+(evil-set-initial-state 'messages-buffer-mode 'normal)
+
 ;; tweaks for other modes:
 
 (defvar cfg/ediff-help-changed nil)

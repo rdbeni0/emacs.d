@@ -36,9 +36,11 @@
  "<M-drag-mouse-2>" 'tab-close)
 
 ;; no space + which-key + no which-key : normal mode
+;; Include `motion' so bindings work in special-mode buffers
+;; (e.g. *Messages*, help) where evil starts in motion state.
 
 (general-define-key
- :states '(normal visual emacs)
+ :states '(normal visual emacs motion)
  :keymaps 'global
  "gl" '(goto-line :which-key "goto-line")
  "gr" '(revert-buffer :which-key "revert-buffer")
@@ -48,16 +50,18 @@
  "Q"  'evil-record-macro)
 
 ;; space as leader-key + which-key
+;; Include `motion' for messages-buffer-mode and other special-mode buffers.
 
 (general-define-key
- :states '(normal visual emacs)
+ :states '(normal visual emacs motion)
  :keymaps 'override
  :prefix "SPC"
 
  ;; GLOBAL and no prefix:
 
- "TAB" '(cfg/alternate-buffer :which-key "alternate-buffer")
- "SPC" '(execute-extended-command :which-key "M-x")
+ "TAB"   '(cfg/alternate-buffer :which-key "alternate-buffer")
+ "<tab>" '(cfg/alternate-buffer :which-key "alternate-buffer")
+ "SPC"   '(execute-extended-command :which-key "M-x")
  "<up>" 'tab-rename
  "<down>" 'tab-new
  "<left>" 'tab-previous

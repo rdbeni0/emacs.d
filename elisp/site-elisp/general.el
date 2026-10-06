@@ -9,30 +9,27 @@
 ;;   - general-override-mode
 ;;   - general-auto-unbind-keys
 ;;
-;; No external dependencies.  Pure Emacs Lisp + evil + which-key (optional).
-;;
-;; Design notes:
-;;   * When :states is given, bindings are installed ONLY via
-;;     evil-define-key* so they stay out of insert / minibuffer.
-;;   * Nested key sequences share a single hierarchy of sparse keymaps
-;;     built in the target keymap; that same hierarchy is then mirrored
-;;     into each evil state.  This is required for which-key to show
-;;     all children under a prefix (e.g. SPC p -> project commands).
+;; Design:
+;;   * When :states is given → ONLY evil-define-key* (state-scoped).
+;;     Nothing is written into the base keymap, so insert / minibuffer
+;;     stay clean unless those states are listed.
+;;   * When :states is omitted → define-key on the base keymap.
+;;   * Prefix labels use (cons "label" keymap) so which-key shows
+;;     "projects" instead of "+prefix".
 ;;
 ;;; Code:
 
 (require 'cl-lib)
 (eval-when-compile (require 'cl-lib))
 
-
+
 ;;; Customization / state
 
 (defvar general-override-mode-map (make-sparse-keymap)
   "Keymap used by `general-override-mode'.")
 
 (define-minor-mode general-override-mode
-  "Minor mode whose keymap overrides almost everything else.
-Activate with (general-override-mode 1)."
+  "Minor mode whose keymap overrides almost everything else."
   :global t
   :keymap general-override-mode-map
   :group 'general)
@@ -47,7 +44,7 @@ Activate with (general-override-mode 1)."
   (evil-make-overriding-map general-override-mode-map 'replace)
   (add-hook 'general-override-mode-hook #'evil-normalize-keymaps))
 
-
+
 ;;; Automatic key unbinding
 
 (defvar general--auto-unbind nil)
@@ -81,7 +78,7 @@ Activate with (general-override-mode 1)."
     (advice-add 'define-key :around #'general--define-key-advice)
     (setq general--auto-unbind t)))
 
-
+
 ;;; Helpers
 
 (defun general--normalize-list (x)
@@ -127,67 +124,16 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
         (which-key-add-key-based-replacements key-str desc)
       (error nil))))
 
-(defun general--unwrap (def)
-  "If DEF is a (STRING . REAL) cons, return REAL; else DEF."
-  (if (and (consp def) (stringp (car def)))
-      (cdr def)
-    def))
+(defun general--make-def (cmd desc)
+  "Build definition: (cons DESC map/cmd) for which-key, or plain value."
+  (cond
+   ((eq cmd :ignore)
+    (let ((m (make-sparse-keymap)))
+      (if desc (cons desc m) m)))
+   (desc (cons desc cmd))
+   (t cmd)))
 
-(defun general--lookup-raw (keymap keyseq)
-  "Look up KEYSEQ in KEYMAP, unwrapping a which-key cons if present."
-  (general--unwrap (lookup-key keymap keyseq t)))
-
-(defun general--ensure-path (keymap keyseq)
-  "Ensure KEYSEQ is a path of sparse keymaps inside KEYMAP.
-Returns the final (innermost) sparse keymap.
-Does not overwrite an existing keymap at the last position;
-creates missing intermediate maps as needed."
-  (let ((map keymap)
-        (len (length keyseq)))
-    (dotimes (i len)
-      (let* ((ev  (aref keyseq i))
-             (vec (vector ev))
-             (cur (general--lookup-raw map vec)))
-        (if (keymapp cur)
-            (setq map cur)
-          (let ((new-map (make-sparse-keymap)))
-            (define-key map vec new-map)
-            (setq map new-map)))))
-    map))
-
-(defun general--bind-in-hierarchy (keymap keyseq cmd desc)
-  "Bind KEYSEQ inside KEYMAP, sharing the nested keymap hierarchy.
-CMD is :ignore or a command symbol/function.
-DESC is an optional which-key label.
-
-Returns the definition that was actually stored (possibly a cons)."
-  (let ((len (length keyseq)))
-    (if (= len 0)
-        nil
-      (if (= len 1)
-          ;; Single key
-          (let ((def (if (eq cmd :ignore)
-                         (let ((m (or (and (keymapp (general--lookup-raw keymap keyseq))
-                                           (general--lookup-raw keymap keyseq))
-                                      (make-sparse-keymap))))
-                           (if desc (cons desc m) m))
-                       (if desc (cons desc cmd) cmd))))
-            (define-key keymap keyseq def)
-            def)
-        ;; Multi-key: ensure parent path, then bind final event into parent
-        (let* ((parent-seq (substring keyseq 0 (1- len)))
-               (parent     (general--ensure-path keymap parent-seq))
-               (final-ev   (vector (aref keyseq (1- len))))
-               (existing   (general--lookup-raw parent final-ev))
-               (def (if (eq cmd :ignore)
-                        (let ((m (if (keymapp existing) existing
-                                   (make-sparse-keymap))))
-                          (if desc (cons desc m) m))
-                      (if desc (cons desc cmd) cmd))))
-          (define-key parent final-ev def)
-          def)))))
-
-
+
 ;;; Core function
 
 ;;;###autoload
@@ -203,13 +149,14 @@ Returns the definition that was actually stored (possibly a cons)."
 
 Supported keywords:
   :states   – list of evil states.  Bindings go ONLY into those states
-              via evil-define-key* (not insert / minibuffer unless listed).
+              via evil-define-key*.  Nothing is written to the base
+              keymap, so insert/minibuffer stay clean unless listed.
   :keymaps  – keymap symbol, list, 'global or 'override
   :prefix   – string prepended to every key
   :major-modes – accepted for API compat (ignored)
 
-Nested sequences share one keymap hierarchy so which-key sees all
-children under a prefix (SPC p, SPC f, …)."
+Prefix keys use (cons \"label\" keymap) so which-key shows the
+custom name instead of \"+prefix\"."
   (declare (indent defun))
   (let* ((plist-keys '(:states :keymaps :major-modes :prefix))
          (bindings
@@ -250,18 +197,22 @@ children under a prefix (SPC p, SPC f, …)."
                      (keyseq   (kbd full-str))
                      (parsed   (general--parse-def def))
                      (cmd      (car parsed))
-                     (desc     (cdr parsed)))
+                     (desc     (cdr parsed))
+                     (bind-def (general--make-def cmd desc)))
 
-                ;; 1. Build / update the shared hierarchy in the base keymap
-                (let ((stored (general--bind-in-hierarchy kmap keyseq cmd desc)))
-
-                  ;; 2. Mirror into evil states (state-scoped – stays out of
-                  ;;    insert and minibuffer unless those states are listed)
-                  (when use-evil
+                (if use-evil
+                    ;; State-scoped ONLY – do not touch the base keymap.
+                    ;; evil-define-key* writes into the state's auxiliary
+                    ;; map for KMAP, so insert/minibuffer are unaffected
+                    ;; unless those states are in STATES-LIST.
+                    ;; Multiple calls share the same aux map, so nested
+                    ;; prefixes (SPC p, SPC p f) accumulate correctly.
                     (dolist (state states-list)
-                      (evil-define-key* state kmap keyseq stored))))
+                      (evil-define-key* state kmap keyseq bind-def))
 
-                ;; 3. which-key key-based replacement (safety net)
+                  ;; No :states – bind directly into the keymap
+                  (define-key kmap keyseq bind-def))
+
                 (when desc
                   (general--which-key-register full-str desc))))))))))
 
