@@ -163,7 +163,7 @@ WARNING! Sometimes could cause errors and hang emacs."
 	       annalist ;; required for "evil-collection"
 	       evil-collection
 	       evil-org
-	       general
+	       ;; general  – replaced by in-house implementation in site-elisp/general.el
 	       wgrep
 	       ))
   (unless (package-installed-p core-packages) (package-install core-packages)))
@@ -296,7 +296,8 @@ WARNING! Sometimes could cause errors and hang emacs."
 ;;;; -> GENERAL.EL AND KEYBINDINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; https://github.com/noctuid/general.el
+;; In-house minimal general.el (site-elisp/general.el) – drop-in replacement
+;; for noctuid/general.el.  No external package is installed.
 (use-package general
   :after evil
   :functions (general-override-mode general-auto-unbind-keys)
@@ -308,16 +309,12 @@ WARNING! Sometimes could cause errors and hang emacs."
   (require 'cfg-gen-for-many-modes)
   (require 'cfg-gen-core)
 
-  ;; https://github.com/noctuid/general.el/issues/99
   ;; `general-override-mode' -> override evil keybindings
   ;; :keymaps 'override
   (general-override-mode 1)
 
-  ;; https://github.com/noctuid/general.el#automatic-key-unbinding
-  ;; "To automatically prevent
-  ;; Key sequence starts with a non-prefix key errors without the need to explicitly unbind non-prefix keys,
-  ;; you can add (`general-auto-unbind-keys') to your configuration file.
-  ;; This will advise define-key to unbind any bound subsequence of the KEY."
+  ;; Automatic key unbinding: advise define-key so that binding a key
+  ;; automatically unbinds any bound prefix of that key.
   (general-auto-unbind-keys))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
