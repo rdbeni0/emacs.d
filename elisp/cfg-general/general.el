@@ -11,12 +11,12 @@
 ;;   - general-auto-unbind-keys
 ;;
 ;; Design:
-;;   * When :states is given → ONLY evil-define-key* (state-scoped).
+;;   * When :states is given -> ONLY evil-define-key* (state-scoped).
 ;;     Nothing is written into the base keymap, so insert / minibuffer
 ;;     stay clean unless those states are listed.
-;;   * When :states is omitted → define-key on the base keymap.
+;;   * When :states is omitted -> define-key on the base keymap.
 ;;   * :non-normal-prefix – alternate prefix for non-normal states
-;;     (insert, emacs, replace, hybrid, iedit-insert).
+;;     (insert, Emacs, replace, hybrid, iedit-insert).
 ;;   * Prefix labels use (cons "label" keymap) so which-key shows
 ;;     "projects" instead of "+prefix".
 ;;
@@ -25,7 +25,6 @@
 (require 'cl-lib)
 (eval-when-compile (require 'cl-lib))
 
-
 ;;; Customization / state
 
 (defvar general-override-mode-map (make-sparse-keymap)
@@ -53,7 +52,6 @@
   '(insert replace emacs hybrid iedit-insert)
   "Evil states that receive :non-normal-prefix instead of :prefix.")
 
-
 ;;; Automatic key unbinding
 
 (defvar general--auto-unbind nil)
@@ -68,7 +66,9 @@
           (define-key keymap prefix nil))))))
 
 (defun general--define-key-advice (orig-fun keymap key def &rest args)
-  "Advice for `define-key' that auto-unbinds conflicting prefixes."
+  "Advice for `define-key' that auto-unbinds conflicting prefixes.
+ORIG-FUN is the original `define-key'; KEYMAP, KEY, DEF and ARGS are
+passed through unchanged."
   (when (and general--auto-unbind (keymapp keymap))
     (let ((raw (cond
                 ((vectorp key) key)
@@ -79,7 +79,8 @@
 
 ;;;###autoload
 (defun general-auto-unbind-keys (&optional disable)
-  "Advise `define-key' so binding a key auto-unbinds its prefixes."
+  "Advise `define-key' so binding a key auto-unbinds its prefixes.
+With DISABLE non-nil, remove the advice and disable auto-unbinding."
   (if disable
       (progn
         (advice-remove 'define-key #'general--define-key-advice)
@@ -87,7 +88,6 @@
     (advice-add 'define-key :around #'general--define-key-advice)
     (setq general--auto-unbind t)))
 
-
 ;;; Helpers
 
 (defun general--normalize-list (x)
@@ -134,7 +134,8 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
       (error nil))))
 
 (defun general--make-def (cmd desc)
-  "Build definition: (cons DESC map/cmd) for which-key, or plain value."
+  "Build a key definition for CMD using DESC.
+Return (cons DESC map/cmd) for which-key, or a plain value."
   (cond
    ((eq cmd :ignore)
     (let ((m (make-sparse-keymap)))
@@ -150,7 +151,7 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
    (t (key-description prefix))))
 
 (defun general--full-key-str (prefix-str key-str)
-  "Join PREFIX-STR and KEY-STR into a single key-description string."
+  "Join PREFIX-STR and KEY-STR into a single `key-description' string."
   (if (string-empty-p prefix-str)
       key-str
     (concat prefix-str " " key-str)))
@@ -159,7 +160,6 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
   "Return non-nil if STATE is a non-normal evil state."
   (memq state general-non-normal-states))
 
-
 ;;; Core function
 
 ;;;###autoload
@@ -173,6 +173,12 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
            (non-normal-prefix nil)
            &allow-other-keys)
   "Define keybindings in the style of general.el (minimal subset).
+ARGS is a plist of the keywords below interleaved with KEY DEF pairs.
+STATES is a list of evil states to bind in (or nil).
+KEYMAPS is a keymap symbol, a list of them, `global' or `override'.
+MAJOR-MODES is accepted for API compatibility and ignored.
+PREFIX is a string prepended to every key in normal-ish states.
+NON-NORMAL-PREFIX is an alternate prefix for non-normal states.
 
 Supported keywords:
   :states             – list of evil states.  Bindings go ONLY into
@@ -180,17 +186,17 @@ Supported keywords:
   :keymaps            – keymap symbol, list, 'global or 'override
   :prefix             – string prepended to every key (normal-ish states)
   :non-normal-prefix  – alternate prefix for non-normal states
-                        (insert, emacs, replace, hybrid, iedit-insert).
+                        (insert, Emacs, replace, hybrid, iedit-insert).
                         When set, those states get this prefix instead
                         of :prefix.  Example:
 
                           (general-define-key
-                           :states '(normal insert emacs)
+                           :states '(normal insert Emacs)
                            :prefix \"SPC\"
                            :non-normal-prefix \"M-SPC\"
                            \"f\" 'find-file)
 
-                        → SPC f in normal, M-SPC f in insert/emacs.
+                        -> SPC f in normal, M-SPC f in insert/Emacs.
 
   :major-modes        – accepted for API compat (ignored)
 
