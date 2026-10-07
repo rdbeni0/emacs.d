@@ -9,15 +9,12 @@
 ;;   - general-override-mode
 ;;   - general-auto-unbind-keys
 ;;
-;; Performance notes:
-;;   * Descriptions use (cons "label" def) – which-key keymap-based
-;;     replacement.  We deliberately do NOT call
-;;     which-key-add-key-based-replacements (that alist is scanned on
-;;     every which-key popup and causes input lag with many bindings).
-;;   * Prefix maps are created once and reused; children are defined
-;;     inside them so nested sequences share structure.
-;;   * When :states is given, only evil-define-key* is used (nothing
-;;     written to the base keymap → insert/minibuffer stay clean).
+;; Performance:
+;;   * Descriptions: (cons "label" def) – keymap-based which-key, O(1).
+;;   * Prefix maps created once and reused.
+;;   * :states → only evil aux maps (insert/minibuffer stay clean).
+;;   * define-key advice is cheap (one lookup per prefix level).
+;;   * Aux maps cached per (keymap . state) within a single call.
 ;;
 ;;; Code:
 
@@ -56,22 +53,26 @@
 (defvar general--auto-unbind nil)
 
 (defun general--unbind-prefix-keys (keymap key)
-  "Unbind every proper prefix of KEY in KEYMAP so KEY can be bound."
-  (when (and (keymapp keymap) (vectorp key) (> (length key) 1))
-    (dotimes (i (1- (length key)))
-      (let ((prefix (substring key 0 (1+ i))))
-        (when (and (lookup-key keymap prefix)
-                   (not (keymapp (lookup-key keymap prefix))))
-          (define-key keymap prefix nil))))))
+  "Unbind non-keymap prefixes of KEY in KEYMAP so KEY can be bound."
+  (let ((len (length key)))
+    (when (and (keymapp keymap) (vectorp key) (> len 1))
+      (dotimes (i (1- len))
+        (let* ((prefix (substring key 0 (1+ i)))
+               (b (lookup-key keymap prefix)))
+          (cond
+           ((or (null b) (numberp b)) nil)
+           ((keymapp b) nil)
+           ((and (consp b) (stringp (car b)) (keymapp (cdr b))) nil)
+           (t (define-key keymap prefix nil))))))))
 
 (defun general--define-key-advice (orig-fun keymap key def &rest args)
-  "Advice for `define-key' that auto-unbinds conflicting prefixes."
-  (when (and general--auto-unbind (keymapp keymap))
-    (let ((raw (cond
-                ((vectorp key) key)
-                ((stringp key) (kbd key))
-                (t (kbd (format "%s" key))))))
-      (general--unbind-prefix-keys keymap raw)))
+  "Thin advice: unbind conflicting prefixes only when auto-unbind is on."
+  (when (and general--auto-unbind (keymapp keymap) key)
+    (let ((raw (if (vectorp key) key
+                 (ignore-errors
+                   (kbd (if (stringp key) key (format "%s" key)))))))
+      (when (vectorp raw)
+        (general--unbind-prefix-keys keymap raw))))
   (apply orig-fun keymap key def args))
 
 ;;;###autoload
@@ -110,142 +111,80 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
   "Parse DEF into (COMMAND . WHICH-KEY-DESCRIPTION)."
   (cond
    ((and (listp def) (keywordp (car def)))
-    (let ((desc (or (plist-get def :which-key)
-                    (plist-get def :wk))))
-      (cons :ignore desc)))
+    (cons :ignore (or (plist-get def :which-key) (plist-get def :wk))))
    ((and (listp def)
          (or (plist-member (cdr def) :which-key)
              (plist-member (cdr def) :wk)))
-    (let* ((cmd  (car def))
-           (desc (or (plist-get (cdr def) :which-key)
-                     (plist-get (cdr def) :wk))))
-      (cons cmd desc)))
+    (cons (car def)
+          (or (plist-get (cdr def) :which-key)
+              (plist-get (cdr def) :wk))))
    (t (cons def nil))))
 
-(defun general--prefix-string (prefix)
+(defsubst general--prefix-string (prefix)
   "Normalize PREFIX to a string (or \"\")."
-  (cond
-   ((null prefix) "")
-   ((stringp prefix) prefix)
-   (t (key-description prefix))))
+  (cond ((null prefix) "")
+        ((stringp prefix) prefix)
+        (t (key-description prefix))))
 
-(defun general--full-key-str (prefix-str key-str)
-  "Join PREFIX-STR and KEY-STR into a single key-description string."
-  (if (or (null prefix-str) (string-empty-p prefix-str))
-      key-str
+(defsubst general--full-key-str (prefix-str key-str)
+  "Join PREFIX-STR and KEY-STR."
+  (if (string-empty-p prefix-str) key-str
     (concat prefix-str " " key-str)))
 
-(defun general--non-normal-state-p (state)
+(defsubst general--non-normal-state-p (state)
   "Return non-nil if STATE is a non-normal evil state."
   (memq state general-non-normal-states))
 
-(defun general--unwrap (def)
-  "Unwrap a which-key (STRING . REAL) cons to REAL; else return DEF."
-  (if (and (consp def) (stringp (car def)))
-      (cdr def)
-    def))
+(defsubst general--unwrap (def)
+  "Unwrap (STRING . REAL) cons to REAL; else DEF."
+  (if (and (consp def) (stringp (car def))) (cdr def) def))
+
+;; Per-call cache: avoids repeated evil-get-auxiliary-keymap.
+(defvar general--aux-cache nil
+  "Alist ((KEYMAP . STATE) . AUX-MAP) for the current define-key call.")
 
 (defun general--aux-map (kmap state)
-  "Return the evil auxiliary keymap for STATE on KMAP, creating it."
-  (evil-get-auxiliary-keymap kmap state t t))
+  "Return evil auxiliary keymap for STATE on KMAP (cached)."
+  (let* ((key (cons kmap state))
+         (cached (assoc key general--aux-cache)))
+    (if cached
+        (cdr cached)
+      (let ((aux (evil-get-auxiliary-keymap kmap state t t)))
+        (push (cons key aux) general--aux-cache)
+        aux))))
 
-(defun general--lookup-in-aux (kmap state keyseq)
-  "Look up KEYSEQ in the aux map for STATE on KMAP, unwrapping cons."
-  (general--unwrap (lookup-key (general--aux-map kmap state) keyseq t)))
-
-(defun general--ensure-prefix-in-aux (kmap state keyseq &optional desc)
-  "Ensure KEYSEQ is a prefix keymap in STATE's aux map for KMAP.
-Reuses an existing map when present.  Returns the (innermost) map.
-If DESC is non-nil the binding is stored as (cons DESC map)."
-  (let ((aux (general--aux-map kmap state))
-        (map aux)
+(defun general--ensure-path (root keyseq &optional desc)
+  "Ensure KEYSEQ is a path of keymaps under ROOT.  Return innermost map.
+Reuses existing maps.  If DESC is given, the final binding is
+\(cons DESC map)."
+  (let ((parent root)
+        (map root)
         (len (length keyseq)))
     (dotimes (i len)
-      (let* ((ev  (aref keyseq i))
-             (vec (vector ev))
-             (cur (general--unwrap (lookup-key map vec t)))
-             (is-last (= i (1- len))))
+      (let* ((vec (vector (aref keyseq i)))
+             (cur (general--unwrap (lookup-key parent vec t)))
+             (last-p (= i (1- len))))
         (if (keymapp cur)
             (setq map cur)
-          (let ((new-map (make-sparse-keymap)))
-            (define-key map vec
-              (if (and is-last desc) (cons desc new-map) new-map))
-            (setq map new-map)))))
-    ;; Refresh description on an already-existing final map
-    (when (and desc (> len 0))
-      (let* ((parent (if (= len 1) aux
-                       (general--unwrap
-                        (lookup-key aux (substring keyseq 0 (1- len)) t))))
-             (final-ev (vector (aref keyseq (1- len))))
-             (existing (lookup-key parent final-ev t)))
-        (when (keymapp parent)
-          (let ((raw (general--unwrap existing)))
-            (when (keymapp raw)
-              (define-key parent final-ev (cons desc raw)))))))
+          (setq map (make-sparse-keymap)))
+        (define-key parent vec
+          (if (and last-p desc) (cons desc map) map))
+        (setq parent map)))
     map))
 
-(defun general--bind-leaf-in-aux (kmap state keyseq cmd desc)
-  "Bind KEYSEQ to CMD in STATE's aux map, with optional which-key DESC.
-Intermediate prefix maps are created/reused as plain keymaps (or
-named conses).  The leaf is stored as (cons DESC CMD) when DESC
-is non-nil."
+(defun general--bind (root keyseq cmd desc)
+  "Bind KEYSEQ under ROOT to CMD (or :ignore prefix) with optional DESC."
   (let ((len (length keyseq)))
-    (if (= len 0)
-        nil
-      (if (= len 1)
-          (let ((aux (general--aux-map kmap state))
-                (def (if desc (cons desc cmd) cmd)))
-            (define-key aux keyseq def))
-        ;; Ensure parent path exists, then bind final event into parent
-        (let* ((parent-seq (substring keyseq 0 (1- len)))
-               (parent     (general--ensure-prefix-in-aux kmap state parent-seq))
-               (final-ev   (vector (aref keyseq (1- len))))
-               (def        (if desc (cons desc cmd) cmd)))
-          (define-key parent final-ev def))))))
-
-(defun general--bind-prefix-in-aux (kmap state keyseq desc)
-  "Bind KEYSEQ as a named prefix in STATE's aux map."
-  (general--ensure-prefix-in-aux kmap state keyseq desc))
-
-
-;;; Non-evil (plain define-key) helpers
-
-(defun general--ensure-prefix-plain (keymap keyseq &optional desc)
-  "Like `general--ensure-prefix-in-aux' but on a plain KEYMAP."
-  (let ((map keymap)
-        (len (length keyseq)))
-    (dotimes (i len)
-      (let* ((ev  (aref keyseq i))
-             (vec (vector ev))
-             (cur (general--unwrap (lookup-key map vec t)))
-             (is-last (= i (1- len))))
-        (if (keymapp cur)
-            (setq map cur)
-          (let ((new-map (make-sparse-keymap)))
-            (define-key map vec
-              (if (and is-last desc) (cons desc new-map) new-map))
-            (setq map new-map)))))
-    (when (and desc (> len 0))
-      (let* ((parent (if (= len 1) keymap
-                       (general--unwrap
-                        (lookup-key keymap (substring keyseq 0 (1- len)) t))))
-             (final-ev (vector (aref keyseq (1- len))))
-             (existing (lookup-key parent final-ev t)))
-        (when (keymapp parent)
-          (let ((raw (general--unwrap existing)))
-            (when (keymapp raw)
-              (define-key parent final-ev (cons desc raw)))))))
-    map))
-
-(defun general--bind-leaf-plain (keymap keyseq cmd desc)
-  "Bind KEYSEQ to CMD on KEYMAP with optional DESC."
-  (let ((len (length keyseq)))
-    (if (= len 1)
-        (define-key keymap keyseq (if desc (cons desc cmd) cmd))
-      (let* ((parent (general--ensure-prefix-plain
-                      keymap (substring keyseq 0 (1- len))))
-             (final-ev (vector (aref keyseq (1- len)))))
-        (define-key parent final-ev (if desc (cons desc cmd) cmd))))))
+    (cond
+     ((= len 0) nil)
+     ((eq cmd :ignore)
+      (general--ensure-path root keyseq desc))
+     ((= len 1)
+      (define-key root keyseq (if desc (cons desc cmd) cmd)))
+     (t
+      (let ((parent (general--ensure-path root (substring keyseq 0 (1- len)))))
+        (define-key parent (vector (aref keyseq (1- len)))
+          (if desc (cons desc cmd) cmd)))))))
 
 
 ;;; Core function
@@ -288,7 +227,8 @@ which-key descriptions use keymap-based cons cells only (fast)."
          (states-list   (when states (general--normalize-list states)))
          (keymap-syms   (general--normalize-list keymaps))
          (use-evil      (and states-list (fboundp 'evil-define-key*)
-                             (fboundp 'evil-get-auxiliary-keymap))))
+                             (fboundp 'evil-get-auxiliary-keymap)))
+         (general--aux-cache nil))
 
     (ignore major-modes)
 
@@ -311,24 +251,18 @@ which-key descriptions use keymap-based cons cells only (fast)."
                      (desc    (cdr parsed)))
 
                 (if use-evil
-                    ;; State-scoped: operate directly on aux maps so we
-                    ;; can reuse prefix keymaps and avoid base-map pollution.
                     (dolist (state states-list)
                       (let* ((use-nn (and has-nn-prefix
                                           (general--non-normal-state-p state)))
                              (p-str  (if use-nn nn-prefix-str prefix-str))
                              (full   (general--full-key-str p-str key-str))
-                             (keyseq (kbd full)))
-                        (if (eq cmd :ignore)
-                            (general--bind-prefix-in-aux kmap state keyseq desc)
-                          (general--bind-leaf-in-aux kmap state keyseq cmd desc))))
+                             (keyseq (kbd full))
+                             (root   (general--aux-map kmap state)))
+                        (general--bind root keyseq cmd desc)))
 
-                  ;; No :states – plain define-key on the keymap
                   (let* ((full   (general--full-key-str prefix-str key-str))
                          (keyseq (kbd full)))
-                    (if (eq cmd :ignore)
-                        (general--ensure-prefix-plain kmap keyseq desc)
-                      (general--bind-leaf-plain kmap keyseq cmd desc))))))))))))
+                    (general--bind kmap keyseq cmd desc)))))))))))
 
 ;;;###autoload
 (defalias 'general-emacs-define-key #'general-define-key)
