@@ -4,7 +4,8 @@
 ;; Lightweight drop-in replacement for noctuid/general.el covering only the
 ;; features used in this configuration:
 ;;
-;;   - general-define-key  (:states :keymaps :major-modes :prefix)
+;;   - general-define-key
+;;       :states :keymaps :major-modes :prefix :non-normal-prefix
 ;;   - which-key metadata  (:which-key / :ignore)
 ;;   - general-override-mode
 ;;   - general-auto-unbind-keys
@@ -14,6 +15,8 @@
 ;;     Nothing is written into the base keymap, so insert / minibuffer
 ;;     stay clean unless those states are listed.
 ;;   * When :states is omitted → define-key on the base keymap.
+;;   * :non-normal-prefix – alternate prefix for non-normal states
+;;     (insert, emacs, replace, hybrid, iedit-insert).
 ;;   * Prefix labels use (cons "label" keymap) so which-key shows
 ;;     "projects" instead of "+prefix".
 ;;
@@ -43,6 +46,12 @@
   (evil-make-overriding-map general-override-mode-map 'operator)
   (evil-make-overriding-map general-override-mode-map 'replace)
   (add-hook 'general-override-mode-hook #'evil-normalize-keymaps))
+
+;; States considered "non-normal" for :non-normal-prefix (same default as
+;; upstream general.el).
+(defvar general-non-normal-states
+  '(insert replace emacs hybrid iedit-insert)
+  "Evil states that receive :non-normal-prefix instead of :prefix.")
 
 
 ;;; Automatic key unbinding
@@ -133,6 +142,23 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
    (desc (cons desc cmd))
    (t cmd)))
 
+(defun general--prefix-string (prefix)
+  "Normalize PREFIX to a string (or \"\")."
+  (cond
+   ((null prefix) "")
+   ((stringp prefix) prefix)
+   (t (key-description prefix))))
+
+(defun general--full-key-str (prefix-str key-str)
+  "Join PREFIX-STR and KEY-STR into a single key-description string."
+  (if (string-empty-p prefix-str)
+      key-str
+    (concat prefix-str " " key-str)))
+
+(defun general--non-normal-state-p (state)
+  "Return non-nil if STATE is a non-normal evil state."
+  (memq state general-non-normal-states))
+
 
 ;;; Core function
 
@@ -144,21 +170,35 @@ Expand symbols whose value is a list (e.g. list-gen-mode-map-*)."
            (keymaps 'global)
            (major-modes nil)
            (prefix nil)
+           (non-normal-prefix nil)
            &allow-other-keys)
   "Define keybindings in the style of general.el (minimal subset).
 
 Supported keywords:
-  :states   – list of evil states.  Bindings go ONLY into those states
-              via evil-define-key*.  Nothing is written to the base
-              keymap, so insert/minibuffer stay clean unless listed.
-  :keymaps  – keymap symbol, list, 'global or 'override
-  :prefix   – string prepended to every key
-  :major-modes – accepted for API compat (ignored)
+  :states             – list of evil states.  Bindings go ONLY into
+                        those states via evil-define-key*.
+  :keymaps            – keymap symbol, list, 'global or 'override
+  :prefix             – string prepended to every key (normal-ish states)
+  :non-normal-prefix  – alternate prefix for non-normal states
+                        (insert, emacs, replace, hybrid, iedit-insert).
+                        When set, those states get this prefix instead
+                        of :prefix.  Example:
+
+                          (general-define-key
+                           :states '(normal insert emacs)
+                           :prefix \"SPC\"
+                           :non-normal-prefix \"M-SPC\"
+                           \"f\" 'find-file)
+
+                        → SPC f in normal, M-SPC f in insert/emacs.
+
+  :major-modes        – accepted for API compat (ignored)
 
 Prefix keys use (cons \"label\" keymap) so which-key shows the
 custom name instead of \"+prefix\"."
   (declare (indent defun))
-  (let* ((plist-keys '(:states :keymaps :major-modes :prefix))
+  (let* ((plist-keys '(:states :keymaps :major-modes :prefix
+                               :non-normal-prefix))
          (bindings
           (let ((rest args) (acc nil))
             (while rest
@@ -167,13 +207,13 @@ custom name instead of \"+prefix\"."
                 (push (pop rest) acc)
                 (when rest (push (pop rest) acc))))
             (nreverse acc)))
-         (prefix-str (cond
-                      ((null prefix) "")
-                      ((stringp prefix) prefix)
-                      (t (key-description prefix))))
-         (states-list (when states (general--normalize-list states)))
-         (keymap-syms (general--normalize-list keymaps))
-         (use-evil (and states-list (fboundp 'evil-define-key*))))
+         (prefix-str     (general--prefix-string prefix))
+         (nn-prefix-str  (general--prefix-string non-normal-prefix))
+         (has-nn-prefix  (and non-normal-prefix
+                              (not (string-empty-p nn-prefix-str))))
+         (states-list    (when states (general--normalize-list states)))
+         (keymap-syms    (general--normalize-list keymaps))
+         (use-evil       (and states-list (fboundp 'evil-define-key*))))
 
     (ignore major-modes)
 
@@ -187,34 +227,37 @@ custom name instead of \"+prefix\"."
         (when kmap
           (let ((pairs bindings))
             (while pairs
-              (let* ((raw-key  (pop pairs))
-                     (def      (pop pairs))
-                     (key-str  (if (stringp raw-key) raw-key
-                                 (key-description raw-key)))
-                     (full-str (if (string-empty-p prefix-str)
-                                   key-str
-                                 (concat prefix-str " " key-str)))
-                     (keyseq   (kbd full-str))
-                     (parsed   (general--parse-def def))
-                     (cmd      (car parsed))
-                     (desc     (cdr parsed))
+              (let* ((raw-key (pop pairs))
+                     (def     (pop pairs))
+                     (key-str (if (stringp raw-key) raw-key
+                                (key-description raw-key)))
+                     (parsed  (general--parse-def def))
+                     (cmd     (car parsed))
+                     (desc    (cdr parsed))
                      (bind-def (general--make-def cmd desc)))
 
                 (if use-evil
-                    ;; State-scoped ONLY – do not touch the base keymap.
-                    ;; evil-define-key* writes into the state's auxiliary
-                    ;; map for KMAP, so insert/minibuffer are unaffected
-                    ;; unless those states are in STATES-LIST.
-                    ;; Multiple calls share the same aux map, so nested
-                    ;; prefixes (SPC p, SPC p f) accumulate correctly.
+                    ;; ---- State-scoped path ----
+                    ;; Split states: normal-ish get :prefix,
+                    ;; non-normal get :non-normal-prefix (when set).
                     (dolist (state states-list)
-                      (evil-define-key* state kmap keyseq bind-def))
+                      (let* ((use-nn (and has-nn-prefix
+                                          (general--non-normal-state-p state)))
+                             (p-str  (if use-nn nn-prefix-str prefix-str))
+                             (full   (general--full-key-str p-str key-str))
+                             (keyseq (kbd full)))
+                        (evil-define-key* state kmap keyseq bind-def)
+                        (when desc
+                          (general--which-key-register full desc))))
 
-                  ;; No :states – bind directly into the keymap
-                  (define-key kmap keyseq bind-def))
-
-                (when desc
-                  (general--which-key-register full-str desc))))))))))
+                  ;; ---- No :states – bind on base keymap ----
+                  ;; :non-normal-prefix is irrelevant without states;
+                  ;; just use :prefix.
+                  (let* ((full   (general--full-key-str prefix-str key-str))
+                         (keyseq (kbd full)))
+                    (define-key kmap keyseq bind-def)
+                    (when desc
+                      (general--which-key-register full desc))))))))))))
 
 ;;;###autoload
 (defalias 'general-emacs-define-key #'general-define-key)
