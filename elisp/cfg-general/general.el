@@ -15,7 +15,6 @@
 
 (require 'cl-lib)
 
-
 ;;; Override mode
 
 (defvar general-override-mode-map (make-sparse-keymap)
@@ -56,7 +55,8 @@
           (define-key keymap prefix nil))))))
 
 (defun general--define-key-advice (orig-fun keymap key def &rest args)
-  "Around advice for `define-key': auto-unbind conflicting prefixes."
+  "Around advice for `define-key': auto-unbind conflicting prefixes.
+ORIG-FUN is the original function; KEYMAP, KEY, DEF, and ARGS are passed to it."
   (when (and general--auto-unbind (keymapp keymap) key)
     (let ((raw (if (vectorp key) key
                  (ignore-errors
@@ -67,7 +67,8 @@
 
 ;;;###autoload
 (defun general-auto-unbind-keys (&optional disable)
-  "Advise `define-key' so binding a key auto-unbinds its prefixes."
+  "Advise `define-key' so binding a key auto-unbinds its prefixes.
+When DISABLE is non-nil, remove the advice instead."
   (if disable
       (progn
         (advice-remove 'define-key #'general--define-key-advice)
@@ -134,7 +135,7 @@
     map))
 
 (defun general--bind (root keyseq cmd desc)
-  "Bind KEYSEQ under ROOT.  Prefixes are plain maps; leaves may use cons."
+  "Bind KEYSEQ under ROOT.  Prefixes are plain maps; leaf bindings may use cons."
   (cond
    ((zerop (length keyseq)) nil)
    ((eq cmd :ignore)
@@ -142,7 +143,7 @@
     (when (and desc (fboundp 'which-key-add-key-based-replacements))
       (condition-case nil
           (which-key-add-key-based-replacements
-           (key-description keyseq) desc)
+            (key-description keyseq) desc)
         (error nil))))
    (t
     (let* ((len (length keyseq))
@@ -175,7 +176,7 @@
       (setq general--pending-hook-added nil))))
 
 (defun general--queue-state-binding (state keyseq cmd desc)
-  "Bind on custom state map now, or queue until it exists."
+  "Bind on custom state map for STATE now, or queue until it exists."
   (let ((map (general--state-map state)))
     (if map
         (general--bind map keyseq cmd desc)
@@ -209,6 +210,7 @@
   "Keyword args stripped from the key/definition body.")
 
 ;;;###autoload
+;;;###autoload
 (cl-defun general-define-key
     (&rest args
            &key
@@ -219,6 +221,9 @@
            (non-normal-prefix nil)
            &allow-other-keys)
   "Define keybindings (minimal general.el-compatible API).
+
+ARGS is a plist of the keyword arguments STATES, KEYMAPS, MAJOR-MODES,
+PREFIX, NON-NORMAL-PREFIX and the key/definition pairs.
 
 :states   – evil states; bindings only in those states (aux maps)
 :keymaps  – keymap symbol/list, 'global, or 'override
