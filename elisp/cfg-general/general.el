@@ -154,7 +154,6 @@ When DISABLE is non-nil, remove the advice instead."
            (def (if desc (cons desc cmd) cmd)))
       (define-key parent event def)))))
 
-
 ;;; Deferred custom-state maps
 
 (defvar general--pending-state-bindings nil
@@ -176,7 +175,8 @@ When DISABLE is non-nil, remove the advice instead."
       (setq general--pending-hook-added nil))))
 
 (defun general--queue-state-binding (state keyseq cmd desc)
-  "Bind on custom state map for STATE now, or queue until it exists."
+  "Bind KEYSEQ to CMD with DESC on the custom state map for STATE.
+If that state map does not exist yet, queue the binding until it does."
   (let ((map (general--state-map state)))
     (if map
         (general--bind map keyseq cmd desc)
@@ -186,7 +186,6 @@ When DISABLE is non-nil, remove the advice instead."
           (setq general--pending-hook-added t)
           (add-hook 'after-load-functions
                     #'general--flush-pending-state-bindings))))))
-
 
 ;;; Aux-map cache
 
@@ -209,7 +208,6 @@ When DISABLE is non-nil, remove the advice instead."
   '(:states :keymaps :major-modes :prefix :non-normal-prefix)
   "Keyword args stripped from the key/definition body.")
 
-;;;###autoload
 ;;;###autoload
 (cl-defun general-define-key
     (&rest args
