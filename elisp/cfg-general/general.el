@@ -15,7 +15,7 @@
 
 (require 'cl-lib)
 
-
+
 ;;; Override mode
 
 (defvar general-override-mode-map (make-sparse-keymap)
@@ -40,7 +40,7 @@
   '(normal visual insert emacs motion operator replace hybrid)
   "Built-in evil states.  Others also bind on `evil-STATE-state-map'.")
 
-
+
 ;;; Auto-unbind
 
 (defvar general--auto-unbind nil)
@@ -75,7 +75,7 @@
     (advice-add 'define-key :around #'general--define-key-advice)
     (setq general--auto-unbind t)))
 
-
+
 ;;; Helpers
 
 (defun general--normalize-list (x)
@@ -117,7 +117,7 @@
     (let ((sym (intern (format "evil-%s-state-map" state))))
       (and (boundp sym) (keymapp (symbol-value sym)) (symbol-value sym)))))
 
-
+
 ;;; Bind primitives
 
 (defun general--ensure-path (root keyseq)
@@ -153,7 +153,7 @@
            (def (if desc (cons desc cmd) cmd)))
       (define-key parent event def)))))
 
-
+
 ;;; Deferred custom-state maps
 
 (defvar general--pending-state-bindings nil
@@ -186,7 +186,7 @@
           (add-hook 'after-load-functions
                     #'general--flush-pending-state-bindings))))))
 
-
+
 ;;; Aux-map cache
 
 (defvar general--aux-cache nil
@@ -201,7 +201,7 @@
         (push (cons key aux) general--aux-cache)
         aux))))
 
-
+
 ;;; Core
 
 (defconst general--plist-keys
