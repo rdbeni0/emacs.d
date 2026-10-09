@@ -1,21 +1,22 @@
 ;;; general.el --- Minimal in-house general.el replacement -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Lightweight drop-in replacement for noctuid/general.el.
+;; Drop-in subset of noctuid/general.el used by this config:
+;;   general-define-key, general-override-mode, general-auto-unbind-keys
 ;;
-;; Custom evil states (treemacs, …):
-;;   Bindings go to mode-map aux maps and to `evil-STATE-state-map'.
-;;   If that state map does not exist yet (load order), the binding is
-;;   queued and applied once via `after-load-functions' – only for the
-;;   few pending custom-state entries, never mass-deferred mode maps.
+;; Keywords: :states :keymaps :prefix :non-normal-prefix :major-modes
+;; which-key: (:which-key / :wk) – cons on commands, plain maps for prefixes
+;;
+;; Custom evil states (e.g. treemacs): bind on mode-map aux maps and on
+;; `evil-STATE-state-map'.  Missing state maps are queued and flushed via
+;; `after-load-functions' (only those few entries – no mass deferral).
 ;;
 ;;; Code:
 
 (require 'cl-lib)
-(eval-when-compile (require 'cl-lib))
 
 
-;;; Customization / state
+;;; Override mode
 
 (defvar general-override-mode-map (make-sparse-keymap)
   "Keymap used by `general-override-mode'.")
@@ -27,43 +28,35 @@
   :group 'general)
 
 (with-eval-after-load 'evil
-  (evil-make-overriding-map general-override-mode-map 'normal)
-  (evil-make-overriding-map general-override-mode-map 'visual)
-  (evil-make-overriding-map general-override-mode-map 'insert)
-  (evil-make-overriding-map general-override-mode-map 'emacs)
-  (evil-make-overriding-map general-override-mode-map 'motion)
-  (evil-make-overriding-map general-override-mode-map 'operator)
-  (evil-make-overriding-map general-override-mode-map 'replace)
+  (dolist (state '(normal visual insert emacs motion operator replace))
+    (evil-make-overriding-map general-override-mode-map state))
   (add-hook 'general-override-mode-hook #'evil-normalize-keymaps))
 
 (defvar general-non-normal-states
   '(insert replace emacs hybrid iedit-insert)
-  "Evil states that receive :non-normal-prefix instead of :prefix.")
+  "States that use :non-normal-prefix instead of :prefix.")
 
 (defvar general-standard-states
   '(normal visual insert emacs motion operator replace hybrid)
-  "Built-in evil states.  Non-standard states also bind on evil-STATE-state-map.")
+  "Built-in evil states.  Others also bind on `evil-STATE-state-map'.")
 
 
-;;; Automatic key unbinding
+;;; Auto-unbind
 
 (defvar general--auto-unbind nil)
 
 (defun general--unbind-prefix-keys (keymap key)
   "Unbind non-keymap prefixes of KEY in KEYMAP so KEY can be bound."
-  (let ((len (length key)))
-    (when (and (keymapp keymap) (vectorp key) (> len 1))
-      (dotimes (i (1- len))
-        (let* ((prefix (substring key 0 (1+ i)))
-               (b (lookup-key keymap prefix)))
-          (cond
-           ((or (null b) (numberp b)) nil)
-           ((keymapp b) nil)
-           ((and (consp b) (stringp (car b)) (keymapp (cdr b))) nil)
-           (t (define-key keymap prefix nil))))))))
+  (when (and (keymapp keymap) (vectorp key) (> (length key) 1))
+    (dotimes (i (1- (length key)))
+      (let* ((prefix (substring key 0 (1+ i)))
+             (b (lookup-key keymap prefix)))
+        (unless (or (null b) (numberp b) (keymapp b)
+                    (and (consp b) (stringp (car b)) (keymapp (cdr b))))
+          (define-key keymap prefix nil))))))
 
 (defun general--define-key-advice (orig-fun keymap key def &rest args)
-  "Thin advice: unbind conflicting prefixes only when auto-unbind is on."
+  "Around advice for `define-key': auto-unbind conflicting prefixes."
   (when (and general--auto-unbind (keymapp keymap) key)
     (let ((raw (if (vectorp key) key
                  (ignore-errors
@@ -86,25 +79,23 @@
 ;;; Helpers
 
 (defun general--normalize-list (x)
-  "Return X as a flat list of items."
+  "Return X as a list.  Expand bound list-valued symbols."
   (cond
-   ((and (symbolp x) (boundp x) (listp (symbol-value x)))
-    (symbol-value x))
+   ((and (symbolp x) (boundp x) (listp (symbol-value x))) (symbol-value x))
    ((listp x) x)
    (t (list x))))
 
 (defun general--resolve-keymap (sym)
-  "Return the keymap object for SYM, or nil."
+  "Resolve SYM to a keymap object, or nil."
   (cond
    ((keymapp sym) sym)
    ((eq sym 'global) (current-global-map))
    ((eq sym 'override) general-override-mode-map)
    ((and (symbolp sym) (boundp sym) (keymapp (symbol-value sym)))
-    (symbol-value sym))
-   (t nil)))
+    (symbol-value sym))))
 
 (defun general--parse-def (def)
-  "Parse DEF into (COMMAND . WHICH-KEY-DESCRIPTION)."
+  "Parse DEF into (CMD . WHICH-KEY-DESC).  CMD may be :ignore."
   (cond
    ((and (listp def) (keywordp (car def)))
     (cons :ignore (or (plist-get def :which-key) (plist-get def :wk))))
@@ -116,88 +107,67 @@
               (plist-get (cdr def) :wk))))
    (t (cons def nil))))
 
-(defsubst general--prefix-string (prefix)
-  (cond ((null prefix) "")
-        ((stringp prefix) prefix)
-        (t (key-description prefix))))
-
-(defsubst general--full-key-str (prefix-str key-str)
-  (if (string-empty-p prefix-str) key-str
-    (concat prefix-str " " key-str)))
-
-(defsubst general--non-normal-state-p (state)
-  (memq state general-non-normal-states))
-
 (defsubst general--unwrap (def)
+  "Unwrap which-key (STRING . REAL); else DEF."
   (if (and (consp def) (stringp (car def))) (cdr def) def))
 
-(defun general--state-map-sym (state)
-  "Symbol `evil-STATE-state-map'."
-  (intern (format "evil-%s-state-map" state)))
-
 (defun general--state-map (state)
-  "Return evil-STATE-state-map if it is a keymap; else nil.
-Only for non-standard states."
+  "Return `evil-STATE-state-map' for a non-standard STATE, or nil."
   (unless (memq state general-standard-states)
-    (let ((sym (general--state-map-sym state)))
+    (let ((sym (intern (format "evil-%s-state-map" state))))
       (and (boundp sym) (keymapp (symbol-value sym)) (symbol-value sym)))))
 
 
-;;; Bind primitives (defined before deferred flush uses them)
+;;; Bind primitives
 
-(defun general--ensure-path (root keyseq &optional _desc)
-  "Ensure KEYSEQ is a path of plain keymaps under ROOT."
-  (let ((parent root)
-        (map root)
+(defun general--ensure-path (root keyseq)
+  "Ensure KEYSEQ is a path of plain keymaps under ROOT; return innermost."
+  (let ((map root)
         (len (length keyseq)))
     (dotimes (i len)
       (let* ((vec (vector (aref keyseq i)))
-             (cur (general--unwrap (lookup-key parent vec t))))
-        (if (keymapp cur)
-            (setq map cur)
-          (setq map (make-sparse-keymap))
-          (define-key parent vec map))
-        (setq parent map)))
+             (cur (general--unwrap (lookup-key map vec t))))
+        (unless (keymapp cur)
+          (setq cur (make-sparse-keymap))
+          (define-key map vec cur))
+        (setq map cur)))
     map))
 
 (defun general--bind (root keyseq cmd desc)
-  "Bind KEYSEQ under ROOT.  Prefix maps are plain; leaves may use cons."
-  (let ((len (length keyseq)))
-    (cond
-     ((= len 0) nil)
-     ((eq cmd :ignore)
-      (general--ensure-path root keyseq)
-      (when (and desc (fboundp 'which-key-add-key-based-replacements))
-        (condition-case nil
-            (which-key-add-key-based-replacements
-             (key-description keyseq) desc)
-          (error nil))))
-     ((= len 1)
-      (define-key root keyseq (if desc (cons desc cmd) cmd)))
-     (t
-      (let ((parent (general--ensure-path root (substring keyseq 0 (1- len)))))
-        (define-key parent (vector (aref keyseq (1- len)))
-          (if desc (cons desc cmd) cmd)))))))
+  "Bind KEYSEQ under ROOT.  Prefixes are plain maps; leaves may use cons."
+  (cond
+   ((zerop (length keyseq)) nil)
+   ((eq cmd :ignore)
+    (general--ensure-path root keyseq)
+    (when (and desc (fboundp 'which-key-add-key-based-replacements))
+      (condition-case nil
+          (which-key-add-key-based-replacements
+           (key-description keyseq) desc)
+        (error nil))))
+   (t
+    (let* ((len (length keyseq))
+           (parent (if (= len 1) root
+                     (general--ensure-path root (substring keyseq 0 (1- len)))))
+           (event (if (= len 1) keyseq
+                    (vector (aref keyseq (1- len)))))
+           (def (if desc (cons desc cmd) cmd)))
+      (define-key parent event def)))))
 
 
-;;; Deferred bindings for custom state maps (load-order safe, no freeze)
+;;; Deferred custom-state maps
 
 (defvar general--pending-state-bindings nil
-  "List of (STATE KEYSEQ CMD DESC) waiting for evil-STATE-state-map.")
+  "List of (STATE KEYSEQ CMD DESC) waiting for `evil-STATE-state-map'.")
 
 (defvar general--pending-hook-added nil)
 
 (defun general--flush-pending-state-bindings (&rest _)
-  "Apply pending custom-state bindings whose state maps now exist."
-  (let ((remaining nil))
+  "Apply pending bindings whose custom state maps now exist."
+  (let (remaining)
     (dolist (item general--pending-state-bindings)
-      (let* ((state  (nth 0 item))
-             (keyseq (nth 1 item))
-             (cmd    (nth 2 item))
-             (desc   (nth 3 item))
-             (map    (general--state-map state)))
+      (let ((map (general--state-map (car item))))
         (if map
-            (general--bind map keyseq cmd desc)
+            (apply #'general--bind map (cdr item))
           (push item remaining))))
     (setq general--pending-state-bindings (nreverse remaining))
     (when (null general--pending-state-bindings)
@@ -205,7 +175,7 @@ Only for non-standard states."
       (setq general--pending-hook-added nil))))
 
 (defun general--queue-state-binding (state keyseq cmd desc)
-  "Bind on state map now, or queue until the map exists."
+  "Bind on custom state map now, or queue until it exists."
   (let ((map (general--state-map state)))
     (if map
         (general--bind map keyseq cmd desc)
@@ -216,23 +186,27 @@ Only for non-standard states."
           (add-hook 'after-load-functions
                     #'general--flush-pending-state-bindings))))))
 
+
+;;; Aux-map cache
 
-;;; Aux cache
-
-(defvar general--aux-cache nil)
+(defvar general--aux-cache nil
+  "Alist ((KEYMAP . STATE) . AUX) for one `general-define-key' call.")
 
 (defun general--aux-map (kmap state)
-  "Return evil auxiliary keymap for STATE on KMAP (cached)."
+  "Cached `evil-get-auxiliary-keymap' for STATE on KMAP."
   (let* ((key (cons kmap state))
-         (cached (assoc key general--aux-cache)))
-    (if cached
-        (cdr cached)
+         (hit (assoc key general--aux-cache)))
+    (if hit (cdr hit)
       (let ((aux (evil-get-auxiliary-keymap kmap state t t)))
         (push (cons key aux) general--aux-cache)
         aux))))
 
+
+;;; Core
 
-;;; Core function
+(defconst general--plist-keys
+  '(:states :keymaps :major-modes :prefix :non-normal-prefix)
+  "Keyword args stripped from the key/definition body.")
 
 ;;;###autoload
 (cl-defun general-define-key
@@ -244,64 +218,66 @@ Only for non-standard states."
            (prefix nil)
            (non-normal-prefix nil)
            &allow-other-keys)
-  "Define keybindings in the style of general.el (minimal subset).
+  "Define keybindings (minimal general.el-compatible API).
 
-Custom states (e.g. treemacs): bindings go to mode-map aux maps and to
-`evil-STATE-state-map'.  If the state map is not loaded yet, the binding
-is deferred via `after-load-functions' (only those pending entries)."
+:states   – evil states; bindings only in those states (aux maps)
+:keymaps  – keymap symbol/list, 'global, or 'override
+:prefix / :non-normal-prefix – string prefixes
+:major-modes – accepted, ignored
+
+Custom states also bind on `evil-STATE-state-map' (deferred if needed)."
   (declare (indent defun))
-  (let* ((plist-keys '(:states :keymaps :major-modes :prefix
-                               :non-normal-prefix))
-         (bindings
-          (let ((rest args) (acc nil))
+  (ignore major-modes)
+  (let* ((bindings
+          (let ((rest args) acc)
             (while rest
-              (if (memq (car rest) plist-keys)
+              (if (memq (car rest) general--plist-keys)
                   (setq rest (cddr rest))
                 (push (pop rest) acc)
                 (when rest (push (pop rest) acc))))
             (nreverse acc)))
-         (prefix-str    (general--prefix-string prefix))
-         (nn-prefix-str (general--prefix-string non-normal-prefix))
-         (has-nn-prefix (and non-normal-prefix
-                             (not (string-empty-p nn-prefix-str))))
-         (states-list   (when states (general--normalize-list states)))
-         (keymap-syms   (general--normalize-list keymaps))
-         (use-evil      (and states-list (fboundp 'evil-define-key*)
-                             (fboundp 'evil-get-auxiliary-keymap)))
+         (prefix-str (if (stringp prefix) prefix
+                       (if prefix (key-description prefix) "")))
+         (nn-str (if (stringp non-normal-prefix) non-normal-prefix
+                   (if non-normal-prefix
+                       (key-description non-normal-prefix) "")))
+         (has-nn (and non-normal-prefix (not (string-empty-p nn-str))))
+         (states-list (and states (general--normalize-list states)))
+         (keymap-syms (general--normalize-list keymaps))
+         (use-evil (and states-list
+                        (fboundp 'evil-define-key*)
+                        (fboundp 'evil-get-auxiliary-keymap)))
          (general--aux-cache nil))
 
-    (ignore major-modes)
-
     (dolist (kmap-sym keymap-syms)
-      (let ((kmap (general--resolve-keymap kmap-sym)))
-        (unless kmap
-          (when (symbolp kmap-sym)
-            (unless (boundp kmap-sym)
-              (set kmap-sym (make-sparse-keymap)))
-            (setq kmap (symbol-value kmap-sym))))
-        (when kmap
+      (let ((kmap (or (general--resolve-keymap kmap-sym)
+                      (and (symbolp kmap-sym)
+                           (progn
+                             (unless (boundp kmap-sym)
+                               (set kmap-sym (make-sparse-keymap)))
+                             (symbol-value kmap-sym))))))
+        (when (keymapp kmap)
           (let ((pairs bindings))
             (while pairs
-              (let* ((raw-key (pop pairs))
-                     (def     (pop pairs))
-                     (key-str (if (stringp raw-key) raw-key
-                                (key-description raw-key)))
-                     (parsed  (general--parse-def def))
-                     (cmd     (car parsed))
-                     (desc    (cdr parsed)))
+              (let* ((raw (pop pairs))
+                     (def (pop pairs))
+                     (key-str (if (stringp raw) raw (key-description raw)))
+                     (parsed (general--parse-def def))
+                     (cmd (car parsed))
+                     (desc (cdr parsed)))
                 (if use-evil
                     (dolist (state states-list)
-                      (let* ((use-nn (and has-nn-prefix
-                                          (general--non-normal-state-p state)))
-                             (p-str  (if use-nn nn-prefix-str prefix-str))
-                             (full   (general--full-key-str p-str key-str))
+                      (let* ((pstr (if (and has-nn
+                                            (memq state general-non-normal-states))
+                                       nn-str prefix-str))
+                             (full (if (string-empty-p pstr) key-str
+                                     (concat pstr " " key-str)))
                              (keyseq (kbd full)))
-                        ;; Mode-map auxiliary (always, when kmap exists)
                         (general--bind (general--aux-map kmap state)
                                        keyseq cmd desc)
-                        ;; Custom state global map (now or deferred)
                         (general--queue-state-binding state keyseq cmd desc)))
-                  (let* ((full   (general--full-key-str prefix-str key-str))
+                  (let* ((full (if (string-empty-p prefix-str) key-str
+                                 (concat prefix-str " " key-str)))
                          (keyseq (kbd full)))
                     (general--bind kmap keyseq cmd desc)))))))))))
 
