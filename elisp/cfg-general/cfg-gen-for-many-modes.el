@@ -51,6 +51,7 @@
     mhtml-mode
     makefile-gmake-mode
     makefile-mode
+    elm-mode
     nix-mode
     nix-ts-mode
     nxml-mode
@@ -103,6 +104,7 @@
     mhtml-mode-map
     makefile-gmake-mode-map
     makefile-mode-map
+    elm-mode-map
     nix-mode-map
     nix-ts-mode-map
     nxml-mode-map
@@ -195,6 +197,7 @@
                         jenkinsfile-mode
                         fish-mode
                         web-mode
+                        elm-mode
                         latex-mode
                         scheme-mode
                         makefile-mode
@@ -206,6 +209,7 @@
                         jenkinsfile-mode-map
                         fish-mode-map
                         web-mode-map
+                        elm-mode-map
                         latex-mode-map
                         scheme-mode-map
                         makefile-mode-map

@@ -183,7 +183,7 @@ WARNING! Sometimes could cause errors and hang emacs."
            ("\\pkgs_arch.txt\\'" . conf-mode)
            ("\\.tmux.conf_x11\\'" . conf-mode)
            ("\\.Xresources\\'" . conf-xdefaults-mode)
-           ("\\Makefile\\'" . makefile-gmake-mode)
+           ("Makefile.*\\'" . makefile-gmake-mode)
            ("\\abbrev_defs\\'" . emacs-lisp-mode)
            ("\\.gcs\\'" . text-mode)
            ("\\.zsh\\'" . sh-mode)
