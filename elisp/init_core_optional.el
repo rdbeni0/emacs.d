@@ -5,3 +5,4 @@
 (use-package cfg-op-core-dark-theme)
 (use-package cfg-op-core-mode-line)
 (use-package cfg-op-core-completion-systems)
+(use-package cfg-op-core-treemacs)

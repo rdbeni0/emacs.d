@@ -1,11 +1,8 @@
-;;; cfg-op-treemacs-speedbar.el --- configfuration for treemacs and speedbar -*- lexical-binding: t -*-
+;;; cfg-op-treemacs-orig.el --- configfuration for treemacs -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; treemacs:
+;; Original version of treemacs:
 ;; https://github.com/Alexander-Miller/treemacs
-;;
-;; sr-speedbar:
-;; https://github.com/emacsorphanage/sr-speedbar/tree/77a83fb50f763a465c021eca7343243f465b4a47
 ;;
 ;;; Code:
 
@@ -458,10 +455,5 @@ Treemacs markers."
   :config
   (treemacs-set-scope-type 'Tabs))
 
-(use-package sr-speedbar
-  :ensure t
-  :config
-  )
-
-(provide 'cfg-op-treemacs-speedbar)
-;;; cfg-op-treemacs-speedbar.el ends here
+(provide 'cfg-op-treemacs-orig)
+;;; cfg-op-treemacs-orig.el ends here
