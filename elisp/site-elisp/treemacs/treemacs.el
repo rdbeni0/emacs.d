@@ -694,6 +694,29 @@ GENERATION discards stale scheduled calls."
   (interactive)
   (treemacs-visit-node-no-split))
 
+(defun treemacs-leftclick-action (event)
+  "Select the node under mouse EVENT without opening it.
+A single click only moves point and updates `hl-line'; use
+`treemacs-doubleclick-action' (double-click) to visit or toggle."
+  (interactive "e")
+  (let* ((start (event-start event))
+         (window (posn-window start))
+         (pos (posn-point start)))
+    (when (window-live-p window)
+      (select-window window))
+    (when (number-or-marker-p pos)
+      (goto-char pos)
+      (when (fboundp 'hl-line-highlight)
+        (hl-line-highlight))
+      (force-mode-line-update))))
+
+(defun treemacs-doubleclick-action (event)
+  "Select then visit or toggle the node under mouse EVENT.
+Bound to double-click; single-click only selects."
+  (interactive "e")
+  (treemacs-leftclick-action event)
+  (treemacs-RET-action))
+
 (defun treemacs-refresh ()
   "Redraw the current treemacs buffer."
   (interactive)
@@ -1066,8 +1089,9 @@ Only use `define-key'; never reassign the keymap variable."
     (define-key map (kbd "oh") #'treemacs-visit-node-horizontal-split)
     (define-key map (kbd "oo") #'treemacs-visit-node-no-split)
     (define-key map (kbd "ox") #'treemacs-visit-node-in-external-application)
-    (define-key map [mouse-1] #'treemacs-RET-action)
-    (define-key map [double-mouse-1] #'treemacs-TAB-action)
+    ;; Mouse: single-click selects; double-click opens/toggles.
+    (define-key map [mouse-1] #'treemacs-leftclick-action)
+    (define-key map [double-mouse-1] #'treemacs-doubleclick-action)
     (define-key map [down-mouse-3] #'ignore)
     (define-key map [mouse-3] #'treemacs-rightclick-menu)
     map))
