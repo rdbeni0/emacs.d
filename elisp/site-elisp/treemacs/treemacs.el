@@ -9,6 +9,8 @@
 ;;   1. project.el   2. .git root   3. file directory
 ;;   4. previous file buffer   5. $HOME
 ;;
+;; Identification: `treemacs-in-house' is non-nil for this build.
+;;
 ;;; Code:
 
 (require 'cl-lib)
@@ -46,8 +48,18 @@
   "Pixel size for PNG icons."
   :type 'integer :group 'treemacs)
 
+(defconst treemacs-in-house t
+  "Non-nil when this is the in-house minimal treemacs replacement.
+Other packages can use (bound-and-true-p treemacs-in-house).")
+
+(defcustom treemacs-icons-directory nil
+  "Explicit directory with treemacs-style PNG icons, or nil to auto-detect."
+  :type '(choice (directory :tag "Icons directory")
+                 (const :tag "Auto-detect (default)" nil))
+  :group 'treemacs)
+
 (defun treemacs--find-icons-dir ()
-  "Locate treemacs icons/default (prefer real package, not this file)."
+  "Locate treemacs icons/default when `treemacs-icons-directory' is nil."
   (or
    ;; walk load-path for a dir that actually contains icons
    (cl-loop for dir in load-path
@@ -62,10 +74,15 @@
             when (file-directory-p candidate)
             return candidate)))
 
-(defcustom treemacs-icons-dir (treemacs--find-icons-dir)
-  "Directory with treemacs-style PNG icons (…/treemacs/icons/default)."
-  :type '(choice (directory :tag "Icons directory") (const :tag "None" nil))
-  :group 'treemacs)
+(defun treemacs--icons-dir ()
+  "Return effective icons directory: override or auto-detect."
+  (let ((override treemacs-icons-directory))
+    (cond
+     ((and (stringp override)
+           (not (string-empty-p override))
+           (file-directory-p override))
+      override)
+     (t (treemacs--find-icons-dir)))))
 
 
 ;;; Faces
@@ -104,9 +121,12 @@
 
 ;;; Buffer / tab state
 
-(defvar-local treemacs--root nil)
-(defvar-local treemacs--expanded nil)
-(defvar-local treemacs--git-cache nil)
+(defvar-local treemacs--root nil
+  "Root directory shown in this treemacs buffer.")
+(defvar-local treemacs--expanded nil
+  "Hash table of expanded directory paths.")
+(defvar-local treemacs--git-cache nil
+  "Alist of relative path to git status char.")
 
 (defvar treemacs--buffers nil
   "Alist (TAB-ID . BUFFER).")
@@ -124,10 +144,12 @@
     (or name (format "frame-%s" (sxhash-eq (selected-frame))))))
 
 (defun treemacs--buffer-name ()
+  "Return the buffer name for the current tab-id."
   (format "*treemacs:%s*" (treemacs--tab-id)))
 
 (defun treemacs--get-buffer (&optional create)
-  "Return (and optionally create) the treemacs buffer for the current tab-id."
+  "Return the treemacs buffer for the current tab-id.
+When CREATE is non-nil, create the buffer if it does not exist."
   (let* ((id  (treemacs--tab-id))
          (buf (cdr (assoc id treemacs--buffers))))
     (when (and buf (not (buffer-live-p buf)))
@@ -141,10 +163,15 @@
       (push (cons id buf) treemacs--buffers))
     buf))
 
+;; ---------------------------------------------------------------------------
+;; WARNING – DO NOT REPLACE WITH TAB-ID / BUFFER-NAME LOOKUP
+;; When the side window was visible but unselected, root follow failed often;
+;; lookup used a volatile tab-id.  Fix: scan the frame for treemacs-mode.
+;; Do not simplify back to (get-buffer-window (treemacs--get-buffer)).
+;; ---------------------------------------------------------------------------
 (defun treemacs--visible-treemacs-window ()
-  "Return the first live window in the selected frame that shows a treemacs buffer.
-This does *not* rely on the current tab-id, so it still finds the side-window
-after a buffer switch that would otherwise change the tab name."
+  "Return a live window on this frame showing a treemacs buffer.
+Do not rely on tab-id; still find the side-window after a buffer switch."
   (cl-loop for win being the windows of (selected-frame)
            for buf = (window-buffer win)
            when (and (buffer-live-p buf)
@@ -175,6 +202,7 @@ after a buffer switch that would otherwise change the tab name."
 ;;; Root detection
 
 (defun treemacs--project-root (&optional buf)
+  "Return the project.el root of BUF, or nil."
   (when (fboundp 'project-current)
     (let ((target (or buf (current-buffer))))
       (condition-case nil
@@ -188,6 +216,7 @@ after a buffer switch that would otherwise change the tab name."
         (error nil)))))
 
 (defun treemacs--git-root (&optional dir)
+  "Return the nearest .git root above DIR, or nil."
   (let ((dir (expand-file-name (or dir default-directory)))
         root)
     (while (and dir (not root))
@@ -198,6 +227,7 @@ after a buffer switch that would otherwise change the tab name."
     root))
 
 (defun treemacs--dired-dir (&optional buf)
+  "Return the Dired directory of BUF, or nil."
   (let ((buf (or buf (current-buffer))))
     (with-current-buffer buf
       (when (derived-mode-p 'dired-mode)
@@ -226,8 +256,8 @@ after a buffer switch that would otherwise change the tab name."
       (error nil))))
 
 (defun treemacs--detect-root (&optional buf)
-  "Smart root for BUF.
-File/Dired → project.el → .git → dir → last-file-buffer → $HOME."
+  "Return a smart project root for BUF.
+Order: project.el, .git, file/Dired directory, previous file buffer, $HOME."
   (let* ((buf  (or buf (current-buffer)))
          (root (treemacs--root-from-buffer buf)))
     (unless root
@@ -239,6 +269,8 @@ File/Dired → project.el → .git → dir → last-file-buffer → $HOME."
 
 
 ;;; Follow – robust buffer handling
+;; WARNING: use `treemacs--visible-treemacs-window', generation debounce,
+;; and switch-to-buffer advice.  Changing only one piece reintroduces bugs.
 
 (defun treemacs--norm-root (dir)
   "Normalize DIR for stable root comparison."
@@ -246,9 +278,12 @@ File/Dired → project.el → .git → dir → last-file-buffer → $HOME."
     (ignore-errors
       (directory-file-name (file-truename (expand-file-name dir))))))
 
-(defvar treemacs--follow-timer nil)
-(defvar treemacs--follow-generation 0)
-(defvar treemacs--follow-last-root nil)
+(defvar treemacs--follow-timer nil
+  "Pending follow timer object, or nil.")
+(defvar treemacs--follow-generation 0
+  "Monotonic generation for last-wins follow scheduling.")
+(defvar treemacs--follow-last-root nil
+  "Normalized root last applied by follow.")
 
 (defun treemacs--best-follow-candidate ()
   "Best live file/dired buffer that is *not* a treemacs buffer."
@@ -302,7 +337,7 @@ GENERATION discards stale scheduled calls."
                               (error-message-string err)))))))))))))
 
 (defun treemacs--schedule-follow (&rest _)
-  "True last-wins debounce via generation counter (no artificial delay)."
+  "Schedule last-wins follow via generation counter (no artificial delay)."
   (when (and treemacs-follow-mode (not treemacs--follow-inhibit))
     (when treemacs--follow-timer
       (cancel-timer treemacs--follow-timer)
@@ -314,7 +349,7 @@ GENERATION discards stale scheduled calls."
                             (lambda () (treemacs--follow gen)))))))
 
 (defun treemacs--follow-now (&rest _)
-  "Immediate follow (find-file / dired / project-switch)."
+  "Run follow immediately after find-file, Dired, or project-switch."
   (when treemacs--follow-timer
     (cancel-timer treemacs--follow-timer)
     (setq treemacs--follow-timer nil))
@@ -322,20 +357,23 @@ GENERATION discards stale scheduled calls."
   (treemacs--follow treemacs--follow-generation))
 
 (defun treemacs--on-after-save ()
+  "Refresh the visible treemacs window after save."
   (when-let ((win (treemacs--visible-treemacs-window)))
     (with-current-buffer (window-buffer win)
       (treemacs--render))))
 
 (defun treemacs--after-switch-to-buffer (&rest _)
-  "Advice for pure buffer switches (recentf, consult, switch-to-buffer…)."
+  "Advise buffer switches such as recentf, consult, and `switch-to-buffer'."
   (when (and treemacs-follow-mode
              (not treemacs--follow-inhibit)
              (or buffer-file-name (derived-mode-p 'dired-mode)))
     (treemacs--schedule-follow)))
 
-(defvar treemacs--hooks-installed nil)
+(defvar treemacs--hooks-installed nil
+  "Non-nil after follow hooks and advice are installed.")
 
 (defun treemacs--install-hooks ()
+  "Install follow hooks and advice once."
   (unless treemacs--hooks-installed
     (add-hook 'window-buffer-change-functions
               (lambda (_) (treemacs--schedule-follow)))
@@ -360,6 +398,7 @@ GENERATION discards stale scheduled calls."
 ;;; Git
 
 (defun treemacs--git-face (status)
+  "Return a face symbol for git STATUS, or nil."
   (pcase status
     ("M" 'treemacs-git-modified-face)
     ("A" 'treemacs-git-added-face)
@@ -371,6 +410,7 @@ GENERATION discards stale scheduled calls."
     (_ nil)))
 
 (defun treemacs--refresh-git (root)
+  "Refresh git status cache for ROOT."
   (setq treemacs--git-cache nil)
   (when (and treemacs-git-mode
              (file-exists-p (expand-file-name ".git" root))
@@ -396,6 +436,7 @@ GENERATION discards stale scheduled calls."
               (push (cons path char) treemacs--git-cache))))))))
 
 (defun treemacs--git-status-for (abs-path root)
+  "Return git status for ABS-PATH under ROOT, or nil."
   (when treemacs--git-cache
     (let* ((root (file-name-as-directory (expand-file-name root)))
            (abs (expand-file-name abs-path))
@@ -420,6 +461,7 @@ GENERATION discards stale scheduled calls."
   "Alist of (KEY . PNG-FILENAME) for known extensions / dir states.")
 
 (defun treemacs--init-icons-map ()
+  "Initialize the default icons filename map."
   (setq treemacs--icons-map
         '(("dir-closed" . "vsc/dir-closed.png")
           ("dir-open"   . "vsc/dir-open.png")
@@ -441,14 +483,17 @@ GENERATION discards stale scheduled calls."
           ("txt" . "txt.png"))))
 
 (defun treemacs--icon-file (key)
-  (when (and treemacs-icons-dir (file-directory-p treemacs-icons-dir))
-    (unless treemacs--icons-map (treemacs--init-icons-map))
-    (let* ((name (or (cdr (assoc key treemacs--icons-map))
-                     (and (stringp key) (concat key ".png"))))
-           (path (and name (expand-file-name name treemacs-icons-dir))))
-      (when (and path (file-readable-p path)) path))))
+  "Return absolute path to icon PNG for KEY, or nil."
+  (let ((icons (treemacs--icons-dir)))
+    (when (and icons (file-directory-p icons))
+      (unless treemacs--icons-map (treemacs--init-icons-map))
+      (let* ((name (or (cdr (assoc key treemacs--icons-map))
+                       (and (stringp key) (concat key ".png"))))
+             (path (and name (expand-file-name name icons))))
+        (when (and path (file-readable-p path)) path)))))
 
 (defun treemacs--create-image (file-path)
+  "Create a scaled image from FILE-PATH, or nil."
   (let ((h treemacs-icon-size)
         (w treemacs-icon-size)
         (type (if (image-type-available-p 'png) 'png
@@ -462,6 +507,7 @@ GENERATION discards stale scheduled calls."
       (error nil))))
 
 (defun treemacs--png-icon (key fallback)
+  "Return a propertized icon string for KEY with FALLBACK."
   (let* ((cache-key (cons key treemacs-icon-size))
          (cached (gethash cache-key treemacs--icon-cache)))
     (or cached
@@ -474,6 +520,7 @@ GENERATION discards stale scheduled calls."
           str))))
 
 (defun treemacs--ext-key (path)
+  "Return icons-map key derived from PATH."
   (let* ((base (downcase (file-name-nondirectory path)))
          (ext  (downcase (or (file-name-extension path) ""))))
     (cond
@@ -483,8 +530,9 @@ GENERATION discards stale scheduled calls."
      (t "fallback"))))
 
 (defun treemacs--icon (path dir-p open-p &optional root-p)
+  "Return icon string for PATH."
   (cond
-   ((and treemacs-icons-dir (display-graphic-p))
+   ((and (treemacs--icons-dir) (display-graphic-p))
     (cond
      (root-p (treemacs--png-icon "root" (propertize "• " 'face 'treemacs-root-face)))
      (dir-p  (treemacs--png-icon (if open-p "dir-open" "dir-closed")
@@ -498,6 +546,7 @@ GENERATION discards stale scheduled calls."
 ;;; Listing / render
 
 (defun treemacs--list-dir (dir)
+  "Return sorted directory entries for DIR."
   (let (entries)
     (dolist (name (directory-files dir nil nil t))
       (unless (or (member name '("." ".."))
@@ -513,6 +562,7 @@ GENERATION discards stale scheduled calls."
                     (t (string-lessp (car a) (car b)))))))))
 
 (defun treemacs--insert-node (path depth)
+  "Insert PATH into the tree at DEPTH."
   (let* ((dir-p  (file-directory-p path))
          (name   (file-name-nondirectory (directory-file-name path)))
          (open-p (and dir-p (gethash path treemacs--expanded)))
@@ -536,6 +586,7 @@ GENERATION discards stale scheduled calls."
         (treemacs--insert-node (cdr e) (1+ depth))))))
 
 (defun treemacs--render ()
+  "Redraw the current treemacs buffer."
   (let ((inhibit-read-only t)
         (root treemacs--root)
         (pos (point)))
@@ -560,12 +611,15 @@ GENERATION discards stale scheduled calls."
     (goto-char (min pos (point-max)))))
 
 (defun treemacs--path-at-point ()
+  "Return filesystem path at point, or nil."
   (get-text-property (point) 'treemacs-path))
 
 (defun treemacs--dir-p-at-point ()
+  "Return non-nil if point is on a directory node."
   (get-text-property (point) 'treemacs-dir-p))
 
 (defun treemacs--goto-path (path)
+  "Move point to PATH in the tree; return non-nil if found."
   (goto-char (point-min))
   (catch 'found
     (while (not (eobp))
@@ -578,6 +632,7 @@ GENERATION discards stale scheduled calls."
 ;;; Commands
 
 (defun treemacs-toggle-node (&optional path)
+  "Toggle expand or collapse of PATH or the node at point."
   (interactive)
   (let ((path (or path (treemacs--path-at-point))))
     (when (and path (file-directory-p path))
@@ -588,6 +643,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--goto-path path))))
 
 (defun treemacs-visit-node-no-split ()
+  "Visit file at point or toggle a directory."
   (interactive)
   (let ((path (treemacs--path-at-point)))
     (cond
@@ -600,6 +656,7 @@ GENERATION discards stale scheduled calls."
         (find-file path))))))
 
 (defun treemacs-visit-node-vertical-split ()
+  "Visit file at point in a vertical split."
   (interactive)
   (let ((path (treemacs--path-at-point)))
     (when (and path (not (file-directory-p path)))
@@ -608,6 +665,7 @@ GENERATION discards stale scheduled calls."
         (find-file path)))))
 
 (defun treemacs-visit-node-horizontal-split ()
+  "Visit file at point in a horizontal split."
   (interactive)
   (let ((path (treemacs--path-at-point)))
     (when (and path (not (file-directory-p path)))
@@ -616,6 +674,7 @@ GENERATION discards stale scheduled calls."
         (find-file path)))))
 
 (defun treemacs-visit-node-in-external-application ()
+  "Open path at point with the OS handler."
   (interactive)
   (let ((path (treemacs--path-at-point)))
     (when path
@@ -636,12 +695,14 @@ GENERATION discards stale scheduled calls."
   (treemacs-visit-node-no-split))
 
 (defun treemacs-refresh ()
+  "Redraw the current treemacs buffer."
   (interactive)
   (when treemacs--root
     (treemacs--render)
     (message "treemacs: refreshed")))
 
 (defun treemacs-create-file ()
+  "Create a new file under point or the tree root."
   (interactive)
   (let* ((path (treemacs--path-at-point))
          (dir (cond ((and path (file-directory-p path)) path)
@@ -656,6 +717,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--goto-path full))))
 
 (defun treemacs-create-dir ()
+  "Create a new directory under point or the tree root."
   (interactive)
   (let* ((path (treemacs--path-at-point))
          (dir (cond ((and path (file-directory-p path)) path)
@@ -670,6 +732,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--goto-path full))))
 
 (defun treemacs-rename-file ()
+  "Rename the filesystem entry at point."
   (interactive)
   (let* ((path (treemacs--path-at-point))
          (dir (and path (file-name-directory path)))
@@ -682,6 +745,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--goto-path dest))))
 
 (defun treemacs-delete-file ()
+  "Delete the filesystem entry at point after confirm."
   (interactive)
   (let ((path (treemacs--path-at-point)))
     (when (and path (y-or-n-p (format "Delete %s? " path)))
@@ -691,6 +755,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--render))))
 
 (defun treemacs-move-file ()
+  "Move the filesystem entry at point."
   (interactive)
   (let* ((path (treemacs--path-at-point))
          (dest-dir (and path (read-directory-name "Move to: ")))
@@ -704,6 +769,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--goto-path dest))))
 
 (defun treemacs-copy-file ()
+  "Copy the filesystem entry at point."
   (interactive)
   (let* ((path (treemacs--path-at-point))
          (dest-dir (and path (read-directory-name "Copy to: ")))
@@ -719,12 +785,14 @@ GENERATION discards stale scheduled calls."
       (treemacs--goto-path dest))))
 
 (defun treemacs-copy-absolute-path-at-point ()
+  "Copy absolute path at point to the kill ring."
   (interactive)
   (when-let ((path (treemacs--path-at-point)))
     (kill-new path)
     (message "Copied: %s" path)))
 
 (defun treemacs-copy-relative-path-at-point ()
+  "Copy root-relative path at point to the kill ring."
   (interactive)
   (when-let ((path (treemacs--path-at-point))
              (root treemacs--root))
@@ -736,6 +804,7 @@ GENERATION discards stale scheduled calls."
       (message "Copied: %s" rel))))
 
 (defun treemacs-copy-filename-at-point ()
+  "Copy filename at point to the kill ring."
   (interactive)
   (when-let ((path (treemacs--path-at-point)))
     (let ((name (file-name-nondirectory (directory-file-name path))))
@@ -743,19 +812,27 @@ GENERATION discards stale scheduled calls."
       (message "Copied: %s" name))))
 
 (defun treemacs-copy-project-path-at-point ()
+  "Copy project-relative path at point."
   (interactive)
   (treemacs-copy-relative-path-at-point))
 
 (defun treemacs-toggle-show-dotfiles ()
+  "Toggle dotfile visibility and refresh."
   (interactive)
   (setq treemacs-show-hidden-files (not treemacs-show-hidden-files))
   (treemacs-refresh)
   (message "Dotfiles %s" (if treemacs-show-hidden-files "shown" "hidden")))
 
-(defun treemacs-next-line () (interactive) (forward-line 1))
-(defun treemacs-previous-line () (interactive) (forward-line -1))
-
+(defun treemacs-next-line ()
+  "Move to the next line."
+  (interactive)
+  (forward-line 1))
+(defun treemacs-previous-line ()
+  "Move to the previous line."
+  (interactive)
+  (forward-line -1))
 (defun treemacs-COLLAPSE-action ()
+  "Collapse the parent of the node at point."
   (interactive)
   (let* ((path (treemacs--path-at-point))
          (parent (and path (file-name-directory (directory-file-name path)))))
@@ -767,8 +844,8 @@ GENERATION discards stale scheduled calls."
 
 (defun treemacs-quit (&optional _arg)
   "Hide the treemacs window for this tab.
-Does not call `kill-this-buffer' (that command requires a mouse event
-and is a common accidental binding for `q' in special-mode buffers)."
+Do not call `kill-this-buffer' (needs a mouse event; common accidental
+binding for `q' in `special-mode' buffers)."
   (interactive "P")
   (let ((win (or (treemacs-get-local-window)
                  (and (eq major-mode 'treemacs-mode)
@@ -781,31 +858,42 @@ and is a common accidental binding for `q' in special-mode buffers)."
 
 ;; Workspace stubs (no config-file workspaces – per-tab isolation instead)
 (defun treemacs-switch-workspace ()
+  "Stub: workspaces map to tab-bar tabs."
   (interactive)
   (message "treemacs: workspaces are tab-bar tabs – switch tabs instead"))
 (defun treemacs-create-workspace ()
+  "Stub: use tab-bar-new-tab for a new scope."
   (interactive) (message "treemacs: use tab-bar-new-tab for a new tree scope"))
 (defun treemacs-remove-workspace ()
+  "Stub: use tab-bar-close-tab."
   (interactive) (message "treemacs: use tab-bar-close-tab"))
 (defun treemacs-rename-workspace ()
+  "Stub: use tab-rename."
   (interactive) (message "treemacs: use tab-rename"))
 (defun treemacs-edit-workspaces ()
+  "Stub: no workspace file in this build."
   (interactive) (message "treemacs: no workspace file – isolation is per tab-bar"))
 (defun treemacs-set-fallback-workspace ()
+  "Stub: no fallback workspace in this build."
   (interactive) (message "treemacs: no fallback workspace in minimal build"))
 (defun treemacs-next-workspace ()
+  "Switch to the next tab-bar tab when available."
   (interactive)
   (when (fboundp 'tab-next) (tab-next)))
 (defalias 'treemacs-next-workspaces #'treemacs-next-workspace)
 (defun treemacs-add-project ()
+  "Rescan root from project.el, git, or file path."
   (interactive)
   (treemacs-rescan-root)
   (message "Root rescanned from project.el / git / file"))
 (defun treemacs-add-project-to-workspace ()
+  "Rescan root (alias of treemacs-add-project)."
   (interactive) (treemacs-add-project))
 (defun treemacs-remove-project-from-workspace ()
+  "Stub: single automatic root cannot be removed."
   (interactive) (message "treemacs: single automatic root – nothing to remove"))
 (defun treemacs-rename-project ()
+  "Stub: root label follows the directory name."
   (interactive) (message "treemacs: root name follows the directory"))
 
 
@@ -887,6 +975,7 @@ and is a common accidental binding for `q' in special-mode buffers)."
 ;;; Display / toggle
 
 (defun treemacs--display-buffer (buf)
+  "Display BUF in a left side window."
   (display-buffer
    buf
    `((display-buffer-in-side-window)
@@ -914,6 +1003,7 @@ and is a common accidental binding for `q' in special-mode buffers)."
       (treemacs--display-buffer buf))))
 
 (defun treemacs-select-window ()
+  "Select the treemacs window, opening it if needed."
   (interactive)
   (let* ((buf (treemacs--get-buffer t))
          (win (get-buffer-window buf)))
@@ -948,7 +1038,8 @@ and is a common accidental binding for `q' in special-mode buffers)."
   "Keymap for `treemacs-mode'.  Do not reassign; only define-key into it.")
 
 (defun treemacs--populate-mode-map ()
-  "Define treemacs commands on the existing `treemacs-mode-map' object."
+  "Define treemacs commands on the existing `treemacs-mode-map' object.
+Only use `define-key'; never reassign the keymap variable."
   (let ((map treemacs-mode-map))
     (define-key map (kbd "RET") #'treemacs-RET-action)
     (define-key map (kbd "TAB") #'treemacs-TAB-action)

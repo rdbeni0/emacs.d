@@ -7,9 +7,9 @@
 
 ;; org-static-blog
 ;; https://github.com/bastibe/org-static-blog
-(use-package org-static-blog
-  :ensure t
-  )
+;; (use-package org-static-blog
+;;   :ensure t
+;;   )
 
 ;; OPTIONAL: orglink
 ;; Similar to: https://www.gnu.org/software/emacs/manual/html_node/emacs/Goto-Address-mode.html
