@@ -58,6 +58,13 @@ Other packages can use (bound-and-true-p treemacs-in-house).")
                  (const :tag "Auto-detect (default)" nil))
   :group 'treemacs)
 
+(defcustom treemacs-double-click-time 0
+  "Seconds within which a second click on the same node opens it.
+If 0 or negative, there is no timeout: every second click on the same
+node acts like a double-click.  Emacs `double-click-time' is not used."
+  :type 'number
+  :group 'treemacs)
+
 (defun treemacs--find-icons-dir ()
   "Locate treemacs icons/default when `treemacs-icons-directory' is nil."
   (or
@@ -709,18 +716,18 @@ the new tree is fully inserted so an empty buffer is never shown."
   (when (region-active-p)
     (deactivate-mark t))
   (setq mark-active nil)
-  (when (boundp 'evil-visual-state-p)
-    (when (and (fboundp 'evil-visual-state-p) (evil-visual-state-p)
-               (fboundp 'evil-normal-state))
-      (evil-normal-state))))
+  (when (and (fboundp 'evil-visual-state-p) (evil-visual-state-p)
+             (fboundp 'evil-normal-state))
+    (evil-normal-state)))
 
-(defun treemacs-leftclick-action (event)
-  "Select the node under mouse EVENT without opening it.
-A single click only moves point and updates `hl-line'; use
-`treemacs-doubleclick-action' (double-click) to visit or toggle.
-Never leave an active region (double-click would otherwise mark from
-point-min to click, looking like a top-to-line highlight)."
-  (interactive "e")
+(defvar-local treemacs--last-click-path nil
+  "Path selected by the previous mouse-1 click in this buffer.")
+(defvar-local treemacs--last-click-time 0.0
+  "Float time of the previous mouse-1 click in this buffer.")
+
+(defun treemacs--goto-event-node (event)
+  "Move point to the node under mouse EVENT and clear any region.
+Return the path at point, or nil."
   (let* ((start (event-start event))
          (window (posn-window start))
          (pos (posn-point start)))
@@ -730,20 +737,49 @@ point-min to click, looking like a top-to-line highlight)."
       (goto-char pos))
     (treemacs--clear-mouse-region)
     (when (fboundp 'hl-line-highlight)
-      (hl-line-highlight))))
+      (hl-line-highlight))
+    (treemacs--path-at-point)))
 
-(defun treemacs-doubleclick-action (event)
-  "Select then visit or toggle the node under mouse EVENT.
-Bound to double-click; single-click only selects."
-  (interactive "e")
-  (treemacs-leftclick-action event)
+(defun treemacs--click-is-double-p (path)
+  "Return non-nil if PATH is a second click on the same node.
+Uses `treemacs-double-click-time': 0 means no timeout."
+  (and path
+       (equal path treemacs--last-click-path)
+       (or (not (numberp treemacs-double-click-time))
+           (<= treemacs-double-click-time 0)
+           (< (- (float-time) treemacs--last-click-time)
+              treemacs-double-click-time))))
+
+(defun treemacs--open-at-point ()
+  "Visit or toggle node at point; keep hl-line if still in treemacs."
   (treemacs--clear-mouse-region)
+  (setq treemacs--last-click-path nil)
   (treemacs-RET-action)
-  ;; RET may re-render (toggle dir); re-assert single-line hl-line.
   (when (eq major-mode 'treemacs-mode)
     (treemacs--clear-mouse-region)
     (when (fboundp 'hl-line-highlight)
       (hl-line-highlight))))
+
+(defun treemacs-leftclick-action (event)
+  "Select the node under EVENT, or open it if this is the second click.
+
+Second click on the same node always opens/toggles it.  When
+`treemacs-double-click-time' is 0 (default), there is no time limit.
+A positive value is a timeout in seconds.  Does not use Emacs
+`double-click-time'."
+  (interactive "e")
+  (let ((path (treemacs--goto-event-node event))
+        (now (float-time)))
+    (if (treemacs--click-is-double-p path)
+        (treemacs--open-at-point)
+      (setq treemacs--last-click-path path
+            treemacs--last-click-time now))))
+
+(defun treemacs-doubleclick-action (event)
+  "Open or toggle the node under EVENT (fast system double-click)."
+  (interactive "e")
+  (treemacs--goto-event-node event)
+  (treemacs--open-at-point))
 
 (defun treemacs-refresh ()
   "Redraw the current treemacs buffer."
@@ -1117,9 +1153,10 @@ Only use `define-key'; never reassign the keymap variable."
     (define-key map (kbd "oh") #'treemacs-visit-node-horizontal-split)
     (define-key map (kbd "oo") #'treemacs-visit-node-no-split)
     (define-key map (kbd "ox") #'treemacs-visit-node-in-external-application)
-    ;; Mouse: single-click selects; double-click opens/toggles.
-    ;; Ignore drag so Emacs does not set a multi-line region.
-    (define-key map [down-mouse-1] #'treemacs-leftclick-action)
+    ;; Mouse: 1st click selects, 2nd click on same node opens (no timeout
+    ;; by default – see `treemacs-double-click-time').  down-mouse-1 is
+    ;; ignored so one physical click is not counted twice.
+    (define-key map [down-mouse-1] #'ignore)
     (define-key map [drag-mouse-1] #'ignore)
     (define-key map [mouse-1] #'treemacs-leftclick-action)
     (define-key map [double-mouse-1] #'treemacs-doubleclick-action)
