@@ -704,10 +704,22 @@ the new tree is fully inserted so an empty buffer is never shown."
   (interactive)
   (treemacs-visit-node-no-split))
 
+(defun treemacs--clear-mouse-region ()
+  "Drop any active region so only `hl-line' shows the selection."
+  (when (region-active-p)
+    (deactivate-mark t))
+  (setq mark-active nil)
+  (when (boundp 'evil-visual-state-p)
+    (when (and (fboundp 'evil-visual-state-p) (evil-visual-state-p)
+               (fboundp 'evil-normal-state))
+      (evil-normal-state))))
+
 (defun treemacs-leftclick-action (event)
   "Select the node under mouse EVENT without opening it.
 A single click only moves point and updates `hl-line'; use
-`treemacs-doubleclick-action' (double-click) to visit or toggle."
+`treemacs-doubleclick-action' (double-click) to visit or toggle.
+Never leave an active region (double-click would otherwise mark from
+point-min to click, looking like a top-to-line highlight)."
   (interactive "e")
   (let* ((start (event-start event))
          (window (posn-window start))
@@ -715,17 +727,23 @@ A single click only moves point and updates `hl-line'; use
     (when (window-live-p window)
       (select-window window))
     (when (number-or-marker-p pos)
-      (goto-char pos)
-      (when (fboundp 'hl-line-highlight)
-        (hl-line-highlight))
-      (force-mode-line-update))))
+      (goto-char pos))
+    (treemacs--clear-mouse-region)
+    (when (fboundp 'hl-line-highlight)
+      (hl-line-highlight))))
 
 (defun treemacs-doubleclick-action (event)
   "Select then visit or toggle the node under mouse EVENT.
 Bound to double-click; single-click only selects."
   (interactive "e")
   (treemacs-leftclick-action event)
-  (treemacs-RET-action))
+  (treemacs--clear-mouse-region)
+  (treemacs-RET-action)
+  ;; RET may re-render (toggle dir); re-assert single-line hl-line.
+  (when (eq major-mode 'treemacs-mode)
+    (treemacs--clear-mouse-region)
+    (when (fboundp 'hl-line-highlight)
+      (hl-line-highlight))))
 
 (defun treemacs-refresh ()
   "Redraw the current treemacs buffer."
@@ -1100,8 +1118,12 @@ Only use `define-key'; never reassign the keymap variable."
     (define-key map (kbd "oo") #'treemacs-visit-node-no-split)
     (define-key map (kbd "ox") #'treemacs-visit-node-in-external-application)
     ;; Mouse: single-click selects; double-click opens/toggles.
+    ;; Ignore drag so Emacs does not set a multi-line region.
+    (define-key map [down-mouse-1] #'treemacs-leftclick-action)
+    (define-key map [drag-mouse-1] #'ignore)
     (define-key map [mouse-1] #'treemacs-leftclick-action)
     (define-key map [double-mouse-1] #'treemacs-doubleclick-action)
+    (define-key map [triple-mouse-1] #'ignore)
     (define-key map [down-mouse-3] #'ignore)
     (define-key map [mouse-3] #'treemacs-rightclick-menu)
     map))
