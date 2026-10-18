@@ -325,16 +325,17 @@ GENERATION discards stale scheduled calls."
               (with-current-buffer tree-buf
                 (let ((changed (not (equal (treemacs--norm-root treemacs--root)
                                            normalized))))
+                  (setq treemacs--follow-last-root normalized)
+                  ;; Redraw only when the root changes (same-project switches
+                  ;; no longer erase/rebuild the whole tree).
                   (when changed
                     (setq treemacs--root root
-                          treemacs--expanded (make-hash-table :test #'equal)))
-                  (setq treemacs--follow-last-root normalized)
-                  ;; Always re-render when the side window is visible.
-                  (condition-case err
-                      (treemacs--render)
-                    (error
-                     (message "treemacs--follow: render failed: %s"
-                              (error-message-string err)))))))))))))
+                          treemacs--expanded (make-hash-table :test #'equal))
+                    (condition-case err
+                        (treemacs--render)
+                      (error
+                       (message "treemacs--follow: render failed: %s"
+                                (error-message-string err))))))))))))))
 
 (defun treemacs--schedule-follow (&rest _)
   "Schedule last-wins follow via generation counter (no artificial delay)."
@@ -586,13 +587,20 @@ GENERATION discards stale scheduled calls."
         (treemacs--insert-node (cdr e) (1+ depth))))))
 
 (defun treemacs--render ()
-  "Redraw the current treemacs buffer."
-  (let ((inhibit-read-only t)
-        (root treemacs--root)
-        (pos (point)))
+  "Redraw the current treemacs buffer without intermediate flicker.
+
+Run git I/O before `erase-buffer', and keep `inhibit-redisplay' set until
+the new tree is fully inserted so an empty buffer is never shown."
+  (let* ((inhibit-read-only t)
+         (inhibit-redisplay t)
+         (inhibit-modification-hooks t)
+         (root treemacs--root)
+         (pos (point)))
+    ;; Heavy work while the previous tree is still visible.
+    (when root
+      (treemacs--refresh-git root))
     (erase-buffer)
     (when root
-      (treemacs--refresh-git root)
       (let ((start (point))
             (label (file-name-nondirectory (directory-file-name root))))
         (insert (treemacs--icon root t t t) label "\n")
@@ -608,7 +616,9 @@ GENERATION discards stale scheduled calls."
         (puthash root t treemacs--expanded)
         (dolist (e (treemacs--list-dir root))
           (treemacs--insert-node (cdr e) 1))))
-    (goto-char (min pos (point-max)))))
+    (goto-char (min pos (point-max)))
+    (when (bound-and-true-p hl-line-mode)
+      (hl-line-highlight))))
 
 (defun treemacs--path-at-point ()
   "Return filesystem path at point, or nil."
