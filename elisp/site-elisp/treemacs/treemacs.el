@@ -59,9 +59,9 @@ Other packages can use (bound-and-true-p treemacs-in-house).")
   :group 'treemacs)
 
 (defcustom treemacs-double-click-time 0
-  "Seconds within which a second click on the same node opens it.
-If 0 or negative, there is no timeout: every second click on the same
-node acts like a double-click.  Emacs `double-click-time' is not used."
+  "Reserved for compatibility; activation uses explicit selection, not time.
+A click on `treemacs--selected-path' always opens/toggles that node.
+Emacs `double-click-time' is not used."
   :type 'number
   :group 'treemacs)
 
@@ -720,66 +720,88 @@ the new tree is fully inserted so an empty buffer is never shown."
              (fboundp 'evil-normal-state))
     (evil-normal-state)))
 
-(defvar-local treemacs--last-click-path nil
-  "Path selected by the previous mouse-1 click in this buffer.")
-(defvar-local treemacs--last-click-time 0.0
-  "Float time of the previous mouse-1 click in this buffer.")
+(defvar-local treemacs--selected-path nil
+  "Path explicitly selected by the last mouse click (highlight target).
+Only a click on this same path opens the node; path-at-point alone is
+not enough (avoids accidental open when point already sits on a line).")
 
-(defun treemacs--goto-event-node (event)
-  "Move point to the node under mouse EVENT and clear any region.
-Return the path at point, or nil."
+(defun treemacs--event-window-pos (event)
+  "Return (WINDOW POS BUFFER) for mouse EVENT, or nils."
   (let* ((start (event-start event))
          (window (posn-window start))
-         (pos (posn-point start)))
-    (when (window-live-p window)
-      (select-window window))
-    (when (number-or-marker-p pos)
-      (goto-char pos))
-    (treemacs--clear-mouse-region)
-    (when (fboundp 'hl-line-highlight)
-      (hl-line-highlight))
-    (treemacs--path-at-point)))
+         (pos (posn-point start))
+         (buf (and (window-live-p window) (window-buffer window))))
+    (list window pos buf)))
 
-(defun treemacs--click-is-double-p (path)
-  "Return non-nil if PATH is a second click on the same node.
-Uses `treemacs-double-click-time': 0 means no timeout."
-  (and path
-       (equal path treemacs--last-click-path)
-       (or (not (numberp treemacs-double-click-time))
-           (<= treemacs-double-click-time 0)
-           (< (- (float-time) treemacs--last-click-time)
-              treemacs-double-click-time))))
+(defun treemacs--path-at-pos (pos &optional buffer)
+  "Return treemacs path text-property at POS in BUFFER."
+  (when (and (number-or-marker-p pos) buffer (buffer-live-p buffer))
+    (with-current-buffer buffer
+      (get-text-property pos 'treemacs-path))))
+
+(defun treemacs--select-node-at (pos &optional buffer)
+  "Move point to POS, clear region, update hl-line. Return path or nil."
+  (when (and (number-or-marker-p pos) buffer (buffer-live-p buffer))
+    (with-current-buffer buffer
+      (goto-char pos)
+      (treemacs--clear-mouse-region)
+      (when (fboundp 'hl-line-highlight)
+        (hl-line-highlight))
+      (treemacs--path-at-point))))
 
 (defun treemacs--open-at-point ()
-  "Visit or toggle node at point; keep hl-line if still in treemacs."
+  "Visit or toggle node at point; keep selection + hl-line in treemacs."
   (treemacs--clear-mouse-region)
-  (setq treemacs--last-click-path nil)
-  (treemacs-RET-action)
-  (when (eq major-mode 'treemacs-mode)
-    (treemacs--clear-mouse-region)
-    (when (fboundp 'hl-line-highlight)
-      (hl-line-highlight))))
+  (let ((path (treemacs--path-at-point)))
+    (when path
+      (setq treemacs--selected-path path))
+    (treemacs-RET-action)
+    (when (eq major-mode 'treemacs-mode)
+      (treemacs--clear-mouse-region)
+      (when path
+        (setq treemacs--selected-path path))
+      (when (fboundp 'hl-line-highlight)
+        (hl-line-highlight)))))
 
 (defun treemacs-leftclick-action (event)
-  "Select the node under EVENT, or open it if this is the second click.
+  "Highlight the node under EVENT, or open it if already selected.
 
-Second click on the same node always opens/toggles it.  When
-`treemacs-double-click-time' is 0 (default), there is no time limit.
-A positive value is a timeout in seconds.  Does not use Emacs
-`double-click-time'."
+Precise mixed model (no timing):
+1. Paths are always read from the event window buffer (not the
+   previously selected window) – fixes focus-switch races.
+2. Selection is an explicit `treemacs--selected-path', not mere
+   point position – first click never opens just because point
+   was already on that line.
+3. Click on the selected path → always open/toggle (works after
+   leaving and returning to the treemacs window).
+4. Click on another path → only select/highlight it."
   (interactive "e")
-  (let ((path (treemacs--goto-event-node event))
-        (now (float-time)))
-    (if (treemacs--click-is-double-p path)
+  (pcase-let* ((`(,window ,pos ,buf) (treemacs--event-window-pos event))
+               (clicked (treemacs--path-at-pos pos buf))
+               ;; Read selection from the *treemacs* buffer, not the
+               ;; previously focused window (critical when clicking in).
+               (selected (and buf (buffer-live-p buf)
+                              (buffer-local-value 'treemacs--selected-path buf)))
+               (already (and clicked selected (equal clicked selected))))
+    (when (window-live-p window)
+      (select-window window))
+    (treemacs--select-node-at pos buf)
+    (if (and already clicked)
         (treemacs--open-at-point)
-      (setq treemacs--last-click-path path
-            treemacs--last-click-time now))))
+      ;; Pure selection – never open on the first click on a node.
+      (when buf
+        (with-current-buffer buf
+          (setq treemacs--selected-path clicked))))))
 
 (defun treemacs-doubleclick-action (event)
-  "Open or toggle the node under EVENT (fast system double-click)."
+  "Open or toggle the node under EVENT (system double-click)."
   (interactive "e")
-  (treemacs--goto-event-node event)
-  (treemacs--open-at-point))
+  (pcase-let* ((`(,window ,pos ,buf) (treemacs--event-window-pos event)))
+    (when (window-live-p window)
+      (select-window window))
+    (treemacs--select-node-at pos buf)
+    (setq treemacs--selected-path (treemacs--path-at-point))
+    (treemacs--open-at-point)))
 
 (defun treemacs-refresh ()
   "Redraw the current treemacs buffer."
@@ -1153,9 +1175,8 @@ Only use `define-key'; never reassign the keymap variable."
     (define-key map (kbd "oh") #'treemacs-visit-node-horizontal-split)
     (define-key map (kbd "oo") #'treemacs-visit-node-no-split)
     (define-key map (kbd "ox") #'treemacs-visit-node-in-external-application)
-    ;; Mouse: 1st click selects, 2nd click on same node opens (no timeout
-    ;; by default – see `treemacs-double-click-time').  down-mouse-1 is
-    ;; ignored so one physical click is not counted twice.
+    ;; Mouse: 1st click highlights; click on highlighted node opens.
+    ;; down-mouse-1 ignored so one physical click is not handled twice.
     (define-key map [down-mouse-1] #'ignore)
     (define-key map [drag-mouse-1] #'ignore)
     (define-key map [mouse-1] #'treemacs-leftclick-action)
