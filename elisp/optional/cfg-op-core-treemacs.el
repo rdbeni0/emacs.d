@@ -7,6 +7,10 @@
 
 (use-package treemacs
   :config
+
+  (setq treemacs-icons-directory
+        (expand-file-name "data/assets/icons" user-emacs-directory))
+
   ;; ---------------------------------------------------------------------------
   ;; load general.el
   ;; Keybindings should be fully compatible with the standard treemacs.
