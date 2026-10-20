@@ -53,16 +53,7 @@
 Other packages can use (bound-and-true-p treemacs-in-house).")
 
 (defcustom treemacs-icons-directory nil
-  "Directory containing treemacs icons, or nil to auto-detect.
-
-Accepted layouts (first match wins):
-  DIR/vsc/…            – DIR is the icons root (…/icons/default)
-  DIR/default/vsc/…    – DIR is a parent of default/
-  DIR/icons/default/…  – DIR is e.g. data/assets
-
-Example:
-  (setq treemacs-icons-directory
-        (expand-file-name "data/assets" user-emacs-directory))"
+  "Explicit directory with treemacs-style PNG icons, or nil to auto-detect."
   :type '(choice (directory :tag "Icons directory")
                  (const :tag "Auto-detect (default)" nil))
   :group 'treemacs)
@@ -74,44 +65,31 @@ Emacs `double-click-time' is not used."
   :type 'number
   :group 'treemacs)
 
-(defun treemacs--icons-root-p (dir)
-  "Return non-nil if DIR looks like an icons root (has vsc/ or PNG files)."
-  (and (stringp dir)
-       (file-directory-p dir)
-       (or (file-directory-p (expand-file-name "vsc" dir))
-           (file-readable-p (expand-file-name "txt.png" dir))
-           (file-readable-p (expand-file-name "dir-closed.png" dir)))))
-
-(defun treemacs--resolve-icons-dir (dir)
-  "Resolve DIR to a concrete icons root, or nil.
-Tries DIR, DIR/default, DIR/icons/default, DIR/icons."
-  (when (and (stringp dir) (file-directory-p dir))
-    (let ((dir (file-name-as-directory (expand-file-name dir))))
-      (cl-find-if #'treemacs--icons-root-p
-                  (list dir
-                        (expand-file-name "default" dir)
-                        (expand-file-name "icons/default" dir)
-                        (expand-file-name "icons" dir))))))
-
 (defun treemacs--find-icons-dir ()
   "Locate treemacs icons/default when `treemacs-icons-directory' is nil."
   (or
+   ;; walk load-path for a dir that actually contains icons
    (cl-loop for dir in load-path
             for candidate = (expand-file-name "icons/default" dir)
-            when (treemacs--icons-root-p candidate)
+            when (and (file-directory-p candidate)
+                      (file-directory-p (expand-file-name "vsc" candidate)))
             return candidate)
+   ;; package-user-dir / elpa
    (cl-loop for dir in (when (boundp 'package-user-dir)
                          (directory-files package-user-dir t "treemacs-" t))
             for candidate = (expand-file-name "icons/default" dir)
-            when (treemacs--icons-root-p candidate)
+            when (file-directory-p candidate)
             return candidate)))
 
 (defun treemacs--icons-dir ()
-  "Return effective icons directory: override (resolved) or auto-detect."
-  (or (and (stringp treemacs-icons-directory)
-           (not (string-empty-p treemacs-icons-directory))
-           (treemacs--resolve-icons-dir treemacs-icons-directory))
-      (treemacs--find-icons-dir)))
+  "Return effective icons directory: override or auto-detect."
+  (let ((override treemacs-icons-directory))
+    (cond
+     ((and (stringp override)
+           (not (string-empty-p override))
+           (file-directory-p override))
+      override)
+     (t (treemacs--find-icons-dir)))))
 
 
 ;;; Faces
