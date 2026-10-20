@@ -44,7 +44,7 @@
   "When non-nil, colour entries by git status."
   :type 'boolean :group 'treemacs)
 
-(defcustom treemacs-icon-size 18
+(defcustom treemacs-icon-size 20
   "Pixel size for PNG icons."
   :type 'integer :group 'treemacs)
 
