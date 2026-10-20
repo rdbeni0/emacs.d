@@ -3,8 +3,6 @@
 ;;
 ;;; Code:
 
-(add-to-list 'load-path (expand-file-name "elisp/site-elisp/treemacs" user-emacs-directory))
-
 (use-package treemacs
   :config
 
