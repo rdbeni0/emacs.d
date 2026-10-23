@@ -46,7 +46,6 @@
       (define-key map (kbd "<tab>") #'treemacs-TAB-action)
       (define-key map (kbd "g") #'treemacs-refresh)
       (define-key map (kbd "r") #'treemacs-refresh)
-      (define-key map (kbd "0") #'treemacs-quit)
       (define-key map (kbd "q") #'treemacs-quit)
       (define-key map (kbd "n") #'treemacs-next-line)
       (define-key map (kbd "p") #'treemacs-previous-line)
@@ -68,8 +67,8 @@
       (define-key map (kbd "oo") #'treemacs-visit-node-no-split)
       (define-key map (kbd "ox") #'treemacs-visit-node-in-external-application)
       ;; Toggle / local leader-style keys (replacing former general bindings)
-      (define-key map (kbd "0") #'treemacs)
-      (define-key map (kbd ",0") #'treemacs)
+      (define-key map (kbd "0") #'treemacs-quit)
+      (define-key map (kbd ",0") #'treemacs-quit)
       ;; Mouse: 1st click highlights; click on highlighted node opens.
       (define-key map [down-mouse-1] #'ignore)
       (define-key map [drag-mouse-1] #'ignore)
@@ -88,21 +87,24 @@
         (kbd "l") #'treemacs-RET-action
         (kbd "g") #'treemacs-refresh
         (kbd "r") #'treemacs-refresh
-        (kbd "0") #'treemacs-quit
         (kbd "q") #'treemacs-quit
         (kbd "R") #'treemacs-rename-file
         (kbd "d") #'treemacs-delete-file
         (kbd "m") #'treemacs-move-file
+        (kbd "0") #'treemacs-quit
+        (kbd ",0") #'treemacs
         (kbd "RET") #'treemacs-RET-action
         (kbd "TAB") #'treemacs-TAB-action)
       (evil-define-key* 'visual treemacs-mode-map
         (kbd "j") #'treemacs-next-line
         (kbd "k") #'treemacs-previous-line
         (kbd "q") #'treemacs-quit
+        (kbd "0") #'treemacs-quit)
       (evil-define-key* 'emacs treemacs-mode-map
         (kbd "j") #'treemacs-next-line
         (kbd "k") #'treemacs-previous-line
         (kbd "q") #'treemacs-quit
+        (kbd "0") #'treemacs-quit)
       (when (fboundp 'evil-normalize-keymaps)
         (evil-normalize-keymaps)))))
 
