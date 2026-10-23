@@ -91,7 +91,7 @@ Emacs `double-click-time' is not used."
       override)
      (t (treemacs--find-icons-dir)))))
 
-
+
 ;;; Faces
 
 (defface treemacs-root-face
@@ -125,7 +125,7 @@ Emacs `double-click-time' is not used."
   '((t :inherit font-lock-string-face))
   "Terminal fallback for nodes." :group 'treemacs)
 
-
+
 ;;; Buffer / tab state
 
 (defvar-local treemacs--root nil
@@ -205,7 +205,7 @@ Do not rely on tab-id; still find the side-window after a buffer switch."
    ((treemacs--get-buffer) 'exists)
    (t 'none)))
 
-
+
 ;;; Root detection
 
 (defun treemacs--project-root (&optional buf)
@@ -274,7 +274,7 @@ Order: project.el, .git, file/Dired directory, previous file buffer, $HOME."
         (setq root (treemacs--root-from-buffer treemacs--last-file-buffer))))
     (or root (expand-file-name "~"))))
 
-
+
 ;;; Follow – robust buffer handling
 ;; WARNING: use `treemacs--visible-treemacs-window', generation debounce,
 ;; and switch-to-buffer advice.  Changing only one piece reintroduces bugs.
@@ -402,7 +402,7 @@ GENERATION discards stale scheduled calls."
                     (treemacs--schedule-follow))))
     (setq treemacs--hooks-installed t)))
 
-
+
 ;;; Git
 
 (defun treemacs--git-face (status)
@@ -459,7 +459,7 @@ GENERATION discards stale scheduled calls."
                     (setq found (or found (cdr cell)))))
                 found)))))))
 
-
+
 ;;; Icons – treemacs PNG style
 
 (defvar treemacs--icon-cache (make-hash-table :test #'equal)
@@ -813,7 +813,7 @@ Tries mapped path, then KEY.png / vsc/KEY.png / .svg variants."
                           (propertize "  " 'face 'treemacs-file-face)))))
    (t (if dir-p (propertize (if open-p "▾ " "▸ ") 'face 'treemacs-term-node-face) "  "))))
 
-
+
 ;;; Listing / render
 
 (defun treemacs--list-dir (dir)
@@ -908,7 +908,7 @@ the new tree is fully inserted so an empty buffer is never shown."
       (forward-line 1))
     nil))
 
-
+
 ;;; Commands
 
 (defun treemacs-toggle-node (&optional path)
@@ -1268,7 +1268,7 @@ binding for `q' in `special-mode' buffers)."
   "Stub: root label follows the directory name."
   (interactive) (message "treemacs: root name follows the directory"))
 
-
+
 ;;; Right-click menu (treemacs-compatible)
 
 (defun treemacs-rightclick-menu (event)
@@ -1343,7 +1343,7 @@ binding for `q' in `special-mode' buffers)."
         (when (commandp cmd)
           (call-interactively cmd))))))
 
-
+
 ;;; Display / toggle
 
 (defun treemacs--display-buffer (buf)
@@ -1403,7 +1403,7 @@ binding for `q' in `special-mode' buffers)."
         (treemacs--render)))
     root))
 
-
+
 ;;; Mode map – bindings live in cfg-gen-op-treemacs-mode.el
 ;; Intentionally empty here: all keys (keyboard, mouse, evil) are
 ;; installed from cfg-gen-op-treemacs-mode.el so they stay centralized.
