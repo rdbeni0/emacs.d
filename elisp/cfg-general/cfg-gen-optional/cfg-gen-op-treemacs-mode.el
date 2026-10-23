@@ -88,24 +88,21 @@
         (kbd "l") #'treemacs-RET-action
         (kbd "g") #'treemacs-refresh
         (kbd "r") #'treemacs-refresh
+        (kbd "0") #'treemacs-quit
         (kbd "q") #'treemacs-quit
         (kbd "R") #'treemacs-rename-file
         (kbd "d") #'treemacs-delete-file
         (kbd "m") #'treemacs-move-file
-        (kbd "0") #'treemacs
-        (kbd ",0") #'treemacs
         (kbd "RET") #'treemacs-RET-action
         (kbd "TAB") #'treemacs-TAB-action)
       (evil-define-key* 'visual treemacs-mode-map
         (kbd "j") #'treemacs-next-line
         (kbd "k") #'treemacs-previous-line
         (kbd "q") #'treemacs-quit
-        (kbd "0") #'treemacs)
       (evil-define-key* 'emacs treemacs-mode-map
         (kbd "j") #'treemacs-next-line
         (kbd "k") #'treemacs-previous-line
         (kbd "q") #'treemacs-quit
-        (kbd "0") #'treemacs)
       (when (fboundp 'evil-normalize-keymaps)
         (evil-normalize-keymaps)))))
 
