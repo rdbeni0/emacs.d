@@ -1404,52 +1404,14 @@ binding for `q' in `special-mode' buffers)."
     root))
 
 
-;;; Mode map – one persistent object (required for general.el)
+;;; Mode map – bindings live in cfg-gen-op-treemacs-mode.el
+;; Intentionally empty here: all keys (keyboard, mouse, evil) are
+;; installed from cfg-gen-op-treemacs-mode.el so they stay centralized.
 
 (defvar treemacs-mode-map (make-sparse-keymap)
-  "Keymap for `treemacs-mode'.  Do not reassign; only define-key into it.")
-
-(defun treemacs--populate-mode-map ()
-  "Define treemacs commands on the existing `treemacs-mode-map' object.
-Only use `define-key'; never reassign the keymap variable."
-  (let ((map treemacs-mode-map))
-    (define-key map (kbd "RET") #'treemacs-RET-action)
-    (define-key map (kbd "TAB") #'treemacs-TAB-action)
-    (define-key map (kbd "<tab>") #'treemacs-TAB-action)
-    (define-key map (kbd "g") #'treemacs-refresh)
-    (define-key map (kbd "r") #'treemacs-refresh)
-    (define-key map (kbd "q") #'treemacs-quit)
-    (define-key map (kbd "n") #'treemacs-next-line)
-    (define-key map (kbd "p") #'treemacs-previous-line)
-    (define-key map (kbd "j") #'treemacs-next-line)
-    (define-key map (kbd "k") #'treemacs-previous-line)
-    (define-key map (kbd "h") #'treemacs-COLLAPSE-action)
-    (define-key map (kbd "l") #'treemacs-RET-action)
-    (define-key map (kbd "R") #'treemacs-rename-file)
-    (define-key map (kbd "d") #'treemacs-delete-file)
-    (define-key map (kbd "m") #'treemacs-move-file)
-    (define-key map (kbd "ya") #'treemacs-copy-absolute-path-at-point)
-    (define-key map (kbd "yr") #'treemacs-copy-relative-path-at-point)
-    (define-key map (kbd "yn") #'treemacs-copy-filename-at-point)
-    (define-key map (kbd "yf") #'treemacs-copy-file)
-    (define-key map (kbd "cf") #'treemacs-create-file)
-    (define-key map (kbd "cd") #'treemacs-create-dir)
-    (define-key map (kbd "ov") #'treemacs-visit-node-vertical-split)
-    (define-key map (kbd "oh") #'treemacs-visit-node-horizontal-split)
-    (define-key map (kbd "oo") #'treemacs-visit-node-no-split)
-    (define-key map (kbd "ox") #'treemacs-visit-node-in-external-application)
-    ;; Mouse: 1st click highlights; click on highlighted node opens.
-    ;; down-mouse-1 ignored so one physical click is not handled twice.
-    (define-key map [down-mouse-1] #'ignore)
-    (define-key map [drag-mouse-1] #'ignore)
-    (define-key map [mouse-1] #'treemacs-leftclick-action)
-    (define-key map [double-mouse-1] #'treemacs-doubleclick-action)
-    (define-key map [triple-mouse-1] #'ignore)
-    (define-key map [down-mouse-3] #'ignore)
-    (define-key map [mouse-3] #'treemacs-rightclick-menu)
-    map))
-
-(treemacs--populate-mode-map)
+  "Keymap for `treemacs-mode'.
+Do not reassign this object.  Bindings are added externally
+(see cfg-gen-op-treemacs-mode.el).")
 
 (define-derived-mode treemacs-mode special-mode "Treemacs"
   "Major mode for the in-house treemacs file tree."
@@ -1470,55 +1432,11 @@ Only use `define-key'; never reassign the keymap variable."
                 (:eval (file-name-nondirectory
                         (directory-file-name (or treemacs--root "?"))))))
   (use-local-map treemacs-mode-map)
-  (define-key treemacs-mode-map (kbd "q") #'treemacs-quit)
-  (treemacs--install-hooks)
-  (treemacs--setup-evil-keys))
-
-
-;;; Evil – normal state only (no custom treemacs state)
-
-(defun treemacs--setup-evil-keys ()
-  "Buffer-local evil keys so `q' is never `kill-this-buffer'."
-  (when (and (bound-and-true-p evil-local-mode)
-             (fboundp 'evil-local-set-key))
-    (evil-local-set-key 'normal (kbd "q") #'treemacs-quit)
-    (evil-local-set-key 'visual (kbd "q") #'treemacs-quit)
-    (evil-local-set-key 'emacs  (kbd "q") #'treemacs-quit)
-    (evil-local-set-key 'normal (kbd "j") #'treemacs-next-line)
-    (evil-local-set-key 'normal (kbd "k") #'treemacs-previous-line)
-    (evil-local-set-key 'normal (kbd "h") #'treemacs-COLLAPSE-action)
-    (evil-local-set-key 'normal (kbd "l") #'treemacs-RET-action)
-    (evil-local-set-key 'normal (kbd "g") #'treemacs-refresh)
-    (evil-local-set-key 'normal (kbd "r") #'treemacs-refresh)))
+  (treemacs--install-hooks))
 
 (with-eval-after-load 'evil
-  (evil-set-initial-state 'treemacs-mode 'normal)
-  (when (fboundp 'evil-define-key*)
-    (evil-define-key* 'normal treemacs-mode-map
-      (kbd "j") #'treemacs-next-line
-      (kbd "k") #'treemacs-previous-line
-      (kbd "h") #'treemacs-COLLAPSE-action
-      (kbd "l") #'treemacs-RET-action
-      (kbd "g") #'treemacs-refresh
-      (kbd "r") #'treemacs-refresh
-      (kbd "q") #'treemacs-quit
-      (kbd "R") #'treemacs-rename-file
-      (kbd "d") #'treemacs-delete-file
-      (kbd "m") #'treemacs-move-file
-      (kbd "RET") #'treemacs-RET-action
-      (kbd "TAB") #'treemacs-TAB-action)
-    (evil-define-key* 'visual treemacs-mode-map
-      (kbd "j") #'treemacs-next-line
-      (kbd "k") #'treemacs-previous-line
-      (kbd "q") #'treemacs-quit)
-    (evil-define-key* 'emacs treemacs-mode-map
-      (kbd "j") #'treemacs-next-line
-      (kbd "k") #'treemacs-previous-line
-      (kbd "q") #'treemacs-quit))
-  (when (fboundp 'evil-normalize-keymaps)
-    (evil-normalize-keymaps)))
+  (evil-set-initial-state 'treemacs-mode 'normal))
 
-(add-hook 'treemacs-mode-hook #'treemacs--setup-evil-keys)
 
 (provide 'treemacs)
 ;;; treemacs.el ends here
