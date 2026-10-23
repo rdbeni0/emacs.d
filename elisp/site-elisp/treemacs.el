@@ -244,7 +244,7 @@ Do not rely on tab-id; still find the side-window after a buffer switch."
            default-directory))))))
 
 (defun treemacs--root-from-buffer (buf)
-  "Resolve root from BUF only (no previous-buffer fallback)."
+  "Resolve root from BUF only (no `previous-buffer' fallback)."
   (when (buffer-live-p buf)
     (condition-case nil
         (let* ((file      (buffer-local-value 'buffer-file-name buf))
@@ -357,7 +357,7 @@ GENERATION discards stale scheduled calls."
                             (lambda () (treemacs--follow gen)))))))
 
 (defun treemacs--follow-now (&rest _)
-  "Run follow immediately after find-file, Dired, or project-switch."
+  "Run follow immediately after `find-file', Dired, or project-switch."
   (when treemacs--follow-timer
     (cancel-timer treemacs--follow-timer)
     (setq treemacs--follow-timer nil))
@@ -371,7 +371,7 @@ GENERATION discards stale scheduled calls."
       (treemacs--render))))
 
 (defun treemacs--after-switch-to-buffer (&rest _)
-  "Advise buffer switches such as recentf, consult, and `switch-to-buffer'."
+  "Advise buffer switch events such as recentf, consult, and `switch-to-buffer'."
   (when (and treemacs-follow-mode
              (not treemacs--follow-inhibit)
              (or buffer-file-name (derived-mode-p 'dired-mode)))
@@ -797,7 +797,8 @@ Tries mapped path, then KEY.png / vsc/KEY.png / .svg variants."
      (t (if open-p "dir-open" "dir-closed")))))
 
 (defun treemacs--icon (path dir-p open-p &optional root-p)
-  "Return icon string for PATH."
+  "Return icon string for PATH.
+DIR-P non-nil means directory, OPEN-P means expanded, ROOT-P means root node."
   (cond
    ((and (treemacs--icons-dir) (display-graphic-p))
     (cond
@@ -975,7 +976,7 @@ the new tree is fully inserted so an empty buffer is never shown."
   (treemacs-visit-node-no-split))
 
 (defun treemacs--clear-mouse-region ()
-  "Drop any active region so only `hl-line' shows the selection."
+  "Drop any active region; show selection with `hl-line' only."
   (when (region-active-p)
     (deactivate-mark t))
   (setq mark-active nil)
@@ -1003,7 +1004,8 @@ not enough (avoids accidental open when point already sits on a line).")
       (get-text-property pos 'treemacs-path))))
 
 (defun treemacs--select-node-at (pos &optional buffer)
-  "Move point to POS, clear region, update hl-line. Return path or nil."
+  "Move point to POS in BUFFER, clear region, update hl-line.
+Return path or nil."
   (when (and (number-or-marker-p pos) buffer (buffer-live-p buffer))
     (with-current-buffer buffer
       (goto-char pos)
@@ -1234,13 +1236,13 @@ binding for `q' in `special-mode' buffers)."
   (interactive)
   (message "treemacs: workspaces are tab-bar tabs – switch tabs instead"))
 (defun treemacs-create-workspace ()
-  "Stub: use tab-bar-new-tab for a new scope."
+  "Stub: use `tab-bar-new-tab' for a new scope."
   (interactive) (message "treemacs: use tab-bar-new-tab for a new tree scope"))
 (defun treemacs-remove-workspace ()
-  "Stub: use tab-bar-close-tab."
+  "Stub: use `tab-bar-close-tab'."
   (interactive) (message "treemacs: use tab-bar-close-tab"))
 (defun treemacs-rename-workspace ()
-  "Stub: use tab-rename."
+  "Stub: use `tab-rename'."
   (interactive) (message "treemacs: use tab-rename"))
 (defun treemacs-edit-workspaces ()
   "Stub: no workspace file in this build."
@@ -1411,7 +1413,7 @@ binding for `q' in `special-mode' buffers)."
 (defvar treemacs-mode-map (make-sparse-keymap)
   "Keymap for `treemacs-mode'.
 Do not reassign this object.  Bindings are added externally
-(see cfg-gen-op-treemacs-mode.el).")
+\(see cfg-gen-op-treemacs-mode.el).")
 
 (define-derived-mode treemacs-mode special-mode "Treemacs"
   "Major mode for the in-house treemacs file tree."
