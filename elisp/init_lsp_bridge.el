@@ -38,6 +38,7 @@
 (use-package cfg-op-groovy-jenkins)
 (use-package cfg-op-elm)
 (use-package cfg-op-haskell)
+(use-package cfg-op-scheme)
 (use-package cfg-op-nix)
 (use-package cfg-op-php)
 (use-package cfg-op-go)
