@@ -51,6 +51,7 @@
     mhtml-mode
     makefile-gmake-mode
     makefile-mode
+    haskell-mode
     elm-mode
     nix-mode
     nix-ts-mode
@@ -104,6 +105,7 @@
     mhtml-mode-map
     makefile-gmake-mode-map
     makefile-mode-map
+    haskell-mode-map
     elm-mode-map
     nix-mode-map
     nix-ts-mode-map

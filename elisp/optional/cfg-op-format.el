@@ -49,6 +49,7 @@
                   ("Fish" fish-indent)
                   ("Go" gofmt)
                   ("Fortran Free Form" fprettify)
+                  ("Haskell"  stylish-haskell)
                   ("HTML" (html-tidy "--indent" "yes" "--indent-spaces" "2" "-wrap" "185"))
                   ("HTML+ERB" erb-format)
                   ("Java" clang-format)
