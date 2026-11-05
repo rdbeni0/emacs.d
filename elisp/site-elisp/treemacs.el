@@ -59,8 +59,7 @@ Other packages can use (bound-and-true-p treemacs-in-house).")
   :group 'treemacs)
 
 (defcustom treemacs-double-click-time 0
-  "Reserved for compatibility; activation uses explicit selection, not time.
-A click on `treemacs--selected-path' always opens/toggles that node.
+  "Reserved for compatibility; mouse uses single-click activation.
 Emacs `double-click-time' is not used."
   :type 'number
   :group 'treemacs)
@@ -866,7 +865,9 @@ the new tree is fully inserted so an empty buffer is never shown."
          (inhibit-redisplay t)
          (inhibit-modification-hooks t)
          (root treemacs--root)
-         (pos (point)))
+         (pos (point))
+         (win (get-buffer-window (current-buffer) t))
+         (ws (and win (window-start win))))
     ;; Heavy work while the previous tree is still visible.
     (when root
       (treemacs--refresh-git root))
@@ -888,6 +889,9 @@ the new tree is fully inserted so an empty buffer is never shown."
         (dolist (e (treemacs--list-dir root))
           (treemacs--insert-node (cdr e) 1))))
     (goto-char (min pos (point-max)))
+    ;; Keep the same viewport – do not jump to the top of the buffer.
+    (when (and win (window-live-p win) ws)
+      (set-window-start win (min ws (point-max)) t))
     (when (bound-and-true-p hl-line-mode)
       (hl-line-highlight))))
 
@@ -900,14 +904,24 @@ the new tree is fully inserted so an empty buffer is never shown."
   (get-text-property (point) 'treemacs-dir-p))
 
 (defun treemacs--goto-path (path)
-  "Move point to PATH in the tree; return non-nil if found."
-  (goto-char (point-min))
-  (catch 'found
-    (while (not (eobp))
-      (when (equal (treemacs--path-at-point) path)
-        (throw 'found t))
-      (forward-line 1))
-    nil))
+  "Move point to the beginning of the PATH node line; return non-nil if found.
+Preserve the current window scroll position (do not jump to the top)."
+  (let* ((win (get-buffer-window (current-buffer) t))
+         (ws (and win (window-start win)))
+         (found
+          (save-excursion
+            (goto-char (point-min))
+            (catch 'found
+              (while (not (eobp))
+                (when (equal (treemacs--path-at-point) path)
+                  (throw 'found (line-beginning-position)))
+                (forward-line 1))
+              nil))))
+    (when found
+      (goto-char found)
+      (when (and win (window-live-p win) ws)
+        (set-window-start win (min ws (point-max)) t)))
+    found))
 
 
 ;;; Commands
@@ -1004,11 +1018,18 @@ not enough (avoids accidental open when point already sits on a line).")
       (get-text-property pos 'treemacs-path))))
 
 (defun treemacs--select-node-at (pos &optional buffer)
-  "Move point to POS in BUFFER, clear region, update hl-line.
-Return path or nil."
+  "Move point to the beginning of the node under POS in BUFFER.
+Clear region, update hl-line.  Return path or nil."
   (when (and (number-or-marker-p pos) buffer (buffer-live-p buffer))
     (with-current-buffer buffer
       (goto-char pos)
+      ;; If click landed past the property (e.g. on newline), step back.
+      (unless (get-text-property (point) 'treemacs-path)
+        (when (and (> (point) (point-min))
+                   (get-text-property (1- (point)) 'treemacs-path))
+          (goto-char (1- (point)))))
+      (when (get-text-property (point) 'treemacs-path)
+        (goto-char (line-beginning-position)))
       (treemacs--clear-mouse-region)
       (when (fboundp 'hl-line-highlight)
         (hl-line-highlight))
@@ -1019,54 +1040,37 @@ Return path or nil."
   (treemacs--clear-mouse-region)
   (let ((path (treemacs--path-at-point)))
     (when path
-      (setq treemacs--selected-path path))
-    (treemacs-RET-action)
-    (when (eq major-mode 'treemacs-mode)
-      (treemacs--clear-mouse-region)
-      (when path
-        (setq treemacs--selected-path path))
-      (when (fboundp 'hl-line-highlight)
-        (hl-line-highlight)))))
+      (setq treemacs--selected-path path)
+      (treemacs-RET-action)
+      (when (eq major-mode 'treemacs-mode)
+        (treemacs--goto-path path)
+        (treemacs--clear-mouse-region)
+        (setq treemacs--selected-path path)
+        (when (fboundp 'hl-line-highlight)
+          (hl-line-highlight))))))
 
 (defun treemacs-leftclick-action (event)
-  "Highlight the node under EVENT, or open it if already selected.
-
-Precise mixed model (no timing):
-1. Paths are always read from the event window buffer (not the
-   previously selected window) – fixes focus-switch races.
-2. Selection is an explicit `treemacs--selected-path', not mere
-   point position – first click never opens just because point
-   was already on that line.
-3. Click on the selected path → always open/toggle (works after
-   leaving and returning to the treemacs window).
-4. Click on another path → only select/highlight it."
+  "Open or toggle the node under EVENT on a single click.
+Point is moved to the beginning of the node line, then the node is
+activated (file visit or directory toggle)."
   (interactive "e")
-  (pcase-let* ((`(,window ,pos ,buf) (treemacs--event-window-pos event))
-               (clicked (treemacs--path-at-pos pos buf))
-               ;; Read selection from the *treemacs* buffer, not the
-               ;; previously focused window (critical when clicking in).
-               (selected (and buf (buffer-live-p buf)
-                              (buffer-local-value 'treemacs--selected-path buf)))
-               (already (and clicked selected (equal clicked selected))))
+  (let* ((start (event-start event))
+         (window (posn-window start))
+         (pos (posn-point start))
+         (buf (and (window-live-p window) (window-buffer window))))
     (when (window-live-p window)
       (select-window window))
-    (treemacs--select-node-at pos buf)
-    (if (and already clicked)
-        (treemacs--open-at-point)
-      ;; Pure selection – never open on the first click on a node.
-      (when buf
-        (with-current-buffer buf
-          (setq treemacs--selected-path clicked))))))
+    (when (and buf (buffer-live-p buf) (number-or-marker-p pos))
+      (with-current-buffer buf
+        (let ((path (treemacs--select-node-at pos buf)))
+          (when path
+            (setq treemacs--selected-path path)
+            (treemacs--open-at-point)))))))
 
 (defun treemacs-doubleclick-action (event)
-  "Open or toggle the node under EVENT (system double-click)."
+  "Open or toggle the node under EVENT (same as single click)."
   (interactive "e")
-  (pcase-let* ((`(,window ,pos ,buf) (treemacs--event-window-pos event)))
-    (when (window-live-p window)
-      (select-window window))
-    (treemacs--select-node-at pos buf)
-    (setq treemacs--selected-path (treemacs--path-at-point))
-    (treemacs--open-at-point)))
+  (treemacs-leftclick-action event))
 
 (defun treemacs-refresh ()
   "Redraw the current treemacs buffer."
@@ -1412,8 +1416,21 @@ binding for `q' in `special-mode' buffers)."
 
 (defvar treemacs-mode-map (make-sparse-keymap)
   "Keymap for `treemacs-mode'.
-Do not reassign this object.  Bindings are added externally
-\(see cfg-gen-op-treemacs-mode.el).")
+Keyboard bindings may be added externally (cfg-gen-op-treemacs-mode.el).
+Mouse bindings for single-click open are installed here.")
+
+(defun treemacs--install-mouse-keys ()
+  "Bind mouse actions on `treemacs-mode-map' (single-click open)."
+  (let ((map treemacs-mode-map))
+    (define-key map [down-mouse-1] #'ignore)
+    (define-key map [drag-mouse-1] #'ignore)
+    (define-key map [mouse-1] #'treemacs-leftclick-action)
+    (define-key map [double-mouse-1] #'treemacs-doubleclick-action)
+    (define-key map [triple-mouse-1] #'ignore)
+    (define-key map [down-mouse-3] #'ignore)
+    (define-key map [mouse-3] #'treemacs-rightclick-menu)))
+
+(treemacs--install-mouse-keys)
 
 (define-derived-mode treemacs-mode special-mode "Treemacs"
   "Major mode for the in-house treemacs file tree."
@@ -1434,6 +1451,7 @@ Do not reassign this object.  Bindings are added externally
                 (:eval (file-name-nondirectory
                         (directory-file-name (or treemacs--root "?"))))))
   (use-local-map treemacs-mode-map)
+  (treemacs--install-mouse-keys)
   (treemacs--install-hooks))
 
 (with-eval-after-load 'evil

@@ -1,4 +1,4 @@
-;;; cfg-gen-op-haskell-mode.el --- general.el for haskell-mode -*- lexical-binding: t -*-
+;;; cfg-gen-op-haskell.el --- general.el for haskell -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;;; Code:
@@ -15,5 +15,5 @@
   "="  '(:ignore t :which-key "format")
   "=n" '(haskell-mode-stylish-buffer :which-key "stylish-haskell"))
 
-(provide 'cfg-gen-op-haskell-mode)
-;;; cfg-gen-op-haskell-mode.el ends here
+(provide 'cfg-gen-op-haskell)
+;;; cfg-gen-op-haskell.el ends here
