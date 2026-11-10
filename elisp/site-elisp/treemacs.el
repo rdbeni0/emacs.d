@@ -301,7 +301,7 @@ Order: project.el, .git, file/Dired directory, previous file buffer, $HOME."
                 (with-current-buffer b
                   (or buffer-file-name
                       (derived-mode-p 'dired-mode)
-                      ;; Obsługa buforów takich jak Magit, Eshell itp. opartych na default-directory
+                      ;; Support for buffers such as Magit, Eshell, etc. based on default-directory
                       (and default-directory
                            (file-directory-p default-directory))))))))
     (or
