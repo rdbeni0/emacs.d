@@ -139,12 +139,12 @@ When DISABLE is non-nil, remove the advice instead."
   (cond
    ((zerop (length keyseq)) nil)
    ((eq cmd :ignore)
-    (general--ensure-path root keyseq)
-    (when (and desc (fboundp 'which-key-add-key-based-replacements))
-      (condition-case nil
-          (which-key-add-key-based-replacements
-            (key-description keyseq) desc)
-        (error nil))))
+    (let ((target-map (general--ensure-path root keyseq)))
+      (when (and desc (fboundp 'which-key-add-keymap-based-replacements))
+        (condition-case nil
+            (which-key-add-keymap-based-replacements root
+              (key-description keyseq) desc)
+          (error nil)))))
    (t
     (let* ((len (length keyseq))
            (parent (if (= len 1) root
