@@ -94,7 +94,8 @@ Emacs `double-click-time' is not used."
 ;;; Faces
 
 (defface treemacs-root-face
-  '((t :inherit font-lock-constant-face :underline t :bold t :height 1.15))
+  ;; '((t :inherit font-lock-constant-face :underline t :bold t :height 1.15))
+  '((t :inherit font-lock-constant-face :bold t :height 1.15))
   "Root node." :group 'treemacs)
 (defface treemacs-directory-face
   '((t :inherit font-lock-function-name-face))
