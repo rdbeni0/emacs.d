@@ -293,14 +293,17 @@ Order: project.el, .git, file/Dired directory, previous file buffer, $HOME."
   "Normalized root last applied by follow.")
 
 (defun treemacs--best-follow-candidate ()
-  "Best live file/dired buffer that is *not* a treemacs buffer."
+  "Best live file/dired/directory buffer that is *not* a treemacs buffer."
   (let ((ready-p
          (lambda (b)
            (and (buffer-live-p b)
                 (not (with-current-buffer b (eq major-mode 'treemacs-mode)))
                 (with-current-buffer b
                   (or buffer-file-name
-                      (derived-mode-p 'dired-mode)))))))
+                      (derived-mode-p 'dired-mode)
+                      ;; Obsługa buforów takich jak Magit, Eshell itp. opartych na default-directory
+                      (and default-directory
+                           (file-directory-p default-directory))))))))
     (or
      ;; 1. selected window (most common case)
      (let ((sel (window-buffer (selected-window))))
