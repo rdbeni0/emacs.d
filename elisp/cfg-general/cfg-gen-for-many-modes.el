@@ -65,6 +65,7 @@
     rust-mode
     rust-ts-mode
     scheme-mode
+    geiser-repl-mode
     sh-mode
     ssh-config-mode
     web-mode
@@ -119,6 +120,7 @@
     rust-mode-map
     rust-ts-mode-map
     scheme-mode-map
+    geiser-repl-mode-map
     sh-mode-map
     ssh-config-mode-map
     web-mode-map
@@ -200,8 +202,8 @@
                         fish-mode
                         web-mode
                         elm-mode
+                        geiser-repl-mode
                         latex-mode
-                        scheme-mode
                         makefile-mode
                         makefile-gmake-mode)))
 
@@ -212,8 +214,8 @@
                         fish-mode-map
                         web-mode-map
                         elm-mode-map
+                        geiser-repl-mode-map
                         latex-mode-map
-                        scheme-mode-map
                         makefile-mode-map
                         makefile-gmake-mode-map)))
 
@@ -241,6 +243,7 @@
                                                    perl-mode
                                                    cperl-mode
                                                    js-json-mode
+                                                   geiser-repl-mode
                                                    nxml-mode
                                                    markdown-mode
                                                    makefile-mode
@@ -256,6 +259,7 @@
                                                        perl-mode-map
                                                        cperl-mode-map
                                                        js-json-mode-map
+                                                       geiser-repl-mode-map
                                                        nxml-mode-map
                                                        markdown-mode-map
                                                        makefile-mode-map
@@ -274,6 +278,8 @@
                                                      '(ssh-config-mode
                                                        web-mode
                                                        latex-mode
+                                                       scheme-mode
+                                                       geiser-repl-mode
                                                        makefile-mode
                                                        makefile-gmake-mode
                                                        esql-mode))
@@ -285,6 +291,8 @@
 					                     (seq-difference list-gen-mode-map
                                                          '(ssh-config-mode-map
                                                            web-mode-map
+                                                           scheme-mode-map
+                                                           geiser-repl-mode-map
                                                            latex-mode-map
                                                            makefile-mode-map
                                                            makefile-gmake-mode-map

@@ -80,8 +80,10 @@ When DISABLE is non-nil, remove the advice instead."
 ;;; Helpers
 
 (defun general--normalize-list (x)
-  "Return X as a list.  Expand bound list-valued symbols."
+  "Return X as a list.  Expand bound list-valued symbols, unless X is a keymap."
   (cond
+   ((keymapp x) (list x))
+   ((and (symbolp x) (boundp x) (keymapp (symbol-value x))) (list x))
    ((and (symbolp x) (boundp x) (listp (symbol-value x))) (symbol-value x))
    ((listp x) x)
    (t (list x))))

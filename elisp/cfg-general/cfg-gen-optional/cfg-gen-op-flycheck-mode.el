@@ -42,8 +42,8 @@
 
 (general-define-key
  :states '(normal visual emacs)
- :keymaps 'flycheck-error-list-mode-map
- :major-modes 'flycheck-error-list-mode
+ :keymaps '(flycheck-error-list-mode-map)
+ :major-modes '(flycheck-error-list-mode)
  :prefix ","
  "<down>" '(flycheck-error-list-next-error :which-key "next-error")
  "<up>" '(flycheck-error-list-previous-error :which-key "previous-error")
